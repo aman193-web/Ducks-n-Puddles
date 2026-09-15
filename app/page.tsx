@@ -1,12 +1,13 @@
+import { Suspense } from 'react'
 import { Hero } from '@/components/sections/Hero'
 import { HeroScene } from '@/components/HeroScene'
+import { CardTilt } from '@/components/CardTilt'
 import { Marquee } from '@/components/ui/Marquee'
 import { DuckStage } from '@/components/sections/DuckStage'
 import { Specs } from '@/components/sections/Specs'
 import { Store } from '@/components/sections/Store'
 import { Story } from '@/components/sections/Story'
 import { InTheWild } from '@/components/sections/InTheWild'
-import { Reviews } from '@/components/sections/Reviews'
 import { Journal } from '@/components/sections/Journal'
 import { Faq } from '@/components/sections/Faq'
 import { Newsletter } from '@/components/sections/Newsletter'
@@ -31,8 +32,9 @@ export default function HomePage() {
     <>
       <Hero />
       <HeroScene />
+      <CardTilt />
       <Marquee
-        items={['Made by two parents', 'Sized for small hands', 'Dishwasher safe', 'Spill-resistant', 'BPA-free']}
+        items={['Named after our own kids', 'Sized for small hands', 'Dishwasher safe', 'Spill-resistant', 'BPA-free']}
         colour="var(--sun)" rot={-3.2}
       />
       <DuckStage />
@@ -45,14 +47,17 @@ export default function HomePage() {
         colour="var(--chichi)" rot={2.6} dir="rtl" seconds={36}
       />
       <InTheWild />
-      <Reviews />
+      {/* Reviews: hidden until the four quotes carry real names. The component
+          and its content are intact — re-add <Reviews /> here to restore it. */}
       <Journal />
       {/* The yellow band and the Duck Squad form ask for the same address, so
           they are deliberately kept apart: the band is a light touchpoint, the
           FAQ answers the objections, and the full form closes. */}
       <Newsletter />
       <Faq />
-      <Squad />
+      {/* Squad reads ?duck= via useSearchParams, which needs a boundary on a
+          statically prerendered page. */}
+      <Suspense fallback={null}><Squad /></Suspense>
     </>
   )
 }

@@ -8,6 +8,8 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { MotionProvider } from '@/components/MotionProvider'
 import { ScrollScenes } from '@/components/ScrollScenes'
 import { ScrollDuck } from '@/components/ui/ScrollDuck'
+import { ScrollTop } from '@/components/ScrollTop'
+import { CursorTrail } from '@/components/ui/CursorTrail'
 import '@/styles/tokens.css'
 import '@/styles/global.css'
 
@@ -83,6 +85,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <SiteFooter />
         <ScrollDuck />
+        <ScrollTop />
+        <CursorTrail />
         <MotionProvider />
         <ScrollScenes />
       </body>

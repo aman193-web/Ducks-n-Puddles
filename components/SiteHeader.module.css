@@ -37,7 +37,7 @@
 /* Nav links get the same roll as the capsules, so the bar has one idiom. */
 .nav { display: none; margin-inline-start: auto; gap: clamp(2px, .6vw, 10px); }
 .nav a {
-  display: inline-flex; align-items: center;
+  display: inline-flex; align-items: center; gap: var(--s-2);
   min-block-size: 44px;
   padding-inline: var(--s-3);
   font-size: var(--fs-small); font-weight: 600;
@@ -55,6 +55,17 @@
 }
 .nav a:hover .roll > span,
 .nav a:focus-visible .roll > span { transform: translateY(-1.3em) rotate(.001deg); }
+
+/* the "Coming soon" qualifier rides with the Store link rather than replacing it,
+   so the nav still reads as a destination list */
+.note {
+  padding: 3px 8px;
+  background: var(--sun);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: .625rem; letter-spacing: .06em; text-transform: uppercase;
+  white-space: nowrap;
+}
 
 .actions { display: flex; align-items: center; gap: var(--s-3); margin-inline-start: auto; }
 .nav + .actions { margin-inline-start: clamp(var(--s-4), 2vw, var(--s-6)); }

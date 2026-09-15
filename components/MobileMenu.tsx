@@ -10,6 +10,7 @@ const NAV = [
   { href: '/#ducks', label: 'The Ducks' },
   { href: '/#features', label: 'Features' },
   { href: '/#store', label: 'The Range' },
+  { href: '/#store', label: 'Store', note: 'Coming soon' },
   { href: '/#story', label: 'Our Story' },
   { href: '/journal', label: 'Journal' },
 ]
@@ -60,8 +61,11 @@ export function MobileMenu() {
 
         <nav className={styles.links} aria-label="Primary">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} onClick={() => setOpen(false)}>
-              {n.label}
+            <Link key={n.label} href={n.href} onClick={() => setOpen(false)}>
+              <span>
+                {n.label}
+                {n.note && <em className={styles.note}>{n.note}</em>}
+              </span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                    strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M7 17 17 7M9 7h8v8" />

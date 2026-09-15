@@ -60,9 +60,16 @@
   padding: var(--card-pad);
   background: var(--cream);
   border-radius: var(--r-lg);
-  transition: transform .45s var(--spring);
+  /* CardTilt writes the four --tilt-* values; with none set the card is flat,
+     so this degrades to a plain card on touch and under reduced motion. */
+  transform: perspective(700px)
+             rotateX(var(--tilt-x, 0deg))
+             rotateY(var(--tilt-y, 0deg))
+             translateY(var(--card-lift, 0px));
+  transform-style: preserve-3d;
+  transition: transform .5s var(--spring);
 }
-.card:hover { transform: translateY(-4px); }
+.card:hover { --card-lift: -6px; }
 
 /* The glyph is the thing that makes a spec scannable, so it gets a disc of its
    own and real size — at 34px light it was a footnote above the label. */
@@ -77,6 +84,10 @@
   background: rgba(16, 38, 74, .06);
   color: var(--ink);
   border-radius: var(--r);
+  /* the glyph travels further than the card it sits on — that difference is the
+     parallax; a uniform rotation on its own just reads as a wobble */
+  translate: var(--tilt-px, 0) var(--tilt-py, 0);
+  transition: translate .45s var(--spring);
 }
 .icon svg { display: block; }
 

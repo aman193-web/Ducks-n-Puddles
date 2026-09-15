@@ -31,5 +31,14 @@
 .links a:nth-child(odd) { rotate: -1deg; }
 .links a:nth-child(even) { rotate: 1deg; }
 .links a:active { transform: scale(.98); background: var(--sun); }
+.links a > span { display: inline-flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
+.note {
+  padding: 3px 9px;
+  background: var(--sun);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-style: normal; font-weight: 500;
+  font-size: .625rem; letter-spacing: .06em; text-transform: uppercase;
+}
+
 .foot { display: grid; gap: var(--s-3); justify-items: stretch; }
 @media (min-width: 940px) { .triggerWrap { display: none; } }

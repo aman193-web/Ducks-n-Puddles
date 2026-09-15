@@ -1,0 +1,35 @@
+.defs { position: absolute; inline-size: 0; block-size: 0; }
+
+.trail {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  filter: url(#dnp-goo);
+  opacity: 0;
+  transition: opacity .35s ease-in-out;
+}
+.trail[data-on='true'] { opacity: 1; }
+
+.trail i {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: block;
+  /* The head is a droplet, the tail tapers to nothing — that taper is what makes
+     the goo filter read as liquid rather than as a caterpillar. */
+  inline-size: calc(26px - var(--i) * 1.5px);
+  block-size: calc(26px - var(--i) * 1.5px);
+  margin: calc((26px - var(--i) * 1.5px) / -2);
+  background: var(--splash);
+  border-radius: 999px;
+  will-change: translate;
+}
+.trail i:nth-child(1) { background: var(--sun); }
+.trail i:nth-child(2) { background: var(--sky); }
+
+/* No cursor to decorate on a touchscreen, and nothing to soften for someone who
+   asked for less motion. */
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .trail { display: none; }
+}

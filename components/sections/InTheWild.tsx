@@ -1,9 +1,8 @@
 'use client'
 import { useRef, useState } from 'react'
-import { Play, Pause, InstagramLogo } from '@phosphor-icons/react/dist/ssr'
-import { Btn } from '@/components/ui/Btn'
+import { Play, Pause } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
-import { reels, brand } from '@/content/brand'
+import { reels } from '@/content/brand'
 import styles from './InTheWild.module.css'
 
 /**
@@ -81,15 +80,6 @@ export function InTheWild() {
         })}
       </ul>
 
-      <div className="wrap">
-        <div className={styles.foot} data-anim="">
-          <p className={styles.handle}>
-            <InstagramLogo size={22} weight="regular" aria-hidden="true" />
-            <span>More of these, most days, on Instagram.</span>
-          </p>
-          <Btn href={brand.instagram} colour="var(--sun)">Follow @ducksnpuddles</Btn>
-        </div>
-      </div>
     </section>
   )
 }

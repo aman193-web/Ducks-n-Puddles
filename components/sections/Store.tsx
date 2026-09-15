@@ -47,7 +47,10 @@ export function Store() {
                            className={styles.badge} />
               <p>{d.personality}</p>
               <p className={styles.price}>{d.forParents}</p>
-              <Btn href={`/#squad?duck=${d.slug}`} colour={d.colour} block>
+              {/* query BEFORE the fragment. `/#squad?duck=x` makes the browser look for
+                  an element with id="squad?duck=x", so it matched nothing and the
+                  click scrolled nowhere. */}
+              <Btn href={`/?duck=${d.slug}#squad`} colour={d.colour} block>
                 I want {d.name}
               </Btn>
             </article>

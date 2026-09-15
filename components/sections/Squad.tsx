@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Picture } from '@/components/Picture'
 import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
@@ -28,13 +29,20 @@ export function Squad() {
   const [message, setMessage] = useState('')
   const mounted = useRef(0)
 
+  /* `useSearchParams` rather than a one-off read on mount. The range cards link
+     to /?duck=x#squad from further up the SAME page, which Next handles as a
+     client navigation — it fires neither `hashchange` (the query changed too)
+     nor `popstate` (it is a push, not a pop), so a listener-based read never
+     saw it. This hook re-renders on exactly that navigation. */
+  const params = useSearchParams()
+
+  useEffect(() => { mounted.current = Date.now() }, [])
+
   useEffect(() => {
-    mounted.current = Date.now()
-    const hash = window.location.hash.split('?')[1] ?? ''
-    const q = new URLSearchParams(window.location.search).get('duck')
-      ?? new URLSearchParams(hash).get('duck')
+    const q = params.get('duck')
+      ?? new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('duck')
     if (q && (DUCKS as readonly string[]).includes(q)) setDuck(q as Duck)
-  }, [])
+  }, [params])
 
   const selected = ducks.findIndex((d) => d.slug === duck)
   const rovingIndex = selected === -1 ? 0 : selected

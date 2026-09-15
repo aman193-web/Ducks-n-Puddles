@@ -1,6 +1,5 @@
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
-import { Pill } from '@/components/ui/Pill'
 import { ducks, brand } from '@/content/brand'
 import { bandPath, ribbonPath, PERIOD, BAND_NAVY, BAND_SKY } from '@/lib/wave'
 import styles from './Hero.module.css'
@@ -158,10 +157,6 @@ export function Hero() {
             </span>
 
             {/* -- UI, inside the frame, as the reference keeps it -- */}
-            <span className={styles.cue}>
-              <Pill href="/#ducks" icon="down" label="Scroll to meet the ducks"
-                    discBg="var(--paper)" discInk="var(--ink)" />
-            </span>
           </div>
         </div>
       </div>

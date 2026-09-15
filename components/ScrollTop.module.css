@@ -1,0 +1,20 @@
+.btn {
+  position: fixed;
+  z-index: 45;
+  inset-block-end: clamp(18px, 2.4vw, 32px);
+  inset-inline-end: clamp(18px, 2.4vw, 32px);
+  display: grid; place-items: center;
+  inline-size: var(--btn-h-sm); block-size: var(--btn-h-sm);
+  background: var(--sun); color: var(--ink);
+  border: var(--border-lg); border-radius: 999px;
+  box-shadow: 0 10px 24px -10px rgba(16, 38, 74, .45);
+  cursor: pointer;
+  /* hidden rather than unmounted, so the transition has something to run on */
+  opacity: 0; translate: 0 14px; pointer-events: none;
+  transition: opacity .3s ease-in-out, translate .4s var(--spring), background-color .25s ease-in-out;
+}
+.btn[data-show='true'] { opacity: 1; translate: 0 0; pointer-events: auto; }
+.btn:hover { background: var(--paper); }
+.btn:active { translate: 0 2px; }
+
+@media (prefers-reduced-motion: reduce) { .btn { transition: opacity .2s linear; } }

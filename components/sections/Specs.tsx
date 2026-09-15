@@ -35,7 +35,7 @@ export function Specs() {
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--cream)" rot={2} data-pop="" data-pop-rot="2">
-            Built for small hands
+            The details
           </Sticker>
           <h2 id="specs-title" className="d d-xl" data-anim="">
             Everything a parent checks, checked.
@@ -46,11 +46,11 @@ export function Specs() {
           </p>
         </div>
 
-        <dl className={styles.grid}>
+        <dl className={styles.grid} data-tilt-grid="">
           {confirmedSpecs.map((s) => {
             const Icon = ICONS[s.key] ?? Drop
             return (
-              <div key={s.key} className={styles.card} data-anim="" data-anim-y="24">
+              <div key={s.key} className={styles.card} data-tilt="" data-anim="" data-anim-y="24">
                 <span className={styles.icon} aria-hidden="true">
                   <Icon size={44} weight="regular" />
                 </span>
@@ -60,7 +60,7 @@ export function Specs() {
             )
           })}
 
-          <div className={`${styles.card} ${styles.open}`} data-anim="" data-anim-y="24">
+          <div className={`${styles.card} ${styles.open}`} data-tilt="" data-anim="" data-anim-y="24">
             <span className={styles.icon} aria-hidden="true">
               <Heart size={44} weight="fill" />
             </span>

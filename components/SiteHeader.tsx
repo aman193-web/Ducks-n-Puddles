@@ -10,6 +10,7 @@ const NAV = [
   { href: '/#ducks', label: 'The Ducks' },
   { href: '/#features', label: 'Features' },
   { href: '/#store', label: 'The Range' },
+  { href: '/#store', label: 'Store', note: 'Coming soon' },
   { href: '/#story', label: 'Our Story' },
   { href: '/journal', label: 'Journal' },
 ]
@@ -32,8 +33,9 @@ export function SiteHeader() {
 
         <nav className={styles.nav} aria-label="Primary" data-menu-load="">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href}>
+            <Link key={n.label} href={n.href}>
               <span className={styles.roll}><span>{n.label}</span></span>
+              {n.note && <span className={styles.note}>{n.note}</span>}
             </Link>
           ))}
         </nav>
