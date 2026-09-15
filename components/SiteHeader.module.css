@@ -1,0 +1,79 @@
+/* =============================================================================
+   HEADER — one quiet row. All of the bar's colour lives in the capsule pair at
+   the end of it, exactly as the reference does.
+   ========================================================================== */
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 50;
+  /* Transparent at rest so the hero's sky runs up behind the nav, then a solid
+     ground once the page has moved — otherwise the bar would sit on whatever
+     section happens to be passing under it. HeaderChrome sets data-stuck. */
+  background: transparent;
+  border-block-end: 0;
+  transition: background-color .32s ease-in-out, box-shadow .32s ease-in-out;
+}
+.header[data-stuck='true'] {
+  background: var(--cream);
+  box-shadow: var(--shadow-ui);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  min-block-size: var(--header-h);
+  padding-block: var(--s-3);
+}
+
+/* The lockup ships as artwork; it gets a size and nothing else. */
+.brand { display: flex; align-items: center; flex: none; text-decoration: none; }
+.brand img {
+  block-size: clamp(50px, 13vw, 68px);
+  inline-size: auto; width: auto;
+  transition: transform .5s var(--spring);
+}
+.brand:hover img { transform: rotate(-5deg) scale(1.05); }
+
+/* Nav links get the same roll as the capsules, so the bar has one idiom. */
+.nav { display: none; margin-inline-start: auto; gap: clamp(2px, .6vw, 10px); }
+.nav a {
+  display: inline-flex; align-items: center;
+  min-block-size: 44px;
+  padding-inline: var(--s-3);
+  font-size: var(--fs-small); font-weight: 600;
+  text-decoration: none;
+  overflow: hidden;
+}
+/* The ghost sits exactly one line below, so the clip box must be exactly one
+   line tall — otherwise the 44px touch target shows both copies at once. */
+.roll { display: inline-block; overflow: hidden; line-height: 1.3; }
+.roll > span {
+  display: inline-block;
+  text-shadow: currentColor 0 1.3em;
+  transform: translateY(0) rotate(.001deg);
+  transition: transform .42s cubic-bezier(.16, 1, .3, 1);
+}
+.nav a:hover .roll > span,
+.nav a:focus-visible .roll > span { transform: translateY(-1.3em) rotate(.001deg); }
+
+.actions { display: flex; align-items: center; gap: var(--s-3); margin-inline-start: auto; }
+.nav + .actions { margin-inline-start: clamp(var(--s-4), 2vw, var(--s-6)); }
+.ctaWrap { display: none; }
+
+@media (min-width: 940px) {
+  .nav { display: flex; }
+  .ctaWrap { display: block; }
+}
+
+/* ---- entrance: the reference's loadMenu, retimed to 1.8s ---------------- */
+@keyframes loadMenu {
+  0%, 25%  { opacity: 0; transform: translateY(-20px); }
+  55%, 100% { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .header [data-menu-load] {
+    animation: loadMenu 1.8s cubic-bezier(.16, 1, .3, 1) both;
+  }
+  .header [data-menu-load]:nth-child(2) { animation-delay: .08s; }
+  .header [data-menu-load]:nth-child(3) { animation-delay: .16s; }
+}

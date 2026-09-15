@@ -1,0 +1,11 @@
+/* Zero-footprint: absolutely positioned against the initial containing block, so
+   it sits at the document origin without taking part in layout. */
+.sentinel {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 64px;
+  pointer-events: none;
+  visibility: hidden;
+}

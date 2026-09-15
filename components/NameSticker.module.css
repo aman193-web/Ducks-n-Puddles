@@ -1,0 +1,39 @@
+/* The product's printed decal promoted to a UI component. The name is set in the
+   display face, ALL CAPS, with the character's own motif after it and a wave-cut
+   bottom edge — exactly as it is printed on the bottle. */
+.sticker {
+  --h: 42px;
+  position: relative;
+  display: inline-flex; align-items: center; gap: calc(var(--h) * .16);
+  min-block-size: 44px; block-size: var(--h);
+  padding-inline: calc(var(--h) * .44);
+  background: var(--sticker-bg);
+  border: var(--border); border-radius: var(--h) var(--h) calc(var(--h) * .4) calc(var(--h) * .4);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink); cursor: pointer;
+  font-family: var(--font-display); font-synthesis: none;
+  text-transform: uppercase; letter-spacing: -.01em; line-height: 1;
+  font-size: calc(var(--h) * .40);
+  white-space: nowrap;
+  transition: transform var(--t) var(--spring);
+}
+.sticker:hover { transform: translateY(-3px) rotate(-2deg); }
+.s { --h: 32px; }
+.m { --h: 42px; }
+.l { --h: clamp(48px, 5.4vw, 62px); }
+.motif { flex: none; inline-size: calc(var(--h) * .38); block-size: auto; }
+
+/* Selection is carried by SHAPE, not by colour or by dimming.
+   The previous version faded the unselected stickers to 62% opacity, which on the
+   deep navy ground turned all three character colours to mud — the brand's whole
+   palette, greyed out, on the one screen that is asking the visitor to pick a
+   favourite. Every sticker is now full strength; the selected one gains a ring
+   and a lift, both of which survive greyscale and colour blindness. */
+.sticker[aria-checked='false'] { opacity: 1; }
+.sticker[aria-checked='true'] { transform: translate(2px, -4px); }
+.sticker[aria-checked='true']::after {
+  content: ''; position: absolute; inset: -6px;
+  border: var(--bw-lg) solid var(--sun); border-radius: inherit; pointer-events: none;
+}
+/* No dimming, no desaturation, no brightness filter — on Goosey's yellow even a
+   6% knock-down reads as olive. The ring and the lift are the whole signal. */

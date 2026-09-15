@@ -1,0 +1,12 @@
+.btn {
+  display: grid; place-items: center;
+  inline-size: var(--btn-h-sm); block-size: var(--btn-h-sm);
+  border: 0; background: var(--sky);
+  border-radius: 999px; color: var(--ink); cursor: pointer;
+  transition: transform .35s cubic-bezier(.16, 1, .3, 1), background-color .3s ease-in-out;
+}
+.btn:hover { transform: translateY(-2px); background: var(--sun); }
+.btn:active { transform: translateY(0) scale(.94); }
+.btn[aria-pressed='true'] { background: var(--sun); }
+
+

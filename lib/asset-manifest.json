@@ -1,0 +1,562 @@
+{
+  "pool-caustics": {
+    "id": "pool-caustics",
+    "tier": "B",
+    "alt": "Sunlit swimming-pool water, rippling and bright.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#0898b8",
+    "aspect": 1.2123,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "open-water": {
+    "id": "open-water",
+    "tier": "B",
+    "alt": "Clear turquoise pool water in soft daylight.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#b8e8e8",
+    "aspect": 1.333,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "cart-path": {
+    "id": "cart-path",
+    "tier": "B",
+    "alt": "Two children walking hand in hand down a sunlit path under a wide cloudy sky.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#d8c8b8",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "dune-walk": {
+    "id": "dune-walk",
+    "tier": "B",
+    "alt": "A child walking away through tall dune grass towards the sea.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280,
+      1536,
+      1920,
+      2560
+    ],
+    "colour": "#a89888",
+    "aspect": 0.75,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "shore-horizon": {
+    "id": "shore-horizon",
+    "tier": "B",
+    "alt": "A wide beach horizon at dusk with layered cloud.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280,
+      1536,
+      1920,
+      2560
+    ],
+    "colour": "#787868",
+    "aspect": 3.1748,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "shell-hands": {
+    "id": "shell-hands",
+    "tier": "B",
+    "alt": "A smiling child sitting in the sand among dune grass.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280,
+      1536,
+      1920,
+      2560
+    ],
+    "colour": "#a89888",
+    "aspect": 0.75,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-turf": {
+    "id": "sample-turf",
+    "tier": "C",
+    "alt": "Three early Ducks ’n Puddles sample bottles standing on grass in warm backlight.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280,
+      1536,
+      1920
+    ],
+    "colour": "#f8f8f8",
+    "aspect": 1.4993,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-splashpad": {
+    "id": "sample-splashpad",
+    "tier": "C",
+    "alt": "An early sample bottle standing on a painted splash-pad surface.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#d8f8f8",
+    "aspect": 0.667,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-carry": {
+    "id": "sample-carry",
+    "tier": "C",
+    "alt": "A child carrying an early sample bottle by its handle across a tennis court.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#f8f8f8",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-mosaic": {
+    "id": "sample-mosaic",
+    "tier": "C",
+    "alt": "Three early sample bottles on stone coping in front of a blue mosaic fountain.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#e8e8d8",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-caddy": {
+    "id": "sample-caddy",
+    "tier": "C",
+    "alt": "Three early sample bottles tucked into a yellow beach caddy with a striped towel.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#b8c8d8",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-beach": {
+    "id": "sample-beach",
+    "tier": "C",
+    "alt": "Three later sample bottles standing on wet sand at dusk.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280,
+      1536,
+      1920,
+      2560
+    ],
+    "colour": "#888878",
+    "aspect": 1.3333,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-duck-1": {
+    "id": "poster-duck-1",
+    "tier": "B",
+    "alt": "Video still: duck-1",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#f8f8f8",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-duck-2": {
+    "id": "poster-duck-2",
+    "tier": "B",
+    "alt": "Video still: duck-2",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#f8f8f8",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-duck-3": {
+    "id": "poster-duck-3",
+    "tier": "B",
+    "alt": "Video still: duck-3",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#488848",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-duck-4": {
+    "id": "poster-duck-4",
+    "tier": "B",
+    "alt": "Video still: duck-4",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#48b8c8",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-duck-5": {
+    "id": "poster-duck-5",
+    "tier": "B",
+    "alt": "Video still: duck-5",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#d8b858",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-duck-6": {
+    "id": "poster-duck-6",
+    "tier": "B",
+    "alt": "Video still: duck-6",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#f8f8f8",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-duck-end": {
+    "id": "poster-duck-end",
+    "tier": "B",
+    "alt": "Video still: duck-end",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#f8f8f8",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "poster-shore": {
+    "id": "poster-shore",
+    "tier": "B",
+    "alt": "Video still: shore",
+    "widths": [
+      540,
+      1080
+    ],
+    "colour": "#e8c8b8",
+    "aspect": 0.5625,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "vincey": {
+    "id": "vincey",
+    "tier": "A",
+    "widths": [
+      310,
+      621
+    ],
+    "alpha": true,
+    "aspect": 0.457,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 621,
+    "nativeHeight": 1359
+  },
+  "chichi": {
+    "id": "chichi",
+    "tier": "A",
+    "widths": [
+      310,
+      621
+    ],
+    "alpha": true,
+    "aspect": 0.457,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 621,
+    "nativeHeight": 1359
+  },
+  "goosey": {
+    "id": "goosey",
+    "tier": "A",
+    "widths": [
+      310,
+      621
+    ],
+    "alpha": true,
+    "aspect": 0.457,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 621,
+    "nativeHeight": 1359
+  },
+  "trio": {
+    "id": "trio",
+    "tier": "A",
+    "widths": [
+      640,
+      1046,
+      2093
+    ],
+    "alpha": true,
+    "aspect": 1.5401,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 2093,
+    "nativeHeight": 1359
+  },
+  "logo-primary": {
+    "id": "logo-primary",
+    "tier": "A",
+    "widths": [
+      132,
+      264,
+      528
+    ],
+    "alpha": true,
+    "aspect": 0.9685,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1047,
+    "nativeHeight": 1081
+  },
+  "logo-mark": {
+    "id": "logo-mark",
+    "tier": "A",
+    "widths": [
+      120,
+      240,
+      480
+    ],
+    "alpha": true,
+    "aspect": 1.1608,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1047,
+    "nativeHeight": 902
+  },
+  "logo-stacked": {
+    "id": "logo-stacked",
+    "tier": "A",
+    "widths": [
+      150
+    ],
+    "alpha": true,
+    "aspect": 0.8104,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 265,
+    "nativeHeight": 327
+  },
+  "mascot": {
+    "id": "mascot",
+    "tier": "A",
+    "widths": [
+      140,
+      280
+    ],
+    "alpha": true,
+    "aspect": 0.8875,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 560,
+    "nativeHeight": 631
+  },
+  "splash": {
+    "id": "splash",
+    "tier": "A",
+    "widths": [
+      334,
+      669
+    ],
+    "alpha": true,
+    "aspect": 1.8635,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 669,
+    "nativeHeight": 359
+  },
+  "pattern-primary": {
+    "id": "pattern-primary",
+    "tier": "A",
+    "widths": [
+      320,
+      640
+    ],
+    "alpha": true,
+    "aspect": 2.1775,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1239,
+    "nativeHeight": 569
+  },
+  "pattern-secondary": {
+    "id": "pattern-secondary",
+    "tier": "A",
+    "widths": [
+      240,
+      480
+    ],
+    "alpha": true,
+    "aspect": 2.1634,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1231,
+    "nativeHeight": 569
+  }
+}

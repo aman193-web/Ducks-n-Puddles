@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -p process.arch)",
+      "Bash(echo \"node arch: $\\(node -p process.arch\\)\")",
+      "Bash(node -p process.platform)",
+      "Bash(echo \"platform: $\\(node -p process.platform\\)\")"
+    ]
+  }
+}

@@ -1,0 +1,161 @@
+/* =============================================================================
+   DUCKS 'N PUDDLES — NEO-BRUTALIST WATER SYSTEM
+
+   Flat vivid colour blocking, one ink, thick borders, hard offset shadows,
+   squircle masks, rotated bands, sticker collage. No gradients. No blur.
+
+   Brand palette and logo are UNCHANGED — the brand's own vivid yellow / hot pink /
+   orange / two blues is already a neo-brutalist palette, so the treatment changes,
+   not the colours.
+   ========================================================================== */
+
+:root {
+  /* ---- brand primitives (brand-guidelines.pdf, unchanged) ---- */
+  --duck-blue:   #294F96;
+  --splash:      #35A3D6;
+  --sun:         #FFDD19;
+  --orange:      #F36B22;
+  --sky:         #62BCEB;
+  --warm-orange: #F89C1C;
+  --vincey:      #349DD7;
+  --chichi:      #EF538E;
+  --goosey:      #FEBC11;
+
+  /* Each character also needs a PALE FIELD to sit on and a TEXT-SAFE INK, because
+     none of the three saturated colours can carry small type. Measured against
+     their own field: ink 13.0-13.9, character-ink 4.8-5.4 — all pass AA.
+     Rule that falls out: saturated colour = large display only; small type = pale
+     field + character ink. */
+  --vincey-field: #E7F3FB;  --vincey-ink: #1E6FA8;
+  --chichi-field: #FDEAF1;  --chichi-ink: #B22A5F;
+  --goosey-field: #FEF6DC;  --goosey-ink: #8A5E00;
+
+  /* ---- ONE ink. Everything — type, borders, shadows, icons — is this colour.
+          A deep shade of the brand's Duck Blue, so it reads near-black on vivid
+          grounds while staying on-brand. ---- */
+  --ink:      #10264A;
+  --ink-soft: #3A5580;
+
+  /* ---- section grounds. Flat blocks; colour is how sections are separated.
+          MEASURED: --ink passes AA or better on sun (11.2), cream (14.0), sky (7.1),
+          goosey (8.9), warm-orange (7.0), splash (5.3), orange (5.0), vincey (5.0),
+          chichi (4.5). It FAILS on Duck Blue (1.9) — so Duck Blue is a shape fill
+          and a border colour only, NEVER a ground for text. Dark sections use
+          --deep, where white (15.0) and sun (11.2) both sing. ---- */
+  --cream:  #FFF6E3;
+  --paper:  #FFFDF7;
+  --deep:   #10264A;
+
+  /* ---- structure ----
+     Depth comes from OUTLINES ON FLAT COLOUR, not from shadows. Measured on the
+     reference: `box-shadow: none` on every content element, borders only ever
+     1.5px or 2px. That restraint is what makes it read as printed packaging
+     rather than as a web page, which is the point for a physical product. */
+  --bw: 1.5px;
+  --bw-lg: 2px;
+  --border: var(--bw) solid var(--ink);
+  --border-lg: var(--bw-lg) solid var(--ink);
+
+  /* Chrome only — a floating header or an open sheet. Never decorative. */
+  --shadow-ui: 0 4px 12px rgba(16, 38, 74, .10);
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+
+  /* ---- radii. The reference uses a deliberately tiny set: 8 / 12 / 16 / 24,
+          plus directional pairs so panels can sit on top of one another. ---- */
+  --r-sm: 8px;
+  --r: 16px;
+  --r-lg: 24px;
+  --r-pill: 999px;
+  --r-top: var(--r-lg) var(--r-lg) 0 0;
+  --r-arch: 50vw 50vw var(--r-lg) var(--r-lg);
+
+  /* ---- type ----
+     Display is Excon (Fontshare, variable 100-900): chunky geometric with real
+     display character, the closest of the shortlist to the reference's paid Pouf.
+     Set UPPERCASE at 700-800 with the reference's own metrics (line-height
+     .82-.86, tracking -.03em), which is what makes the words behave as a printed
+     block rather than as a paragraph.
+     NOTE: the brand book specifies Bowlby One for headings. This is a deliberate
+     deviation to match the agreed reference; revert by changing this one line. */
+  --font-display: var(--font-excon), "Arial Black", Impact, sans-serif;
+  --font-body:    var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    var(--font-dmmono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-hand:    var(--font-edu), ui-rounded, cursive;
+
+  /* Huge, tight, ALL CAPS — the Koa move (146px at −5px tracking). */
+  /* 144px at 1440 — the reference's own hero scale. Measured in Gabarito:
+     "We give a duck." needs 1081px against 1142px of column, so the longest line
+     still lands whole; the first sentence breaks above it, which is what gives
+     the stack its printed-block look. */
+  --fs-mega:  clamp(2.375rem, 10vw, 9rem);
+  /* Display leading. The hero keeps the tight printed-block setting (the
+     benchmark's own mega headline runs 0.856); section headings were also at
+     0.82, where three lines of 76px type read as crushed rather than as
+     confident. Each step gets its own value instead. */
+  --lh-display: .86;
+  --lh-xl: .92;
+  --lh-lg: .96;
+  --lh-md: 1;
+  --fs-xl:    clamp(2.125rem, 5.6vw, 4.75rem);
+  --fs-lg:    clamp(1.75rem, 4.2vw, 3.5rem);
+  --fs-md:    clamp(1.375rem, 2.6vw, 2rem);
+  --fs-lead:  clamp(1.0625rem, 1.35vw, 1.375rem);
+  --fs-body:  clamp(1rem, 1vw, 1.125rem);
+  --fs-small: 0.9375rem;
+  --fs-micro: 0.75rem;
+
+  --measure: 58ch;
+
+  /* ---- SPACE — one system, used everywhere -------------------------------
+     Benchmarked against koakids.com.au, measured: 32px gutter at 390, section
+     padding 140-150 at 1440, ink-to-ink gaps between sections a consistent
+     170-240, heading-to-body 20 (mobile) / 24-42 (desktop).
+
+     Ours was 18px at 390 (content sitting on the edge) and gaps anywhere from
+     20px to 315px, which is what made the page read as compressed in places and
+     disconnected in others. ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+
+  /* 26 at 360 · 28 at 390 · 55 at 768 · 72 at 1024+ */
+  --gutter: clamp(24px, 7vw, 72px);
+  --max: 1280px;
+  --header-h: 92px;
+
+  /* Half of the gap between two sections, so the rhythm is 160-260 end to end.
+     72 at phone · 72 at 1024 · 100 at 1440. */
+  --section-y: clamp(72px, 7vw, 100px);
+
+  /* ---- flow: the three gaps that repeat inside every section ---- */
+  /* eyebrow/sticker -> heading */
+  --flow-eyebrow: clamp(12px, 1.2vw, 20px);
+  /* heading -> lead paragraph */
+  --flow-head: clamp(16px, 1.7vw, 28px);
+  /* section head -> the content it introduces */
+  --flow-block: clamp(32px, 3.6vw, 56px);
+  /* inside a card */
+  --card-pad: clamp(18px, 1.9vw, 28px);
+  /* between cards in a grid or rail */
+  --card-gap: clamp(14px, 1.8vw, 26px);
+
+  /* one button height everywhere — KOA holds 64 at every breakpoint */
+  --btn-h: 64px;
+  --btn-h-sm: 52px;
+
+  /* ---- motion: bouncy, kid-friendly. GSAP owns the real curves; these mirror
+          them for CSS-only interactions so the whole site shares one rhythm. ---- */
+  /* A real spring as a pure CSS curve — overshoots to 1.058 at ~38% and settles
+     by ~79%. Gives every transition physics with zero JS. (Technique borrowed
+     from Toca Boca, who ship the same idea as a single token.) */
+  --spring: linear(0, 0.007, 0.028 2.4%, 0.064, 0.115 5.2%, 0.228 7.9%, 0.607 15.8%,
+    0.715 18.5%, 0.804, 0.878, 0.938, 0.985 28.7%, 1.02 31.5%, 1.038, 1.05 35.9%,
+    1.057 38.4%, 1.058 41.1%, 1.051 46.1%, 1.014 60.2%, 1.002 68.2%, 0.997 79.1%, 0.999);
+  --bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --pop:    cubic-bezier(.2, .9, .3, 1.4);
+  --t-fast: 140ms;
+  --t:      240ms;
+  --t-slow: 420ms;
+}

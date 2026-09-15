@@ -1,0 +1,66 @@
+.section { background: var(--paper); padding-block: var(--section-y); }
+
+.head {
+  display: grid; justify-items: start;
+  gap: var(--flow-eyebrow);
+  margin-block-end: var(--flow-block);
+}
+.head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
+@media (min-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
+    align-items: start;
+  }
+  .head > :nth-child(1) { grid-column: 1; grid-row: 1; }
+  .head > :nth-child(2) { grid-column: 1; grid-row: 2; }
+  .head > :nth-child(3) { grid-column: 2; grid-row: 2; margin-block-start: 0; padding-block-start: .5em; }
+}
+
+/* Hairline-separated rows. A top border on every row plus one on the list gives
+   a rule above the first and below the last without a stray element. */
+.list { border-block-end: 1.5px solid rgba(16, 38, 74, .18); }
+.row { border-block-start: 1.5px solid rgba(16, 38, 74, .18); }
+
+.q {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: clamp(var(--s-4), 1.5vw, var(--s-5));
+  cursor: pointer;
+  list-style: none;
+  font-size: clamp(1rem, 1.2vw, 1.1875rem);
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: pretty;
+  transition: padding-block-end .25s ease-in-out;
+}
+/* the answer is the continuation of the question, so they close up when open */
+.row[open] .q { padding-block-end: var(--s-2); }
+/* Safari draws its own disclosure triangle without this. */
+.q::-webkit-details-marker { display: none; }
+.q:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 4px; border-radius: var(--r-sm); }
+
+.mark {
+  flex: none;
+  display: grid; place-items: center;
+  inline-size: 40px; block-size: 40px;
+  background: var(--orange); color: var(--ink);
+  border-radius: var(--r-sm);
+  transition: transform .4s var(--spring), background-color .25s ease-in-out;
+}
+.mark svg { transition: transform .4s var(--spring); }
+.row:hover .mark { transform: translateY(-2px); }
+/* Rotate the GLYPH, not the button — turning the square 135deg made it a
+   diamond. The same arrow does both jobs, so there is nothing to swap. */
+.row[open] .mark { background: var(--sun); }
+.row[open] .mark svg { transform: rotate(135deg); }
+
+.a {
+  padding-block-end: clamp(var(--s-4), 1.6vw, var(--s-5));
+  padding-inline-end: clamp(0px, 6vw, 96px);
+}
+.a p { max-width: 68ch; font-size: var(--fs-small); line-height: 1.6; text-wrap: pretty; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mark, .mark svg, .q { transition: none; }
+}

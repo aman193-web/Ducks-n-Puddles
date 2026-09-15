@@ -1,0 +1,19 @@
+.edge {
+  display: block; inline-size: 100%; line-height: 0;
+  /* The height is on the BOX, not on the svg. With it on the svg, any sub-pixel
+     difference between the two left a strip of the `above` colour showing under
+     the wave — the yellow line below the features section. */
+  block-size: clamp(38px, 5.2vw, 76px);
+  overflow: clip;
+  /* 1px of overlap in both directions: a fractional layout position otherwise
+     leaves a hairline of the page ground between the edge and its neighbours.
+     The top eats into the previous section's padding so the wave does not add
+     its own height to the seam — but only a QUARTER of it. At -0.62 it swallowed
+     almost the whole bottom padding and the feature cards ended up 37px from the
+     crest, close enough to read as a collision. */
+  margin-block-start: calc(var(--section-y) * -0.22 - 1px);
+  position: relative; z-index: 3; pointer-events: none;
+  margin-block-end: -1px;
+}
+.edge svg { display: block; inline-size: 100%; block-size: calc(100% + 1px); }
+.flip { transform: scaleY(-1); }

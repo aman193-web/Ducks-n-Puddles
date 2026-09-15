@@ -1,0 +1,38 @@
+/* Pill input with the submit button nested inside it — the reference's device. */
+.form { display: grid; gap: var(--s-3); inline-size: 100%; max-width: 420px; }
+.pill {
+  display: flex; align-items: center; gap: var(--s-2);
+  background: var(--paper); border: var(--bw-lg) solid var(--ink); border-radius: var(--r-pill);
+  padding: 5px 5px 5px var(--s-5);
+  max-width: 420px;
+}
+.pill:focus-within { border-color: var(--orange); }
+.pill input {
+  flex: 1; min-inline-size: 0;
+  min-block-size: 46px; border: 0; background: transparent;
+  font-weight: 600; color: var(--ink);
+}
+.pill input::placeholder { color: var(--ink); opacity: .55; }
+.pill input:focus-visible { outline: none; }
+
+.go {
+  flex: none; display: grid; place-items: center;
+  inline-size: 62px; block-size: 46px;
+  background: var(--orange); color: var(--ink);
+  border: var(--bw) solid var(--ink); border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: transform var(--t) var(--spring), background var(--t-fast) linear;
+}
+.go:hover { transform: translateX(3px); background: var(--sun); }
+.go:active { transform: translateX(0) scale(.94); }
+.go:disabled { opacity: .55; cursor: progress; }
+
+.hp { position: absolute; left: -9999px; inline-size: 1px; block-size: 1px; overflow: hidden; }
+.msg {
+  font-size: var(--fs-small); font-weight: 700;
+  background: var(--sun); border: var(--border); border-radius: var(--r-sm);
+  padding: var(--s-2) var(--s-3); width: fit-content; max-width: 420px;
+}
+.err { background: var(--orange); }
+.fine { font-size: var(--fs-micro); font-weight: 500; opacity: .8; max-width: 40ch; line-height: 1.5; }
+.fine a { text-decoration: underline; text-underline-offset: .25em; font-weight: 700; }

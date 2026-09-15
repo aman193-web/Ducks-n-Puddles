@@ -1,0 +1,86 @@
+.page { background: var(--cream); padding-block: clamp(var(--s-7), 6vw, var(--s-9)); }
+
+.masthead { display: grid; justify-items: start; gap: var(--s-4); margin-block-end: clamp(var(--s-7), 5vw, var(--s-9)); }
+
+/* ---- index --------------------------------------------------------------- */
+.list { display: grid; gap: clamp(20px, 2.4vw, 34px); list-style: none; padding: 0; margin: 0; }
+.rowLink {
+  display: grid; gap: var(--s-4); align-items: center;
+  text-decoration: none; border-radius: var(--r-lg);
+}
+.rowLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 6px; }
+.rowFigure {
+  display: block; overflow: clip;
+  border: var(--border-lg); border-radius: var(--r-lg); background: var(--sky);
+}
+.rowFigure img {
+  inline-size: 100%; block-size: auto; aspect-ratio: 16 / 10; object-fit: cover;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+.rowLink:hover .rowFigure img { transform: scale(1.04); }
+.rowBody { display: grid; justify-items: start; gap: var(--s-3); }
+.rowTitle {
+  font-family: var(--font-display); font-synthesis: none;
+  text-transform: uppercase; letter-spacing: -.024em; line-height: 1.02;
+  font-size: clamp(1.375rem, 2.6vw, 2.25rem); text-wrap: balance;
+}
+.excerpt { max-width: 52ch; text-wrap: pretty; }
+@media (min-width: 780px) {
+  .rowLink { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 3vw, 48px); }
+}
+
+.tag {
+  padding: 6px 14px;
+  background: var(--sun); border: var(--border); border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
+}
+.meta {
+  display: flex; flex-wrap: wrap; gap: var(--s-2);
+  font-size: var(--fs-micro); color: var(--ink-soft);
+}
+
+/* ---- post ---------------------------------------------------------------- */
+.back {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-block-size: 44px;
+  font-weight: 700; font-size: var(--fs-small);
+  text-decoration: underline; text-underline-offset: .3em;
+}
+/* The cap goes on the H1, not on the wrapper: `ch` resolves against the
+   element's OWN font-size, so 20ch on a body-sized div was ~180px and broke the
+   display type one word per line. */
+.postHead { display: grid; justify-items: start; gap: var(--s-4); margin-block: var(--s-4) var(--s-6); }
+.postHead h1 { max-width: 17ch; text-wrap: balance; }
+
+.hero {
+  overflow: clip; border: var(--border-lg); border-radius: var(--r-lg);
+  background: var(--sky); margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
+}
+.hero img { inline-size: 100%; block-size: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* A single measured column. Long-form is the one place on this site where the
+   line length matters more than filling the width. */
+.prose { display: grid; gap: var(--s-5); max-width: 64ch; }
+.prose p { font-size: var(--fs-lead); line-height: 1.65; text-wrap: pretty; }
+.prose p:first-child { font-weight: 600; }
+
+.cta {
+  display: grid; justify-items: start; gap: var(--s-4);
+  max-width: 64ch;
+  margin-block: clamp(var(--s-7), 5vw, var(--s-9)) var(--s-7);
+  padding: clamp(20px, 2.4vw, 32px);
+  background: var(--sky); border: var(--border-lg); border-radius: var(--r-lg);
+}
+
+.more { display: grid; gap: var(--s-4); max-width: 64ch; }
+.moreTitle {
+  font-family: var(--font-display); font-synthesis: none;
+  text-transform: uppercase; letter-spacing: -.02em;
+  font-size: var(--fs-md);
+}
+.more ul { display: grid; gap: var(--s-3); list-style: none; padding: 0; margin: 0; }
+.more a {
+  display: inline-flex; min-block-size: 44px; align-items: center;
+  font-weight: 700; text-decoration: underline; text-underline-offset: .3em;
+}

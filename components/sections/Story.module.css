@@ -1,0 +1,38 @@
+/* Image left on a colour panel, copy right — the reference's two-up. Type is a
+   step down from the section headings elsewhere and the copy is trimmed so the
+   whole thing lands in one frame rather than running past the fold. */
+.section { background: var(--cream); padding-block: var(--section-y); }
+.grid { display: grid; gap: var(--s-7); align-items: center; }
+
+/* No panel and no caption underneath — the pale blue box plus a caption made the
+   photograph the smallest thing in its own half of the section. The squircle
+   mask is the frame now, and the image gets all of the column. */
+.figure {
+  position: relative;
+  display: grid; place-items: center;
+}
+.figure img {
+  inline-size: 100%; block-size: auto;
+  aspect-ratio: 1 / 1; object-fit: cover;
+  border-radius: 34% / 30%;          /* squircle, as the reference masks its shots */
+}
+/* a rotated badge pinned to the frame, like the reference's WINNER crown */
+.badge { position: absolute; inset-block-start: -12px; inset-inline-end: -4px; z-index: 2; }
+
+
+.body { display: grid; justify-items: start; gap: var(--s-4); }
+/* a section heading, so it takes the section heading's leading */
+.title { color: var(--ink); font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: var(--lh-xl); }
+.body p { max-width: 46ch; font-size: var(--fs-body); }
+.pull {
+  background: var(--sun); border: var(--border);
+  border-radius: var(--r); padding: var(--s-4) var(--s-5);
+  max-width: 46ch;
+}
+.sig { display: flex; align-items: center; gap: var(--s-3); margin-block-start: var(--s-2); }
+.sig img { inline-size: 42px; height: auto; }
+
+@media (min-width: 900px) {
+  /* the photograph now carries the column rather than sitting inside a panel */
+  .grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(var(--s-7), 5vw, var(--s-9)); }
+}

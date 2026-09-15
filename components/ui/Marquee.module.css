@@ -1,0 +1,63 @@
+/* A broad rotated ticker that bleeds past both edges and bites into the sections
+   above and below, so the page reads as overlapping panels rather than a stack of
+   bands. Modelled on the reference's 380px-tall banner. */
+.band {
+  position: relative; z-index: 6;
+  inline-size: 118vw; margin-inline: -9vw;
+  background: var(--bg, var(--sun));
+  rotate: var(--rot, -3.2deg);
+  overflow: hidden;
+  padding-block: clamp(var(--s-6), 3.8vw, 58px);
+  /* Rotated, so the band's visual bounds sit well outside its box: the corners
+     reach ~half the section width x sin(rot) beyond it. The negative margin
+     absorbs the box, and the symmetric value is what keeps the gap above equal
+     to the gap below — they were visibly different before. */
+  margin-block: clamp(-44px, -2.9vw, -22px);
+  --dur: 32s;
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+.track { display: flex; inline-size: max-content; animation: slide var(--dur) linear infinite; }
+.band[data-dir="rtl"] .track { animation-direction: reverse; }
+.band:hover .track, .band:focus-within .track { animation-play-state: paused; }
+
+.group { display: flex; align-items: center; flex: none; }
+.item {
+  display: inline-flex; align-items: center;
+  /* The glyph is an inline SEPARATOR: equal air on both sides, so it reads as
+     punctuation between two phrases rather than as a tail on the one before it.
+     The item ends with its icon, so the space after it is two half-paddings
+     (this item's end + the next item's start) — which is why the padding is
+     exactly half the gap. Change one and you must change the other. */
+  --sep: 0.4em;
+  gap: var(--sep);
+  padding-inline: calc(var(--sep) / 2);
+  font-family: var(--font-display); font-synthesis: none; font-weight: 800;
+  text-transform: uppercase; letter-spacing: -0.028em;
+  font-size: clamp(1.625rem, 3.9vw, 3.75rem);
+  line-height: 1;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* Each phrase is followed by an icon in its own outlined disc — the reference
+   sets its sticker glyphs the same way, so they read as objects on the band
+   rather than as punctuation. */
+.icon {
+  flex: none;
+  display: grid; place-items: center;
+  inline-size: 1.24em; block-size: 1.24em;
+  background: var(--i-bg, var(--paper));
+  border: var(--bw-lg) solid var(--ink);
+  border-radius: 999px;
+  rotate: var(--i-rot, -6deg);
+  /* Optically centred on the CAPS, not on the line box. The band is set in
+     uppercase at line-height 1, so the line box carries descender space the
+     glyphs never use and `align-items: center` parks the disc ~0.06em low
+     against the letterforms. `translate` is free here — `rotate` is its own
+     property, so the two compose without a transform. */
+  translate: 0 -0.055em;
+}
+.icon svg { inline-size: 74%; block-size: 74%; }
+
+@keyframes slide { to { transform: translate3d(-50%, 0, 0); } }
+@media (prefers-reduced-motion: reduce) { .track { animation: none; } }

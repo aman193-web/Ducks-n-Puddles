@@ -1,0 +1,31 @@
+# deps
+node_modules/
+.pnp
+.pnp.*
+
+# next
+.next/
+out/
+build/
+next-env.d.ts
+
+# 652MB of raw camera masters — never committed.
+# Masters live in the client's shared drive; see assets-source/MANIFEST.json
+/assets-source/
+
+# generated derivatives cache
+.cache/
+
+# env
+.env
+.env*.local
+
+# misc
+.DS_Store
+*.pem
+.vercel
+.turbo
+coverage/
+*.tsbuildinfo
+.playwright-mcp/
+*.jpeg

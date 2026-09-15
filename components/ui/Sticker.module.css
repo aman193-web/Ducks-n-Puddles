@@ -1,0 +1,23 @@
+/* Sticker: a rotated, bordered, hard-shadowed chip. Used as inline glyphs inside
+   headlines, as badges on frames, and as scattered doodles. */
+.sticker {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  background: var(--bg, var(--sun)); color: var(--ink);
+  border: var(--border); border-radius: var(--r-pill);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700; font-size: var(--fs-micro);
+  letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  rotate: var(--rot, -3deg);
+}
+.glyph {
+  display: inline-grid; place-items: center; vertical-align: middle;
+  inline-size: .66em; block-size: .66em; padding: .14em;
+  background: var(--bg, var(--sun)); color: var(--ink);
+  border: 3px solid var(--ink); border-radius: 999px;
+  rotate: var(--rot, -6deg);
+  margin-inline: .1em;
+  translate: 0 -.04em;
+  box-shadow: var(--shadow-sm);
+}
+.glyph svg { inline-size: 100%; block-size: 100%; }

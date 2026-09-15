@@ -1,0 +1,439 @@
+/* =============================================================================
+   HERO — "The Pond Window"
+
+   Translated from coquelicots.nl, measured rather than remembered:
+
+     desktop   panel 1296x720 inset 72px, radius 24, fills the fold, next
+               section peeks by ~30px; intro paragraph 18/23.4 capped at 440px
+               sitting in the header row; ALL UI inside the frame.
+     mobile    panel 351x544 inset 20px, radius 15 — PORTRAIT, not a squashed
+               16:9; intro drops below the logo at 14/18.2; the CTA pair leaves
+               the frame so it lands under the thumb.
+     load      one ~1.8s ease-in-out sequence; a curtain whose height collapses
+               100% -> 0 uncovers the panel first, everything else follows it.
+
+   What is ours: the panel is not a video of a place, it is a place. A pond in
+   section, sky above and water below, with the brand's own measured wave as the
+   waterline. The headline lives in the sky and throws a reflection into the
+   water; the three bottles stand on the line and ripple it.
+
+   TRANSFORM DISCIPLINE (this hero has four motion systems running at once):
+     `translate`  -> pointer parallax, written from JS as a px pair
+     `transform`  -> one-shot CSS entrances, and the endless wave drift
+     GSAP         -> owns `.float` (buoyancy) and the panel's --water on scroll
+   Every element belongs to exactly one of those. Break that and the last writer
+   silently wins.
+   ========================================================================== */
+.hero {
+  position: relative;
+  background: var(--cream);
+  /* up under the transparent header — the panel owns the whole first screen */
+  margin-block-start: calc(var(--header-h) * -1);
+  /* No bottom padding. The ribbon that follows is designed to bite into the
+     blocks above and below it, and a section's worth of padding here left a
+     band of cream above the ribbon and none below — the overlap only happened
+     on one side. */
+  padding-block-end: 0;
+  isolation: isolate;
+}
+
+/* ---- the window -------------------------------------------------------- */
+.panelWrap { padding-inline: 0; }
+
+.panel {
+  /* ONE number the whole composition hangs off. Split in two so the scroll tide
+     can move it without ever needing to know which breakpoint set the base. */
+  --water-base: 58%;
+  --tide: 0%;
+  --water: calc(var(--water-base) - var(--tide));
+  position: relative;
+  /* Full bleed: no gutter, no radius. --edge carries the site's text grid into
+     the panel instead, so the headline still lines up with the header logo and
+     with every section below rather than with the screen edge. */
+  --edge: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
+  border-radius: 0;
+  overflow: clip;
+  isolation: isolate;
+  /* Portrait on a phone, landscape on a desktop — a different composition, not
+     the same one letterboxed. The viewport maths keeps the next section peeking
+     the way the reference's does. */
+  /* A full window. `svh` (small viewport height) rather than `vh`, so a mobile
+     browser with its toolbars showing still gets exactly one screen and never
+     a scroll. The ribbon that follows bites into the last ~34px of it, which is
+     the composition working, not the panel falling short. */
+  block-size: 100svh;
+  min-block-size: 520px;
+  background: linear-gradient(180deg, #EAF7FE 0%, #CBEBFB 46%, var(--sky) 100%);
+}
+
+@media (min-width: 900px) {
+  .panel {
+    --water-base: 70%;
+    block-size: 100svh;
+    min-block-size: 600px;
+  }
+}
+
+/* their loadHeroMediaAfter — collapses upward, so the scene is uncovered from
+   the bottom like a curtain being raised */
+.curtain {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  z-index: 30;
+  display: block;
+  block-size: 100%;
+  background: var(--cream);
+  pointer-events: none;
+}
+
+.scene { position: absolute; inset: 0; }
+
+/* ---- sky --------------------------------------------------------------- */
+.sun {
+  position: absolute;
+  inset-block-start: -14%;
+  inset-inline-end: -6%;
+  inline-size: min(46%, 420px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 221, 25, .78) 0%, rgba(255, 221, 25, .28) 42%, transparent 68%);
+  z-index: 1;
+}
+/* Z-STACK, in one place so it can be reasoned about:
+     1 sky glow · 2 water body · 3 headline reflection · 4 far wave
+     5 THE BOTTLES · 6 near wave · 7 surface glints · 8 headline · 9 rally
+     12 UI · 30 load curtain
+   The bottles sitting between the two waves is the whole trick: the brand wave
+   crosses IN FRONT of them, so they are in the water rather than on top of a
+   picture of it. */
+.haze {
+  position: absolute;
+  inset-inline: -10%;
+  inset-block-start: 6%;
+  block-size: 40%;
+  background: radial-gradient(60% 100% at 22% 60%, rgba(255, 255, 255, .8), transparent 70%),
+              radial-gradient(46% 100% at 78% 30%, rgba(255, 255, 255, .62), transparent 72%);
+  z-index: 1;
+}
+
+/* The left column. Anchored to the WATERLINE and growing upward, so the stack
+   can never collide with the surface, with the squad, or with itself — whatever
+   height the panel ends up at. The reference gets away with absolute corners
+   because its panel holds a video; ours holds a composition that has to stay
+   readable at every size. */
+.copy {
+  position: absolute;
+  z-index: 9;
+  inset-inline-start: var(--edge);
+  inset-inline-end: var(--gutter);
+  inset-block-end: calc(100% - var(--water) + 3.5%);
+  display: grid;
+  justify-items: start;
+  gap: clamp(12px, 1.7vw, 24px);
+}
+
+.rally { margin: 0; color: var(--ink); opacity: .72; }
+
+/* ---- the headline, sitting in the sky with its feet in the water -------- */
+/* Upper-left, with the squad lower-right: the two masses overlap on a diagonal
+   instead of sitting side by side, which is what keeps this off the 50/50 grid
+   the brief rules out — and it means every word stays legible, which a headline
+   centred behind three bottles does not. */
+.title {
+  margin: 0;
+  font-weight: 800;
+  /* height-aware: a wide but short window (a laptop at 1440x720) has to shrink
+     the display type or there is nothing left of the sky */
+  font-size: clamp(2.25rem, min(6.2vw, 10.4vh), 5.5rem);
+  letter-spacing: -.036em;
+  line-height: .84;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+/* outer span clips, inner span is what rises */
+.title > span { display: block; overflow: hidden; padding-block-end: .04em; }
+.title > span > span { display: block; }
+
+/* ---- the headline thrown back off the water ---------------------------- */
+.echo {
+  position: absolute;
+  z-index: 3;
+  inset-inline-start: var(--edge);
+  inset-inline-end: var(--gutter);
+  inset-block-start: calc(var(--water) + 2%);
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(2.25rem, min(6.2vw, 10.4vh), 5.5rem);
+  letter-spacing: -.036em;
+  line-height: .84;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .12);
+  transform: scaleY(-1);
+  filter: blur(2.4px);
+  /* local bottom = visual top, so this fades AWAY from the waterline */
+  mask-image: linear-gradient(to top, #000 0%, transparent 46%);
+  pointer-events: none;
+}
+.echo span { display: block; }
+
+/* ---- what lives IN the water ------------------------------------------
+   No background of its own: the body of the pond is the wave SVG. This is only
+   a clipping box for the things drifting inside it. */
+.water {
+  position: absolute;
+  z-index: 3;
+  inset-inline: 0;
+  inset-block: calc(var(--water) + 5%) 0;
+  overflow: clip;
+  pointer-events: none;
+}
+.caustic {
+  position: absolute;
+  display: block;
+  block-size: 14%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .2);
+  filter: blur(16px);
+}
+.caustic:nth-child(1) { inline-size: 46%; inset-inline-start: 2%;  inset-block-start: 18%; }
+.caustic:nth-child(2) { inline-size: 34%; inset-inline-end: 8%;    inset-block-start: 48%; }
+.caustic:nth-child(3) { inline-size: 56%; inset-inline-start: 18%; inset-block-start: 78%; }
+
+/* bubbles, so the deep end is water rather than a blue rectangle */
+.bubble {
+  position: absolute;
+  inset-block-end: 0;
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, .3);
+  opacity: 0;
+}
+.bubble:nth-of-type(1) { inline-size: 9px;  inset-inline-start: 14%; }
+.bubble:nth-of-type(2) { inline-size: 7px;  inset-inline-start: 21%; }
+.bubble:nth-of-type(3) { inline-size: 12px; inset-inline-start: 58%; }
+.bubble:nth-of-type(4) { inline-size: 9px;  inset-inline-start: 66%; }
+.bubble:nth-of-type(5) { inline-size: 11px; inset-inline-start: 87%; }
+
+/* ---- the waterline -----------------------------------------------------
+   Body and crest are the SAME curve at the SAME size in the SAME place, with
+   the product sandwiched between them. They must therefore drift identically —
+   same keyframes, same duration, same start — or the pond tears in half. */
+.wave {
+  position: absolute;
+  display: block;
+  inset-inline-start: 0;
+  inset-block-end: 0;
+  pointer-events: none;
+  /* `translate` is reserved for pointer parallax; the drift lives on the svg */
+}
+.wave svg { inline-size: 100%; block-size: 100%; }
+
+.waveBody, .waveCrest {
+  inset-block-start: calc(var(--water) - 2%);
+  inline-size: 200%;
+}
+.waveBody { z-index: 2; }
+.waveCrest { z-index: 6; }
+
+.waveFar {
+  z-index: 1;
+  inset-block-start: calc(var(--water) - 8%);
+  inline-size: 260%;
+  opacity: .45;
+}
+
+/* light catching the surface, in front of everything in the water */
+.glints {
+  position: absolute;
+  z-index: 7;
+  inset-inline: 0;
+  inset-block: calc(var(--water) + 3%) 0;
+  pointer-events: none;
+}
+.glints i {
+  position: absolute;
+  display: block;
+  block-size: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .7);
+  filter: blur(2px);
+  opacity: 0;
+}
+.glints i:nth-child(1) { inline-size: 54px; inset-inline-start: 11%; inset-block-start: 16%; }
+.glints i:nth-child(2) { inline-size: 32px; inset-inline-start: 27%; inset-block-start: 39%; }
+.glints i:nth-child(3) { inline-size: 72px; inset-inline-start: 52%; inset-block-start: 24%; }
+.glints i:nth-child(4) { inline-size: 40px; inset-inline-start: 71%; inset-block-start: 52%; }
+.glints i:nth-child(5) { inline-size: 58px; inset-inline-start: 84%; inset-block-start: 31%; }
+
+/* ---- the squad, standing in the line ----------------------------------- */
+.squad {
+  position: absolute;
+  z-index: 5;
+  inset-inline: 0;
+  /* the base sits BELOW the waterline, so the near wave swallows the bottom
+     fifth of each bottle */
+  inset-block-end: calc(100% - var(--water) - 8%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: clamp(2px, 1.2vw, 22px);
+  /* right-aligned to the text grid, then pushed further in so the cluster
+     sits inside the frame rather than against its edge */
+  padding-inline-end: calc(var(--edge) + clamp(0px, 8vw, 150px));
+  pointer-events: none;
+}
+.bottle { position: relative; display: block; }
+.bottle:nth-child(1) { z-index: 2; }
+.bottle:nth-child(2) { z-index: 3; }
+.bottle:nth-child(3) { z-index: 1; }
+
+.float { position: relative; display: block; }
+.float img {
+  inline-size: auto;
+  block-size: clamp(132px, 21.5vw, 326px);
+  filter: drop-shadow(0 10px 18px rgba(16, 38, 74, .22));
+}
+/* the middle one is nearest, so it is biggest and stands lowest */
+.bottle:nth-child(2) .float img { block-size: clamp(162px, 25.5vw, 392px); }
+.bottle:nth-child(1) { transform: rotate(-4deg); margin-inline-end: -2.2vw; }
+.bottle:nth-child(3) { transform: rotate(4deg);  margin-inline-start: -2.2vw; }
+
+
+
+/* ---- UI, inside the frame ---------------------------------------------- */
+
+.ctas { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.second { display: inline-flex; }
+
+.cue {
+  position: absolute;
+  z-index: 12;
+  /* Anchored to the waterline like the CTA row, not to the panel's foot: the
+     ribbon now overlaps the bottom of the panel by ~90px, and by ~140px at the
+     right-hand end once its rotation is counted. Down there the cue was buried. */
+  inset-block-end: calc(100% - var(--water) + 3.5%);
+  inset-inline-end: var(--edge);
+  display: none;
+}
+@media (min-width: 900px) { .cue { display: block; } }
+
+/* =============================================================================
+   MOBILE — a different composition, not a shrunken one.
+
+   The headline moves to the TOP of the frame and the bottles get the bottom
+   half; the water comes up to meet them. The CTA pair leaves the frame entirely
+   and stacks full-width underneath, where a thumb can reach it — the reference
+   keeps its single CTA in the header, which is not a choice we can copy on a
+   page whose whole job is one signup.
+   ========================================================================== */
+@media (max-width: 899px) {
+  .panel { --water-base: 67%; }
+
+  /* Portrait frame: the column leaves the waterline and pins to the TOP, the
+     pond takes the bottom half. A different composition, not a squashed one. */
+  .copy {
+    inset-block-end: auto;
+    inset-block-start: calc(var(--header-h) + clamp(6px, 2.5vw, 18px));
+    inset-inline: 20px;
+    gap: 14px;
+  }
+  .rally { font-size: .625rem; }
+
+  .title {
+    font-size: clamp(2.25rem, 11.6vw, 3.5rem);
+    letter-spacing: -.03em;
+  }
+  .echo { display: none; }
+
+  /* one CTA on a phone: the second is redundant next to the scroll that starts
+     the moment this panel ends */
+  .ctas { display: grid; justify-items: stretch; inline-size: 100%; }
+  .second { display: none; }
+
+  /* portrait frame: the squad comes back to the centre and takes the lower half */
+  .squad {
+    inset-block-end: calc(100% - var(--water) - 5%);
+    justify-content: center;
+    padding-inline-end: 0;
+    gap: 0;
+  }
+  .glints i:nth-child(3), .glints i:nth-child(5) { display: none; }
+  /* the product has to be the biggest thing in a portrait frame, or the panel
+     is just a headline on a blue background */
+  .float img { block-size: clamp(140px, 42vw, 210px); }
+  .bottle:nth-child(2) .float img { block-size: clamp(168px, 50vw, 250px); }
+  .bottle:nth-child(1) { margin-inline-end: -5vw; }
+  .bottle:nth-child(3) { margin-inline-start: -5vw; }
+}
+
+/* =============================================================================
+   LOAD — one sequence, the reference's shape: a held beat, then everything
+   arrives on the same curve. Pure CSS so it runs before hydration; nothing is
+   left at opacity 0 if the JS never comes.
+   ========================================================================== */
+@keyframes heroCurtain { 0%, 8% { block-size: 100%; } 100% { block-size: 0; } }
+@keyframes heroLine    { from { transform: translateY(108%); } to { transform: translateY(0); } }
+@keyframes heroRise    { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes heroEmerge  { from { opacity: 0; transform: translateY(54px) scale(.93); } to { opacity: 1; transform: none; } }
+@keyframes heroDrift   { to { transform: translateX(-50%); } }
+@keyframes heroGlint   { 0%, 100% { opacity: 0; transform: scaleX(.6); } 50% { opacity: .65; transform: scaleX(1); } }
+@keyframes heroBubble  {
+  0%   { opacity: 0; transform: translate(0, 40px); }
+  12%  { opacity: .8; }
+  88%  { opacity: .8; }
+  100% { opacity: 0; transform: translate(14px, -260px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .curtain { animation: heroCurtain 1.25s cubic-bezier(.16, 1, .3, 1) forwards; }
+
+  .title > span > span { animation: heroLine .95s cubic-bezier(.16, 1, .3, 1) both; }
+  .title > span:nth-child(1) > span { animation-delay: .42s; }
+  .title > span:nth-child(2) > span { animation-delay: .51s; }
+  .title > span:nth-child(3) > span { animation-delay: .60s; }
+
+  /* rotate is part of the resting pose, so the outer two keep it while emerging */
+  .bottle { animation: heroEmerge 1.1s cubic-bezier(.16, 1, .3, 1) both; }
+  .bottle:nth-child(1) { animation-delay: .62s; }
+  .bottle:nth-child(2) { animation-delay: .70s; }
+  .bottle:nth-child(3) { animation-delay: .78s; }
+
+
+  .bubble { animation: heroBubble 9s linear infinite; }
+  .bubble:nth-of-type(2) { animation-duration: 11s; animation-delay: 2.4s; }
+  .bubble:nth-of-type(3) { animation-duration: 8s;  animation-delay: 1.1s; }
+  .bubble:nth-of-type(4) { animation-duration: 12s; animation-delay: 4.2s; }
+  .bubble:nth-of-type(5) { animation-duration: 10s; animation-delay: 3.3s; }
+
+  .glints i { animation: heroGlint 5.2s ease-in-out infinite; }
+  .glints i:nth-child(2) { animation-delay: 1.1s; }
+  .glints i:nth-child(3) { animation-delay: 2.3s; }
+  .glints i:nth-child(4) { animation-delay: .6s; }
+  .glints i:nth-child(5) { animation-delay: 3.1s; }
+
+  .waveFar svg { animation: heroDrift 38s linear infinite; }
+  /* identical on purpose — see the note on .wave */
+  .waveBody svg, .waveCrest svg { animation: heroDrift 24s linear infinite reverse; }
+
+  .rally, .ctas, .cue {
+    animation: heroRise .8s cubic-bezier(.16, 1, .3, 1) both;
+  }
+  .rally { animation-delay: .30s; }
+  .ctas  { animation-delay: .92s; }
+  .cue   { animation-delay: 1.08s; }
+}
+
+/* The outer bottles' resting rotation is set on .bottle, which the entrance also
+   drives. Restore it once the entrance has finished by hanging it on the inner
+   wrapper instead, where nothing else writes. */
+@media (prefers-reduced-motion: no-preference) {
+  .bottle:nth-child(1), .bottle:nth-child(3) { transform: none; }
+  .bottle:nth-child(1) .float { rotate: -4deg; }
+  .bottle:nth-child(3) .float { rotate: 4deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain { display: none; }
+}

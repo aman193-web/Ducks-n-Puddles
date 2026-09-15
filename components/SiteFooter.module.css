@@ -1,0 +1,180 @@
+/* =============================================================================
+   FOOTER — Koa's, measured and translated.
+
+   Their numbers at 1440: heading 32/700 display · sub 16 · pill input 300x59
+   radius 32 with a 1.5px ink border · socials 50x50 radius 20 · link columns at
+   x=922 / x=1150, headings 20/700 · hairline rule the full content width with
+   the mark sitting astride it · copyright 14 · three mascots 315x299 along the
+   bottom, cropped by the footer's own edge.
+
+   Ours differs in two places on purpose: the top edge is the brand's measured
+   wave rather than their scallops, and the cropped mascots are the top half of
+   the three bottles — the product, not a character illustration.
+   ========================================================================== */
+.footer {
+  position: relative;
+  background: var(--cream);
+  /* NOT clipped. The duck rides higher than the wave band is tall, so a clip
+     here decapitated it. Clipping happens where it is actually needed: .crest
+     stops the swimmer at the viewport edge, .bottles crops the product. */
+}
+
+/* ---- the waterline, with a duck on it ---------------------------------- */
+.crest {
+  position: relative;
+  z-index: 2;
+  /* clip on one axis only — the one combination `clip` allows — so the swimmer
+     cannot cause a horizontal scrollbar while still rising above the crest */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+/* The wave lands on a fractional pixel, so the svg fill's antialiased last row
+   left a hairline across the full width. The band's bottom few pixels are always
+   inside the fill, so a cream strip there is invisible except for killing it. */
+.crest::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -1px;
+  block-size: 3px;
+  background: var(--cream);
+  z-index: 3;
+}
+
+.swimmer {
+  position: absolute;
+  inset-block-end: 34%;
+  inset-inline-start: 0;
+  /* WaveEdge sets z-index: 3 on itself, so the duck has to clear that or it
+     paddles along BEHIND the water it is supposed to be sitting on */
+  z-index: 4;
+  display: block;
+  pointer-events: none;
+}
+.paddle { display: block; }
+.paddle img {
+  inline-size: clamp(38px, 3.6vw, 54px);
+  block-size: auto;
+  /* the mascot is drawn facing left; flip it to face the way it is travelling.
+     On the <img> so the bob on .paddle can never clobber the flip. */
+  transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* `translate`, not `left`: crossing the viewport by animating a layout
+     property would relayout the whole footer sixty times a second. */
+  .swimmer { animation: footerSwim 26s linear infinite; }
+  .paddle  { animation: footerPaddle 1.9s ease-in-out infinite alternate; }
+}
+@keyframes footerSwim {
+  from { translate: -70px 0; }
+  to   { translate: calc(100vw + 70px) 0; }
+}
+@keyframes footerPaddle {
+  from { transform: translateY(0) rotate(-3deg); }
+  to   { transform: translateY(-5px) rotate(3deg); }
+}
+
+/* ---- body -------------------------------------------------------------- */
+.inner { padding-block: clamp(var(--s-7), 5vw, var(--s-9)) 0; position: relative; z-index: 1; }
+
+.grid { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-8)); }
+@media (min-width: 900px) {
+  /* their signup column stops at x=406 of 1440 and the links start at 922 —
+     a deliberately wide trough between the two, which is most of why that
+     footer breathes */
+  .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+.signup { display: grid; justify-items: start; gap: var(--s-4); }
+.h {
+  font-family: var(--font-display); font-synthesis: none;
+  text-transform: uppercase; letter-spacing: -.025em; line-height: 1;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+}
+.blurb { font-size: var(--fs-small); max-width: 42ch; line-height: 1.6; }
+
+.socials { display: flex; gap: var(--s-3); margin-block-start: var(--s-2); }
+.social {
+  display: grid; place-items: center;
+  inline-size: 50px; block-size: 50px;
+  background: var(--s-bg); color: var(--ink);
+  border: var(--border); border-radius: var(--r);
+  transition: transform .35s var(--spring);
+}
+.social:hover { transform: translateY(-3px) rotate(-6deg); }
+.social:active { transform: scale(.93); }
+
+/* ---- link columns ------------------------------------------------------ */
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); }
+@media (min-width: 900px) { .cols { justify-self: end; column-gap: clamp(var(--s-6), 4vw, var(--s-8)); } }
+
+.colH { font-weight: 700; font-size: 1.125rem; margin-block-end: var(--s-3); }
+.links { display: grid; list-style: none; padding: 0; margin: 0; }
+.links a {
+  display: inline-flex; align-items: center; min-block-size: 42px;
+  font-size: var(--fs-small); text-decoration: none;
+  width: fit-content;
+  transition: transform .35s var(--spring);
+}
+.links a:hover { transform: translateX(5px); text-decoration: underline; text-decoration-thickness: 2px; }
+
+/* ---- the rule, broken by the mark -------------------------------------- */
+.rule {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(var(--s-4), 2.4vw, var(--s-6));
+  margin-block-start: clamp(var(--s-6), 4vw, var(--s-8));
+}
+.line { block-size: 1.5px; background: var(--ink); opacity: .55; }
+.mark { display: block; line-height: 0; transition: transform .5s var(--spring); }
+.mark:hover { transform: rotate(-6deg) scale(1.05); }
+.mark img { inline-size: clamp(74px, 8vw, 104px); block-size: auto; }
+
+.bottom {
+  display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5);
+  align-items: baseline; justify-content: space-between;
+  padding-block: var(--s-5) 0;
+  font-size: var(--fs-micro);
+}
+
+/* ---- the squad, cropped by the page's own bottom edge ------------------
+   The row is SHORTER than the renders inside it and clips them, so the bottles
+   read as rising out of the bottom of the page rather than as three images that
+   happen to be cut off. */
+.bottles {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(4px, 3vw, 46px);
+  /* Headroom at the top so the hover lift has somewhere to go — without it the
+     row clipped the ducks' heads the moment they rose. */
+  padding-block-start: 34px;
+  block-size: clamp(222px, 25vw, 358px);
+  margin-block-start: clamp(var(--s-5), 3vw, var(--s-7));
+  overflow: clip;
+}
+.bottle { display: block; flex: 0 0 auto; }
+.bottle img {
+  inline-size: auto;
+  /* Bigger renders cropped tighter: ~60% of each bottle shows, which lands the
+     cut just below the blue sleeve's wave and leaves the name decal whole. At
+     the old 55% the row sliced straight through VINCEY / CHI CHI / GOOSEY. */
+  block-size: clamp(320px, 38vw, 540px);
+  transition: transform .6s var(--spring);
+}
+/* the middle one stands prouder, as it does in the hero — by rising, not by
+   growing, so all three still show the same amount of bottle */
+.bottle:nth-child(2) { margin-block-start: -18px; }
+
+.bottles:hover .bottle:nth-child(1) img { transform: translateY(-10px) rotate(-3deg); }
+.bottles:hover .bottle:nth-child(2) img { transform: translateY(-12px); }
+.bottles:hover .bottle:nth-child(3) img { transform: translateY(-10px) rotate(3deg); }
+
+@media (max-width: 560px) {
+  .bottles { gap: 0; }
+  .bottle:nth-child(1) { margin-inline-end: -6vw; }
+  .bottle:nth-child(3) { margin-inline-start: -6vw; }
+}
