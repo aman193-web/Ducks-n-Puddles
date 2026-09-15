@@ -35,6 +35,14 @@
 
   a { color: inherit; text-underline-offset: .2em; }
 
+  /* The liquid cursor REPLACES the system one. The class is added by
+     CursorTrail only once it is actually running, so a touch device, a
+     reduced-motion visitor or a JS failure all keep their own pointer. */
+  .has-liquid-cursor,
+  .has-liquid-cursor * { cursor: none !important; }
+  /* …except where the caret matters: typing with no cursor is miserable. */
+  .has-liquid-cursor :is(input, textarea, select) { cursor: auto !important; }
+
   /* The header is sticky, so an anchor jump otherwise lands with the section's
      first element tucked underneath it. */
   [id] { scroll-margin-block-start: 104px; }

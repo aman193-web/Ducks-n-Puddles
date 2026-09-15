@@ -56,11 +56,21 @@
 .nav a:hover .roll > span,
 .nav a:focus-visible .roll > span { transform: translateY(-1.3em) rotate(.001deg); }
 
-/* the "Coming soon" qualifier rides with the Store link rather than replacing it,
-   so the nav still reads as a destination list */
+/* Store is a destination of its own, so it sits last and reads as a button
+   rather than as another text link in the row. */
+.nav a.storeLink {
+  padding-inline: var(--s-4);
+  margin-inline-start: var(--s-2);
+  background: var(--sky);
+  border-radius: var(--r-pill);
+  transition: background-color .28s ease-in-out, transform .35s var(--spring);
+}
+.nav a.storeLink:hover { background: var(--sun); transform: translateY(-2px); }
+
+/* the "Coming soon" qualifier rides with the Store link rather than replacing it */
 .note {
   padding: 3px 8px;
-  background: var(--sun);
+  background: var(--paper);
   border-radius: var(--r-pill);
   font-family: var(--font-mono); font-weight: 500;
   font-size: .625rem; letter-spacing: .06em; text-transform: uppercase;

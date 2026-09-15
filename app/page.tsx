@@ -34,7 +34,7 @@ export default function HomePage() {
       <HeroScene />
       <CardTilt />
       <Marquee
-        items={['Named after our own kids', 'Sized for small hands', 'Dishwasher safe', 'Spill-resistant', 'BPA-free']}
+        items={['Flip-top straw', 'Sized for small hands', 'Dishwasher safe', 'Spill-resistant', 'BPA-free']}
         colour="var(--sun)" rot={-3.2}
       />
       <DuckStage />

@@ -9,10 +9,11 @@ import styles from './SiteHeader.module.css'
 const NAV = [
   { href: '/#ducks', label: 'The Ducks' },
   { href: '/#features', label: 'Features' },
-  { href: '/#store', label: 'The Range' },
-  { href: '/#store', label: 'Store', note: 'Coming soon' },
   { href: '/#story', label: 'Our Story' },
   { href: '/journal', label: 'Journal' },
+  /* Last, and set apart as a button. Points at the on-page section until the
+     dedicated /store route exists — swap the href when it does. */
+  { href: '/#store', label: 'Store', note: 'Coming soon', cta: true },
 ]
 
 /**
@@ -33,7 +34,7 @@ export function SiteHeader() {
 
         <nav className={styles.nav} aria-label="Primary" data-menu-load="">
           {NAV.map((n) => (
-            <Link key={n.label} href={n.href}>
+            <Link key={n.label} href={n.href} className={n.cta ? styles.storeLink : undefined}>
               <span className={styles.roll}><span>{n.label}</span></span>
               {n.note && <span className={styles.note}>{n.note}</span>}
             </Link>

@@ -7,7 +7,7 @@
   pointer-events: none;
   filter: url(#dnp-goo);
   opacity: 0;
-  transition: opacity .35s ease-in-out;
+  transition: opacity .25s ease-in-out;
 }
 .trail[data-on='true'] { opacity: 1; }
 
@@ -16,20 +16,23 @@
   inset-block-start: 0;
   inset-inline-start: 0;
   display: block;
-  /* The head is a droplet, the tail tapers to nothing — that taper is what makes
-     the goo filter read as liquid rather than as a caterpillar. */
-  inline-size: calc(26px - var(--i) * 1.5px);
-  block-size: calc(26px - var(--i) * 1.5px);
-  margin: calc((26px - var(--i) * 1.5px) / -2);
+  /* Head 17px tapering to ~4px. The taper is what makes the goo filter read as
+     liquid rather than as a caterpillar. */
+  --d: calc(17px - var(--i) * 1.45px);
+  inline-size: var(--d);
+  block-size: var(--d);
+  margin: calc(var(--d) / -2);
   background: var(--splash);
   border-radius: 999px;
   will-change: translate;
+  transition: background-color .18s ease-in-out, scale .22s var(--spring);
 }
-.trail i:nth-child(1) { background: var(--sun); }
-.trail i:nth-child(2) { background: var(--sky); }
 
-/* No cursor to decorate on a touchscreen, and nothing to soften for someone who
-   asked for less motion. */
+/* over anything clickable the bead swells and turns yellow — with the system
+   cursor hidden, this is the only hover affordance left */
+.trail[data-hot='true'] i { background: var(--sun); }
+.trail[data-hot='true'] i:nth-child(-n + 3) { scale: 1.55; }
+
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .trail { display: none; }
 }

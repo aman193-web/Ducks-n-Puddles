@@ -9,10 +9,11 @@ import styles from './MobileMenu.module.css'
 const NAV = [
   { href: '/#ducks', label: 'The Ducks' },
   { href: '/#features', label: 'Features' },
-  { href: '/#store', label: 'The Range' },
-  { href: '/#store', label: 'Store', note: 'Coming soon' },
   { href: '/#story', label: 'Our Story' },
   { href: '/journal', label: 'Journal' },
+  /* Last, and set apart as a button. Points at the on-page section until the
+     dedicated /store route exists — swap the href when it does. */
+  { href: '/#store', label: 'Store', note: 'Coming soon', cta: true },
 ]
 
 /**
