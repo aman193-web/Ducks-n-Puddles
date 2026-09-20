@@ -162,20 +162,37 @@ public/                   generated derivatives only (committed)
 ```
 Hero              full-window “pond window”
 Marquee           rotated ribbon
-DuckStage         three sticky character panels
-Specs             #features — product features
+Why               #why — what we stand for, parent and child side by side
+DuckStage         #ducks — three sticky character panels
+Store             #store — our first product
+Specs             #features — why parents will love it
 WaveEdge          colour transition
-Store             #store — the range
 Story             #story — the founders
+Foundation        #foundation — more than a brand; a full screen
+WhatsNext         #next — the bottles are just the beginning
 Marquee
 InTheWild         #wild — reels rail
-Reviews           #reviews
 Journal           #journal
-Newsletter        compact yellow CTA band
+Newsletter        compact CTA band
 Faq               #faq
 Squad             #squad — the full waitlist form
 SiteFooter
 ```
+
+The order is the client's own requested flow (*Website Revisions, Sep 2026*): who we
+are → meet the ducks → our first product → why parents will love them → our story →
+bigger vision → everyday life → join the Duck Squad.
+
+`Reviews` is built but deliberately **not** rendered: its four quotes are invented
+placeholders. Adding `<Reviews />` back is one line once real ones arrive.
+
+### The characters
+
+Chi Chi, Goosey and Vincey exist today only as a colour token, a name sticker and a
+printed motif — there are **no illustrated character assets** in the repo. The pose set,
+the `<Duck>` cameo component that will consume it, and where each character goes are
+specified in **[docs/CHARACTERS.md](docs/CHARACTERS.md)**. Read that before adding any
+character art.
 
 ### The hero
 
