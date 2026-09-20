@@ -8,6 +8,8 @@ import { DuckStage } from '@/components/sections/DuckStage'
 import { Specs } from '@/components/sections/Specs'
 import { Store } from '@/components/sections/Store'
 import { Story } from '@/components/sections/Story'
+import { Foundation } from '@/components/sections/Foundation'
+import { WhatsNext } from '@/components/sections/WhatsNext'
 import { InTheWild } from '@/components/sections/InTheWild'
 import { Journal } from '@/components/sections/Journal'
 import { Faq } from '@/components/sections/Faq'
@@ -28,7 +30,9 @@ import { WaveEdge } from '@/components/ui/WaveEdge'
  *   Meet the ducks  the three characters, so they are met before their bottles
  *   The range     our FIRST product — character and product together
  *   Features      why parents will love them, once they have seen one
- *   Our story     the family, and the bigger vision
+ *   Our story     the family, and where this came from
+ *   Foundation    more than a brand — a whole screen, because it is a statement
+ *   Bigger vision the bottles are just the beginning
  *   Everyday life the reels rail — real kids, real families
  *   Journal → Newsletter → FAQ → Duck Squad
  *
@@ -57,13 +61,20 @@ export default function HomePage() {
       <Specs />
       <WaveEdge above="var(--sky-soft)" fill="var(--cream)" />
       <Story />
+      {/* The Foundation claims a whole screen — see its module for why. The
+          bigger-vision list sits directly after it and overlaps its bottom edge,
+          so the two read as one movement rather than two bands. */}
+      <Foundation />
+      <WhatsNext />
       <Marquee
         items={['A friend for every adventure', 'Comfort, carried', 'Quack']}
         colour="var(--chichi-soft)" rot={2.6} dir="rtl" seconds={36}
       />
       <InTheWild />
-      {/* Reviews: hidden until the four quotes carry real names. The component
-          and its content are intact — re-add <Reviews /> here to restore it. */}
+      {/* Reviews stays out, deliberately, and stays BUILT: the four quotes are
+          invented placeholders (see the TODO in content/brand.ts) and inventing
+          social proof for a children's brand is not a copy decision. The moment
+          real quotes arrive it is one line — <Reviews /> — right here. */}
       <Journal />
       {/* The yellow band and the Duck Squad form ask for the same address, so
           they are deliberately kept apart: the band is a light touchpoint, the

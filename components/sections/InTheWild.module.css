@@ -76,3 +76,6 @@
   margin-block-start: var(--flow-block);
 }
 .handle { display: inline-flex; align-items: center; gap: var(--s-3); font-weight: 600; }
+
+/* The rail is full-bleed, so its CTA goes back inside a wrap below it. */
+.cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }

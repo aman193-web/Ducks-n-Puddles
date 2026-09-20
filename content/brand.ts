@@ -169,38 +169,75 @@ export const pendingSpecCount = specs.filter((s) => s.status === 'pending').leng
 
 /* --------------------------------------------------------------------------- */
 
+/**
+ * THE FOUNDATION — "more than a brand".
+ *
+ * ⚠️ INTENT ONLY, AND DELIBERATELY SO. The client asked to introduce the Ducks 'n
+ * Puddles Foundation "even if it's just a small section for now", and confirmed
+ * they want intent without specifics. Nothing below names a partner, a
+ * percentage, a pledge, a programme or a beneficiary, because none of those have
+ * been supplied — and a charitable claim about children is a real-world claim,
+ * not copy. The same honesty rule that governs `specs` governs this.
+ *
+ * TODO(client): supply the Foundation's actual commitment — who it gives to, in
+ * what form, and how much — before anything more specific than this ships.
+ */
+export const foundation = {
+  eyebrow: 'More than a brand',
+  title: 'There’s always room in the puddle.',
+  body: [
+    'Ducks ’n Puddles was never only meant to be a shelf of products. It started with '
+    + 'our own family, and the whole reason to build it was the children who would end '
+    + 'up holding it.',
+    'So giving back to children and families is part of the purpose from the beginning, '
+    + 'not something bolted on once the company is big enough. We are still putting the '
+    + 'shape of it together, and when it is real you will hear exactly what it is — the '
+    + 'same way you hear everything else from us.',
+  ],
+  /** Goosey's own line from the character sheet. It is the argument for the whole
+   *  section, which is why he is the duck this section belongs to. */
+  quote: 'There’s always room for one more friend!',
+  quoteBy: 'Goosey',
+} as const
+
+/**
+ * THE BIGGER VISION — "the bottles are just the beginning".
+ *
+ * The client's words. This is the material that makes the point that Ducks 'n
+ * Puddles is a children's lifestyle brand whose FIRST product is a bottle, not a
+ * water-bottle company.
+ *
+ * Every row is a real intention from the discovery call, and none of them carries
+ * a date — because none of them has one.
+ */
 export const roadmap = [
   {
-    title: 'Reserve before launch',
-    body: 'Call dibs before the store opens. Once production is confirmed, the Duck Squad gets a window to reserve their duck first. Whether that involves a deposit is genuinely still undecided — we will tell you either way before it happens.',
+    title: 'The Quack Pack',
+    body: 'The books the characters came from. Chi Chi, Goosey and Vincey, with more of the world around them and stories that actually go somewhere.',
   },
   {
     title: 'Name it yours',
-    body: 'The silicone sleeve on the bottom comes off. We want to let you put your kid’s name on it. Stickers too, probably. This is the one we are most excited about, which is why we are not rushing it.',
-  },
-  {
-    title: 'The Quack Pack',
-    body: 'A book series. Same ducks, more of them, and stories that actually go somewhere.',
+    body: 'The silicone sleeve on the bottom comes off, and we want your child’s name on it. This is the one we are most excited about, which is why we are not rushing it.',
   },
   {
     title: 'Boxes that grow up',
-    body: 'Subscribe when they are two, and the box keeps changing until they are around six. Fewer decisions for you.',
+    body: 'Subscribe when they are two, and the box keeps growing with them until they are around six. Fewer decisions for you, something to look forward to for them.',
   },
   {
     title: 'For the parents',
-    body: 'Bath wipes. A spray for the table, for before they eat off the table. The unglamorous half of having small children.',
+    body: 'Bath wipes. A spray for the table, for before they eat off the table. The unglamorous half of having small children, made a little easier.',
+  },
+  {
+    title: 'First dibs',
+    body: 'When production is confirmed, the Duck Squad gets a window to claim their duck before the store opens to anybody else.',
   },
 ]
 
-/** The prototype timeline. Photographs here are Tier C — always captioned as samples. */
-export const samples = [
-  { id: 'sample-turf',      label: 'Sample 01', caption: 'The first three that held water. The duck on the sleeve was still green.' },
-  { id: 'sample-carry',     label: 'Sample 02', caption: 'Handle test. It carried well — it also caught on everything.' },
-  { id: 'sample-splashpad', label: 'Sample 02', caption: 'Straw and lid, out in the world rather than on a desk.' },
-  { id: 'sample-mosaic',    label: 'Sample 03', caption: 'Colour check against real water, because screens lie.' },
-  { id: 'sample-beach',     label: 'Sample 04', caption: 'Closest yet. The tuft is right. The names are not on them yet.' },
-  { id: 'sample-caddy',     label: 'Sample 04', caption: 'Packed for a normal afternoon, which is the only test that counts.' },
-]
+/* The `samples` prototype timeline and its <Samples> section are gone. The
+   section opened "These are the ones that didn't make it", which is exactly the
+   edge the Sep 2026 feedback is removing, and the same material now reads better
+   as the first journal post (why-were-still-on-sample-four). The photographs
+   themselves are untouched in the asset manifest. */
 
 /* --------------------------------------------------------------------------- */
 

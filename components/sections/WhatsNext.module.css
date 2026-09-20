@@ -47,13 +47,15 @@
   display: grid; place-items: center;
   inline-size: 54px; block-size: 54px;
   background: var(--n-bg); border: var(--border); border-radius: 50%;
-  font-family: var(--font-display); font-synthesis: none; font-size: 1.25rem;
+  font-family: var(--font-display); font-synthesis: none; font-weight: 500; font-size: 1.25rem;
 }
-.title { font-family: var(--font-display); font-synthesis: none; text-transform: uppercase;
-         font-size: var(--fs-md); letter-spacing: -.02em; }
+.title { font-family: var(--font-display); font-synthesis: none; font-weight: 500;
+         font-size: var(--fs-md); letter-spacing: -.008em; }
 .body { grid-column: 2; max-width: 42ch; text-wrap: pretty; }
 @media (max-width: 560px) {
   .item { grid-template-columns: 1fr; }
   .num { grid-row: auto; }
   .body { grid-column: 1; }
 }
+
+.cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }

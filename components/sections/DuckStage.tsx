@@ -88,6 +88,12 @@ export function DuckStage() {
           </article>
         ))}
       </div>
+
+      <div className="wrap">
+        <div className={styles.cta}>
+          <Btn href="/#store">See them as bottles</Btn>
+        </div>
+      </div>
     </section>
   )
 }

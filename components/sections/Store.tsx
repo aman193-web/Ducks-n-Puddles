@@ -32,6 +32,11 @@ export function Store() {
             three &mdash; what changes is who is coming with them. And the bottles are just
             the beginning.
           </p>
+          {/* Launch anticipation, kept honest: no date, no countdown, no signup
+              counter, no invented scarcity. Just what is actually true. */}
+          <p className={`mono ${styles.drop}`} data-anim="">
+            First drop &mdash; not open yet. The Duck Squad hears the day it is.
+          </p>
         </div>
 
         <div className={styles.cards}>

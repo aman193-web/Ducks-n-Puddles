@@ -2,6 +2,7 @@
 import { useRef, useState } from 'react'
 import { Play, Pause } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
+import { Btn } from '@/components/ui/Btn'
 import { reels } from '@/content/brand'
 import styles from './InTheWild.module.css'
 
@@ -84,6 +85,11 @@ export function InTheWild() {
         })}
       </ul>
 
+      <div className="wrap">
+        <div className={styles.cta}>
+          <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>
+        </div>
+      </div>
     </section>
   )
 }

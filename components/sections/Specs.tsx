@@ -1,6 +1,7 @@
 import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby, Heart }
   from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
+import { Btn } from '@/components/ui/Btn'
 import { confirmedSpecs } from '@/content/brand'
 import styles from './Specs.module.css'
 
@@ -70,6 +71,10 @@ export function Specs() {
             </dd>
           </div>
         </dl>
+
+        <div className={styles.cta}>
+          <Btn href="/#story" colour="var(--paper)">Where this came from</Btn>
+        </div>
       </div>
     </section>
   )

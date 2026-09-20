@@ -1,0 +1,102 @@
+/* =============================================================================
+   THE FOUNDATION
+
+   The only section besides the hero that claims a whole screen. That is what
+   makes it read as a statement rather than as another band — the client asked
+   for it to be prominent, and prominence on this page is a matter of how much
+   room a thing is given, not how loud it is set.
+
+   Goosey's ground (--goosey-soft, ink 11.1). It is the one warm colour on a page
+   that is otherwise blue and cream, so the section separates itself, and it
+   belongs to the duck whose own line is the argument of the section.
+   ========================================================================== */
+.section {
+  position: relative;
+  background: var(--goosey-soft);
+  /* `svh` so a phone with its toolbars showing still gets exactly one screen and
+     never an accidental scroll — the same reasoning as the hero panel. */
+  min-block-size: 100svh;
+  display: grid;
+  align-content: center;
+  /* Tighter than --section-y: min-block-size already guarantees the screen, so
+     this padding only decides how much air the content gets INSIDE it. At the
+     full 100 top and bottom the section ran past 1.5 screens. */
+  padding-block: var(--s-8);
+  overflow: clip;
+  isolation: isolate;
+}
+
+/* A soft pool of light so the flat tint has a source, matching the treatment the
+   Duck Squad section uses. */
+.section::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset-block-start: -22%;
+  inset-inline-end: -12%;
+  inline-size: min(78%, 900px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(255, 253, 247, .78) 0%, rgba(255, 253, 247, .32) 46%, transparent 70%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative; z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: var(--flow-eyebrow);
+}
+
+/* Hero scale, not section scale — this is what makes it read as a moment rather
+   than as another band. It takes the full content width; see the note in the
+   component for why. */
+.title { margin-block-end: var(--flow-head); }
+
+/* The body stays in the left half from 900 up. The empty right half is
+   deliberate: it is the reserved space for the three characters together in one
+   puddle (Batch 4), which is the picture this copy is describing. */
+.copy {
+  display: grid;
+  justify-items: start;
+  gap: var(--flow-head);
+  max-width: 62ch;
+}
+@media (min-width: 900px) {
+  .copy { max-width: min(54ch, 56%); }
+}
+.body { max-width: 52ch; }
+
+/* Goosey's own line, set apart as a pull quote. */
+.quote {
+  margin: 0;
+  display: grid;
+  gap: var(--s-2);
+  padding-inline-start: var(--s-5);
+  border-inline-start: var(--bw-lg) solid var(--ink);
+}
+.quote blockquote { margin: 0; font-size: clamp(1.25rem, 2vw, 1.75rem); }
+.quote figcaption { color: var(--ink); opacity: .78; }
+
+.cta { margin-block-start: var(--s-3); }
+
+/* ---- the subtle brand elements: puddles and a footprint, scattered --------
+   Decorative and behind everything. On a phone they are off entirely: the copy
+   already fills the screen and the marks would only crowd it. */
+.puddles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  color: var(--ink);
+  opacity: .12;
+  pointer-events: none;
+}
+.puddles svg { position: absolute; inline-size: auto; block-size: auto; }
+.puddles svg:nth-child(1) { inline-size: 74px;  inset-block-end: 14%; inset-inline-start: 6%; rotate: -12deg; }
+.puddles svg:nth-child(2) { inline-size: 110px; inset-block-start: 18%; inset-inline-end: 22%; rotate: 16deg; }
+.puddles svg:nth-child(3) { inline-size: 52px;  inset-block-end: 26%; inset-inline-end: 8%; rotate: 8deg; }
+
+@media (min-width: 900px) {
+  .puddles { display: block; }
+}

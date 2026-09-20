@@ -108,3 +108,5 @@
 .open { background: var(--ink); color: var(--cream); }
 .open .icon { background: rgba(255, 255, 255, .09); color: var(--sun); }
 .open .key { color: var(--sky); }
+
+.cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }
