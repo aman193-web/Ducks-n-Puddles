@@ -1,15 +1,5 @@
-import { Flower, Sun, Heart, Star, Drop, Smiley } from '@phosphor-icons/react/dist/ssr'
+import { Motif } from '@/components/Motif'
 import styles from './Marquee.module.css'
-
-/** Kid-friendly glyph set, each with its own disc colour and rest angle. */
-const GLYPHS = [
-  { Icon: Flower, bg: 'var(--paper)', rot: -8 },
-  { Icon: Sun, bg: 'var(--orange)', rot: 6 },
-  { Icon: Drop, bg: 'var(--sky)', rot: -5 },
-  { Icon: Heart, bg: 'var(--chichi)', rot: 8 },
-  { Icon: Star, bg: 'var(--goosey)', rot: -7 },
-  { Icon: Smiley, bg: 'var(--paper)', rot: 5 },
-] as const
 
 interface Props {
   items: string[]
@@ -22,24 +12,22 @@ interface Props {
 /**
  * Infinite rotated ticker. The track holds the items TWICE and translates exactly
  * -50%, so the loop is seamless with no JS and no measurement.
+ *
+ * The separator used to be a set of six Phosphor glyphs, each in its own outlined
+ * colour disc. The client asked for the band to feel lighter and less "in your
+ * face", and named the symbols specifically — so it is now the brand's own
+ * droplet motif, drawn in ink at low opacity. One mark, no disc, no outline, and
+ * it is already on the physical bottle.
  */
-export function Marquee({ items, colour = 'var(--sun)', rot = -3.2, dir = 'ltr', seconds = 32 }: Props) {
+export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = 'ltr', seconds = 32 }: Props) {
   const group = (
     <span className={styles.group} aria-hidden="true">
-      {items.map((t, i) => {
-        const g = GLYPHS[i % GLYPHS.length]
-        return (
-          <span className={styles.item} key={`${t}-${i}`}>
-            {t}
-            <span
-              className={styles.icon}
-              style={{ ['--i-bg' as string]: g.bg, ['--i-rot' as string]: `${g.rot}deg` } as React.CSSProperties}
-            >
-              <g.Icon weight="fill" color="var(--ink)" />
-            </span>
-          </span>
-        )
-      })}
+      {items.map((t, i) => (
+        <span className={styles.item} key={`${t}-${i}`}>
+          {t}
+          <Motif name="droplets" className={styles.mark} />
+        </span>
+      ))}
     </span>
   )
 

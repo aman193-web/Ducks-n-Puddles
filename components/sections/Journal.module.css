@@ -55,7 +55,7 @@
 
 .title {
   font-family: var(--font-display); font-synthesis: none;
-  text-transform: uppercase; letter-spacing: -.022em; line-height: 1.02;
+  font-weight: 500; letter-spacing: -.01em; line-height: 1.12;
   font-size: clamp(1.25rem, 1.8vw, 1.625rem);
   text-wrap: balance;
 }

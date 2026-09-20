@@ -31,7 +31,6 @@
     outline-offset: 3px;
     border-radius: 4px;
   }
-  [data-ground="deep"] :focus-visible { outline-color: var(--sun); }
 
   a { color: inherit; text-underline-offset: .2em; }
 
@@ -58,21 +57,22 @@
 }
 
 @layer type {
-  /* Display: ALL CAPS, set solid, tight negative tracking. The words themselves
-     become the layout rather than sitting inside one. */
+  /* Display: sentence case, set close, near-zero tracking. Sentence case and
+     weight 500 are the two things that turn the old shouty setting warm — ALL
+     CAPS at 800 was the single loudest thing on the page. Tracking stays barely
+     negative because Fredoka's round counters collide below about -.012em. */
   .d {
     font-family: var(--font-display);
-    font-weight: 800;
+    font-weight: 500;
     font-synthesis: none;
-    text-transform: uppercase;
     line-height: var(--lh-display);
-    letter-spacing: -0.028em;
+    letter-spacing: -0.01em;
     color: var(--ink);
   }
-  .d-mega { font-size: var(--fs-mega); letter-spacing: -0.034em; line-height: var(--lh-display); }
-  .d-xl   { font-size: var(--fs-xl);   letter-spacing: -0.03em;  line-height: var(--lh-xl); }
-  .d-lg   { font-size: var(--fs-lg);   letter-spacing: -0.026em; line-height: var(--lh-lg); }
-  .d-md   { font-size: var(--fs-md);   letter-spacing: -0.018em; line-height: var(--lh-md); }
+  .d-mega { font-size: var(--fs-mega); letter-spacing: -0.014em; line-height: var(--lh-display); }
+  .d-xl   { font-size: var(--fs-xl);   letter-spacing: -0.012em; line-height: var(--lh-xl); }
+  .d-lg   { font-size: var(--fs-lg);   letter-spacing: -0.01em;  line-height: var(--lh-lg); }
+  .d-md   { font-size: var(--fs-md);   letter-spacing: -0.008em; line-height: var(--lh-md); }
 
   /* Tiny uppercase MONO label. Used for eyebrows, product sub-labels and
      kickers — one of the strongest signals in the reference's type system. */

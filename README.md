@@ -62,7 +62,7 @@ so re-running them is cheap.
 | Styling | **Vanilla CSS** — custom properties + CSS Modules |
 | Animation | **GSAP 3.15** + ScrollTrigger, **Lenis 1.3** smooth scroll |
 | Icons | **@phosphor-icons/react**, imported from `/dist/ssr` |
-| Fonts | Excon (self-hosted variable woff2) + Poppins / DM Mono / Edu QLD Beginner via `next/font/google` |
+| Fonts | Fredoka (display) + Poppins / DM Mono / Edu QLD Beginner via `next/font/google` |
 
 **There is no Tailwind, and that is deliberate.** A Tailwind-default look is precisely
 what the brief was reacting against, and the design is token-driven anyway. The entire

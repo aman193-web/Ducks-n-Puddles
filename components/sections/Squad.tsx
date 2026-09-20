@@ -72,11 +72,11 @@ export function Squad() {
   }
 
   return (
-    <section className={styles.section} id="squad" data-ground="deep" aria-labelledby="squad-title">
+    <section className={styles.section} id="squad" aria-labelledby="squad-title">
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
           <Sticker colour="var(--sun)" rot={-3} data-pop="" data-pop-rot="-3">Join the Duck Squad</Sticker>
-          <h2 id="squad-title" className={`d d-xl ${styles.title}`} data-anim="">
+          <h2 id="squad-title" className="d d-xl" data-anim="">
             Quack up your inbox.
           </h2>
           <p className={`lead ${styles.sub}`} data-anim="">
@@ -99,7 +99,7 @@ export function Squad() {
         {state === 'done' ? (
           <div className={styles.success} role="status" aria-live="polite">
             <div style={{ inlineSize: 180 }}><PuddleFace colour="var(--sun)" /></div>
-            <h3 className="d d-lg" style={{ color: 'var(--sun)' }}>You&rsquo;re in.</h3>
+            <h3 className="d d-lg">You&rsquo;re in.</h3>
             <p className="hand">Check your inbox to confirm &mdash; we only count you once you do.</p>
             <p className={styles.note}>Nothing there in a few minutes? Have a look in Promotions.</p>
           </div>

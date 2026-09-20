@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Poppins, DM_Mono, Edu_QLD_Beginner } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Poppins, DM_Mono, Edu_QLD_Beginner, Fredoka } from 'next/font/google'
 import { brand } from '@/content/brand'
 import { SiteHeader } from '@/components/SiteHeader'
 import { HeaderChrome } from '@/components/HeaderChrome'
@@ -13,18 +12,16 @@ import { CursorTrail } from '@/components/ui/CursorTrail'
 import '@/styles/tokens.css'
 import '@/styles/global.css'
 
-/* Display: Excon (Fontshare), self-hosted as a single variable file covering
-   100-900. Chunky geometric with real display character — the closest of the
-   shortlist to the reference's paid Pouf V0.5. Self-hosted rather than loaded
-   from the Fontshare CDN so it is preloaded with the page and never blocks on a
-   third-party origin. */
-const excon = localFont({
-  src: '../public/fonts/Excon-Variable.woff2',
-  weight: '100 900',
+/* Display: Fredoka (Google, variable 300-700). Replaces Excon, which the client
+   read as bold/edgy/heavy — the words they used were warm, soft, playful. Fredoka
+   is a rounded geometric: the same display presence, none of the hard corners.
+   Set at 500-600 in sentence case rather than 800 ALL CAPS; the weight and the
+   caps were the two halves of "heavy". */
+const fredoka = Fredoka({
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
   display: 'swap',
-  variable: '--font-excon',
-  fallback: ['Arial Black', 'Impact', 'sans-serif'],
-  adjustFontFallback: 'Arial',
+  variable: '--font-fredoka',
 })
 
 /* Micro-labels. Stands in for the reference's GT America Mono — tiny uppercase
@@ -71,13 +68,15 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#62BCEB',
+  /* The first paint under the browser chrome is the hero gradient's top stop,
+     not a section ground — so this tracks Hero.module.css, not --sky. */
+  themeColor: '#EAF7FE',
   colorScheme: 'light',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${excon.variable} ${poppins.variable} ${dmMono.variable} ${edu.variable}`}>
+    <html lang="en" className={`${fredoka.variable} ${poppins.variable} ${dmMono.variable} ${edu.variable}`}>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
         <HeaderChrome />

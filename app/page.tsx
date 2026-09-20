@@ -35,16 +35,16 @@ export default function HomePage() {
       <CardTilt />
       <Marquee
         items={['Flip-top straw', 'Sized for small hands', 'Dishwasher safe', 'Spill-resistant', 'BPA-free']}
-        colour="var(--sun)" rot={-3.2}
+        colour="var(--sun-soft)" rot={-3.2}
       />
       <DuckStage />
       <Specs />
-      <WaveEdge above="var(--sky)" fill="var(--cream)" />
+      <WaveEdge above="var(--sky-soft)" fill="var(--cream)" />
       <Store />
       <Story />
       <Marquee
         items={['A friend for every adventure', 'Nine ounces of courage', 'Quack']}
-        colour="var(--chichi)" rot={2.6} dir="rtl" seconds={36}
+        colour="var(--chichi-soft)" rot={2.6} dir="rtl" seconds={36}
       />
       <InTheWild />
       {/* Reviews: hidden until the four quotes carry real names. The component

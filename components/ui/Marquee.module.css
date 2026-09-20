@@ -4,10 +4,10 @@
 .band {
   position: relative; z-index: 6;
   inline-size: 118vw; margin-inline: -9vw;
-  background: var(--bg, var(--sun));
+  background: var(--bg, var(--sun-soft));
   rotate: var(--rot, -3.2deg);
   overflow: hidden;
-  padding-block: clamp(var(--s-6), 3.8vw, 58px);
+  padding-block: clamp(var(--s-5), 3vw, 46px);
   /* Rotated, so the band's visual bounds sit well outside its box: the corners
      reach ~half the section width x sin(rot) beyond it. The negative margin
      absorbs the box, and the symmetric value is what keeps the gap above equal
@@ -31,33 +31,30 @@
   --sep: 0.4em;
   gap: var(--sep);
   padding-inline: calc(var(--sep) / 2);
-  font-family: var(--font-display); font-synthesis: none; font-weight: 800;
-  text-transform: uppercase; letter-spacing: -0.028em;
-  font-size: clamp(1.625rem, 3.9vw, 3.75rem);
+  font-family: var(--font-display); font-synthesis: none; font-weight: 500;
+  letter-spacing: -0.008em;
+  /* Halved from clamp(1.625rem, 3.9vw, 3.75rem). Together with sentence case and
+     weight 500, this is the "lighter, less in-your-face" the client asked for —
+     the band is still a band, it just stops shouting. */
+  font-size: clamp(1.125rem, 2.2vw, 1.875rem);
   line-height: 1;
   color: var(--ink);
   white-space: nowrap;
 }
 
-/* Each phrase is followed by an icon in its own outlined disc — the reference
-   sets its sticker glyphs the same way, so they read as objects on the band
-   rather than as punctuation. */
-.icon {
+/* Each phrase is followed by the brand's own droplet motif — the mark printed on
+   the Vincey bottle — rather than a coloured glyph in an outlined disc. It is
+   ink at 42%, so it separates the phrases without competing with them. */
+.mark {
   flex: none;
-  display: grid; place-items: center;
-  inline-size: 1.24em; block-size: 1.24em;
-  background: var(--i-bg, var(--paper));
-  border: var(--bw-lg) solid var(--ink);
-  border-radius: 999px;
-  rotate: var(--i-rot, -6deg);
-  /* Optically centred on the CAPS, not on the line box. The band is set in
-     uppercase at line-height 1, so the line box carries descender space the
-     glyphs never use and `align-items: center` parks the disc ~0.06em low
-     against the letterforms. `translate` is free here — `rotate` is its own
-     property, so the two compose without a transform. */
-  translate: 0 -0.055em;
+  inline-size: .78em; block-size: .78em;
+  color: var(--ink);
+  opacity: .42;
+  /* Optically centred on the letterforms, not on the line box: at line-height 1
+     the box carries descender space the word barely uses, which parks the mark
+     fractionally low against the text. */
+  translate: 0 -0.03em;
 }
-.icon svg { inline-size: 74%; block-size: 74%; }
 
 @keyframes slide { to { transform: translate3d(-50%, 0, 0); } }
 @media (prefers-reduced-motion: reduce) { .track { animation: none; } }

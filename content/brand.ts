@@ -32,7 +32,10 @@ export interface Duck {
   name: string
   /** As printed on the bottle. */
   stickerName: string
+  /** Full saturation. ACCENT only — stickers, buttons, badges. */
   colour: string
+  /** 45% white. The section-ground step; see the tint ramp in tokens.css. */
+  soft: string
   ink: string
   field: string
   /** The motif printed after the name on the real product decal. */
@@ -50,8 +53,9 @@ export const ducks: Duck[] = [
   {
     slug: 'vincey',
     name: 'Vincey',
-    stickerName: 'VINCEY',
+    stickerName: 'Vincey',
     colour: 'var(--vincey)',
+    soft: 'var(--vincey-soft)',
     ink: 'var(--vincey-ink)',
     field: 'var(--vincey-field)',
     motif: 'droplets',
@@ -63,8 +67,9 @@ export const ducks: Duck[] = [
   {
     slug: 'chi-chi',
     name: 'Chi Chi',
-    stickerName: 'CHI CHI',
+    stickerName: 'Chi Chi',
     colour: 'var(--chichi)',
+    soft: 'var(--chichi-soft)',
     ink: 'var(--chichi-ink)',
     field: 'var(--chichi-field)',
     motif: 'flower',
@@ -76,8 +81,9 @@ export const ducks: Duck[] = [
   {
     slug: 'goosey',
     name: 'Goosey',
-    stickerName: 'GOOSEY',
+    stickerName: 'Goosey',
     colour: 'var(--goosey)',
+    soft: 'var(--goosey-soft)',
     ink: 'var(--goosey-ink)',
     field: 'var(--goosey-field)',
     motif: 'footprint',

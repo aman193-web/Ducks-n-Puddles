@@ -33,7 +33,7 @@ export function DuckStage() {
           <article
             key={d.slug}
             className={styles.panel}
-            style={{ ['--duck' as string]: d.colour } as React.CSSProperties}
+            style={{ ['--duck' as string]: d.soft } as React.CSSProperties}
             aria-labelledby={`duck-${d.slug}`}
           >
             <span className={styles.index} aria-hidden="true">{i + 1}</span>

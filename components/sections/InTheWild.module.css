@@ -1,4 +1,4 @@
-.section { background: var(--vincey); padding-block: var(--section-y); overflow: clip; }
+.section { background: var(--vincey-soft); padding-block: var(--section-y); overflow: clip; }
 
 /* shares the two-column head used across the site */
 .head {

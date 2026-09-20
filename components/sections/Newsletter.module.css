@@ -5,7 +5,7 @@
   gap: clamp(var(--s-5), 3vw, var(--s-7));
   align-items: center;
   padding: clamp(var(--s-6), 4vw, var(--s-9));
-  background: var(--sun);
+  background: var(--sun-soft);
   border-radius: var(--r-lg);
 }
 @media (min-width: 900px) {
@@ -19,7 +19,7 @@
   font-size: clamp(2rem, 4.6vw, 3.75rem);
   line-height: var(--lh-xl);
   letter-spacing: -.03em;
-  text-transform: uppercase;
+  font-weight: 500;
   color: var(--ink);
   text-wrap: balance;
 }

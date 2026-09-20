@@ -89,7 +89,7 @@
 .signup { display: grid; justify-items: start; gap: var(--s-4); }
 .h {
   font-family: var(--font-display); font-synthesis: none;
-  text-transform: uppercase; letter-spacing: -.025em; line-height: 1;
+  font-weight: 500; letter-spacing: -.01em; line-height: 1.05;
   font-size: clamp(1.5rem, 2.6vw, 2rem);
 }
 .blurb { font-size: var(--fs-small); max-width: 42ch; line-height: 1.6; }

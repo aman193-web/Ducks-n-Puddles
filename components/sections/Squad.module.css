@@ -1,14 +1,15 @@
 .section {
-  background: var(--deep);
-  color: var(--cream);
+  background: var(--duck-blue-soft);
+  color: var(--ink);
   padding-block: var(--section-y);
   position: relative;
   overflow: clip;
   isolation: isolate;
 }
-/* The navy was a flat field with a near-invisible panel on it. A soft sun glow
-   behind the copy gives the section a light source, which is the difference
-   between "dark" and "dead". Zero bytes, no blur on a paint-heavy element. */
+/* A soft sun wash behind the copy gives the section a light source, which is
+   what keeps a flat tint from reading as a plain band. It survived the move off
+   navy; only the alphas changed, because warm light has to work harder to be
+   seen on a light ground than on a dark one. */
 .section::before {
   content: '';
   position: absolute;
@@ -18,7 +19,7 @@
   inline-size: min(70%, 780px);
   aspect-ratio: 1;
   background: radial-gradient(circle at 50% 50%,
-    rgba(255, 221, 25, .16) 0%, rgba(98, 188, 235, .10) 45%, transparent 68%);
+    rgba(255, 221, 25, .46) 0%, rgba(255, 246, 227, .30) 45%, transparent 70%);
   pointer-events: none;
 }
 /* 50/50 from 900px up: the pitch on the left, the form on the right. Centred in
@@ -40,33 +41,32 @@
   /* the render was landing right on the paragraph's last line */
   margin-block-start: var(--flow-eyebrow);
 }
-/* The bottles are blue on navy and were sinking into the ground. A pool of
-   light behind them does the separating — a rim or an outline on a photographic
-   render would read as a cut-out. */
+/* The bottles are blue on a blue-ish tint and would sink into the ground. A
+   pool of light behind them does the separating — a rim or an outline on a
+   photographic render would read as a cut-out. */
 .art::before {
   content: '';
   position: absolute;
   z-index: -1;
   inset: -12% -8% -6%;
   background: radial-gradient(60% 55% at 50% 58%,
-    rgba(98, 188, 235, .30) 0%, rgba(98, 188, 235, .12) 55%, transparent 76%);
+    rgba(255, 253, 247, .85) 0%, rgba(255, 253, 247, .45) 55%, transparent 76%);
   pointer-events: none;
 }
-.art img { filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .45)); }
+.art img { filter: drop-shadow(0 16px 26px rgba(16, 38, 74, .18)); }
 .art img { inline-size: 100%; block-size: auto; }
-.title { color: var(--sun); }
-.sub { color: var(--cream); max-width: 42ch; }
+.sub { max-width: 42ch; }
 
-/* The form sits on its own raised ground so it reads as the thing to do. At 6%
-   white it was 0.4:1 against the navy — technically a panel, visually nothing.
-   Duck Blue is a real step up from --deep and makes the cream inputs pop. */
+/* The form sits on its own raised ground so it reads as the thing to do. On the
+   tinted ground that separation is a step UP to paper with the site's own
+   outline, rather than the step down into navy it used to be. */
 .panel {
   position: relative;
   z-index: 1;
-  background: var(--duck-blue);
+  background: var(--paper);
+  border: var(--border-lg);
   border-radius: var(--r-lg);
   padding: clamp(var(--s-6), 3vw, var(--s-8));
-  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .55);
 }
 
 @media (min-width: 900px) {
@@ -76,19 +76,18 @@
 @media (max-width: 899px) { .art { display: none; } }
 
 .pick { display: grid; gap: var(--s-4); justify-items: start; border: 0; padding: 0; margin: 0; }
-.pickLabel { font-weight: 700; font-size: var(--fs-small); color: var(--sun); margin-block-end: var(--s-1); }
+.pickLabel { font-weight: 700; font-size: var(--fs-small); margin-block-end: var(--s-1); }
 .stickers { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-4); }
 
 .form { display: grid; gap: var(--s-5); inline-size: 100%; }
 .field { display: grid; gap: var(--s-3); text-align: start; }
-.field label { font-weight: 700; font-size: var(--fs-small); color: var(--sun); }
+.field label { font-weight: 700; font-size: var(--fs-small); }
 .field input {
   min-block-size: 58px; padding-inline: var(--s-5);
   background: var(--cream); color: var(--ink);
   border: var(--border-lg); border-radius: var(--r);
   font-weight: 600;
 }
-.field input:focus-visible { outline-color: var(--sun); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .consent {
   display: flex; gap: var(--s-3); text-align: start; align-items: center;
@@ -96,18 +95,18 @@
   /* the whole label is the target, and it clears 44px */
   min-block-size: 44px; padding-block: var(--s-2);
 }
-.consent input { inline-size: 26px; block-size: 26px; flex: none; accent-color: var(--sun); cursor: pointer; }
+.consent input { inline-size: 26px; block-size: 26px; flex: none; accent-color: var(--duck-blue); cursor: pointer; }
 .consentRow { display: grid; gap: var(--s-2); text-align: start; }
 .privacy {
   display: inline-flex; align-items: center; min-block-size: 44px;
-  color: var(--sun); font-size: var(--fs-small); font-weight: 600;
+  color: var(--duck-blue); font-size: var(--fs-small); font-weight: 600;
   text-underline-offset: .2em;
 }
-.note { font-size: var(--fs-micro); color: rgba(255,246,227,.72); max-width: 44ch; }
+.note { font-size: var(--fs-micro); color: var(--ink-soft); max-width: 44ch; }
 .copy > .note { margin-block-start: var(--flow-eyebrow); }
 .error {
   color: var(--ink); background: var(--sun); border: var(--border); border-radius: var(--r-sm);
   padding: var(--s-2) var(--s-3); font-weight: 700; font-size: var(--fs-small); text-align: start;
 }
 .success { display: grid; gap: var(--s-4); justify-items: center; text-align: center; }
-.success p { color: var(--sun); }
+

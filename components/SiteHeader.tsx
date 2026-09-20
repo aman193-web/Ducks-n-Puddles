@@ -19,7 +19,7 @@ const NAV = [
 /**
  * The supplied lockup, used as supplied — no roundel behind it and no typeset
  * wordmark beside it. The mark already contains the brand name, so setting it
- * again in Excon was saying it twice in two different voices.
+ * again in the display face was saying it twice in two different voices.
  *
  * `logo-mark` is the tagline-free cut. At 46px tall the "A Friend for Every
  * Adventure" line in the primary lockup is unreadable and only shrinks the duck.

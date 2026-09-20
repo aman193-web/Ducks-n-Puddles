@@ -30,6 +30,29 @@
   --chichi-field: #FDEAF1;  --chichi-ink: #B22A5F;
   --goosey-field: #FEF6DC;  --goosey-ink: #8A5E00;
 
+  /* ---- SOFT GROUNDS — the middle step the system was missing -------------
+     The site painted whole sections in full-saturation brand colour, which is
+     what read as heavy. The reference (koakids.com.au) reserves saturation for
+     ACCENTS and grounds its sections in tints: measured there, #F8F4ED (13.7),
+     #CCD0EF (9.9), #F1E9DC (12.5), #FEE358 (11.7), #87E1CF (9.8).
+
+     Each of these is the brand hex mixed with 45% white — no hue moves, the
+     brand palette is untouched, and every one clears AA against --ink with
+     room to spare (contrast in the comment beside it).
+
+       --x-field  (~85% white)  cards sitting ON a coloured ground
+       --x-soft   ( 45% white)  SECTION GROUNDS            <- new step
+       --x        (full)        accents: buttons, stickers, badges, art
+
+     Duck Blue is the exception: at 45% it is still a mid-tone (5.6) and goes
+     muddy, so it takes 70%. */
+  --sky-soft:       #A9DAF4;  /* ink 10.0 */
+  --vincey-soft:    #8FC9E9;  /* ink  8.4 */
+  --chichi-soft:    #F6A0C1;  /* ink  7.7 */
+  --goosey-soft:    #FEDA7C;  /* ink 11.1 */
+  --sun-soft:       #FFEC80;  /* ink 12.6 */
+  --duck-blue-soft: #BFCAE0;  /* ink  9.1 — 70% white, not 45% */
+
   /* ---- ONE ink. Everything — type, borders, shadows, icons — is this colour.
           A deep shade of the brand's Duck Blue, so it reads near-black on vivid
           grounds while staying on-brand. ---- */
@@ -73,14 +96,16 @@
   --r-arch: 50vw 50vw var(--r-lg) var(--r-lg);
 
   /* ---- type ----
-     Display is Excon (Fontshare, variable 100-900): chunky geometric with real
-     display character, the closest of the shortlist to the reference's paid Pouf.
-     Set UPPERCASE at 700-800 with the reference's own metrics (line-height
-     .82-.86, tracking -.03em), which is what makes the words behave as a printed
-     block rather than as a paragraph.
+     Display is Fredoka (Google, variable 300-700): a rounded geometric with real
+     display presence and no hard corners. It replaced Excon, which was set
+     UPPERCASE at 800 — the client read that pairing as bold, edgy and heavy, and
+     asked for warm, soft and playful.
+     Fredoka's letterforms are rounder AND wider, so the settings had to move with
+     it: weight 800 -> 500, sentence case for headings, tracking -.03em -> -.01em
+     (negative tracking collides round letterforms), and looser display leading.
      NOTE: the brand book specifies Bowlby One for headings. This is a deliberate
-     deviation to match the agreed reference; revert by changing this one line. */
-  --font-display: var(--font-excon), "Arial Black", Impact, sans-serif;
+     deviation; revert by changing this one line. */
+  --font-display: var(--font-fredoka), ui-rounded, "Trebuchet MS", sans-serif;
   --font-body:    var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   --font-mono:    var(--font-dmmono), ui-monospace, "SF Mono", Menlo, monospace;
   --font-hand:    var(--font-edu), ui-rounded, cursive;
@@ -91,12 +116,11 @@
      still lands whole; the first sentence breaks above it, which is what gives
      the stack its printed-block look. */
   --fs-mega:  clamp(2.375rem, 10vw, 9rem);
-  /* Display leading. The hero keeps the tight printed-block setting (the
-     benchmark's own mega headline runs 0.856); section headings were also at
-     0.82, where three lines of 76px type read as crushed rather than as
-     confident. Each step gets its own value instead. */
-  --lh-display: .86;
-  --lh-xl: .92;
+  /* Display leading. Round faces need more air than square ones — the old .86
+     was compensating for Excon's squareness, and under Fredoka it reads as
+     crushed. .92/1.0 matches the reference's own heading leading. */
+  --lh-display: .92;
+  --lh-xl: 1;
   --lh-lg: .96;
   --lh-md: 1;
   --fs-xl:    clamp(2.125rem, 5.6vw, 4.75rem);
