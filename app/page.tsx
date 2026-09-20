@@ -3,6 +3,7 @@ import { Hero } from '@/components/sections/Hero'
 import { HeroScene } from '@/components/HeroScene'
 import { CardTilt } from '@/components/CardTilt'
 import { Marquee } from '@/components/ui/Marquee'
+import { Why } from '@/components/sections/Why'
 import { DuckStage } from '@/components/sections/DuckStage'
 import { Specs } from '@/components/sections/Specs'
 import { Store } from '@/components/sections/Store'
@@ -17,15 +18,28 @@ import { WaveEdge } from '@/components/ui/WaveEdge'
 /**
  * ORDER, and why.
  *
- * Pre-launch belongs in exactly two places: the hero chip and the waitlist at
- * the foot. Between them the page sells the product the way any brand with
- * stock on the shelf would — features, range, story, reels, reviews, journal.
- * Before this, every one of those sections opened by explaining that nothing was
- * for sale, which is a thing a visitor only needs to be told once.
+ * This is the client's own requested flow (Website Revisions, Sep 2026): they
+ * asked for the homepage to tell a clearer story as someone scrolls, with each
+ * section leading into the next rather than reading as separate blocks.
  *
- * The two sections that existed purely to say "not yet" have moved rather than
- * been deleted: the sample diary is now the first journal post, and the roadmap
- * lives with the waitlist where a reader has already opted into the wait.
+ *   Hero          A Friend for Every Adventure — the official tagline
+ *   Why           who we are and what we stand for, BEFORE any product. Speaks
+ *                 to the parent and the child side by side.
+ *   Meet the ducks  the three characters, so they are met before their bottles
+ *   The range     our FIRST product — character and product together
+ *   Features      why parents will love them, once they have seen one
+ *   Our story     the family, and the bigger vision
+ *   Everyday life the reels rail — real kids, real families
+ *   Journal → Newsletter → FAQ → Duck Squad
+ *
+ * Two moves worth naming: Why now sits above everything, because the WHY used to
+ * arrive two thirds down the page if at all; and Store swapped with Specs, so a
+ * reader meets the ducks, then the thing they can own, then the reasons — rather
+ * than reading a spec sheet about a product they have not seen.
+ *
+ * Pre-launch belongs in exactly two places: the hero chip and the waitlist at
+ * the foot. Everywhere else the page shows the product the way any brand with
+ * stock on the shelf would.
  */
 export default function HomePage() {
   return (
@@ -37,13 +51,14 @@ export default function HomePage() {
         items={['Flip-top straw', 'Sized for small hands', 'Dishwasher safe', 'Spill-resistant', 'BPA-free']}
         colour="var(--sun-soft)" rot={-3.2}
       />
+      <Why />
       <DuckStage />
+      <Store />
       <Specs />
       <WaveEdge above="var(--sky-soft)" fill="var(--cream)" />
-      <Store />
       <Story />
       <Marquee
-        items={['A friend for every adventure', 'Nine ounces of courage', 'Quack']}
+        items={['A friend for every adventure', 'Comfort, carried', 'Quack']}
         colour="var(--chichi-soft)" rot={2.6} dir="rtl" seconds={36}
       />
       <InTheWild />

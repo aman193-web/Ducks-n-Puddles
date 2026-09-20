@@ -1,6 +1,6 @@
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
-import { ducks, brand } from '@/content/brand'
+import { ducks } from '@/content/brand'
 import { bandPath, ribbonPath, PERIOD, BAND_NAVY, BAND_SKY } from '@/lib/wave'
 import styles from './Hero.module.css'
 
@@ -103,7 +103,7 @@ export function Hero() {
                 headline and the CTA can never collide with each other or with
                 the surface however short the panel gets. */}
             <div className={styles.copy}>
-              <p className={`mono ${styles.rally}`}>{brand.rallyCry}</p>
+              <p className={`mono ${styles.rally}`}>Meet Chi Chi, Goosey &amp; Vincey &mdash; arriving soon</p>
 
               <h1 id="hero-title" className={`d ${styles.title}`}>
                 <span><span>A friend </span></span>

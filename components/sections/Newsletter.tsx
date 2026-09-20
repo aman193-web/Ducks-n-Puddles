@@ -20,8 +20,8 @@ export function Newsletter() {
           </h2>
           <div className={styles.right}>
             <p className={styles.blurb}>
-              Small, bite-size updates from the pond &mdash; and first word when the
-              bottles are ready. Straight to your inbox.
+              Come into the Ducks &rsquo;n Puddles world before anyone else. Little notes
+              from the pond, and first word when the ducks arrive.
             </p>
             <FooterSignup />
           </div>

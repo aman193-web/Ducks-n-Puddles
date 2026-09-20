@@ -45,12 +45,24 @@
 
 .text { display: grid; justify-items: start; gap: var(--s-4); position: relative; z-index: 2; }
 .name { color: var(--ink); }
-.personality { font-weight: 700; font-size: var(--fs-md); max-width: 20ch; }
-.says { max-width: 26ch; }
-.parents {
-  background: var(--cream); border: var(--border); border-radius: var(--r);
-  box-shadow: var(--shadow-sm); padding: var(--s-3) var(--s-4);
-  font-size: var(--fs-small); font-weight: 600; max-width: 34ch; rotate: -1deg;
+/* The character description carries the panel, so it is set at lead size — but at
+   600, not 700: this is warm prose now, not a slogan. */
+.personality { font-weight: 600; font-size: var(--fs-lead); line-height: 1.5; max-width: 42ch; }
+.says { max-width: 30ch; }
+
+/* What the duck helps a child with, straight off the character sheet. Chips
+   rather than a list: five short virtues read as a set, and a bulleted column
+   would out-weigh the description above it. */
+.teaches { display: grid; gap: var(--s-2); margin-block-start: var(--s-2); }
+/* Full --ink at full opacity. At 12px this label needs 4.5:1; --ink-soft measures
+   4.19 on Vincey's soft ground and 3.84 on Chi Chi's, and ink at .72 opacity only
+   reaches 4.39/4.31 — still short. The mono face and its tracking carry the step
+   down in hierarchy instead, which costs no contrast at all. */
+.teachesLabel { color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--s-2); list-style: none; padding: 0; margin: 0; }
+.chips li {
+  background: var(--cream); border: var(--border); border-radius: var(--r-pill);
+  padding: 6px var(--s-3); font-size: var(--fs-small); font-weight: 600;
 }
 
 .figure { position: relative; justify-self: center; }
@@ -59,16 +71,6 @@
   position: absolute; inset-block-end: -14px; inset-inline-start: 50%;
   translate: -50% 0; inline-size: 116%; block-size: 22px;
   background: var(--cream); border: var(--border-lg); border-radius: 50%; z-index: 0;
-}
-/* A giant outlined number behind each duck — the panel's index in the squad. */
-.index {
-  position: absolute; inset-block-start: 50%; inset-inline-start: 50%;
-  translate: -50% -52%;
-  font-family: var(--font-display); font-synthesis: none;
-  font-size: clamp(16rem, 34vw, 30rem); line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 3px var(--ink);
-  opacity: .18; z-index: 0; pointer-events: none; user-select: none;
 }
 .quackBtn { margin-block-start: var(--s-2); }
 

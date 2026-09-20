@@ -9,7 +9,6 @@ const EXPLORE = [
   { href: '/#features', label: 'Features' },
   { href: '/#store', label: 'The Range' },
   { href: '/#story', label: 'Our Story' },
-  { href: '/#reviews', label: 'Reviews' },
   { href: '/journal', label: 'Journal' },
 ]
 
@@ -65,9 +64,8 @@ export function SiteFooter() {
           <div className={styles.signup}>
             <h2 className={styles.h}>{brand.tagline}</h2>
             <p className={styles.blurb}>
-              {brand.founders} &mdash; two parents in {brand.place}. Ducks &rsquo;n Puddles
-              is a family project, not a licensing deal. If something&rsquo;s wrong with
-              it, you&rsquo;re emailing us directly.
+              {brand.founders} &mdash; two parents in {brand.place}, making things we
+              wanted for our own kids. Write to us any time; it really is us reading it.
             </p>
             <div className={styles.socials}>
               {SOCIALS.map((s) => (

@@ -40,9 +40,9 @@ export function Specs() {
           <h2 id="specs-title" className="d d-xl" data-anim="">
             Everything a parent checks, checked.
           </h2>
-          <p className="lead" data-anim="">
+          <p className="lead measure" data-anim="">
             Nine ounces, a straw that snaps shut, and a bottle that goes straight in the
-            dishwasher. The rest is a duck your kid will not put down.
+            dishwasher. Small things, but they are the ones that make a morning easier.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export function Specs() {
             </span>
             <dt className={styles.key}>And the bit that matters</dt>
             <dd className={styles.value}>
-              A bottle with a name on it gets carried. That is the whole idea.
+              A bottle with a friend on it gets carried everywhere. That is the whole idea.
             </dd>
           </div>
         </dl>

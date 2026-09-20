@@ -6,7 +6,11 @@ import { reels } from '@/content/brand'
 import styles from './InTheWild.module.css'
 
 /**
- * Spotted in the wild — the reels rail.
+ * Ducks in Everyday Life — the reels rail.
+ *
+ * Renamed from "Spotted in the wild" at the client's suggestion, and the lead no
+ * longer ends on "this is the whole marketing department": they want real kids,
+ * real families and real adventures, not a joke about how small the operation is.
  *
  * Real clips off the family's own camera roll, transcoded from HEVC .MOV to
  * H.264 by scripts/build-video.mjs (Safari plays the originals; Chrome and
@@ -42,10 +46,10 @@ export function InTheWild() {
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--sun)" rot={-2} data-pop="" data-pop-rot="-2">Out in the world</Sticker>
-          <h2 id="wild-title" className="d d-xl" data-anim="">Spotted in the wild.</h2>
-          <p className="lead" data-anim="">
-            Real afternoons, filmed on a phone, no crew. This is the whole marketing
-            department.
+          <h2 id="wild-title" className="d d-xl" data-anim="">Ducks in everyday life.</h2>
+          <p className="lead measure" data-anim="">
+            Real kids, real families, real afternoons. This is what a duck looks like once
+            it belongs to somebody.
           </p>
         </div>
       </div>

@@ -9,41 +9,65 @@ import styles from './DuckStage.module.css'
 const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 
 /**
- * The founder's "clickable characters that introduce themselves", built so it
- * works without hover, without sound and without JavaScript: all three panels are
- * always in the DOM and every introduction is real text, not injected on click.
+ * MEET THE DUCKS.
+ *
+ * Rewritten against Character Sheet 2 and the client's notes. What changed and
+ * why, because most of it was deliberate and is now deliberately gone:
+ *
+ *   "Three ducks. Three strong opinions."  -> "Meet the ducks."  The client does
+ *      not want them framed as opinionated; they want three personalities a
+ *      child can connect with.
+ *   "They are named after our kids…"       -> removed. The ducks are inspired by
+ *      the family but are characters in their own right now, with their own
+ *      identities in the Ducks 'n Puddles world.
+ *   Splash / Bloom / Waddle eyebrows       -> replaced by each character's real
+ *      role from the sheet (The Calm Companion, The Brave Spark, The Sunshine
+ *      Friend). The old three were invented labels.
+ *   The giant outlined 1 / 2 / 3           -> removed. No character is ranked.
+ *   The quips                              -> each duck's own saying, verbatim
+ *      from the sheet, plus what they teach a child.
+ *
+ * Still works without hover, without sound and without JavaScript: all three
+ * panels are in the DOM and every introduction is real text, not injected.
  */
 export function DuckStage() {
   return (
     <section className={styles.section} id="ducks" aria-labelledby="ducks-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--chichi)" rot={2} data-pop="" data-pop-rot="2">The Duck Squad</Sticker>
+          <Sticker colour="var(--chichi)" rot={2} data-pop="" data-pop-rot="2">The Quack Pack</Sticker>
           <h2 id="ducks-title" className="d d-xl" data-anim="">
-            Three ducks. Three strong opinions.
+            Meet the ducks.
           </h2>
           <p className="lead measure" data-anim="">
-            They are named after our kids, and they behave like them.
+            Three little friends, each with their own kind of heart. Your child will know
+            which one is theirs.
           </p>
         </div>
       </div>
 
       <div className={styles.stack}>
-        {ducks.map((d, i) => (
+        {ducks.map((d) => (
           <article
             key={d.slug}
             className={styles.panel}
             style={{ ['--duck' as string]: d.soft } as React.CSSProperties}
             aria-labelledby={`duck-${d.slug}`}
           >
-            <span className={styles.index} aria-hidden="true">{i + 1}</span>
             <div className={`wrap ${styles.inner}`}>
               <div className={styles.text}>
-                <Sticker colour="var(--cream)" rot={-2}>{d.motif === 'droplets' ? 'Splash' : d.motif === 'flower' ? 'Bloom' : 'Waddle'}</Sticker>
+                <Sticker colour="var(--cream)" rot={-2}>{d.role}</Sticker>
                 <h3 id={`duck-${d.slug}`} className={`d d-mega ${styles.name}`}>{d.name}</h3>
                 <p className={styles.personality}>{d.personality}</p>
-                <p className={`hand ${styles.says}`}>&ldquo;{d.says}&rdquo;</p>
-                <p className={styles.parents}>{d.forParents}</p>
+                <p className={`hand ${styles.says}`}>&ldquo;{d.saying}&rdquo;</p>
+
+                <div className={styles.teaches}>
+                  <p className={`eyebrow ${styles.teachesLabel}`}>What {d.name} helps with</p>
+                  <ul className={styles.chips}>
+                    {d.teaches.map((t) => <li key={t}>{t}</li>)}
+                  </ul>
+                </div>
+
                 <span className={styles.quackBtn}>
                   <Btn colour="var(--cream)" arrow={false} onClick={() => void playQuack()}>
                     Hear {d.name} quack

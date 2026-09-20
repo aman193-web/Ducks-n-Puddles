@@ -1,4 +1,14 @@
-.section { background: var(--cream); padding-block: var(--section-y); }
+/* The range now follows the duck stage directly, so it inherits the job Specs
+   used to do: covering the seam where the last sticky character panel ends. A
+   cream panel with rounded top corners, lifted over the panel below it. */
+.section {
+  background: var(--cream);
+  padding-block: var(--section-y);
+  position: relative; z-index: 2;
+  margin-block-start: calc(var(--r-lg) * -2);
+  border-start-start-radius: var(--r-lg);
+  border-start-end-radius: var(--r-lg);
+}
 /* Two-column head: the display line on the left, the lead paragraph bottom-aligned
    beside it. Capped at ~50ch and left-aligned, these heads left the entire right
    half of the page empty above every section. */

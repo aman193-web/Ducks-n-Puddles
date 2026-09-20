@@ -23,11 +23,14 @@ export function Store() {
     <section className={styles.section} id="store" aria-labelledby="store-title" data-scene="store">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--chichi)" rot={2} data-pop="" data-pop-rot="2">The range</Sticker>
-          <h2 id="store-title" className="d d-xl" data-anim="">Three ducks. Pick your kid&rsquo;s.</h2>
-          <p className="lead" data-anim="">
-            Same bottle, same nine ounces, same straw. Three personalities, because the
-            one they choose is the one they carry.
+          <Sticker colour="var(--chichi)" rot={2} data-pop="" data-pop-rot="2">Our first product</Sticker>
+          <h2 id="store-title" className="d d-xl" data-anim="">
+            Every duck comes as a bottle.
+          </h2>
+          <p className="lead measure" data-anim="">
+            The Vincey bottle is their Vincey. Same nine ounces and the same straw on all
+            three &mdash; what changes is who is coming with them. And the bottles are just
+            the beginning.
           </p>
         </div>
 

@@ -1,12 +1,19 @@
 import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
-import { brand } from '@/content/brand'
+import { Btn } from '@/components/ui/Btn'
 import styles from './Story.module.css'
 
 /**
- * Copy is deliberately shorter than the long-form version it replaced: the
- * section now has to sit beside an image in a single frame, and four paragraphs
- * pushed it past the fold. The founder story in full belongs on /our-story.
+ * OUR STORY.
+ *
+ * The copy below is the client's own, supplied in the Sep 2026 revisions and
+ * used close to verbatim — they asked for the section to carry who the family
+ * is, where Ducks 'n Puddles came from, why they made it, and the bigger vision.
+ *
+ * Three things went with the old version and should not come back without them
+ * asking: the nickname explanation (the ducks are characters now, not labels for
+ * the founders' children), the child's name in the pull quote, and the "spilled
+ * water" framing. It closes on the official tagline, which is how they wrote it.
  */
 export function Story() {
   return (
@@ -24,25 +31,36 @@ export function Story() {
           <div className={styles.body}>
             <Sticker colour="var(--chichi)" rot={-2} data-pop="" data-pop-rot="-2">Our story</Sticker>
             <h2 id="story-title" className={`d ${styles.title}`} data-anim="">
-              It started with two kids and a lot of spilled water.
+              It started with our family.
             </h2>
             <p data-anim="">
-              We&rsquo;re Larissa and Vinnie. Lucy answers to two nicknames &mdash; Chi&nbsp;Chi
-              and Goosey &mdash; so both became ducks. Vinci is Vincey, and Vincey does not
-              walk anywhere. That is genuinely where they came from: not a brief, what we
-              actually call our children.
+              Hi, we&rsquo;re Larisa and Vinny &mdash; husband and wife, parents, and the
+              founders of Ducks &rsquo;n Puddles.
             </p>
             <p data-anim="">
-              You get careful about everything once you have kids. Then you hand them a
-              bottle you know almost nothing about, and it is in their mouth all day. So we
-              decided to make one.
+              It began with a question: how could we make things that make life easier for
+              parents, while helping little ones feel loved, safe and comforted?
+            </p>
+            <p data-anim="">
+              Inspired by our own family, we created Chi&nbsp;Chi, Goosey and Vincey &mdash;
+              three little friends with personalities of their own, each bringing a different
+              kind of comfort and companionship to a child&rsquo;s everyday adventures.
+            </p>
+            <p data-anim="">
+              We&rsquo;re starting with our character water bottles, but the bottles are just
+              the beginning. Our dream is a world of thoughtful products, stories and
+              experiences that bring more ease to parents and more comfort, connection and
+              magic to childhood.
             </p>
             <p className={`hand ${styles.pull}`} data-anim="" data-anim-rot="2">
-              I would rather be late than hand Lucy something I wasn&rsquo;t sure about.
+              A friend for every adventure.
             </p>
             <div className={styles.sig} data-anim="">
               <img src="/img/mascot-140.webp" width={42} height={47} alt="" className="wiggle" />
-              <span className="hand">&mdash; Larissa</span>
+              <span className="hand">&mdash; Larisa &amp; Vinny</span>
+            </div>
+            <div className={styles.cta} data-anim="">
+              <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>
             </div>
           </div>
         </div>

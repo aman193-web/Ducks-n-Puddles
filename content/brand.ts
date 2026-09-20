@@ -13,11 +13,18 @@ export const brand = {
    *  so both spellings rank. */
   spokenName: 'Ducks and Puddles',
   tagline: 'A Friend for Every Adventure',
-  /** The existing hero line. It is genuinely good — clean double meaning, memorable,
-   *  does brand and mission work at once. Kept deliberately. */
+  /** Kept deliberately — clean double meaning, memorable. The client asked for it
+   *  to sit on the PARENT-facing side rather than over the hero, where the official
+   *  tagline belongs. */
   rallyCry: 'Your Kids Matter. We Give a Duck.',
+  /** The WHY, in the client's own words (Website Revisions, Sep 2026). This is the
+   *  sentence the homepage has to land before anything else — it is what the brand
+   *  stands for beyond the products, and it deliberately names BOTH audiences in
+   *  one line: ease for the parent, comfort for the child. */
+  why: 'Thoughtfully designed products that make life easier for parents while helping '
+     + 'little ones feel safe, loved, confident, and ready for every adventure.',
   closing: 'Every great adventure begins with a smile.',
-  founders: 'Larissa & Vinnie',
+  founders: 'Larisa & Vinny',
   place: 'South Florida',
   email: 'ducksnpuddles7@gmail.com', // TODO(client): professional domain address
   instagram: 'https://www.instagram.com/ducksnpuddles/',
@@ -40,11 +47,18 @@ export interface Duck {
   field: string
   /** The motif printed after the name on the real product decal. */
   motif: 'droplets' | 'flower' | 'footprint'
-  /** Client-approved personality, verbatim from their live site. */
+  /** The character's title on the illustrator's sheet. Part of their identity. */
+  role: string
+  /** The two-word core the client will not move on (Website Revisions, Sep 2026). */
+  core: string
+  /** Who this duck IS, from Character Sheet 2. Warm, positive, child-centred. */
   personality: string
-  /** First person, in the duck's voice. Written to match the approved personality. */
-  says: string
-  /** Parent-facing. */
+  /** What the character teaches a child. Straight off the sheet. */
+  teaches: string[]
+  /** The character's own saying, verbatim from the sheet. Drives the tap-to-speak
+   *  interaction once the illustrated poses land. */
+  saying: string
+  /** Parent-facing: the child this duck is for. */
   forParents: string
   bobMs: number
 }
@@ -59,8 +73,14 @@ export const ducks: Duck[] = [
     ink: 'var(--vincey-ink)',
     field: 'var(--vincey-field)',
     motif: 'droplets',
-    personality: 'Calm, collected, and comforting.',
-    says: "I'll go in first. Then you'll know it's alright.",
+    role: 'The Calm Companion',
+    core: 'Calm + Gentle',
+    personality:
+      "Vincey is gentle strength. He's thoughtful, observant, calm, and quietly brave — "
+      + "the friend who sits beside you until you're ready. Vincey reminds children that "
+      + "bravery doesn't have to be loud.",
+    teaches: ['Emotional safety', 'Patience', 'Quiet courage', 'Trust', 'Self-acceptance'],
+    saying: "Take your time. I'll be right here.",
     forParents: 'For the one who needs a minute before they join in.',
     bobMs: 5200,
   },
@@ -73,8 +93,14 @@ export const ducks: Duck[] = [
     ink: 'var(--chichi-ink)',
     field: 'var(--chichi-field)',
     motif: 'flower',
-    personality: 'Funny, bold, and always ready for an adventure.',
-    says: 'Found a puddle. Already in it. Come on.',
+    role: 'The Brave Spark',
+    core: 'Bold + Brave',
+    personality:
+      "Chi Chi is the duck who runs toward life. She's bold, expressive, imaginative, and "
+      + 'completely comfortable being herself. If there is a puddle nearby, she has '
+      + 'probably already jumped in it.',
+    teaches: ['Confidence', 'Courage', 'Self-expression', 'Leadership', 'Being proud of who you are'],
+    saying: "Let's do it!",
     forParents: 'For the one who is halfway out the door before you find your keys.',
     bobMs: 5900,
   },
@@ -87,8 +113,14 @@ export const ducks: Duck[] = [
     ink: 'var(--goosey-ink)',
     field: 'var(--goosey-field)',
     motif: 'footprint',
-    personality: 'Happy, optimistic, and the perfect sidekick.',
-    says: "I'm last. I'm not lost. There's a difference.",
+    role: 'The Sunshine Friend',
+    core: 'Optimistic + Comforting',
+    personality:
+      'Goosey is pure warmth. He is optimistic, affectionate, welcoming, and always '
+      + 'looking for ways to make someone smile — the friend who saves you a seat before '
+      + 'you have asked for one.',
+    teaches: ['Kindness', 'Gratitude', 'Empathy', 'Friendship', 'Inclusion'],
+    saying: "There's always room for one more friend!",
     forParents: 'For the one who narrates the entire day at full volume.',
     bobMs: 6700,
   } as Duck,
@@ -259,7 +291,7 @@ export const reels = [
 export const faqs = [
   {
     q: 'What is Ducks ’n Puddles?',
-    a: 'Three duck water bottles — Vincey, Chi Chi and Goosey — made by two parents in South Florida. They are named after our own kids, and they behave like them. The idea is simple: a bottle with a face and a name gets carried, and a bottle that gets carried gets used.',
+    a: 'A children’s brand built around three little friends — Chi Chi, Goosey and Vincey — made by two parents in South Florida. Each one has their own personality, and the first thing they come as is a water bottle. A bottle with a friend on it gets carried, and a bottle that gets carried gets used. The bottles are just the beginning.',
   },
   {
     q: 'How big is the bottle?',
@@ -287,6 +319,6 @@ export const faqs = [
   },
   {
     q: 'How do I get in touch?',
-    a: 'Email us. Ducks ’n Puddles is a family project, not a licensing deal — if something is wrong with it, you are emailing the two people who made it.',
+    a: 'Email us. Ducks ’n Puddles is a family project, so the two people who made it are the two people who read it.',
   },
 ] as const

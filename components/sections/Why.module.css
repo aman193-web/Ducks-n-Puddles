@@ -1,0 +1,72 @@
+/* WHY — the first section after the hero.
+
+   Cream, because it follows the hero's ribbon and has to read as the page
+   settling rather than as another colour block. The two columns carry the only
+   colour, one per audience. */
+.section {
+  background: var(--cream);
+  padding-block: var(--section-y);
+  position: relative;
+}
+
+.head {
+  display: grid;
+  justify-items: start;
+  gap: var(--flow-eyebrow);
+  margin-block-end: var(--flow-block);
+}
+/* The client's WHY sentence is long for a headline, so it is set narrower than
+   the site's usual full-width display line and allowed to wrap over three or
+   four lines. That shape is the point: it reads as a statement of intent. */
+.head h2 { max-width: 22ch; }
+@media (min-width: 900px) {
+  .head h2 { max-width: 26ch; }
+}
+
+/* The two audiences are the SAME SIZE and sit level. That is the whole argument
+   of the section — the client asked for neither side to get lost. */
+.split {
+  display: grid;
+  gap: var(--card-gap);
+}
+@media (min-width: 820px) {
+  .split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.side {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  padding: var(--card-pad);
+  border: var(--border);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+}
+/* Each side takes its audience's own field, so the pair reads as two halves of
+   one brand rather than two unrelated cards. */
+.split > :nth-child(1) { background: var(--vincey-field); }
+.split > :nth-child(2) { background: var(--chichi-field); }
+
+.mark {
+  display: grid; place-items: center;
+  inline-size: 44px; block-size: 44px;
+  border-radius: var(--r-pill);
+  background: var(--paper);
+  border: var(--border);
+  color: var(--ink);
+  margin-block-end: var(--s-2);
+}
+.mark svg { inline-size: 22px; block-size: 22px; }
+
+.eyebrow { color: var(--ink-soft); }
+.body { max-width: 44ch; }
+/* The handwritten close: rallyCry on the parent side, the three words on the
+   child side. Set apart from the paragraph so it lands as a signature. */
+.foot {
+  margin-block-start: var(--s-2);
+  padding-block-start: var(--s-3);
+  border-block-start: var(--border);
+  color: var(--ink);
+}
+
+.cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }

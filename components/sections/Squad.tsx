@@ -77,12 +77,12 @@ export function Squad() {
         <div className={styles.copy}>
           <Sticker colour="var(--sun)" rot={-3} data-pop="" data-pop-rot="-3">Join the Duck Squad</Sticker>
           <h2 id="squad-title" className="d d-xl" data-anim="">
-            Quack up your inbox.
+            Come into the pond.
           </h2>
           <p className={`lead ${styles.sub}`} data-anim="">
-            One short email every couple of weeks. You&rsquo;ll know before anyone else when
-            the bottles are ready &mdash; and once a month we&rsquo;ll ask what we should make
-            next. We mean that literally; it changes what we build.
+            The Duck Squad is where the Ducks &rsquo;n Puddles world opens up first. You will
+            know before anyone else when the ducks arrive, and once a month we ask what we
+            should make next. We mean that literally; it changes what we build.
           </p>
           {/* the payoff, and the thing that was leaving this column half empty
               next to a form four times its height */}

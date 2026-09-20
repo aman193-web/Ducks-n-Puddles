@@ -36,3 +36,6 @@
   /* the photograph now carries the column rather than sitting inside a panel */
   .grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(var(--s-7), 5vw, var(--s-9)); }
 }
+
+/* The story now ends on a next step rather than on a signature. */
+.cta { margin-block-start: var(--s-3); }
