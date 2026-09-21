@@ -34,9 +34,10 @@ const PRESETS: Record<string, Mark[]> = {
   ],
   /* A duck silhouette and a splash — for a section a character has swum past. */
   wake: [
-    { name: 'duck', size: 44, x: 94, y: 78, rot: 8 },
-    { name: 'splash', size: 30, x: 88, y: 88, rot: -12 },
-    { name: 'droplets', size: 24, x: 4, y: 64, rot: 10 },
+    { name: 'duck', size: 44, x: 96, y: 70, rot: 8 },
+    { name: 'splash', size: 30, x: 90, y: 80, rot: -12 },
+    /* was x:4 y:64, which landed on a reel caption */
+    { name: 'droplets', size: 24, x: 3, y: 40, rot: 10 },
   ],
 }
 

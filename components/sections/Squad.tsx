@@ -87,8 +87,17 @@ export function Squad() {
           </p>
           {/* the payoff, and the thing that was leaving this column half empty
               next to a form four times its height */}
+          {/* Goosey alone, greeting you beside the bottles — NOT the trio.
+              trio-walk runs Chi Chi, Goosey, Vincey left to right while the
+              bottle render runs Vincey, Chi Chi, Goosey, so overlaying them put
+              the pink duck in front of the blue VINCEY bottle and quietly
+              contradicted the "their Vincey" pairing the range cards make
+              properly. One character implies no mapping, and Goosey is the
+              right one to open a door with. */}
           <div className={styles.art} aria-hidden="true">
             <Picture id="trio" sizes="(min-width: 900px) 42vw, 78vw" alt="" data-bob="" />
+            <Duck who="goosey" pose="wave" density="always" float
+                  className={styles.artDuck} sizes="(min-width: 900px) 14vw, 26vw" />
           </div>
 
           <p className={styles.note}>

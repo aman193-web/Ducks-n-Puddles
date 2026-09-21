@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { Picture } from './Picture'
 import { brand, ducks } from '@/content/brand'
 import { WaveEdge } from './ui/WaveEdge'
-import { Duck } from './ui/Duck'
 import styles from './SiteFooter.module.css'
 
 const EXPLORE = [
@@ -122,20 +121,19 @@ export function SiteFooter() {
       </div>
 
       {/* ---- the squad, cropped by the page's own bottom edge ----
-              The three characters walk in front of their own bottles, which is
-              the client's "bring the product and character worlds together" at
-              the one place every visitor reaches. Both rows are cropped by the
-              same bottom edge, so they read as one group standing together. */}
-      <div className={styles.squad} aria-hidden="true">
-        <div className={styles.bottles}>
-          {ducks.map((d) => (
-            <span key={d.slug} className={styles.bottle}>
-              <Picture id={assetFor(d.slug)} sizes="(min-width: 900px) 22vw, 40vw" alt="" />
-            </span>
-          ))}
-        </div>
-        <Duck who="trio" pose="walk" density="always" className={styles.trio}
-              sizes="(min-width: 900px) 56vw, 92vw" />
+              NO character cameo here, deliberately. This row is a tuned crop —
+              540px renders in a 358px box, so ~60% of each bottle shows and the
+              cut lands below the name decal. An illustrated duck in front of it
+              is 50% clipped by that same box and its feet land on the decals;
+              the only clear ground is outside the bottle group, and that gap
+              closes below about 1400px. The illustrated trio lives in the Duck
+              Squad section instead, which has a column built for art. */}
+      <div className={styles.bottles} aria-hidden="true">
+        {ducks.map((d) => (
+          <span key={d.slug} className={styles.bottle}>
+            <Picture id={assetFor(d.slug)} sizes="(min-width: 900px) 22vw, 40vw" alt="" />
+          </span>
+        ))}
       </div>
     </footer>
   )

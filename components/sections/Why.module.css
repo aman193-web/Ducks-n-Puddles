@@ -61,7 +61,9 @@
 
 /* --ink-soft measures 4.23 on the chichi field at 12px. Full ink. */
 .eyebrow { color: var(--ink); }
-.body { max-width: 44ch; }
+/* 36ch, not 44: the child column's copy is the longer of the two and its last
+   line ran 44px under the cameo in the bottom-right corner. */
+.body { max-width: 36ch; }
 /* The handwritten close: rallyCry on the parent side, the three words on the
    child side. Set apart from the paragraph so it lands as a signature. */
 .foot {
@@ -69,6 +71,9 @@
   padding-block-start: var(--s-3);
   border-block-start: var(--border);
   color: var(--ink);
+  /* Clear of the cameo in the bottom-right corner — measured, the duck was
+     landing on 4139px² of this line on both cards. */
+  padding-inline-end: clamp(72px, 9vw, 116px);
 }
 
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }

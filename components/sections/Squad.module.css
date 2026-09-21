@@ -53,8 +53,24 @@
     rgba(255, 253, 247, .85) 0%, rgba(255, 253, 247, .45) 55%, transparent 76%);
   pointer-events: none;
 }
-.art img { filter: drop-shadow(0 16px 26px rgba(16, 38, 74, .18)); }
-.art img { inline-size: 100%; block-size: auto; }
+.art > picture img { filter: drop-shadow(0 16px 26px rgba(16, 38, 74, .18)); }
+.art > picture img { inline-size: 100%; block-size: auto; }
+
+/* Goosey stands to the RIGHT of the bottle group, on the same ground line,
+   clear of the render rather than in front of it. The source is square, so
+   width is also height: the art block is 299px tall and this is anchored 6%
+   (18px) below it, which caps the character at ~317px before its head climbs
+   out of the block and onto the paragraph above. 180px leaves plenty of room. */
+.artDuck {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: -6%;
+  inset-inline-end: -14%;
+  inline-size: min(40%, 180px);
+}
+@media (max-width: 899px) {
+  .artDuck { inline-size: min(34%, 140px); inset-inline-end: -4%; }
+}
 .sub { max-width: 42ch; }
 
 /* The form sits on its own raised ground so it reads as the thing to do. On the
