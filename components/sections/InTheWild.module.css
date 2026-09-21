@@ -19,7 +19,7 @@
 .head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 @media (min-width: 900px) {
   .head {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
     align-items: start;
   }

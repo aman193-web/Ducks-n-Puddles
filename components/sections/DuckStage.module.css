@@ -6,18 +6,17 @@
   display: grid;
   justify-items: start;
   gap: var(--flow-eyebrow);
-  /* The ribbon above overlaps this section, so the top padding has to cover the
-     ribbon's bite AND still leave a section's worth of air — at plain
-     --section-y the sticker was sitting right under the ribbon's edge. The
-     bottom gets a full section gap before the first colour panel, which had
-     only --flow-block and read as the panel crowding the headline. */
-  padding-block: calc(var(--section-y) + clamp(28px, 3.4vw, 56px)) 0;
+  /* Plain --section-y. This used to carry an extra clamp(28px, 3.4vw, 56px) of
+     ribbon clearance, from when the Marquee sat directly above the duck stage —
+     the Batch 2 reorder put the Why section between them, so that allowance was
+     stale and made this the widest ink gap on the page at 304px. */
+  padding-block: var(--section-y) 0;
   margin-block-end: var(--section-y);
 }
 .head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 @media (min-width: 900px) {
   .head {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
     align-items: start;
   }
@@ -56,7 +55,11 @@
 /* The character description carries the panel, so it is set at lead size — but at
    600, not 700: this is warm prose now, not a slogan. */
 .personality { font-weight: 600; font-size: var(--fs-lead); line-height: 1.5; max-width: 42ch; }
-.says { max-width: 30ch; }
+/* No cap, and balanced. `ch` is a poor unit here — it resolves against the
+   handwriting face, where 42ch measured only 349px and still dropped the
+   closing word of both quotes onto a line of its own. The text column governs
+   the width instead. */
+.says { text-wrap: balance; }
 
 /* What the duck helps a child with, straight off the character sheet. Chips
    rather than a list: five short virtues read as a set, and a bulleted column

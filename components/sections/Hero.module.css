@@ -144,9 +144,13 @@
   margin: 0;
   /* Bangbang has one weight. Scale is what makes the hero the hero now. */
   font-weight: 400;
-  /* height-aware: a wide but short window (a laptop at 1440x720) has to shrink
-     the display type or there is nothing left of the sky */
-  font-size: clamp(2.25rem, min(6.2vw, 10.4vh), 5.5rem);
+  /* Height-aware: a wide but short window (a laptop at 1440x720) has to shrink
+     the display type or there is nothing left of the sky.
+     Sits one step ABOVE --fs-mega (116 vs 109 at 1440), so the page's h1 is
+     unambiguously its largest type — it was 88 against duck names at 144.
+     Bangbang is narrow enough to take it: "adventure" at 116px needs ~440px of
+     a ~1216px column. */
+  font-size: clamp(2.25rem, min(8.05vw, 13vh), 7.25rem);
   letter-spacing: .004em;
   line-height: 1;
   color: var(--ink);
@@ -165,7 +169,7 @@
   margin: 0;
   /* every metric here must match .title exactly — this is its reflection */
   font-weight: 400;
-  font-size: clamp(2.25rem, min(6.2vw, 10.4vh), 5.5rem);
+  font-size: clamp(2.25rem, min(8.05vw, 13vh), 7.25rem);
   letter-spacing: .004em;
   line-height: 1;
   color: rgba(255, 255, 255, .12);
@@ -342,8 +346,10 @@
   .rally { font-size: .625rem; }
 
   .title {
-    font-size: clamp(2.25rem, 11.6vw, 3.5rem);
-    letter-spacing: -.03em;
+    font-size: clamp(2.25rem, 11.6vw, 3.75rem);
+    /* was -.03em, which was Fredoka's setting: Bangbang's letterforms are drawn
+       close already and negative tracking collapses them */
+    letter-spacing: .004em;
   }
   .echo { display: none; }
 

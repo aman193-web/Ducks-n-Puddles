@@ -9,7 +9,7 @@
 .head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 @media (min-width: 900px) {
   .head {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
     align-items: start;
   }
@@ -55,8 +55,9 @@
 
 .title {
   font-family: var(--font-display); font-synthesis: none;
-  font-weight: 400; letter-spacing: .01em; line-height: 1.14;
-  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  font-weight: 400; letter-spacing: .01em; line-height: var(--lh-md);
+  /* the shared card-title size — see the ladder in tokens.css */
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
   text-wrap: balance;
 }
 .excerpt { font-size: var(--fs-small); line-height: 1.55; text-wrap: pretty; }

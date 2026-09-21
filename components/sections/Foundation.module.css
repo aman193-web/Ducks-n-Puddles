@@ -103,7 +103,7 @@
   color: var(--chichi-ink);
 }
 
-.body { max-width: 46ch; }
+.body { max-width: 52ch; }
 
 /* Goosey's own line, set apart as a pull quote. */
 .quote {
@@ -113,7 +113,7 @@
   padding-inline-start: var(--s-5);
   border-inline-start: var(--bw-lg) solid var(--ink);
 }
-.quote blockquote { margin: 0; font-size: clamp(1.25rem, 2vw, 1.75rem); }
+.quote blockquote { margin: 0; font-size: clamp(1.25rem, 2vw, 1.75rem); text-wrap: balance; }
 .quote figcaption { color: var(--ink); }
 
 .cta { margin-block-start: var(--s-3); }

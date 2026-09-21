@@ -1,4 +1,7 @@
-.section { background: var(--cream); padding-block: 0 var(--section-y); }
+/* The panel carries up to 96px of its own padding, so a full --section-y below
+   it doubled up and made Newsletter->faq the widest ink gap on the page at
+   313px against a 160-260 band. */
+.section { background: var(--cream); padding-block: 0 calc(var(--section-y) * 0.45); }
 
 .panel {
   display: grid;
@@ -16,10 +19,14 @@
 }
 
 .title {
-  font-size: clamp(2rem, 4.6vw, 3.75rem);
-  line-height: var(--lh-xl);
-  letter-spacing: -.03em;
-  font-weight: 400; letter-spacing: .008em;
+  /* --fs-lg: the heading sits beside a form inside an inset panel, so it takes
+     the narrow-column step rather than the full section size. Was a one-off 60px. */
+  font-size: var(--fs-lg);
+  line-height: var(--lh-lg);
+  font-weight: 400;
+  /* was also carrying a dead `letter-spacing: -.03em` from the Excon era, one
+     line above the value that actually applied */
+  letter-spacing: .008em;
   color: var(--ink);
   text-wrap: balance;
 }

@@ -118,7 +118,22 @@
      "We give a duck." needs 1081px against 1142px of column, so the longest line
      still lands whole; the first sentence breaks above it, which is what gives
      the stack its printed-block look. */
-  --fs-mega:  clamp(2.375rem, 10vw, 9rem);
+  /* THE DISPLAY LADDER, largest to smallest, with the role each step serves.
+     Measured at 1440. Bangbang is narrow, so these are bigger than the numbers
+     Fredoka needed and still wrap in fewer lines.
+
+       116  hero h1              Hero.module.css, height-aware (see note there)
+       109  --fs-mega            the duck names — a single word on a full screen
+        88  Foundation headline  its own clamp: a SENTENCE, so a step down
+        76  --fs-xl              every section h2
+        56  --fs-lg              headings in a narrow column or long sentences
+                                 (Our Story, the newsletter band, the WHY)
+        32  --fs-md              sub-heads
+        28  card titles          Journal and the bigger-vision cards
+
+     --fs-mega was 144, which made the duck names LARGER than the hero: an h3
+     out-sizing the page's h1 by 60%. */
+  --fs-mega:  clamp(2.5rem, 7.6vw, 6.875rem);
   /* Display leading. Bangbang's em box is exactly its ascent plus its descent
      (750 + 250 of 1000), so anything under 1.0 clips the descenders on g, p, y
      and the comma. Each step sits at or just above 1. */

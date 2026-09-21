@@ -34,6 +34,11 @@
 
   a { color: inherit; text-underline-offset: .2em; }
 
+  /* No single-word last lines. Measured eight paragraphs ending on one short
+     word — "us.", "Vinny.", "all.", "point." — where the last line was under 5%
+     of the widest. Several sections set this already; this is the default. */
+  p { text-wrap: pretty; }
+
   /* The liquid cursor REPLACES the system one. The class is added by
      CursorTrail only once it is actually running, so a touch device, a
      reduced-motion visitor or a JS failure all keep their own pointer. */
@@ -72,6 +77,10 @@
     letter-spacing: 0;
     color: var(--ink);
   }
+  /* Even out the rag on anything that wraps. Safe on headings — unlike on a
+     button label, where it once split "I want Vincey" across two lines and gave
+     three identical CTAs three different heights. */
+  .d-mega, .d-xl, .d-lg, .d-md { text-wrap: balance; }
   .d-mega { font-size: var(--fs-mega); letter-spacing: .004em; line-height: var(--lh-display); }
   .d-xl   { font-size: var(--fs-xl);   letter-spacing: .006em; line-height: var(--lh-xl); }
   .d-lg   { font-size: var(--fs-lg);   letter-spacing: .008em; line-height: var(--lh-lg); }
@@ -88,7 +97,10 @@
     font-family: var(--font-mono); font-weight: 500;
     font-size: var(--fs-micro); letter-spacing: .1em; text-transform: uppercase;
   }
-  .lead { font-size: var(--fs-lead); line-height: 1.5; font-weight: 500; }
+  /* `balance`, not `pretty`. pretty only reflows the LAST few lines, which
+     cannot rescue a two-line lead whose second line is one word — four section
+     leads were doing exactly that. balance evens every line. */
+  .lead { font-size: var(--fs-lead); line-height: 1.5; font-weight: 500; text-wrap: balance; }
   .hand { font-family: var(--font-hand); font-size: clamp(1.0625rem, 1.6vw, 1.375rem); line-height: 1.45; }
   .measure { max-width: var(--measure); }
 }

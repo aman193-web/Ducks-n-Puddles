@@ -30,7 +30,12 @@
 .head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 @media (min-width: 900px) {
   .head {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    /* 1.2/0.8, not 1.35/0.65. At the old split the lead column measured 348px
+       at 1440 — about 25 characters per line at --fs-lead — which orphaned the
+       last word of four different section leads. The heading still gets 710px,
+       and every section h2 fits that in two lines or fewer. This same head is
+       shared by eight sections; they all carry the same split. */
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
     align-items: start;
   }
