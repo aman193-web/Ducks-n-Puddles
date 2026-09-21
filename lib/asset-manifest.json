@@ -558,5 +558,213 @@
     ],
     "nativeWidth": 1231,
     "nativeHeight": 569
+  },
+  "chichi-idle": {
+    "id": "chichi-idle",
+    "tier": "A",
+    "widths": [
+      420,
+      840
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "goosey-idle": {
+    "id": "goosey-idle",
+    "tier": "A",
+    "widths": [
+      420,
+      840
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "vincey-idle": {
+    "id": "vincey-idle",
+    "tier": "A",
+    "widths": [
+      420,
+      840
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "chichi-wave": {
+    "id": "chichi-wave",
+    "tier": "A",
+    "widths": [
+      340,
+      680
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "goosey-wave": {
+    "id": "goosey-wave",
+    "tier": "A",
+    "widths": [
+      340,
+      680
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "chichi-splash": {
+    "id": "chichi-splash",
+    "tier": "A",
+    "widths": [
+      340,
+      680
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "goosey-rest": {
+    "id": "goosey-rest",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "vincey-peek": {
+    "id": "vincey-peek",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "chichi-walk": {
+    "id": "chichi-walk",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "vincey-walk": {
+    "id": "vincey-walk",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "goosey-cheer": {
+    "id": "goosey-cheer",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "trio-puddle": {
+    "id": "trio-puddle",
+    "tier": "A",
+    "widths": [
+      720,
+      1440
+    ],
+    "alpha": true,
+    "aspect": 1.3333,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1448,
+    "nativeHeight": 1086
+  },
+  "trio-walk": {
+    "id": "trio-walk",
+    "tier": "A",
+    "widths": [
+      560,
+      1120
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
   }
 }

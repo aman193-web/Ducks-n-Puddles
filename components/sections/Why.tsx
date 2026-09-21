@@ -1,6 +1,7 @@
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { Motif } from '@/components/Motif'
+import { Duck } from '@/components/ui/Duck'
 import { brand } from '@/content/brand'
 import styles from './Why.module.css'
 
@@ -54,7 +55,7 @@ export function Why() {
     <section className={styles.section} id="why" aria-labelledby="why-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--goosey)" rot={-2} data-pop="" data-pop-rot="-2">
+          <Sticker colour="var(--goosey-soft)" rot={-2} data-pop="" data-pop-rot="-2">
             Why we make these
           </Sticker>
           <h2 id="why-title" className="d d-xl measure" data-anim="">
@@ -72,6 +73,13 @@ export function Why() {
               <h3 className="d d-md">{s.head}</h3>
               <p className={styles.body}>{s.body}</p>
               <p className={`hand ${styles.foot}`}>{s.foot}</p>
+              {/* The parent side gets the calm one, the child side the brave
+                  one. Two audiences, two characters, same size — which is the
+                  section's whole argument made visible. */}
+              <Duck who={s.k === 'parents' ? 'vincey' : 'chi-chi'}
+                    pose={s.k === 'parents' ? 'idle' : 'wave'}
+                    className={styles.cameo} float
+                    sizes="(min-width: 820px) 10vw, 22vw" />
             </article>
           ))}
         </div>

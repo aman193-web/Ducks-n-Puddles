@@ -34,6 +34,7 @@
 }
 
 .side {
+  position: relative;
   display: grid;
   align-content: start;
   gap: var(--s-3);
@@ -58,7 +59,8 @@
 }
 .mark svg { inline-size: 22px; block-size: 22px; }
 
-.eyebrow { color: var(--ink-soft); }
+/* --ink-soft measures 4.23 on the chichi field at 12px. Full ink. */
+.eyebrow { color: var(--ink); }
 .body { max-width: 44ch; }
 /* The handwritten close: rallyCry on the parent side, the three words on the
    child side. Set apart from the paragraph so it lands as a signature. */
@@ -70,3 +72,21 @@
 }
 
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }
+
+/* One character per audience column, bottom-right of its own card. */
+.cameo {
+  position: absolute;
+  z-index: 1;
+  inline-size: clamp(76px, 9vw, 124px);
+  inset-block-end: calc(var(--card-pad) * -0.5);
+  inset-inline-end: calc(var(--card-pad) * -0.2);
+}
+
+/* Tighter on a phone: the two cards ran to 1.6 screens, and the 44px motif disc
+   is doing very little work at that size. */
+@media (max-width: 819px) {
+  .side { padding: var(--s-5) var(--s-4); gap: var(--s-2); }
+  .mark { inline-size: 34px; block-size: 34px; margin-block-end: 0; }
+  .mark svg { inline-size: 17px; block-size: 17px; }
+  .body { font-size: var(--fs-small); }
+}

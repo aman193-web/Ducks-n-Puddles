@@ -1,5 +1,11 @@
-import { Motif } from '@/components/Motif'
+import { Motif, type MotifName } from '@/components/Motif'
 import styles from './Marquee.module.css'
+
+/** Rotating brand marks, in place of the six Phosphor glyphs in outlined discs
+ *  the client asked to remove. Puddle, splash, footprint, wave, duck — the
+ *  "little splashes/puddles or another subtle brand element" they suggested,
+ *  cycled so the band does not repeat one mark all the way across. */
+const MARKS: MotifName[] = ['droplets', 'splash', 'footprint', 'wave', 'duck']
 
 interface Props {
   items: string[]
@@ -25,7 +31,7 @@ export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = '
       {items.map((t, i) => (
         <span className={styles.item} key={`${t}-${i}`}>
           {t}
-          <Motif name="droplets" className={styles.mark} />
+          <Motif name={MARKS[i % MARKS.length]} className={styles.mark} />
         </span>
       ))}
     </span>

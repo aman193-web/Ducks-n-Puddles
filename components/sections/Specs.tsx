@@ -2,6 +2,8 @@ import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby, Heart }
   from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
+import { Duck } from '@/components/ui/Duck'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import { confirmedSpecs } from '@/content/brand'
 import styles from './Specs.module.css'
 
@@ -33,6 +35,10 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; weight?: 'light
 export function Specs() {
   return (
     <section className={styles.section} id="features" aria-labelledby="specs-title">
+      <BrandDetail preset="droplets" />
+      {/* Goosey, sitting at the corner of the spec sheet — the one warm thing in
+          a section that is otherwise all reassurance for the parent. */}
+      <Duck who="goosey" pose="rest" className={styles.cameo} float />
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--cream)" rot={2} data-pop="" data-pop-rot="2">

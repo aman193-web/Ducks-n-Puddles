@@ -6,6 +6,7 @@ import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
 import { PuddleFace } from '@/components/ui/PuddleFace'
+import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
 import { DUCKS } from '@/lib/subscribe-schema'
 import styles from './Squad.module.css'
@@ -75,7 +76,7 @@ export function Squad() {
     <section className={styles.section} id="squad" aria-labelledby="squad-title">
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
-          <Sticker colour="var(--sun)" rot={-3} data-pop="" data-pop-rot="-3">Join the Duck Squad</Sticker>
+          <Sticker colour="var(--sun-soft)" rot={-3} data-pop="" data-pop-rot="-3">Join the Duck Squad</Sticker>
           <h2 id="squad-title" className="d d-xl" data-anim="">
             Come into the pond.
           </h2>
@@ -98,7 +99,11 @@ export function Squad() {
         <div className={styles.panel}>
         {state === 'done' ? (
           <div className={styles.success} role="status" aria-live="polite">
-            <div style={{ inlineSize: 180 }}><PuddleFace colour="var(--sun)" /></div>
+            {/* Goosey cheering, because the moment someone joins the squad is
+                exactly "there's always room for one more friend". */}
+            <Duck who="goosey" pose="cheer" density="always"
+                  className={styles.success_duck} float
+                  sizes="180px" />
             <h3 className="d d-lg">You&rsquo;re in.</h3>
             <p className="hand">Check your inbox to confirm &mdash; we only count you once you do.</p>
             <p className={styles.note}>Nothing there in a few minutes? Have a look in Promotions.</p>

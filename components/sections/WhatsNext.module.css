@@ -52,8 +52,31 @@
 .title { font-family: var(--font-display); font-synthesis: none; font-weight: 500;
          font-size: var(--fs-md); letter-spacing: -.008em; }
 .body { grid-column: 2; max-width: 42ch; text-wrap: pretty; }
-@media (max-width: 560px) {
-  .item { grid-template-columns: 1fr; }
+/* ---- a rail below 860px -------------------------------------------------
+   Five stacked cards ran to 2.35 screens on a phone. Two columns was tried
+   first and made it WORSE: at 140px wide the title and body wrapped so hard
+   that each card went 281px -> 518px, for no net saving. As a scroll-snap rail
+   it is one screen, and it matches the range and journal rails either side. */
+@media (max-width: 859px) {
+  .list {
+    display: flex;
+    gap: var(--card-gap);
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--gutter);
+    scrollbar-width: thin;
+  }
+  .item {
+    flex: 0 0 auto;
+    inline-size: min(74vw, 280px);
+    scroll-snap-align: start;
+    grid-template-columns: 1fr;
+    align-content: start;
+    rotate: 0deg;
+  }
   .num { grid-row: auto; }
   .body { grid-column: 1; }
 }

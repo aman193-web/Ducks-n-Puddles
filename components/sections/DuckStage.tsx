@@ -2,6 +2,7 @@
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
+import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
 import { play as playQuack } from '@/lib/sound'
 import styles from './DuckStage.module.css'
@@ -35,7 +36,7 @@ export function DuckStage() {
     <section className={styles.section} id="ducks" aria-labelledby="ducks-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--chichi)" rot={2} data-pop="" data-pop-rot="2">The Quack Pack</Sticker>
+          <Sticker colour="var(--chichi-soft)" rot={2} data-pop="" data-pop-rot="2">The Quack Pack</Sticker>
           <h2 id="ducks-title" className="d d-xl" data-anim="">
             Meet the ducks.
           </h2>
@@ -61,6 +62,11 @@ export function DuckStage() {
                 <p className={styles.personality}>{d.personality}</p>
                 <p className={`hand ${styles.says}`}>&ldquo;{d.saying}&rdquo;</p>
 
+                <p className={styles.parents}>
+                  <span className={`eyebrow ${styles.parentsLabel}`}>For parents</span>
+                  {d.forParents}
+                </p>
+
                 <div className={styles.teaches}>
                   <p className={`eyebrow ${styles.teachesLabel}`}>What {d.name} helps with</p>
                   <ul className={styles.chips}>
@@ -75,12 +81,23 @@ export function DuckStage() {
                 </span>
               </div>
 
+              {/* The CHARACTER leads and the bottle stands with it. This section
+                  is called Meet the Ducks, and until now the only thing to meet
+                  was a product render — which is the single biggest thing the
+                  client asked us to change. */}
               <div className={styles.figure}>
                 <span className={styles.puddle} aria-hidden="true" />
+                <Duck
+                  who={d.slug} pose="idle" density="always" float
+                  className={styles.character}
+                  sizes="(min-width: 880px) 26vw, 56vw"
+                  alt={d.name}
+                />
                 <Picture
                   id={assetFor(d.slug)}
-                  sizes="(min-width: 880px) 30vw, 70vw"
+                  sizes="(min-width: 880px) 16vw, 34vw"
                   alt={`The ${d.name} bottle`}
+                  className={styles.bottle}
                   data-bob=""
                 />
               </div>

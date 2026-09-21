@@ -110,3 +110,13 @@
 .open .key { color: var(--sky); }
 
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }
+
+/* Goosey, sitting at the section's bottom-right corner, clear of the grid. */
+.cameo {
+  position: absolute;
+  z-index: 1;
+  inline-size: clamp(110px, 12vw, 176px);
+  inset-block-end: calc(var(--section-y) * -0.18);
+  inset-inline-end: clamp(8px, 3vw, 64px);
+}
+@media (max-width: 899px) { .cameo { display: none; } }

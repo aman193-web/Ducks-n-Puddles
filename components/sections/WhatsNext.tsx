@@ -27,7 +27,7 @@ export function WhatsNext() {
     <section className={styles.section} id="next" aria-labelledby="next-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--sky)" rot={-2} data-pop="" data-pop-rot="-2">The bigger picture</Sticker>
+          <Sticker colour="var(--sky-soft)" rot={-2} data-pop="" data-pop-rot="-2">The bigger picture</Sticker>
           <h2 id="next-title" className="d d-xl" data-anim="">
             The bottles are just the beginning.
           </h2>

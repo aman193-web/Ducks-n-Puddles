@@ -18,7 +18,7 @@ export function Faq() {
     <section className={styles.section} id="faq" aria-labelledby="faq-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--sun)" rot={-2} data-pop="" data-pop-rot="-2">Questions</Sticker>
+          <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Questions</Sticker>
           <h2 id="faq-title" className="d d-xl" data-anim="">Things parents ask us.</h2>
           <p className="lead" data-anim="">
             If it is not here, email us &mdash; it goes straight to {brand.founders}.

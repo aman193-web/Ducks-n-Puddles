@@ -143,6 +143,23 @@
    The row is SHORTER than the renders inside it and clips them, so the bottles
    read as rising out of the bottom of the page rather than as three images that
    happen to be cut off. */
+/* Wraps both rows so they share one clipping edge. */
+.squad { position: relative; overflow: clip; }
+
+/* The characters walk in FRONT of the bottles, overlapping the row's lower
+   half — the bottles are what you buy, the ducks are who they are. */
+.trio {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: -4%;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: min(84%, 720px);
+}
+@media (max-width: 899px) {
+  .trio { inline-size: min(100%, 460px); inset-block-end: -6%; }
+}
+
 .bottles {
   position: relative;
   display: flex;

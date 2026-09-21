@@ -184,14 +184,18 @@ export const pendingSpecCount = specs.filter((s) => s.status === 'pending').leng
  */
 export const foundation = {
   eyebrow: 'More than a brand',
+  /** The section used to never say the word "Foundation" anywhere, which is why
+   *  it read as a general values block instead of what the client asked for.
+   *  The name now leads. */
+  name: 'The Ducks ’n Puddles Foundation',
   title: 'There’s always room in the puddle.',
   body: [
     'Ducks ’n Puddles was never only meant to be a shelf of products. It started with '
     + 'our own family, and the whole reason to build it was the children who would end '
     + 'up holding it.',
-    'So giving back to children and families is part of the purpose from the beginning, '
-    + 'not something bolted on once the company is big enough. We are still putting the '
-    + 'shape of it together, and when it is real you will hear exactly what it is — the '
+    'So we are building the Foundation alongside the brand rather than after it, because '
+    + 'giving back to children and families is part of the purpose. We are still putting '
+    + 'the shape of it together — when it is real you will hear exactly what it is, the '
     + 'same way you hear everything else from us.',
   ],
   /** Goosey's own line from the character sheet. It is the argument for the whole

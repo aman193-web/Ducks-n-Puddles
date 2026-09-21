@@ -57,7 +57,22 @@
 .cards > .cardWrap:nth-child(2) .card { rotate: .8deg; }
 .cards > .cardWrap:nth-child(3) .card { rotate: -.6deg; }
 .figure { position: relative; justify-self: center; }
-.figure img { block-size: clamp(196px, 21vw, 270px); inline-size: auto; width: auto; }
+/* Scoped to .bottle, NOT `.figure img`. The unscoped rule also caught the
+   character cameo and forced `block-size` on a square source with
+   `inline-size: auto`, which stretched it to 138x273. */
+.bottle { block-size: clamp(196px, 21vw, 270px); inline-size: auto; width: auto; }
+
+/* The character, standing beside its bottle and overlapping the puddle. Behind
+   the bottle in the stack so the product still leads — the duck is who it is,
+   the bottle is what you buy. */
+.character {
+  position: absolute;
+  z-index: 0;
+  inline-size: clamp(88px, 11vw, 132px);
+  inset-block-end: -6px;
+  inset-inline-start: -14%;
+}
+.figure > picture:has(.bottle) { position: relative; z-index: 1; }
 .puddle {
   position: absolute; inset-block-end: -10px; inset-inline-start: 50%;
   translate: -50% 0; inline-size: 88%; block-size: 20px;
@@ -77,4 +92,42 @@
   background: var(--sun); color: var(--ink);
   border: var(--border); border-radius: var(--r-pill);
   justify-self: start;
+}
+
+/* ---- the two voices ----------------------------------------------------
+   Child line then parent line, each labelled, separated by a hairline so they
+   read as a pair rather than as two stray paragraphs. */
+.voices { display: grid; gap: var(--s-3); }
+.voice { display: grid; gap: 2px; margin: 0; }
+.voice + .voice { padding-block-start: var(--s-3); border-block-start: var(--border); }
+/* Full ink, no opacity: at 12px this needs 4.5:1 and ink at .62 measures
+   4.22-4.34. The mono face and its tracking carry the hierarchy instead. */
+.voiceLabel { color: var(--ink); }
+
+/* The ripple sits in the card's own puddle, under the bottle. */
+.ripple { inline-size: 116%; inset-inline-start: 50%; inset-block-end: -16px; }
+
+/* ---- a rail below 820px -------------------------------------------------
+   Three stacked cards ran to 3.03 screens on a phone — the single biggest slice
+   of the mobile scroll length. As a scroll-snap rail it is one screen, and the
+   pattern is already proven by the reels section: keyboard and trackpad native,
+   no JS, degrades to a plain scroller. The desktop card fan is gated to
+   min-width 1024 (ScrollScenes), so it is untouched by this. */
+@media (max-width: 819px) {
+  .cards {
+    display: flex;
+    gap: var(--card-gap);
+    /* bleeds out of the wrap so the row reads as continuing off-screen, and
+       starts on the page's own content edge like the reels rail */
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--gutter);
+    scrollbar-width: thin;
+  }
+  .cardWrap { flex: 0 0 auto; inline-size: min(78vw, 300px); scroll-snap-align: start; }
+  /* the resting tilts read as clutter in a tight row */
+  .cards > .cardWrap .card { rotate: 0deg; }
 }

@@ -1,4 +1,13 @@
-.section { background: var(--vincey-soft); padding-block: var(--section-y); overflow: clip; }
+.section {
+  background: var(--vincey-soft);
+  padding-block: var(--section-y);
+  position: relative;
+  /* clip on one axis only: the peeking duck rises above the top edge, and a
+     two-axis clip decapitated it. The rail still cannot cause a horizontal
+     scrollbar. */
+  overflow-x: clip;
+  overflow-y: visible;
+}
 
 /* shares the two-column head used across the site */
 .head {
@@ -79,3 +88,12 @@
 
 /* The rail is full-bleed, so its CTA goes back inside a wrap below it. */
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }
+
+/* Vincey peeking over the top edge of the section, above the rail. */
+.cameo {
+  position: absolute;
+  z-index: 2;
+  inline-size: clamp(96px, 11vw, 150px);
+  inset-block-start: calc(var(--section-y) * -0.3);
+  inset-inline-end: clamp(12px, 8vw, 150px);
+}

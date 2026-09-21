@@ -21,7 +21,7 @@ export function Journal() {
     <section className={styles.section} id="journal" aria-labelledby="journal-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--sky)" rot={2} data-pop="" data-pop-rot="2">The duck pond</Sticker>
+          <Sticker colour="var(--sky-soft)" rot={2} data-pop="" data-pop-rot="2">The duck pond</Sticker>
           <h2 id="journal-title" className="d d-xl" data-anim="">Notes from the kitchen table.</h2>
           <p className="lead" data-anim="">
             What we are learning, what we are changing, and the odd thing worth knowing

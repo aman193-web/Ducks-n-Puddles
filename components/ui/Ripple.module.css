@@ -1,0 +1,51 @@
+/* =============================================================================
+   A PUDDLE RIPPLE
+
+   The only new motion primitive in this round. `transform: scale()` on a ring
+   that fades as it grows — and `transform` is safe here because these <i>
+   elements carry no resting value of their own and are not [data-anim], so the
+   reduced-motion `transform: none !important` rule has nothing to erase. The
+   rings do not render at all under reduced motion (see the bottom of the file),
+   rather than sitting frozen mid-expansion.
+   ========================================================================== */
+.ripple {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: 100%;
+  aspect-ratio: 1 / .28;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ripple i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border: var(--bw) solid var(--ink);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+@keyframes rippleOut {
+  /* 0-46% is the whole event; the rest is deliberate dead time, so it reads as
+     the occasional plink of water rather than a pulsing loop. */
+  0%   { transform: scale(.34); opacity: 0; }
+  8%   { opacity: .34; }
+  46%  { transform: scale(1); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ripple i {
+    animation: rippleOut 5.2s ease-out infinite;
+    /* each ring trails the one inside it */
+    animation-delay: calc(var(--r-i) * .62s);
+  }
+}
+
+/* Nothing to freeze: under reduced motion the rings are simply absent. */
+@media (prefers-reduced-motion: reduce) {
+  .ripple { display: none; }
+}

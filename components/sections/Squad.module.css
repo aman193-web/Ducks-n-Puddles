@@ -110,3 +110,6 @@
 }
 .success { display: grid; gap: var(--s-4); justify-items: center; text-align: center; }
 
+
+/* Goosey cheering, in place of the puddle face, on form success. */
+.success_duck { inline-size: min(56%, 200px); margin-inline: auto; }

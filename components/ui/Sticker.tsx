@@ -7,7 +7,7 @@ type StickerProps = {
   rot?: number
 } & React.HTMLAttributes<HTMLSpanElement>
 
-export function Sticker({ children, colour = 'var(--sun)', rot = -3, className, style, ...rest }: StickerProps) {
+export function Sticker({ children, colour = 'var(--sun-soft)', rot = -3, className, style, ...rest }: StickerProps) {
   return (
     <span
       {...rest}
@@ -24,7 +24,7 @@ export function Sticker({ children, colour = 'var(--sun)', rot = -3, className, 
  * ("POWERFUL [trophy] NUTRITION"). Decorative, so it is hidden from assistive tech
  * and the sentence still reads cleanly to a screen reader.
  */
-export function Glyph({ motif, colour = 'var(--sun)', rot = -6 }: {
+export function Glyph({ motif, colour = 'var(--sun-soft)', rot = -6 }: {
   motif: MotifName; colour?: string; rot?: number
 }) {
   return (

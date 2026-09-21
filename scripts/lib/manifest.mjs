@@ -74,6 +74,37 @@ export const alphaAssets = [
   { id: 'splash',         src: `${BRAND_DIR}/icons/water-splash-icon.png`, widths: [334, 669] },
   { id: 'pattern-primary',   src: `${BRAND_DIR}/patterns/primary-pattern-transparent.png`,   widths: [320, 640] },
   { id: 'pattern-secondary', src: `${BRAND_DIR}/patterns/secondary-pattern-transparent.png`, widths: [240, 480] },
+
+  /* ---- THE CHARACTERS ---------------------------------------------------
+     The illustrated Chi Chi, Goosey and Vincey — what the client most wanted
+     on the site, and what makes this a character brand rather than a bottle
+     shop. Masters live in media/brand/characters/ at 1254x1254 with real
+     alpha; 35 poses are on disk and the subset below is what is actually
+     placed. Add a line here to bring another pose into play.
+
+     Two traps, both load-bearing:
+       - Widths must stay <= the master's native width or they are silently
+         dropped (build-images.mjs), and if every width is dropped <Picture>
+         renders width={undefined} / height={NaN}.
+       - alphaAssets carry no `alt`, so <Picture> without an explicit alt
+         renders alt="" aria-hidden. Correct for a decorative cameo; wrong for
+         a character that is actually content. Pass alt when it means something. */
+  { id: 'chichi-idle',   src: `${BRAND_DIR}/characters/chichi-idle.png`,   widths: [420, 840] },
+  { id: 'goosey-idle',   src: `${BRAND_DIR}/characters/goosey-idle.png`,   widths: [420, 840] },
+  { id: 'vincey-idle',   src: `${BRAND_DIR}/characters/vincey-idle.png`,   widths: [420, 840] },
+  { id: 'chichi-wave',   src: `${BRAND_DIR}/characters/chichi-wave.png`,   widths: [340, 680] },
+  { id: 'goosey-wave',   src: `${BRAND_DIR}/characters/goosey-wave.png`,   widths: [340, 680] },
+  { id: 'chichi-splash', src: `${BRAND_DIR}/characters/chichi-splash.png`, widths: [340, 680] },
+  { id: 'goosey-rest',   src: `${BRAND_DIR}/characters/goosey-rest.png`,   widths: [300, 600] },
+  { id: 'vincey-peek',   src: `${BRAND_DIR}/characters/vincey-peek.png`,   widths: [300, 600] },
+  { id: 'chichi-walk',   src: `${BRAND_DIR}/characters/chichi-walk.png`,   widths: [300, 600] },
+  { id: 'vincey-walk',   src: `${BRAND_DIR}/characters/vincey-walk.png`,   widths: [300, 600] },
+  { id: 'goosey-cheer',  src: `${BRAND_DIR}/characters/goosey-cheer.png`,  widths: [300, 600] },
+  /* The three of them together, standing in one puddle. This is the literal
+     picture the Foundation's headline describes, so it is the one character
+     asset the page cannot do without. Landscape master, 1448x1086. */
+  { id: 'trio-puddle',   src: `${BRAND_DIR}/characters/trio-puddle.png`,   widths: [720, 1440] },
+  { id: 'trio-walk',     src: `${BRAND_DIR}/characters/trio-walk.png`,     widths: [560, 1120] },
 ]
 
 /**

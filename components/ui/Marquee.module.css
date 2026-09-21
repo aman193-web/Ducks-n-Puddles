@@ -42,14 +42,14 @@
   white-space: nowrap;
 }
 
-/* Each phrase is followed by the brand's own droplet motif — the mark printed on
-   the Vincey bottle — rather than a coloured glyph in an outlined disc. It is
-   ink at 42%, so it separates the phrases without competing with them. */
+/* Each phrase is followed by a brand mark — puddle, splash, footprint, wave,
+   duck — rather than a coloured glyph in an outlined disc. Full ink at 1em:
+   at .78em and 42% opacity these read as smudges rather than as icons, which
+   was the note. No disc, no outline; the mark is the whole thing. */
 .mark {
   flex: none;
-  inline-size: .78em; block-size: .78em;
+  inline-size: 1em; block-size: 1em;
   color: var(--ink);
-  opacity: .42;
   /* Optically centred on the letterforms, not on the line box: at line-height 1
      the box carries descender space the word barely uses, which parks the mark
      fractionally low against the text. */

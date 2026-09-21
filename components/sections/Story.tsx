@@ -1,6 +1,7 @@
 import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
+import { Duck } from '@/components/ui/Duck'
 import styles from './Story.module.css'
 
 /**
@@ -21,15 +22,19 @@ export function Story() {
       <div className="wrap">
         <div className={styles.grid}>
           <figure className={styles.figure} data-anim="" data-anim-rot="-2">
-            <Sticker className={styles.badge} colour="var(--goosey)" rot={9}
+            <Sticker className={styles.badge} colour="var(--goosey-soft)" rot={9}
                      data-pop="" data-pop-rot="9">
               South Florida
             </Sticker>
-            <Picture id="shell-hands" sizes="(min-width: 900px) 46vw, 92vw" />
+            <Picture id="shell-hands" sizes="(min-width: 900px) 46vw, 92vw"
+                     className={styles.photo} />
+            {/* Chi Chi, already in the puddle, beside the real family. */}
+            <Duck who="chi-chi" pose="splash" className={styles.cameo} float
+                  sizes="(min-width: 900px) 13vw, 26vw" />
           </figure>
 
           <div className={styles.body}>
-            <Sticker colour="var(--chichi)" rot={-2} data-pop="" data-pop-rot="-2">Our story</Sticker>
+            <Sticker colour="var(--chichi-soft)" rot={-2} data-pop="" data-pop-rot="-2">Our story</Sticker>
             <h2 id="story-title" className={`d ${styles.title}`} data-anim="">
               It started with our family.
             </h2>
@@ -52,14 +57,14 @@ export function Story() {
               experiences that bring more ease to parents and more comfort, connection and
               magic to childhood.
             </p>
-            <p className={`hand ${styles.pull}`} data-anim="" data-anim-rot="2">
-              A friend for every adventure.
-            </p>
-            <div className={styles.sig} data-anim="">
-              <img src="/img/mascot-140.webp" width={42} height={47} alt="" className="wiggle" />
-              <span className="hand">&mdash; Larisa &amp; Vinny</span>
-            </div>
-            <div className={styles.cta} data-anim="">
+            {/* The "A friend for every adventure." pull quote is gone: it is the
+                hero's h1 AND the last line of the client's own copy above, and
+                three times on one page is once too many. */}
+            <div className={styles.close} data-anim="">
+              <span className={styles.sig}>
+                <img src="/img/mascot-140.webp" width={42} height={47} alt="" className="wiggle" />
+                <span className="hand">&mdash; Larisa &amp; Vinny</span>
+              </span>
               <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>
             </div>
           </div>

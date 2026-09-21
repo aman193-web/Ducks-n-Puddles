@@ -3,6 +3,8 @@ import { useRef, useState } from 'react'
 import { Play, Pause } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
+import { Duck } from '@/components/ui/Duck'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import { reels } from '@/content/brand'
 import styles from './InTheWild.module.css'
 
@@ -44,9 +46,13 @@ export function InTheWild() {
 
   return (
     <section className={styles.section} id="wild" aria-labelledby="wild-title">
+      <BrandDetail preset="wake" />
+      {/* Vincey looking over the edge of the rail — the `peek` pose is painted
+          as an upper body exactly for this. */}
+      <Duck who="vincey" pose="peek" className={styles.cameo} />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--sun)" rot={-2} data-pop="" data-pop-rot="-2">Out in the world</Sticker>
+          <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Out in the world</Sticker>
           <h2 id="wild-title" className="d d-xl" data-anim="">Ducks in everyday life.</h2>
           <p className="lead measure" data-anim="">
             Real kids, real families, real afternoons. This is what a duck looks like once

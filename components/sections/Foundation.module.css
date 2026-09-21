@@ -44,28 +44,46 @@
 .inner {
   position: relative; z-index: 1;
   display: grid;
-  justify-items: start;
-  gap: var(--flow-eyebrow);
+  gap: var(--flow-block);
+  align-items: start;
+}
+/* Head across the top, then copy left and the three of them in their puddle
+   right. The art used to be an empty reserved column, which read as a hole;
+   now it is the thing the headline is describing, so it gets real width. */
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'head head' 'copy art';
+    column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
+    row-gap: var(--flow-block);
+  }
+  .head { grid-area: head; }
+  .copy { grid-area: copy; }
+  .art  { grid-area: art; align-self: center; }
 }
 
-/* Hero scale, not section scale — this is what makes it read as a moment rather
-   than as another band. It takes the full content width; see the note in the
-   component for why. */
-.title { margin-block-end: var(--flow-head); }
+.head { display: grid; justify-items: start; gap: var(--flow-eyebrow); }
 
-/* The body stays in the left half from 900 up. The empty right half is
-   deliberate: it is the reserved space for the three characters together in one
-   puddle (Batch 4), which is the picture this copy is describing. */
 .copy {
   display: grid;
   justify-items: start;
   gap: var(--flow-head);
-  max-width: 62ch;
 }
-@media (min-width: 900px) {
-  .copy { max-width: min(54ch, 56%); }
+
+/* Hero scale, not section scale — this is what makes it read as a moment rather
+   than as another band. Capped so it breaks into a stacked block of two or three
+   lines rather than running the full width as one. */
+.title { max-width: 24ch; }
+
+/* The Foundation's actual name, directly under the headline. Without this the
+   section never said the word and read as a general values block. */
+.name {
+  color: var(--ink);
+  padding-block-end: var(--s-3);
+  border-block-end: var(--bw-lg) solid var(--ink);
 }
-.body { max-width: 52ch; }
+
+.body { max-width: 48ch; }
 
 /* Goosey's own line, set apart as a pull quote. */
 .quote {
@@ -99,4 +117,14 @@
 
 @media (min-width: 900px) {
   .puddles { display: block; }
+}
+
+/* ---- the three of them, in one puddle ---------------------------------- */
+.art { position: relative; justify-self: center; inline-size: 100%; }
+.trio { inline-size: min(100%, 560px); margin-inline: auto; }
+/* On a phone the art leads and the copy follows it — a child recognises the
+   characters before a parent reads the paragraph. */
+@media (max-width: 899px) {
+  .art { order: -1; }
+  .trio { inline-size: min(100%, 420px); }
 }

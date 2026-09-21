@@ -1,0 +1,51 @@
+/* =============================================================================
+   A CHARACTER CAMEO
+
+   TRANSFORM CHANNEL (see Hero.module.css and README.md — break it and the last
+   writer silently wins):
+     `scale`      -> the horizontal flip, a standalone property
+     `rotate`     -> the resting tilt, written inline from the component
+     `transform`  -> the float keyframe ONLY
+   Nothing here uses `translate`, which the hero's pointer parallax owns, and
+   nothing puts a resting value on `transform`, because reduced motion sets
+   `transform: none !important` and would erase it.
+   ========================================================================== */
+.duck {
+  display: block;
+  position: relative;
+  /* Decorative by default: a cameo must never eat a click meant for the content
+     it sits beside. A cameo that IS interactive re-enables this itself. */
+  pointer-events: none;
+  user-select: none;
+  /* The flip is `scale`, so it composes with the inline `rotate` and with the
+     float's `transform` instead of fighting them. */
+  scale: var(--duck-flip, 1) 1;
+}
+.duck img {
+  inline-size: 100%;
+  block-size: auto;
+  /* The masters are painted with no ground, so a soft contact shadow is what
+     stops a character looking pasted on. Warm navy, not black. */
+  filter: drop-shadow(0 12px 18px rgba(16, 38, 74, .16));
+}
+
+/* Idle float. Its own keyframe rather than [data-bob], because bob() in
+   lib/motion.ts derives amplitude and period from DOM index — every extra
+   bobbing element would silently re-time all the others. */
+@keyframes duckFloat {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-7px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .float { animation: duckFloat 2.6s ease-in-out infinite alternate; }
+  /* Out of phase, so a group never bobs in lockstep. */
+  .float:nth-of-type(2n)   { animation-duration: 3.1s; animation-delay: .4s; }
+  .float:nth-of-type(3n)   { animation-duration: 2.9s; animation-delay: .8s; }
+}
+
+/* Mobile density. The client asked for mobile to feel as intentional as
+   desktop, which means fewer characters on a phone rather than the same ones
+   squeezed in — and it keeps the scroll length down. */
+@media (max-width: 899px) {
+  .duck[data-density='desktop'] { display: none; }
+}

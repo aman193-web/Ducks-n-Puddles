@@ -41,6 +41,14 @@
   padding-block: var(--s-6);
   overflow: clip;
 }
+/* A sticky element TALLER than the viewport cannot pin: the bottom of its
+   content is cut off while it is stuck, and the card-stack effect degrades into
+   ordinary scrolling. On a phone these panels measured 970px against 844px of
+   viewport, so the floor comes off and each panel sizes to its own content —
+   which either pins properly or scrolls honestly. */
+@media (max-width: 899px) {
+  .panel { min-block-size: 0; }
+}
 .inner { display: grid; gap: var(--s-6); align-items: center; }
 
 .text { display: grid; justify-items: start; gap: var(--s-4); position: relative; z-index: 2; }
@@ -53,6 +61,18 @@
 /* What the duck helps a child with, straight off the character sheet. Chips
    rather than a list: five short virtues read as a set, and a bulleted column
    would out-weigh the description above it. */
+/* The parent-facing line, back after Batch 2 dropped it. The client asked for
+   both audiences at once: the description above is for the child, this is for
+   whoever is buying it. */
+.parents {
+  display: grid; gap: 2px;
+  background: var(--cream); border: var(--border); border-radius: var(--r);
+  padding: var(--s-3) var(--s-4);
+  font-size: var(--fs-small); font-weight: 600; max-width: 38ch;
+}
+/* Full ink — see the note on .teachesLabel. */
+.parentsLabel { color: var(--ink); font-weight: 500; }
+
 .teaches { display: grid; gap: var(--s-2); margin-block-start: var(--s-2); }
 /* Full --ink at full opacity. At 12px this label needs 4.5:1; --ink-soft measures
    4.19 on Vincey's soft ground and 3.84 on Chi Chi's, and ink at .72 opacity only
@@ -65,8 +85,19 @@
   padding: 6px var(--s-3); font-size: var(--fs-small); font-weight: 600;
 }
 
-.figure { position: relative; justify-self: center; }
-.figure img { block-size: clamp(240px, 38vw, 500px); inline-size: auto; width: auto; position: relative; z-index: 1; }
+.figure {
+  position: relative; justify-self: center;
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: clamp(4px, 1.4vw, 20px);
+}
+/* The character is the taller of the two and sits slightly forward, so the pair
+   reads as a duck holding its own bottle rather than as two stacked images. */
+.character { inline-size: clamp(170px, 26vw, 330px); z-index: 2; }
+.bottle {
+  block-size: clamp(190px, 28vw, 380px);
+  inline-size: auto; width: auto;
+  position: relative; z-index: 1;
+}
 .puddle {
   position: absolute; inset-block-end: -14px; inset-inline-start: 50%;
   translate: -50% 0; inline-size: 116%; block-size: 22px;
@@ -80,3 +111,22 @@
 
 /* A way out of the sticky character stack: the last panel unpins into this. */
 .cta { padding-block: var(--section-y); display: flex; justify-content: center; }
+
+/* Denser on a phone: the chips wrapped to three rows and the panel ran past a
+   screen. Same content, less air. */
+@media (max-width: 899px) {
+  /* The character leads on a phone. In DOM order the figure comes after the
+     text, and in a sticky stack the NEXT panel covers the previous one from the
+     bottom up — so the duck, which is the whole point of the section, was the
+     first thing hidden and the last thing seen. */
+  .inner { display: flex; flex-direction: column; }
+  .figure { order: -1; }
+
+  .text { gap: var(--s-3); }
+  .personality { font-size: var(--fs-body); }
+  .chips li { padding: 4px var(--s-3); font-size: var(--fs-micro); }
+  .parents { padding: var(--s-2) var(--s-3); }
+  .figure { gap: 0; }
+  .character { inline-size: clamp(140px, 38vw, 190px); }
+  .bottle { block-size: clamp(150px, 40vw, 200px); }
+}

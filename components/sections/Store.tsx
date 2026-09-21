@@ -2,6 +2,9 @@ import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
 import { NameSticker } from '@/components/NameSticker'
+import { Duck } from '@/components/ui/Duck'
+import { BrandDetail } from '@/components/ui/BrandDetail'
+import { Ripple } from '@/components/ui/Ripple'
 import { ducks } from '@/content/brand'
 import styles from './Store.module.css'
 
@@ -21,9 +24,10 @@ const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 export function Store() {
   return (
     <section className={styles.section} id="store" aria-labelledby="store-title" data-scene="store">
+      <BrandDetail preset="trail" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--chichi)" rot={2} data-pop="" data-pop-rot="2">Our first product</Sticker>
+          <Sticker colour="var(--chichi-soft)" rot={2} data-pop="" data-pop-rot="2">Our first product</Sticker>
           <h2 id="store-title" className="d d-xl" data-anim="">
             Every duck comes as a bottle.
           </h2>
@@ -46,15 +50,36 @@ export function Store() {
                 scroll systems on one card is what left them faded and stacked */}
             <article className={styles.card}
                      style={{ ['--duck-field' as string]: d.field } as React.CSSProperties}>
+              {/* THE CHARACTER STANDS BESIDE ITS OWN BOTTLE. This is the client's
+                  "we want kids to understand that the Vincey bottle is their
+                  Vincey" — the copy above says it, and this is what proves it.
+                  density="always" because it is the whole point of the card, so
+                  it earns its place on a phone. */}
               <div className={styles.figure}>
                 <span className={styles.puddle} aria-hidden="true" />
+                <Ripple className={styles.ripple} />
+                <Duck who={d.slug} pose="idle" density="always" float
+                      className={styles.character}
+                      sizes="(min-width: 820px) 11vw, 30vw" />
                 <Picture id={assetFor(d.slug)} sizes="(min-width: 820px) 20vw, 55vw"
-                         alt={`The ${d.name} bottle`} />
+                         alt={`The ${d.name} bottle`} className={styles.bottle} />
               </div>
               <NameSticker name={d.stickerName} motif={d.motif} colour={d.colour} size="m"
                            className={styles.badge} />
-              <p>{d.personality}</p>
-              <p className={styles.price}>{d.forParents}</p>
+              {/* The client asked for both audiences to be spoken to at once and
+                  for neither to get lost. Both lines were already here as two
+                  undifferentiated paragraphs; labelling them makes the pair
+                  legible — child first, then parent. */}
+              <div className={styles.voices}>
+                <p className={styles.voice}>
+                  <span className={`eyebrow ${styles.voiceLabel}`}>For little ones</span>
+                  {d.personality}
+                </p>
+                <p className={styles.voice}>
+                  <span className={`eyebrow ${styles.voiceLabel}`}>For parents</span>
+                  {d.forParents}
+                </p>
+              </div>
               {/* query BEFORE the fragment. `/#squad?duck=x` makes the browser look for
                   an element with id="squad?duck=x", so it matched nothing and the
                   click scrolled nowhere. */}

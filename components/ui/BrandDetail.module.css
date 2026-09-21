@@ -1,0 +1,40 @@
+/* =============================================================================
+   SUBTLE BRAND DETAILS
+
+   Puddles, splashes, footprints, wave crests and duck silhouettes scattered in
+   a section's margins. Generalised from the arrangement Foundation proved.
+
+   TRANSFORM CHANNEL: each mark's resting tilt is written to `rotate`, the
+   standalone property — NOT to `transform`, which reduced motion sets to
+   `none !important` and would erase. `translate` is left alone entirely; the
+   hero's pointer parallax owns it.
+   ========================================================================== */
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  color: var(--ink);
+  opacity: var(--detail-opacity, .12);
+  pointer-events: none;
+  user-select: none;
+}
+
+.mark {
+  position: absolute;
+  display: block;
+  /* Scales with the viewport so a 46px mark on a 1440 page is not the same
+     46px on a 1024 one, where the margins are much tighter. */
+  inline-size: clamp(calc(var(--m-size) * .62), calc(var(--m-size) * 0.055vw + var(--m-size) * .55), var(--m-size));
+  inset-inline-start: var(--m-x);
+  inset-block-start: var(--m-y);
+  translate: -50% -50%;
+}
+.mark svg { inline-size: 100%; block-size: auto; }
+
+/* Off on a phone. The client asked for mobile to feel as intentional as
+   desktop, and on a 390px screen the copy already fills the frame — these
+   would be clutter, not atmosphere. */
+@media (max-width: 899px) {
+  .field { display: none; }
+}

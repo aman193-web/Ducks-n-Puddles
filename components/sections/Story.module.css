@@ -2,18 +2,38 @@
    step down from the section headings elsewhere and the copy is trimmed so the
    whole thing lands in one frame rather than running past the fold. */
 .section { background: var(--cream); padding-block: var(--section-y); }
-.grid { display: grid; gap: var(--s-7); align-items: center; }
+/* `stretch`, not `center`. Centred, the photograph floated at its natural
+   height against an 800px copy column and left a deep well of empty cream
+   under it — which is what read as the section being too tall. Stretching the
+   figure to the column balances the two and removes the dead space without
+   cutting any of the client's copy. */
+.grid { display: grid; gap: var(--s-7); align-items: stretch; }
 
 /* No panel and no caption underneath — the pale blue box plus a caption made the
    photograph the smallest thing in its own half of the section. The squircle
    mask is the frame now, and the image gets all of the column. */
 .figure {
   position: relative;
-  display: grid; place-items: center;
+  display: grid;
+  /* `stretch` on the inline axis so <picture> gets a real width: it is a bare
+     wrapper with no content of its own, so under `place-items: center` it
+     collapsed to 0 until the image loaded — and a lazy image inside a
+     zero-width box never intersects the viewport, so it never loaded at all. */
+  justify-items: stretch;
+  align-content: stretch;
+  /* Reserve the box BEFORE the image arrives, so there is no layout shift and
+     the grid row has a height to work with from first paint. */
+  min-block-size: 100%;
 }
-.figure img {
-  inline-size: 100%; block-size: auto;
-  aspect-ratio: 1 / 1; object-fit: cover;
+.figure > picture { display: block; block-size: 100%; }
+/* Scoped to .photo, NOT `.figure img`. Unscoped it also caught the Chi Chi
+   cameo and stretched a square source to 187x566 under `object-fit: cover`. */
+.photo {
+  inline-size: 100%;
+  /* fills the column the copy sets, rather than the copy waiting on the photo */
+  block-size: 100%;
+  min-block-size: clamp(320px, 42vw, 560px);
+  object-fit: cover;
   border-radius: 34% / 30%;          /* squircle, as the reference masks its shots */
 }
 /* a rotated badge pinned to the frame, like the reference's WINNER crown */
@@ -24,18 +44,29 @@
 /* a section heading, so it takes the section heading's leading */
 .title { color: var(--ink); font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: var(--lh-xl); }
 .body p { max-width: 46ch; font-size: var(--fs-body); }
-.pull {
-  background: var(--sun); border: var(--border);
-  border-radius: var(--r); padding: var(--s-4) var(--s-5);
-  max-width: 46ch;
-}
-.sig { display: flex; align-items: center; gap: var(--s-3); margin-block-start: var(--s-2); }
+.sig { display: flex; align-items: center; gap: var(--s-3); }
 .sig img { inline-size: 42px; height: auto; }
+
+/* Signature and next step on ONE row — they were stacked, which cost ~47px for
+   two elements that belong together anyway. */
+.close {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--s-4) var(--s-6);
+  margin-block-start: var(--s-3);
+}
 
 @media (min-width: 900px) {
   /* the photograph now carries the column rather than sitting inside a panel */
   .grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(var(--s-7), 5vw, var(--s-9)); }
 }
 
-/* The story now ends on a next step rather than on a signature. */
-.cta { margin-block-start: var(--s-3); }
+/* Chi Chi splashing at the foot of the photograph — the client's "bring the
+   product and character worlds together", and the one place on this page where
+   a character sits beside the real family. */
+.cameo {
+  position: absolute;
+  z-index: 3;
+  inline-size: clamp(96px, 13vw, 168px);
+  inset-block-end: -6%;
+  inset-inline-start: -5%;
+}
