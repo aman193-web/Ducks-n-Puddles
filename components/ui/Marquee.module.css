@@ -31,8 +31,8 @@
   --sep: 0.4em;
   gap: var(--sep);
   padding-inline: calc(var(--sep) / 2);
-  font-family: var(--font-display); font-synthesis: none; font-weight: 500;
-  letter-spacing: -0.008em;
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .01em;
   /* Halved from clamp(1.625rem, 3.9vw, 3.75rem). Together with sentence case and
      weight 500, this is the "lighter, less in-your-face" the client asked for —
      the band is still a band, it just stops shouting. */

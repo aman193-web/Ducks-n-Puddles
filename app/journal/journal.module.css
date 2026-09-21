@@ -21,7 +21,7 @@
 .rowBody { display: grid; justify-items: start; gap: var(--s-3); }
 .rowTitle {
   font-family: var(--font-display); font-synthesis: none;
-  font-weight: 500; letter-spacing: -.01em; line-height: 1.12;
+  font-weight: 400; letter-spacing: .01em; line-height: 1.14;
   font-size: clamp(1.375rem, 2.6vw, 2.25rem); text-wrap: balance;
 }
 .excerpt { max-width: 52ch; text-wrap: pretty; }
@@ -76,7 +76,7 @@
 .more { display: grid; gap: var(--s-4); max-width: 64ch; }
 .moreTitle {
   font-family: var(--font-display); font-synthesis: none;
-  font-weight: 500; letter-spacing: -.01em;
+  font-weight: 400; letter-spacing: .01em;
   font-size: var(--fs-md);
 }
 .more ul { display: grid; gap: var(--s-3); list-style: none; padding: 0; margin: 0; }

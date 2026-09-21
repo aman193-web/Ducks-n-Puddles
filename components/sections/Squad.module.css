@@ -6,22 +6,9 @@
   overflow: clip;
   isolation: isolate;
 }
-/* A soft sun wash behind the copy gives the section a light source, which is
-   what keeps a flat tint from reading as a plain band. It survived the move off
-   navy; only the alphas changed, because warm light has to work harder to be
-   seen on a light ground than on a dark one. */
-.section::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  inset-block-start: -18%;
-  inset-inline-start: -10%;
-  inline-size: min(70%, 780px);
-  aspect-ratio: 1;
-  background: radial-gradient(circle at 50% 50%,
-    rgba(255, 221, 25, .46) 0%, rgba(255, 246, 227, .30) 45%, transparent 70%);
-  pointer-events: none;
-}
+/* No wash behind the copy. A sun-yellow radial on this periwinkle ground read
+   as a stain rather than as light — it turned olive where the two met and sat
+   right behind the sticker. The ground carries itself. */
 /* 50/50 from 900px up: the pitch on the left, the form on the right. Centred in
    one 720px column, the heading, the sub, the duck picker, two fields, a consent
    row and a button made a very long single file — and pushed the actual email

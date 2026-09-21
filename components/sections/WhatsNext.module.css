@@ -76,8 +76,8 @@
   .lead { grid-template-columns: auto 1fr; }
   .leadDuck { display: none; }
 }
-.title { font-family: var(--font-display); font-synthesis: none; font-weight: 500;
-         font-size: var(--fs-md); letter-spacing: -.008em; }
+.title { font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+         font-size: var(--fs-md); letter-spacing: .01em; line-height: var(--lh-md); }
 .body { grid-column: 2; max-width: 42ch; text-wrap: pretty; }
 /* ---- a rail below 860px -------------------------------------------------
    Five stacked cards ran to 2.35 screens on a phone. Two columns was tried

@@ -57,22 +57,25 @@
 }
 
 @layer type {
-  /* Display: sentence case, set close, near-zero tracking. Sentence case and
-     weight 500 are the two things that turn the old shouty setting warm — ALL
-     CAPS at 800 was the single loudest thing on the page. Tracking stays barely
-     negative because Fredoka's round counters collide below about -.012em. */
+  /* Display: sentence case, weight 400, tracking 0.
+     Bangbang ships ONE weight, so 400 is not a choice — and with
+     `font-synthesis: none` anything heavier would be a silent no-op rather than
+     a fake bold, which is why it is stated rather than left to inherit.
+     Tracking is 0 and not negative: these letterforms are drawn close already
+     and pulling them tighter collapsed the counters. The larger steps get a
+     hair of POSITIVE tracking instead, which a condensed face needs at size. */
   .d {
     font-family: var(--font-display);
-    font-weight: 500;
+    font-weight: 400;
     font-synthesis: none;
     line-height: var(--lh-display);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     color: var(--ink);
   }
-  .d-mega { font-size: var(--fs-mega); letter-spacing: -0.014em; line-height: var(--lh-display); }
-  .d-xl   { font-size: var(--fs-xl);   letter-spacing: -0.012em; line-height: var(--lh-xl); }
-  .d-lg   { font-size: var(--fs-lg);   letter-spacing: -0.01em;  line-height: var(--lh-lg); }
-  .d-md   { font-size: var(--fs-md);   letter-spacing: -0.008em; line-height: var(--lh-md); }
+  .d-mega { font-size: var(--fs-mega); letter-spacing: .004em; line-height: var(--lh-display); }
+  .d-xl   { font-size: var(--fs-xl);   letter-spacing: .006em; line-height: var(--lh-xl); }
+  .d-lg   { font-size: var(--fs-lg);   letter-spacing: .008em; line-height: var(--lh-lg); }
+  .d-md   { font-size: var(--fs-md);   letter-spacing: .01em;  line-height: var(--lh-md); }
 
   /* Tiny uppercase MONO label. Used for eyebrows, product sub-labels and
      kickers — one of the strongest signals in the reference's type system. */

@@ -142,14 +142,13 @@
    centred behind three bottles does not. */
 .title {
   margin: 0;
-  /* 600 here, 500 everywhere else: the hero is the one place the display face
-     should carry a little more weight than the section headings under it. */
-  font-weight: 600;
+  /* Bangbang has one weight. Scale is what makes the hero the hero now. */
+  font-weight: 400;
   /* height-aware: a wide but short window (a laptop at 1440x720) has to shrink
      the display type or there is nothing left of the sky */
   font-size: clamp(2.25rem, min(6.2vw, 10.4vh), 5.5rem);
-  letter-spacing: -.014em;
-  line-height: .96;
+  letter-spacing: .004em;
+  line-height: 1;
   color: var(--ink);
 }
 /* outer span clips, inner span is what rises */
@@ -165,10 +164,10 @@
   inset-block-start: calc(var(--water) + 2%);
   margin: 0;
   /* every metric here must match .title exactly — this is its reflection */
-  font-weight: 600;
+  font-weight: 400;
   font-size: clamp(2.25rem, min(6.2vw, 10.4vh), 5.5rem);
-  letter-spacing: -.014em;
-  line-height: .96;
+  letter-spacing: .004em;
+  line-height: 1;
   color: rgba(255, 255, 255, .12);
   transform: scaleY(-1);
   filter: blur(2.4px);

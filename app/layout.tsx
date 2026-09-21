@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
-import { Poppins, DM_Mono, Edu_QLD_Beginner, Fredoka } from 'next/font/google'
+import { Poppins, DM_Mono, Edu_QLD_Beginner } from 'next/font/google'
+import localFont from 'next/font/local'
 import { brand } from '@/content/brand'
 import { SiteHeader } from '@/components/SiteHeader'
 import { HeaderChrome } from '@/components/HeaderChrome'
@@ -12,16 +13,29 @@ import { CursorTrail } from '@/components/ui/CursorTrail'
 import '@/styles/tokens.css'
 import '@/styles/global.css'
 
-/* Display: Fredoka (Google, variable 300-700). Replaces Excon, which the client
-   read as bold/edgy/heavy — the words they used were warm, soft, playful. Fredoka
-   is a rounded geometric: the same display presence, none of the hard corners.
-   Set at 500-600 in sentence case rather than 800 ALL CAPS; the weight and the
-   caps were the two halves of "heavy". */
-const fredoka = Fredoka({
-  weight: ['400', '500', '600'],
-  subsets: ['latin'],
+/* Display: Bangbang, the face the LOGO is lettered in — which is the whole
+   reason for it: the wordmark and the headlines now speak with one voice
+   instead of two. Hand-drawn, narrow and friendly; it replaced Fredoka, which
+   replaced Excon.
+
+   Self-hosted from public/fonts rather than assets-source/, which is gitignored
+   — a font the site depends on has to be committed or the build works locally
+   and dies on a fresh clone.
+
+   Converted from the supplied 186KB .otf to an 83KB woff2 (fontTools). Coverage
+   checked against what the headlines actually set: A-Z, a-z, 0-9 and the curly
+   apostrophe and em dash that "There's" and "Ducks 'n Puddles" depend on.
+
+   ONE WEIGHT, 400. Every `font-weight` on display type is therefore 400 — with
+   `font-synthesis: none` (see .d in global.css) anything heavier is a silent
+   no-op rather than a fake bold. */
+const bangbang = localFont({
+  src: '../public/fonts/Bangbang-Regular.woff2',
+  weight: '400',
+  style: 'normal',
   display: 'swap',
-  variable: '--font-fredoka',
+  variable: '--font-bangbang',
+  fallback: ['ui-rounded', 'Trebuchet MS', 'sans-serif'],
 })
 
 /* Micro-labels. Stands in for the reference's GT America Mono — tiny uppercase
@@ -76,7 +90,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fredoka.variable} ${poppins.variable} ${dmMono.variable} ${edu.variable}`}>
+    <html lang="en" className={`${bangbang.variable} ${poppins.variable} ${dmMono.variable} ${edu.variable}`}>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
         <HeaderChrome />
