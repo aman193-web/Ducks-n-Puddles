@@ -76,7 +76,7 @@ export default async function JournalPost(
             We send one short email every couple of weeks, and the Duck Squad hears
             about the bottles before this site does.
           </p>
-          <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>
+          <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
         </aside>
 
         {more.length > 0 && (

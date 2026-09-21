@@ -93,7 +93,7 @@ export function InTheWild() {
 
       <div className="wrap">
         <div className={styles.cta}>
-          <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>
+          <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
         </div>
       </div>
     </section>

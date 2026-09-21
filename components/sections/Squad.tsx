@@ -171,7 +171,7 @@ export function Squad() {
 
             {state === 'error' && <p className={styles.error} role="alert">{message}</p>}
 
-            <Btn type="submit" colour="var(--sun)" block disabled={state === 'sending'}>
+            <Btn type="submit" colour="var(--sun-soft)" block disabled={state === 'sending'}>
               {state === 'sending' ? 'One moment…' : 'Quack me up'}
             </Btn>
           </form>

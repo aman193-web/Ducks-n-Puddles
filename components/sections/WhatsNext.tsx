@@ -1,9 +1,21 @@
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
+import { Duck } from '@/components/ui/Duck'
+import { Motif, type MotifName } from '@/components/Motif'
 import { roadmap } from '@/content/brand'
 import styles from './WhatsNext.module.css'
 
-const FILLS = ['var(--sun)', 'var(--chichi)', 'var(--sky)', 'var(--goosey)', 'var(--orange)']
+/** One brand mark and one field tint per row, so the five read as a set of
+ *  different things rather than as a ranked list. The numbered discs are gone:
+ *  the client asked to remove the 1/2/3 ranking from Meet the Ducks, and a
+ *  column of numbers here was the same device in a different place. */
+const FACE: { mark: MotifName; field: string }[] = [
+  { mark: 'duck',      field: 'var(--goosey-field)' },
+  { mark: 'flower',    field: 'var(--chichi-field)' },
+  { mark: 'splash',    field: 'var(--vincey-field)' },
+  { mark: 'droplets',  field: 'var(--vincey-field)' },
+  { mark: 'footprint', field: 'var(--goosey-field)' },
+]
 
 /**
  * THE BIGGER VISION — "the bottles are just the beginning".
@@ -13,16 +25,15 @@ const FILLS = ['var(--sun)', 'var(--chichi)', 'var(--sky)', 'var(--goosey)', 'va
  * character brand whose FIRST product is a water bottle — not a water-bottle
  * company — and the roadmap it reads is already exactly that argument.
  *
- * What changed: the framing. It used to be a pre-launch status board ("we're
- * building this in order, not all at once", "nothing here has a date yet"),
- * which is a thing to tell someone who is waiting. It is now what the world gets
- * to be. The honesty is unchanged: no row carries a date, because none of them
- * has one.
- *
- * The numbered discs stay. They are a reading ORDER for a list, not a ranking of
- * characters — which is the thing the client asked to remove from Meet the Ducks.
+ * The layout leads on ONE card. Five equal cards in two columns left a ragged
+ * single card on a third row and read as a backlog; the books are the biggest
+ * part of the vision, so The Quack Pack takes the full width and the other four
+ * sit under it in a 2x2. Three rows instead of three-and-a-bit, and it reads as
+ * a designed section rather than a list.
  */
 export function WhatsNext() {
+  const [lead, ...rest] = roadmap
+
   return (
     <section className={styles.section} id="next" aria-labelledby="next-title">
       <div className="wrap">
@@ -38,10 +49,22 @@ export function WhatsNext() {
         </div>
 
         <ol className={styles.list}>
-          {roadmap.map((r, i) => (
+          <li className={`${styles.item} ${styles.lead}`} data-anim="" data-anim-y="40"
+              style={{ ['--n-bg' as string]: FACE[0].field } as React.CSSProperties}>
+            <span className={styles.mark} aria-hidden="true"><Motif name={FACE[0].mark} /></span>
+            <div className={styles.leadText}>
+              <h3 className={styles.title}>{lead.title}</h3>
+              <p className={styles.body}>{lead.body}</p>
+            </div>
+            {/* Chi Chi reading over the shoulder of the thing that is a book series */}
+            <Duck who="chi-chi" pose="wave" className={styles.leadDuck} float
+                  sizes="(min-width: 860px) 14vw, 30vw" />
+          </li>
+
+          {rest.map((r, i) => (
             <li key={r.title} className={styles.item} data-anim="" data-anim-y="40"
-                style={{ ['--n-bg' as string]: FILLS[i % FILLS.length] } as React.CSSProperties}>
-              <span className={styles.num} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                style={{ ['--n-bg' as string]: FACE[i + 1].field } as React.CSSProperties}>
+              <span className={styles.mark} aria-hidden="true"><Motif name={FACE[i + 1].mark} /></span>
               <h3 className={styles.title}>{r.title}</h3>
               <p className={styles.body}>{r.body}</p>
             </li>
@@ -49,7 +72,7 @@ export function WhatsNext() {
         </ol>
 
         <div className={styles.cta}>
-          <Btn href="/#squad" colour="var(--sun)">Be first to know</Btn>
+          <Btn href="/#squad" colour="var(--sun-soft)">Be first to know</Btn>
         </div>
       </div>
     </section>

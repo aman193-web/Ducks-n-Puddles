@@ -112,7 +112,7 @@ export function Hero() {
               </h1>
 
               <div className={styles.ctas}>
-                <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>
+                <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
                 <span className={styles.second}>
                   <Btn href="/#ducks" colour="var(--paper)">Meet the ducks</Btn>
                 </span>

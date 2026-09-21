@@ -1,43 +1,49 @@
 /* =============================================================================
    THE FOUNDATION
 
-   The only section besides the hero that claims a whole screen. That is what
-   makes it read as a statement rather than as another band — the client asked
-   for it to be prominent, and prominence on this page is a matter of how much
-   room a thing is given, not how loud it is set.
+   The only section besides the hero that claims a whole screen. Prominence on
+   this page is a matter of how much room a thing is given, not how loud it is
+   set — so: full bleed, its own colour world, a heading at hero scale.
 
-   Goosey's ground (--goosey-soft, ink 11.1). It is the one warm colour on a page
-   that is otherwise blue and cream, so the section separates itself, and it
-   belongs to the duck whose own line is the argument of the section.
+   Designed against the two banner references: an accent word in the headline, a
+   labelled chip, the art seated on an organic blob, and small marks scattered in
+   the margins. The earlier pass had the substance right and the design wrong —
+   a transparent PNG floating on a flat ground reads as a paragraph with a
+   picture, not as a banner.
+
+   Goosey's ground (--goosey-soft, ink 11.1): the one warm colour on a page that
+   is otherwise blue and cream, so the section separates itself, and it belongs
+   to the duck whose own line is the argument of the section.
+
+   TRANSFORM CHANNEL: resting tilts here are written to `rotate`, never to
+   `transform`, which reduced motion sets to `none !important`.
    ========================================================================== */
 .section {
   position: relative;
   background: var(--goosey-soft);
-  /* `svh` so a phone with its toolbars showing still gets exactly one screen and
-     never an accidental scroll — the same reasoning as the hero panel. */
+  /* `svh` so a phone with its toolbars showing still gets exactly one screen
+     and never an accidental scroll — the hero panel's reasoning. */
   min-block-size: 100svh;
   display: grid;
   align-content: center;
   /* Tighter than --section-y: min-block-size already guarantees the screen, so
-     this padding only decides how much air the content gets INSIDE it. At the
-     full 100 top and bottom the section ran past 1.5 screens. */
+     this only decides how much air the content gets inside it. */
   padding-block: var(--s-8);
   overflow: clip;
   isolation: isolate;
 }
 
-/* A soft pool of light so the flat tint has a source, matching the treatment the
-   Duck Squad section uses. */
+/* A soft pool of light, so the flat tint has a source. */
 .section::before {
   content: '';
   position: absolute;
   z-index: 0;
-  inset-block-start: -22%;
-  inset-inline-end: -12%;
-  inline-size: min(78%, 900px);
+  inset-block-start: -24%;
+  inset-inline-end: -14%;
+  inline-size: min(82%, 940px);
   aspect-ratio: 1;
   background: radial-gradient(circle at 50% 50%,
-    rgba(255, 253, 247, .78) 0%, rgba(255, 253, 247, .32) 46%, transparent 70%);
+    rgba(255, 253, 247, .8) 0%, rgba(255, 253, 247, .3) 46%, transparent 70%);
   pointer-events: none;
 }
 
@@ -45,45 +51,59 @@
   position: relative; z-index: 1;
   display: grid;
   gap: var(--flow-block);
-  align-items: start;
+  align-items: center;
 }
-/* Head across the top, then copy left and the three of them in their puddle
-   right. The art used to be an empty reserved column, which read as a hole;
-   now it is the thing the headline is describing, so it gets real width. */
 @media (min-width: 900px) {
   .inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: 'head head' 'copy art';
-    column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
-    row-gap: var(--flow-block);
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    column-gap: clamp(var(--s-7), 4vw, var(--s-9));
   }
-  .head { grid-area: head; }
-  .copy { grid-area: copy; }
-  .art  { grid-area: art; align-self: center; }
 }
 
-.head { display: grid; justify-items: start; gap: var(--flow-eyebrow); }
+.copy { display: grid; justify-items: start; gap: var(--flow-head); }
 
-.copy {
-  display: grid;
-  justify-items: start;
-  gap: var(--flow-head);
-}
-
-/* Hero scale, not section scale — this is what makes it read as a moment rather
-   than as another band. Capped so it breaks into a stacked block of two or three
-   lines rather than running the full width as one. */
-.title { max-width: 24ch; }
-
-/* The Foundation's actual name, directly under the headline. Without this the
-   section never said the word and read as a general values block. */
-.name {
+/* ---- the chip: what this section is, said plainly --------------------- */
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-block-size: 44px;
+  padding-inline: var(--s-4) var(--s-5);
+  background: var(--paper);
+  border: var(--border-lg);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
   color: var(--ink);
-  padding-block-end: var(--s-3);
-  border-block-end: var(--bw-lg) solid var(--ink);
+  rotate: -1.5deg;
+}
+.chipMark {
+  display: grid; place-items: center;
+  inline-size: 26px; block-size: 26px;
+  border-radius: 50%;
+  background: var(--sun);
+  color: var(--ink);
+}
+.chipMark svg { inline-size: 15px; block-size: 15px; }
+
+/* ---- the headline, with one word in the accent colour ----------------
+   NOT --fs-mega. At 144px in a half-width column this ran to five lines and
+   660px, which is what pushed the section to 1.55 screens — and both reference
+   banners set their headline far smaller than that, letting the composition
+   (accent word, blob, scattered marks) carry the weight instead. At ~89px it
+   lands in three lines and still reads as the biggest thing on the page after
+   the hero: --fs-xl, the section-heading size, tops out at 76px. */
+.title {
+  font-size: clamp(2.5rem, 6.2vw, 5.5rem);
+  max-width: 18ch;
+}
+/* <em> carries the emphasis the accent colour is expressing; the italic is not
+   wanted, so it is reset. Chi Chi's ink measures 4.8 against this ground —
+   comfortable at a 144px display size, where AA-Large asks for 3. */
+.accent {
+  font-style: normal;
+  color: var(--chichi-ink);
 }
 
-.body { max-width: 48ch; }
+.body { max-width: 46ch; }
 
 /* Goosey's own line, set apart as a pull quote. */
 .quote {
@@ -94,37 +114,83 @@
   border-inline-start: var(--bw-lg) solid var(--ink);
 }
 .quote blockquote { margin: 0; font-size: clamp(1.25rem, 2vw, 1.75rem); }
-.quote figcaption { color: var(--ink); opacity: .78; }
+.quote figcaption { color: var(--ink); }
 
 .cta { margin-block-start: var(--s-3); }
 
-/* ---- the subtle brand elements: puddles and a footprint, scattered --------
-   Decorative and behind everything. On a phone they are off entirely: the copy
-   already fills the screen and the marks would only crowd it. */
-.puddles {
+/* ---- the art, seated on an organic blob ------------------------------- */
+.art {
+  position: relative;
+  justify-self: center;
+  inline-size: 100%;
+  display: grid;
+  place-items: center;
+}
+/* The blob is the GROUND the characters stand on — both references seat their
+   photo in an organic shape rather than letting it float. The radius pair is
+   the house puddle shape, lifted from PuddleFace.module.css so every organic
+   form on the site is the same form. */
+.blob {
+  position: absolute;
+  z-index: 0;
+  /* Wider and rounder than the art it seats: an organic shape is much shorter
+     at its horizontal extremes than an ellipse, so a blob merely the same size
+     as the render leaves the outer two ducks' feet hanging outside it. */
+  inline-size: min(100%, 620px);
+  aspect-ratio: 1 / .82;
+  background: var(--paper);
+  border: var(--border-lg);
+  /* Asymmetric on BOTH axes and flatter than it is round — at 1:.95 with gentle
+     radii this was a circle with a hairline on it, not a puddle. */
+  border-radius: 58% 42% 47% 53% / 44% 58% 42% 56%;
+  rotate: -6deg;
+}
+.trio {
+  position: relative;
+  z-index: 1;
+  inline-size: min(88%, 470px);
+  margin-inline: auto;
+}
+
+/* On a phone the art leads and the copy follows — a child recognises the
+   characters before a parent reads the paragraph. */
+@media (max-width: 899px) {
+  .art { order: -1; }
+  .blob { inline-size: min(100%, 420px); }
+  .trio { inline-size: min(84%, 330px); }
+  .title { max-width: 18ch; }
+}
+
+/* ---- scattered marks -------------------------------------------------
+   A handful of small shapes in the margins, on the references' pattern.
+   Decorative, behind everything, and off on a phone where the copy already
+   fills the frame. */
+.scatter {
   position: absolute;
   inset: 0;
   z-index: 0;
   display: none;
   color: var(--ink);
-  opacity: .12;
+  opacity: .2;
   pointer-events: none;
 }
-.puddles svg { position: absolute; inline-size: auto; block-size: auto; }
-.puddles svg:nth-child(1) { inline-size: 74px;  inset-block-end: 14%; inset-inline-start: 6%; rotate: -12deg; }
-.puddles svg:nth-child(2) { inline-size: 110px; inset-block-start: 18%; inset-inline-end: 22%; rotate: 16deg; }
-.puddles svg:nth-child(3) { inline-size: 52px;  inset-block-end: 26%; inset-inline-end: 8%; rotate: 8deg; }
+.scatter svg { position: absolute; inline-size: auto; block-size: auto; }
+.scatter svg:nth-child(1) { inline-size: 58px; inset-block-start: 12%; inset-inline-start: 4%;  rotate: -14deg; }
+.scatter svg:nth-child(2) { inline-size: 76px; inset-block-end:   16%; inset-inline-start: 2%;  rotate: 4deg; }
+.scatter svg:nth-child(3) { inline-size: 44px; inset-block-start: 8%;  inset-inline-end: 7%;    rotate: 10deg; }
+.scatter svg:nth-child(4) { inline-size: 52px; inset-block-end:   9%;  inset-inline-end: 3%;    rotate: -8deg; }
+/* Over the ART column, not between the two: at 1024 the headline reaches
+   further across and this mark landed on it. */
+.scatter svg:nth-child(5) { inline-size: 32px; inset-block-start: 3%;  inset-inline-start: 64%; rotate: 18deg; }
 
 @media (min-width: 900px) {
-  .puddles { display: block; }
+  .scatter { display: block; }
 }
-
-/* ---- the three of them, in one puddle ---------------------------------- */
-.art { position: relative; justify-self: center; inline-size: 100%; }
-.trio { inline-size: min(100%, 560px); margin-inline: auto; }
-/* On a phone the art leads and the copy follows it — a child recognises the
-   characters before a parent reads the paragraph. */
-@media (max-width: 899px) {
-  .art { order: -1; }
-  .trio { inline-size: min(100%, 420px); }
+/* The two LEFT-margin marks need a margin to sit in. Below about 1360px the
+   wrap has no spare width outside the gutter, so a 70px mark at 4% overlaps the
+   content edge and lands on the headline — measured 1568px² at 1024. The
+   right-hand marks sit over the art column and have room throughout. */
+@media (max-width: 1359px) {
+  .scatter svg:nth-child(1),
+  .scatter svg:nth-child(2) { display: none; }
 }

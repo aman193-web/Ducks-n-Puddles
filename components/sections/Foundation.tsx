@@ -1,5 +1,4 @@
 import { Btn } from '@/components/ui/Btn'
-import { Sticker } from '@/components/ui/Sticker'
 import { Duck } from '@/components/ui/Duck'
 import { Motif } from '@/components/Motif'
 import { foundation } from '@/content/brand'
@@ -8,44 +7,47 @@ import styles from './Foundation.module.css'
 /**
  * THE FOUNDATION — the one section besides the hero that claims a whole screen.
  *
- * The client asked for this "even if it's just a small section for now"; the
- * brief was to make it prominent. Prominence on this page is a matter of how
- * much room a thing is given, not how loud it is set: full bleed, its own colour
- * world, a heading at hero scale.
+ * Designed against the two banner references the client sent. What those share,
+ * and what this now does:
  *
- * The first pass got one thing badly wrong — it never said the word
- * "Foundation" anywhere, so it read as a general brand-values block. The name
- * now leads, and the right half holds the three of them standing in one puddle,
- * which is the literal picture the headline describes. That image is the
- * argument; it was an empty column before.
+ *   - the headline carries ONE word in an accent colour
+ *     ("Give to CHARITY. Create Change." / "A FOUNDATION for The Future")
+ *   - the art sits on an ORGANIC BLOB rather than floating as a bare cutout
+ *   - small marks are scattered in the margins, not a flat field
+ *   - a labelled chip names the thing, top-left
  *
- * ⚠️ The copy is still INTENT ONLY. No partner, percentage, pledge or programme
- * — see the TODO(client) on `foundation` in content/brand.ts. A charitable claim
- * about children is a real-world claim, not something to fill in with a guess.
+ * The earlier pass got the substance right and the design wrong: it never said
+ * the word "Foundation" and the art was a transparent PNG on a flat ground,
+ * which is why it read as a values paragraph rather than as a banner.
+ *
+ * ⚠️ The copy is still INTENT ONLY. No partner, percentage, pledge or
+ * programme — see the TODO(client) on `foundation` in content/brand.ts. A
+ * charitable claim about children is a real-world claim, not a copy placeholder.
  */
 export function Foundation() {
   return (
     <section className={styles.section} id="foundation" aria-labelledby="foundation-title">
-      {/* Subtle brand elements, from the marks already printed on the bottles. */}
-      <span className={styles.puddles} aria-hidden="true">
-        <Motif name="droplets" /><Motif name="footprint" /><Motif name="droplets" />
+      {/* Scattered brand marks, on the references' pattern: a few small shapes
+          in the margins rather than one flat decorative field. */}
+      <span className={styles.scatter} aria-hidden="true">
+        <Motif name="droplets" /><Motif name="wave" /><Motif name="splash" />
+        <Motif name="footprint" /><Motif name="droplets" />
       </span>
 
       <div className={`wrap ${styles.inner}`}>
-        {/* The head spans BOTH columns. Inside the copy column the 144px headline
-            broke over five lines (662px) and pushed the section past 1.6 screens;
-            across the full width it lands in two. */}
-        <div className={styles.head}>
-          <Sticker colour="var(--paper)" rot={-2} data-pop="" data-pop-rot="-2">
-            {foundation.eyebrow}
-          </Sticker>
-          <h2 id="foundation-title" className={`d d-mega ${styles.title}`} data-anim="">
-            {foundation.title}
-          </h2>
-          <p className={`mono ${styles.name}`} data-anim="">{foundation.name}</p>
-        </div>
-
         <div className={styles.copy}>
+          {/* The chip names the Foundation, which the first pass never did. */}
+          <p className={styles.chip}>
+            <span className={styles.chipMark} aria-hidden="true"><Motif name="duck" /></span>
+            {foundation.name}
+          </p>
+
+          <h2 id="foundation-title" className={`d d-mega ${styles.title}`} data-anim="">
+            {foundation.title.before}
+            <em className={styles.accent}>{foundation.title.accent}</em>
+            {foundation.title.after}
+          </h2>
+
           {foundation.body.map((p) => (
             <p key={p.slice(0, 24)} className={`lead ${styles.body}`} data-anim="">{p}</p>
           ))}
@@ -60,9 +62,12 @@ export function Foundation() {
           </div>
         </div>
 
-        {/* Not decorative — this image IS the section's argument, so it carries a
-            real alt and renders on a phone too. */}
+        {/* The art sits ON a blob, the way both references seat their photo in
+            an organic shape. The blob is the ground; the characters keep their
+            alpha and stand on it. Not decorative — this image IS the section's
+            argument, so it carries a real alt and renders on a phone too. */}
         <div className={styles.art}>
+          <span className={styles.blob} aria-hidden="true" />
           <Duck
             who="trio" pose="puddle"
             density="always"

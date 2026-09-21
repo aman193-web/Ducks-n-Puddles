@@ -76,7 +76,7 @@ export function MobileMenu() {
         </nav>
 
         <div className={styles.foot}>
-          <Btn href="/#squad" colour="var(--sun)" block>Join the Duck Squad</Btn>
+          <Btn href="/#squad" colour="var(--sun-soft)" block>Join the Duck Squad</Btn>
         </div>
     </div>
   ) : null

@@ -10,7 +10,7 @@
    so the label sits closer to the middle of its own button.
    ========================================================================== */
 .btn {
-  --bg: var(--sun);
+  --bg: var(--sun-soft);
   --ink-on: var(--ink);
   position: relative;
   display: inline-flex; align-items: center; justify-content: flex-start;
@@ -54,7 +54,7 @@
 /* the incoming glyph waits off-stage, down-left */
 .badge svg + svg { transform: translate(-26px, 26px); opacity: 0; }
 
-.btn:hover .badge, .btn:focus-visible .badge { background: var(--orange); color: var(--paper); }
+.btn:hover .badge, .btn:focus-visible .badge { background: var(--warm-orange); color: var(--ink); }
 .btn:hover .badge svg, .btn:focus-visible .badge svg { transform: translate(26px, -26px); opacity: 0; }
 .btn:hover .badge svg + svg, .btn:focus-visible .badge svg + svg { transform: translate(0, 0); opacity: 1; }
 

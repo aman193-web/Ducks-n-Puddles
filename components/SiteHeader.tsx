@@ -44,7 +44,7 @@ export function SiteHeader() {
         <div className={styles.actions} data-menu-load="">
           <SoundToggle />
           <span className={styles.ctaWrap}>
-            <Btn href="/#squad" size="sm" colour="var(--sun)">Join the Squad</Btn>
+            <Btn href="/#squad" size="sm" colour="var(--sun-soft)">Join the Squad</Btn>
           </span>
           <MobileMenu />
         </div>

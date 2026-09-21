@@ -188,7 +188,9 @@ export const foundation = {
    *  it read as a general values block instead of what the client asked for.
    *  The name now leads. */
   name: 'The Ducks ’n Puddles Foundation',
-  title: 'There’s always room in the puddle.',
+  /** Split so one word can take the accent colour, the way both reference
+   *  banners set their headline ("Give to CHARITY. Create Change."). */
+  title: { before: 'There’s always ', accent: 'room', after: ' in the puddle.' },
   body: [
     'Ducks ’n Puddles was never only meant to be a shelf of products. It started with '
     + 'our own family, and the whole reason to build it was the children who would end '

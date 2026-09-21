@@ -33,21 +33,48 @@
 .list { display: grid; gap: var(--card-gap); }
 @media (min-width: 860px) { .list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .item {
+  position: relative;
   display: grid; grid-template-columns: auto 1fr; gap: var(--s-3) var(--s-5);
-  background: var(--paper); border: var(--border-lg); border-radius: var(--r-lg);
-  box-shadow: var(--shadow); padding: var(--card-pad);
+  /* Each card takes its own field tint rather than all five sitting on paper —
+     the section now reads as a set of different things. */
+  background: var(--n-bg); border: var(--border-lg); border-radius: var(--r-lg);
+  padding: var(--card-pad);
   align-content: start;
+  overflow: clip;
   transition: transform var(--t) var(--spring);
 }
-.item:hover { transform: translate(3px, -3px); box-shadow: var(--shadow-lg); }
+.item:hover { transform: translate(3px, -3px); }
 .item:nth-child(odd) { rotate: -.5deg; }
 .item:nth-child(even) { rotate: .5deg; }
-.num {
+
+/* A brand mark in place of the number. Same slot, same size, none of the
+   ranking the client asked us to drop from Meet the Ducks. */
+.mark {
   grid-row: span 2; align-self: start;
   display: grid; place-items: center;
   inline-size: 54px; block-size: 54px;
-  background: var(--n-bg); border: var(--border); border-radius: 50%;
-  font-family: var(--font-display); font-synthesis: none; font-weight: 500; font-size: 1.25rem;
+  background: var(--paper); border: var(--border); border-radius: 50%;
+  color: var(--ink);
+}
+.mark svg { inline-size: 26px; block-size: 26px; }
+
+/* ---- the featured lead card ------------------------------------------
+   The books are the biggest part of the vision, so the first row is one wide
+   card rather than one of five equal ones. It also fixes the ragged bottom:
+   five cards in two columns left a single card alone on a third row. */
+.lead {
+  grid-column: 1 / -1;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-5);
+}
+.leadText { display: grid; gap: var(--s-2); min-inline-size: 0; }
+.lead .title { font-size: var(--fs-lg); }
+.lead .body { grid-column: auto; max-width: 52ch; }
+.leadDuck { inline-size: clamp(88px, 12vw, 150px); justify-self: end; }
+@media (max-width: 719px) {
+  .lead { grid-template-columns: auto 1fr; }
+  .leadDuck { display: none; }
 }
 .title { font-family: var(--font-display); font-synthesis: none; font-weight: 500;
          font-size: var(--fs-md); letter-spacing: -.008em; }
@@ -77,8 +104,13 @@
     align-content: start;
     rotate: 0deg;
   }
-  .num { grid-row: auto; }
+  .mark { grid-row: auto; }
   .body { grid-column: 1; }
+  /* in a rail every card is the same width, so the feature is just the first */
+  .lead { grid-column: auto; grid-template-columns: 1fr; align-items: start; }
+  .lead .title { font-size: var(--fs-md); }
+  .leadText { gap: var(--s-2); }
+  .leadDuck { display: none; }
 }
 
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }

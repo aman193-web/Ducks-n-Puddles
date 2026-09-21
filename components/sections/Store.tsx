@@ -83,7 +83,10 @@ export function Store() {
               {/* query BEFORE the fragment. `/#squad?duck=x` makes the browser look for
                   an element with id="squad?duck=x", so it matched nothing and the
                   click scrolled nowhere. */}
-              <Btn href={`/?duck=${d.slug}#squad`} colour={d.colour} block>
+              {/* d.soft, not d.colour: full saturation on a pale field card was
+                  the last loud thing on the page. The character is still
+                  identified by its own hue, one step lighter. */}
+              <Btn href={`/?duck=${d.slug}#squad`} colour={d.soft} block>
                 I want {d.name}
               </Btn>
             </article>

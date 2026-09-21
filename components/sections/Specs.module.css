@@ -112,11 +112,15 @@
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }
 
 /* Goosey, sitting at the section's bottom-right corner, clear of the grid. */
+/* INSIDE the section, not hanging below it. WaveEdge sits at z-index 3 and
+   pulls itself up by 22% of --section-y into this section's bottom padding, so
+   anything overlapping that band gets painted over — which is exactly what
+   sliced this duck's legs off. The offset clears the wave's bite with room. */
 .cameo {
   position: absolute;
   z-index: 1;
   inline-size: clamp(110px, 12vw, 176px);
-  inset-block-end: calc(var(--section-y) * -0.18);
+  inset-block-end: calc(var(--section-y) * 0.42);
   inset-inline-end: clamp(8px, 3vw, 64px);
 }
 @media (max-width: 899px) { .cameo { display: none; } }

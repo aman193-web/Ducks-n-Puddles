@@ -65,7 +65,7 @@ export function Story() {
                 <img src="/img/mascot-140.webp" width={42} height={47} alt="" className="wiggle" />
                 <span className="hand">&mdash; Larisa &amp; Vinny</span>
               </span>
-              <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>
+              <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
             </div>
           </div>
         </div>
