@@ -39,8 +39,6 @@
   object-fit: cover;
   border-radius: 34% / 30%;          /* squircle, as the reference masks its shots */
 }
-/* a rotated badge pinned to the frame, like the reference's WINNER crown */
-.badge { position: absolute; inset-block-start: -12px; inset-inline-end: -4px; z-index: 2; }
 
 
 .body { display: grid; justify-items: start; gap: var(--s-3); }

@@ -94,16 +94,6 @@
 .foot { margin-block-start: var(--s-6); max-width: var(--measure); }
 @media (min-width: 820px) { .cards { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 
-/* The first-drop line, sitting with the lead rather than under the whole head:
-   it is a qualifier on the range, not an announcement of its own. */
-.drop {
-  display: inline-flex; align-items: center;
-  min-block-size: 34px; padding-inline: var(--s-4);
-  background: var(--sun); color: var(--ink);
-  border: var(--border); border-radius: var(--r-pill);
-  justify-self: start;
-}
-
 /* ---- the two voices ----------------------------------------------------
    Child line then parent line, each labelled, separated by a hairline so they
    read as a pair rather than as two stray paragraphs. */

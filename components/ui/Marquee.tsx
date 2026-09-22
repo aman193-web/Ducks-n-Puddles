@@ -1,11 +1,17 @@
-import { Motif, type MotifName } from '@/components/Motif'
+import { Drop, PawPrint, Waves, Bird } from '@phosphor-icons/react/dist/ssr'
 import styles from './Marquee.module.css'
 
-/** Rotating brand marks, in place of the six Phosphor glyphs in outlined discs
- *  the client asked to remove. Puddle, splash, footprint, wave, duck — the
- *  "little splashes/puddles or another subtle brand element" they suggested,
- *  cycled so the band does not repeat one mark all the way across. */
-const MARKS: MotifName[] = ['droplets', 'splash', 'footprint', 'wave', 'duck']
+/** The separator set, from Phosphor — the same library Specs, the FAQ, the
+ *  Journal and the reels rail already draw from, so the site speaks one icon
+ *  language instead of keeping a hand-drawn set alive for the ribbon alone.
+ *
+ *  What the client asked to remove was the outlined COLOUR DISC around each
+ *  glyph, not icons as such: they suggested "little splashes/puddles or another
+ *  subtle brand element". These are drop, pawprint, waves and bird — water and
+ *  ducks — drawn in ink with no disc, and cycled so the band never repeats one
+ *  mark across its width. Filled weight, because at ~1em a hairline outline
+ *  disappears against the tinted band. */
+const MARKS = [Drop, PawPrint, Waves, Bird] as const
 
 interface Props {
   items: string[]
@@ -19,11 +25,10 @@ interface Props {
  * Infinite rotated ticker. The track holds the items TWICE and translates exactly
  * -50%, so the loop is seamless with no JS and no measurement.
  *
- * The separator used to be a set of six Phosphor glyphs, each in its own outlined
- * colour disc. The client asked for the band to feel lighter and less "in your
- * face", and named the symbols specifically — so it is now the brand's own
- * droplet motif, drawn in ink at low opacity. One mark, no disc, no outline, and
- * it is already on the physical bottle.
+ * The separators were six Phosphor glyphs in outlined colour discs, which the
+ * client named specifically as too "in your face". What went was the DISC —
+ * these are Phosphor again, in ink at full opacity, no disc and no outline,
+ * cycling through four water-and-duck marks rather than repeating one.
  */
 export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = 'ltr', seconds = 32 }: Props) {
   /* The loop is seamless only when HALF the track is at least as wide as the
@@ -46,7 +51,10 @@ export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = '
       {loop.map((t, i) => (
         <span className={styles.item} key={`${t}-${i}`}>
           {t}
-          <Motif name={MARKS[i % MARKS.length]} className={styles.mark} />
+          {(() => {
+            const Mark = MARKS[i % MARKS.length]
+            return <Mark weight="fill" className={styles.mark} />
+          })()}
         </span>
       ))}
     </span>

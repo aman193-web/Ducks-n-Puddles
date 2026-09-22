@@ -82,7 +82,14 @@
    reaches 4.39/4.31 — still short. The mono face and its tracking carry the step
    down in hierarchy instead, which costs no contrast at all. */
 .teachesLabel { color: var(--ink); }
-.chips { display: flex; flex-wrap: wrap; gap: var(--s-2); list-style: none; padding: 0; margin: 0; }
+/* `justify-self: start` so the chip row hugs the left edge of its grid cell
+   instead of being stretched across it — a wrapped row of pills that is
+   stretched reads as a justified paragraph rather than as a set of tags. */
+.chips {
+  display: flex; flex-wrap: wrap; gap: var(--s-2);
+  justify-self: start;
+  list-style: none; padding: 0; margin: 0;
+}
 .chips li {
   background: var(--cream); border: var(--border); border-radius: var(--r-pill);
   padding: 6px var(--s-3); font-size: var(--fs-small); font-weight: 600;

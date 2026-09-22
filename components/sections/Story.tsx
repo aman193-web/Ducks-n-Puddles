@@ -24,10 +24,6 @@ export function Story() {
       <div className="wrap">
         <div className={styles.grid}>
           <figure className={styles.figure} data-anim="" data-anim-rot="-2">
-            <Sticker className={styles.badge} colour="var(--goosey-soft)" rot={9}
-                     data-pop="" data-pop-rot="9">
-              South Florida
-            </Sticker>
             <Picture id="shell-hands" sizes="(min-width: 900px) 46vw, 92vw"
                      className={styles.photo} />
             {/* Chi Chi, already in the puddle, beside the real family. */}

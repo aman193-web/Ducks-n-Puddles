@@ -1,21 +1,31 @@
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { Duck } from '@/components/ui/Duck'
-import { Motif, type MotifName } from '@/components/Motif'
+import { BookOpenText, Sparkle, Package, Drop, Confetti } from '@phosphor-icons/react/dist/ssr'
 import { roadmap } from '@/content/brand'
 import styles from './WhatsNext.module.css'
 
-/** One brand mark and one field tint per row, so the five read as a set of
- *  different things rather than as a ranked list. The numbered discs are gone:
- *  the client asked to remove the 1/2/3 ranking from Meet the Ducks, and a
- *  column of numbers here was the same device in a different place. */
-const FACE: { mark: MotifName; field: string }[] = [
-  { mark: 'duck',      field: 'var(--goosey-field)' },
-  { mark: 'flower',    field: 'var(--chichi-field)' },
-  { mark: 'splash',    field: 'var(--vincey-field)' },
-  { mark: 'droplets',  field: 'var(--vincey-field)' },
-  { mark: 'footprint', field: 'var(--goosey-field)' },
-]
+/** One icon and one field tint per row, so the five read as a set of different
+ *  things rather than as a ranked list. The numbered discs are gone: the client
+ *  asked to remove the 1/2/3 ranking from Meet the Ducks, and a column of
+ *  numbers here was the same device in a different place.
+ *
+ *  Phosphor, matching Specs and the FAQ. The gain over the brand motifs that
+ *  were here is that each one can say what its row IS — a book, a personalised
+ *  name, a box, something for the parents, an early window. Five puddles and
+ *  footprints told you nothing about five different products; the icons now
+ *  carry meaning rather than just marking a position.
+ *
+ *  Duotone, not fill: these sit at 31px inside a bordered disc, where a solid
+ *  shape reads as a blob. Order tracks `roadmap` in content/brand.ts — if a row
+ *  is added or reordered there, reorder here to match. */
+const FACE = [
+  { Icon: BookOpenText, field: 'var(--goosey-field)' },  // The Quack Pack — the books
+  { Icon: Sparkle,      field: 'var(--chichi-field)' },  // Name it yours
+  { Icon: Package,      field: 'var(--vincey-field)' },  // Boxes that grow up
+  { Icon: Drop,         field: 'var(--vincey-field)' },  // For the parents
+  { Icon: Confetti,     field: 'var(--goosey-field)' },  // First dibs
+] as const
 
 /**
  * THE BIGGER VISION — "the bottles are just the beginning".
@@ -51,7 +61,9 @@ export function WhatsNext() {
         <ol className={styles.list}>
           <li className={`${styles.item} ${styles.lead}`} data-anim="" data-anim-y="40"
               style={{ ['--n-bg' as string]: FACE[0].field } as React.CSSProperties}>
-            <span className={styles.mark} aria-hidden="true"><Motif name={FACE[0].mark} /></span>
+            <span className={styles.mark} aria-hidden="true">
+              {(() => { const { Icon } = FACE[0]; return <Icon weight="duotone" /> })()}
+            </span>
             <div className={styles.leadText}>
               <h3 className={styles.title}>{lead.title}</h3>
               <p className={styles.body}>{lead.body}</p>
@@ -64,7 +76,9 @@ export function WhatsNext() {
           {rest.map((r, i) => (
             <li key={r.title} className={styles.item} data-anim="" data-anim-y="40"
                 style={{ ['--n-bg' as string]: FACE[i + 1].field } as React.CSSProperties}>
-              <span className={styles.mark} aria-hidden="true"><Motif name={FACE[i + 1].mark} /></span>
+              <span className={styles.mark} aria-hidden="true">
+                {(() => { const { Icon } = FACE[i + 1]; return <Icon weight="duotone" /> })()}
+              </span>
               <h3 className={styles.title}>{r.title}</h3>
               <p className={styles.body}>{r.body}</p>
             </li>

@@ -90,7 +90,9 @@
 .h {
   font-family: var(--font-display); font-synthesis: none;
   font-weight: 400; letter-spacing: .008em; line-height: 1.06;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  /* 50px at desktop, up from a 32px cap: the footer sign-off was set at
+     card-title size and read as a caption under the sections above it. */
+  font-size: clamp(1.5rem, 3.5vw, 3.125rem);
 }
 .blurb { font-size: var(--fs-small); max-width: 42ch; line-height: 1.6; }
 
