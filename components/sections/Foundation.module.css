@@ -84,23 +84,28 @@
 }
 .chipMark svg { inline-size: 15px; block-size: 15px; }
 
-/* ---- the headline, with one word in the accent colour ----------------
-   NOT --fs-mega. At 144px in a half-width column this ran to five lines and
-   660px, which is what pushed the section to 1.55 screens — and both reference
-   banners set their headline far smaller than that, letting the composition
-   (accent word, blob, scattered marks) carry the weight instead. At ~89px it
-   lands in three lines and still reads as the biggest thing on the page after
-   the hero: --fs-xl, the section-heading size, tops out at 76px. */
+/* ---- the headline -----------------------------------------------------
+   --fs-xl, the section-heading size. It had its own 88px clamp to sit a step
+   above the other sections; the design pass put every section heading on one
+   size, so the Foundation's prominence now comes entirely from the things that
+   were always doing the work — a whole screen, its own colour, the blob and the
+   scattered marks. (It is emphatically NOT --fs-mega: at 144px in a half-width
+   column it ran to five lines and 660px.) */
 .title {
-  font-size: clamp(2.5rem, 6.2vw, 5.5rem);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-xl);
   max-width: 18ch;
 }
-/* <em> carries the emphasis the accent colour is expressing; the italic is not
-   wanted, so it is reset. Chi Chi's ink measures 4.8 against this ground —
-   comfortable at a 144px display size, where AA-Large asks for 3. */
+/* The accent is now INK, i.e. the same colour as the rest of the headline, so
+   the word is no longer picked out visually. That is what the design pass asked
+   for (--deep, which is byte-identical to --ink at #10264A; --ink is the token
+   that means "text", so it is the one used here).
+   The <em> stays because the emphasis is still real to a screen reader, but be
+   aware it is now announced without being shown. If the accent is meant to be
+   gone for good, the honest form is to drop the <em> from Foundation.tsx. */
 .accent {
   font-style: normal;
-  color: var(--chichi-ink);
+  color: var(--ink);
 }
 
 .body { max-width: 52ch; }

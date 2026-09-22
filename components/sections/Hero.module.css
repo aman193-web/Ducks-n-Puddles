@@ -147,12 +147,21 @@
   /* Height-aware: a wide but short window (a laptop at 1440x720) has to shrink
      the display type or there is nothing left of the sky.
      Sits one step ABOVE --fs-mega (116 vs 109 at 1440), so the page's h1 is
-     unambiguously its largest type — it was 88 against duck names at 144.
-     Bangbang is narrow enough to take it: "adventure" at 116px needs ~440px of
-     a ~1216px column. */
-  font-size: clamp(2.25rem, min(8.05vw, 13vh), 7.25rem);
+     unambiguously its largest type.
+     The 10.24vw term reaches that 116px ceiling at 1133px instead of 1441px,
+     which is the design pass's "100px at 977" expressed as a coefficient — it
+     makes the hero bigger through the whole tablet-to-desktop band and leaves
+     1440 exactly where it was, so no breakpoint is needed for it. */
+  font-size: clamp(2.25rem, min(10.24vw, 13vh), 7.25rem);
   letter-spacing: .004em;
-  line-height: 1;
+  /* 0.82. The design pass asked for 75/100 = 0.75; measured, this headline's
+     ink needs 0.808em between baselines, so 0.75 clipped the 'y' of "for every"
+     and overlapped the line below. 0.82 is as tight as it goes.
+     It CAN go this tight — well under the 1 the section headings need — only
+     because this headline's line breaks are hard-coded spans, so its worst
+     glyph pair is a 'y' (0.185em) rather than the 'j' (0.353em) that turns up in
+     reflowing headings. Change the wording and this needs re-measuring. */
+  line-height: .82;
   color: var(--ink);
 }
 /* outer span clips, inner span is what rises */
@@ -169,9 +178,9 @@
   margin: 0;
   /* every metric here must match .title exactly — this is its reflection */
   font-weight: 400;
-  font-size: clamp(2.25rem, min(8.05vw, 13vh), 7.25rem);
+  font-size: clamp(2.25rem, min(10.24vw, 13vh), 7.25rem);
   letter-spacing: .004em;
-  line-height: 1;
+  line-height: .82;
   color: rgba(255, 255, 255, .12);
   transform: scaleY(-1);
   filter: blur(2.4px);
@@ -346,7 +355,13 @@
   .rally { font-size: .625rem; }
 
   .title {
-    font-size: clamp(2.25rem, 11.6vw, 3.75rem);
+    /* Cap raised 3.75rem -> 5.5rem. The old 60px ceiling was set for Fredoka,
+       and the mobile composition applies all the way up to 899px — so once the
+       section headings went to 82px, the page's h1 was SMALLER than an h2
+       through the whole 768-899 band (60 against 68), and smaller than the duck
+       names too (85 at 899). 88px keeps the h1 largest across the band and
+       changes nothing on a real phone, where 11.6vw is the binding term. */
+    font-size: clamp(2.25rem, 11.6vw, 5.5rem);
     /* was -.03em, which was Fredoka's setting: Bangbang's letterforms are drawn
        close already and negative tracking collapses them */
     letter-spacing: .004em;

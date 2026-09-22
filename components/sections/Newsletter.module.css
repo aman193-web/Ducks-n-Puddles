@@ -19,10 +19,10 @@
 }
 
 .title {
-  /* --fs-lg: the heading sits beside a form inside an inset panel, so it takes
-     the narrow-column step rather than the full section size. Was a one-off 60px. */
-  font-size: var(--fs-lg);
-  line-height: var(--lh-lg);
+  /* The full section size, like every other heading. It stepped down for its
+     inset panel; the design pass collapsed all of them onto --fs-xl. */
+  font-size: var(--fs-xl);
+  line-height: var(--lh-xl);
   font-weight: 400;
   /* was also carrying a dead `letter-spacing: -.03em` from the Excon era, one
      line above the value that actually applied */

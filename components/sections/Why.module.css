@@ -19,8 +19,13 @@
    a 22ch measure it ran to five lines and 387px — a paragraph set at heading
    size. It takes --fs-lg and the full content width instead, which lands it in
    two or three lines and lets it read as the statement of intent it is. */
+/* Its own step at 62px — above --fs-lg, below the 82px section size. This is
+   the one heading that is a long SENTENCE rather than a title, so it stays
+   smaller; at --fs-xl it would run to five lines again. Leading stays looser
+   than the section headings for the same reason: three lines of running prose
+   want more air than a two-word title. */
 .head h2 {
-  font-size: var(--fs-lg);
+  font-size: clamp(1.75rem, 5.72vw, 3.875rem);
   line-height: var(--lh-lg);
   max-width: 44ch;
 }

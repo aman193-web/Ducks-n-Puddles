@@ -46,7 +46,12 @@
 }
 /* The ghost sits exactly one line below, so the clip box must be exactly one
    line tall — otherwise the 44px touch target shows both copies at once. */
-.roll { display: inline-block; overflow: hidden; line-height: 1.3; }
+/* `nowrap` is load-bearing, not cosmetic. This box is `overflow: hidden` so the
+   hover ghost can roll up through it, and the nav gap clamps down to ~6px at
+   narrow desktop widths — at which point "The Ducks" and "Our Story" wrapped to
+   TWO lines inside a one-line clip and rendered as overlapping text. Measured at
+   1084px: those two labels' inner spans were 39px tall against a 20px line. */
+.roll { display: inline-block; overflow: hidden; line-height: 1.3; white-space: nowrap; }
 .roll > span {
   display: inline-block;
   text-shadow: currentColor 0 1.3em;
