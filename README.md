@@ -244,6 +244,16 @@ relevant script.
 
 All optional. Create `.env.local`:
 
+> **`DESIGN_MODE_TOKEN` is the one exception to "all optional"** — it is not read by the
+> app at all. `.mcp.json` references it so the Design Mode MCP server can authenticate
+> without the bearer token being committed to this repository, which is public. It has to
+> be in the SHELL environment that launches Claude Code, not in `.env.local`, because
+> `.env.local` is loaded by Next and not by the editor:
+>
+> ```bash
+> echo 'export DESIGN_MODE_TOKEN="dm_…"' >> ~/.zshrc
+> ```
+
 ```bash
 # console (default) | mailchimp | resend | customerio | webhook
 SUBSCRIBE_PROVIDER=console
