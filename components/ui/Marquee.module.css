@@ -48,7 +48,7 @@
    was the note. No disc, no outline; the mark is the whole thing. */
 .mark {
   flex: none;
-  inline-size: 1em; block-size: 1em;
+  inline-size: 1.15em; block-size: 1.15em;
   color: var(--ink);
   /* Optically centred on the letterforms, not on the line box: at line-height 1
      the box carries descender space the word barely uses, which parks the mark

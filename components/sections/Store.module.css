@@ -62,15 +62,25 @@
    `inline-size: auto`, which stretched it to 138x273. */
 .bottle { block-size: clamp(196px, 21vw, 270px); inline-size: auto; width: auto; }
 
-/* The character, standing beside its bottle and overlapping the puddle. Behind
-   the bottle in the stack so the product still leads — the duck is who it is,
-   the bottle is what you buy. */
+/* The character looks out from BEHIND the bottle: bottom-aligned to the same
+   ground, pushed far enough left that roughly half of it clears the bottle's
+   edge, and z-index 0 so the product still leads.
+   At -14% it cleared by 14px of a 135px body and was effectively invisible;
+   -46% shows the head, one wing and a foot, which is what "peeking" needs. */
 .character {
   position: absolute;
   z-index: 0;
-  inline-size: clamp(88px, 11vw, 132px);
-  inset-block-end: -6px;
-  inset-inline-start: -14%;
+  /* Taller than the bottle's lower half, so the HEAD is what clears the edge.
+     At 152px the character was shorter than the 273px bottle and the only part
+     showing past it was a wing tip. */
+  inline-size: clamp(130px, 17vw, 200px);
+  inset-block-end: -4px;
+  /* The offset is a share of the CHARACTER's own width, not the figure's — the
+     figure is as wide as whichever bottle render is in it, so a percentage
+     there moved the duck by a different amount on every card. -55% puts the
+     head and one wing clear while the body stays behind the bottle. */
+  inset-inline-start: 0;
+  translate: -55% 0;
 }
 .figure > picture:has(.bottle) { position: relative; z-index: 1; }
 .puddle {

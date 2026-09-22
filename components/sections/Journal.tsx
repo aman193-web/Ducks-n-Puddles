@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import { posts, formatDate } from '@/content/journal'
 import styles from './Journal.module.css'
 
@@ -19,6 +20,7 @@ export function Journal() {
 
   return (
     <section className={styles.section} id="journal" aria-labelledby="journal-title">
+      <BrandDetail preset="droplets" />
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--sky-soft)" rot={2} data-pop="" data-pop-rot="2">The duck pond</Sticker>

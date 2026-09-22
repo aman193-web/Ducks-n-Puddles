@@ -687,6 +687,54 @@
     "nativeWidth": 1254,
     "nativeHeight": 1254
   },
+  "chichi-turn": {
+    "id": "chichi-turn",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "goosey-turn": {
+    "id": "goosey-turn",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
+  "vincey-turn": {
+    "id": "vincey-turn",
+    "tier": "A",
+    "widths": [
+      300,
+      600
+    ],
+    "alpha": true,
+    "aspect": 1,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1254,
+    "nativeHeight": 1254
+  },
   "chichi-walk": {
     "id": "chichi-walk",
     "tier": "A",

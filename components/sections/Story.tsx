@@ -2,6 +2,7 @@ import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { Duck } from '@/components/ui/Duck'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import styles from './Story.module.css'
 
 /**
@@ -19,6 +20,7 @@ import styles from './Story.module.css'
 export function Story() {
   return (
     <section className={styles.section} id="story" aria-labelledby="story-title">
+      <BrandDetail preset="crests" />
       <div className="wrap">
         <div className={styles.grid}>
           <figure className={styles.figure} data-anim="" data-anim-rot="-2">

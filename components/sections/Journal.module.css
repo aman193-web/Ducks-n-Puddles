@@ -1,4 +1,7 @@
-.section { background: var(--paper); padding-block: var(--section-y); }
+.section { background: var(--paper); padding-block: var(--section-y);
+  position: relative;
+  overflow-x: clip;
+}
 
 .head {
   display: grid; justify-items: start;

@@ -49,7 +49,7 @@ export function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className={styles.crest}>
-        <WaveEdge above="var(--duck-blue-soft)" fill="var(--cream)" />
+        <WaveEdge above="var(--vincey-soft)" fill="var(--cream)" />
         <span className={styles.swimmer} aria-hidden="true">
           <span className={styles.paddle}>
             <img src="/img/mascot-140.webp" width={54} height={60} alt="" />

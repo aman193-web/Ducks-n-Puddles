@@ -1,5 +1,9 @@
 .section {
-  background: var(--duck-blue-soft);
+  /* Vincey's blue rather than the periwinkle duck-blue tint. It is the calmest
+     of the three character colours, which suits the section that asks someone to
+     commit, and it ties the closing section to a character rather than to a
+     neutral. --ink measures 8.4 on it. */
+  background: var(--vincey-soft);
   color: var(--ink);
   padding-block: var(--section-y);
   position: relative;
@@ -105,7 +109,9 @@
   color: var(--duck-blue); font-size: var(--fs-small); font-weight: 600;
   text-underline-offset: .2em;
 }
-.note { font-size: var(--fs-micro); color: var(--ink-soft); max-width: 44ch; }
+/* Full --ink. --ink-soft measured 4.19 against Vincey's blue at 12px, where AA
+   asks 4.5 — it cleared on the lighter periwinkle this section used before. */
+.note { font-size: var(--fs-micro); color: var(--ink); opacity: .82; max-width: 44ch; }
 .copy > .note { margin-block-start: var(--flow-eyebrow); }
 .error {
   color: var(--ink); background: var(--sun); border: var(--border); border-radius: var(--r-sm);

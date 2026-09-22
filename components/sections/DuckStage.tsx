@@ -4,7 +4,6 @@ import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
 import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
-import { play as playQuack } from '@/lib/sound'
 import styles from './DuckStage.module.css'
 
 const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
@@ -74,11 +73,6 @@ export function DuckStage() {
                   </ul>
                 </div>
 
-                <span className={styles.quackBtn}>
-                  <Btn colour="var(--cream)" arrow={false} onClick={() => void playQuack()}>
-                    Hear {d.name} quack
-                  </Btn>
-                </span>
               </div>
 
               {/* The CHARACTER leads and the bottle stands with it. This section

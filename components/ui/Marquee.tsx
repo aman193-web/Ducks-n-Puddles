@@ -26,9 +26,24 @@ interface Props {
  * it is already on the physical bottle.
  */
 export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = 'ltr', seconds = 32 }: Props) {
+  /* The loop is seamless only when HALF the track is at least as wide as the
+     band, because the animation translates exactly -50%. The band is 118vw and
+     keeps growing with the viewport, while the item text stops growing once
+     --fs caps out — so a short list opens a gap on the right that gets worse the
+     wider the screen. Measured at 1440: five items covered 909px of a 1703px
+     band (794px short) and three items covered 611px (1092px short).
+     Repeating the list to a floor of 26 entries puts half the track past 5000px.
+     The band is 118vw, so the requirement scales with the display: 20 entries
+     cleared 2560 with 702px to spare but would have fallen ~330px short on a
+     3440 ultrawide. 26 covers that with room. */
+  const loop = Array.from(
+    { length: Math.max(2, Math.ceil(26 / items.length)) },
+    () => items,
+  ).flat()
+
   const group = (
     <span className={styles.group} aria-hidden="true">
-      {items.map((t, i) => (
+      {loop.map((t, i) => (
         <span className={styles.item} key={`${t}-${i}`}>
           {t}
           <Motif name={MARKS[i % MARKS.length]} className={styles.mark} />

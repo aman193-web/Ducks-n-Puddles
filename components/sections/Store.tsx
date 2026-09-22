@@ -50,17 +50,21 @@ export function Store() {
                 scroll systems on one card is what left them faded and stacked */}
             <article className={styles.card}
                      style={{ ['--duck-field' as string]: d.field } as React.CSSProperties}>
-              {/* THE CHARACTER STANDS BESIDE ITS OWN BOTTLE. This is the client's
-                  "we want kids to understand that the Vincey bottle is their
-                  Vincey" — the copy above says it, and this is what proves it.
-                  density="always" because it is the whole point of the card, so
-                  it earns its place on a phone. */}
+              {/* THE CHARACTER LOOKS OUT FROM BEHIND ITS OWN BOTTLE. This is the
+                  client's "we want kids to understand that the Vincey bottle is
+                  their Vincey" — the copy says it, this proves it.
+                  The `turn` pose is a three-quarter facing RIGHT, so placed to
+                  the left of the bottle it reads as peeking round it. It sat at
+                  the `idle` pose before, overlapping the bottle almost exactly
+                  and showing 14px of itself — which is to say, invisible.
+                  density="always": it is the point of the card, so it earns a
+                  phone. */}
               <div className={styles.figure}>
                 <span className={styles.puddle} aria-hidden="true" />
                 <Ripple className={styles.ripple} />
-                <Duck who={d.slug} pose="idle" density="always" float
+                <Duck who={d.slug} pose="turn" density="always" float
                       className={styles.character}
-                      sizes="(min-width: 820px) 11vw, 30vw" />
+                      sizes="(min-width: 820px) 13vw, 34vw" />
                 <Picture id={assetFor(d.slug)} sizes="(min-width: 820px) 20vw, 55vw"
                          alt={`The ${d.name} bottle`} className={styles.bottle} />
               </div>

@@ -106,7 +106,6 @@
   translate: -50% 0; inline-size: 116%; block-size: 22px;
   background: var(--cream); border: var(--border-lg); border-radius: 50%; z-index: 0;
 }
-.quackBtn { margin-block-start: var(--s-2); }
 
 @media (min-width: 880px) {
   .inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-8); }

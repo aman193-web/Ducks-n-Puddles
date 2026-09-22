@@ -56,7 +56,7 @@
   background: var(--paper); border: var(--border); border-radius: 50%;
   color: var(--ink);
 }
-.mark svg { inline-size: 26px; block-size: 26px; }
+.mark svg { inline-size: 31px; block-size: 31px; }
 
 /* ---- the featured lead card ------------------------------------------
    The books are the biggest part of the vision, so the first row is one wide

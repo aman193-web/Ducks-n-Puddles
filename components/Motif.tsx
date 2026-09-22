@@ -44,34 +44,36 @@ export function Motif({ name, size = 24, className }: { name: MotifName; size?: 
   }
 
   if (name === 'splash') {
+    // A droplet landing in a puddle: the drop, two thrown off either side, and
+    // the ring it lands in. Drawn on the same 24x24 grid as the others so the
+    // whole set shares one optical weight in the ribbon.
     return (
       <svg {...common}>
-        {/* a droplet landing, with two smaller ones thrown off either side */}
-        <path d={teardrop} transform="translate(-1 -3) scale(0.58) translate(6 6)" />
-        <circle cx="4.6" cy="9.4" r="1.9" />
-        <circle cx="19.4" cy="9.4" r="1.9" />
-        {/* the puddle it lands in */}
-        <path d="M2.6 19.4c0-1.1 4.2-2 9.4-2s9.4.9 9.4 2-4.2 2-9.4 2-9.4-.9-9.4-2Z" />
+        <path d={teardrop} transform="translate(-0.6 -4.2) scale(0.55) translate(6 6)" />
+        <ellipse cx="4.4" cy="10.6" rx="2" ry="2.3" transform="rotate(-20 4.4 10.6)" />
+        <ellipse cx="19.6" cy="10.6" rx="2" ry="2.3" transform="rotate(20 19.6 10.6)" />
+        <path d="M2.2 18.6c0-1.6 4.4-2.9 9.8-2.9s9.8 1.3 9.8 2.9-4.4 2.9-9.8 2.9-9.8-1.3-9.8-2.9Zm3.4 0c0 .7 2.9 1.3 6.4 1.3s6.4-.6 6.4-1.3-2.9-1.3-6.4-1.3-6.4.6-6.4 1.3Z" />
       </svg>
     )
   }
 
   if (name === 'wave') {
-    // The brand's own crest, at icon scale: one tall hump then a short one.
+    // The brand's own crest at icon scale: one tall hump, one short, the same
+    // asymmetry lib/wave.ts draws at full size.
     return (
       <svg {...common}>
-        <path d="M1 15.4c2.6 0 3.9-5.2 6.5-5.2s3.9 5.2 6.5 5.2 2.6-3.4 5.2-3.4c1.7 0 3 1.1 3.8 2.2v3.6c-.8-1.1-2.1-2.2-3.8-2.2-2.6 0-2.6 3.4-5.2 3.4-2.6 0-3.9-5.2-6.5-5.2S3.6 19 1 19Z" />
+        <path d="M1.4 13.8c1.9 0 2.6-4.6 5.5-4.6s3.6 4.6 5.5 4.6c1.6 0 2-2.7 4-2.7 1.6 0 2.6 1 3.4 2.1l1.8 2.4-2.6 1.9-1.8-2.4c-.4-.6-.7-.8-.8-.8-.5 0-1 2.7-4 2.7-3.3 0-4.2-4.6-5.5-4.6s-2.1 4.6-5.5 4.6Z" />
       </svg>
     )
   }
 
   if (name === 'duck') {
-    // Silhouette: body, head, beak, tuft. Reads at 16px, which the bottle
-    // render does not.
+    // Silhouette: body, head, beak, tuft, and the water line under it. Reads at
+    // 16px, which the photographic bottle render does not.
     return (
       <svg {...common}>
-        <path d="M15.6 3.1c.5-1 1.9-.9 2.2.2l.4 1.5c1.7.4 2.9 1.9 2.9 3.7 0 .6-.1 1.1-.3 1.6l2.1.5c.6.1.9.8.5 1.3-2.1 2.9-5.6 5.9-10.2 5.9-4.3 0-7.8-2.1-9.4-4.4-.4-.6 0-1.4.7-1.4h7.5c-.4-.8-.6-1.7-.6-2.6 0-2.3 1.5-4.2 3.6-4.8ZM21 8.1c0-.5-.4-.9-.9-.9s-.9.4-.9.9.4.9.9.9.9-.4.9-.9Z" />
-        <path d="M4.4 18.2c3 1.7 6.4 2.4 9.4 1.9 1.2-.2 2.3.7 2 1.5-.2.6-1.2.9-2.6 1-3.8.2-7.5-1.2-9.7-3.5-.6-.6.1-1.3.9-.9Z" />
+        <path d="M16.1 2.4c.4-.9 1.7-.8 2 .2l.5 1.7c1.7.5 2.9 2 2.9 3.8 0 .5-.1 1-.2 1.4l1.5.4c.6.2.8.9.4 1.3-2.2 2.6-5.5 5.1-9.8 5.1-4.2 0-7.7-2-9.4-4.3-.4-.5 0-1.3.6-1.3h7.2c-.4-.8-.6-1.7-.6-2.6 0-2.3 1.6-4.3 3.7-4.9Zm4.3 4.9a.95.95 0 1 0-1.9 0 .95.95 0 0 0 1.9 0Z" />
+        <path d="M2.6 18.1c3.2 1.9 6.9 2.7 10.2 2.2.9-.1 1.5.9.9 1.4-.5.4-1.5.6-2.8.7-3.9.2-7.6-1.3-9.7-3.6-.5-.6.2-1.2 1.4-.7Z" />
       </svg>
     )
   }

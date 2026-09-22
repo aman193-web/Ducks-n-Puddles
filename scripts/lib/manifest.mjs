@@ -97,6 +97,11 @@ export const alphaAssets = [
   { id: 'chichi-splash', src: `${BRAND_DIR}/characters/chichi-splash.png`, widths: [340, 680] },
   { id: 'goosey-rest',   src: `${BRAND_DIR}/characters/goosey-rest.png`,   widths: [300, 600] },
   { id: 'vincey-peek',   src: `${BRAND_DIR}/characters/vincey-peek.png`,   widths: [300, 600] },
+  /* Three-quarter, facing right — the pose that reads as looking out from
+     behind something when it is placed to the LEFT of that thing. */
+  { id: 'chichi-turn',   src: `${BRAND_DIR}/characters/chichi-turn.png`,   widths: [300, 600] },
+  { id: 'goosey-turn',   src: `${BRAND_DIR}/characters/goosey-turn.png`,   widths: [300, 600] },
+  { id: 'vincey-turn',   src: `${BRAND_DIR}/characters/vincey-turn.png`,   widths: [300, 600] },
   { id: 'chichi-walk',   src: `${BRAND_DIR}/characters/chichi-walk.png`,   widths: [300, 600] },
   { id: 'vincey-walk',   src: `${BRAND_DIR}/characters/vincey-walk.png`,   widths: [300, 600] },
   { id: 'goosey-cheer',  src: `${BRAND_DIR}/characters/goosey-cheer.png`,  widths: [300, 600] },

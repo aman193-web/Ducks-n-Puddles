@@ -1,7 +1,10 @@
 /* Image left on a colour panel, copy right — the reference's two-up. Type is a
    step down from the section headings elsewhere and the copy is trimmed so the
    whole thing lands in one frame rather than running past the fold. */
-.section { background: var(--cream); padding-block: var(--section-y); }
+.section { background: var(--cream); padding-block: var(--section-y);
+  position: relative;
+  overflow-x: clip;
+}
 /* `stretch`, not `center`. Centred, the photograph floated at its natural
    height against an 800px copy column and left a deep well of empty cream
    under it — which is what read as the section being too tall. Stretching the
