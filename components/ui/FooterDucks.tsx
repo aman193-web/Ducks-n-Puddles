@@ -1,7 +1,6 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import { prefersReduced } from '@/lib/motion'
 import styles from './FooterDucks.module.css'
 
 /**
@@ -44,10 +43,23 @@ export function FooterDucks() {
   const wrap = useRef<HTMLDivElement>(null)
   const video = useRef<HTMLVideoElement>(null)
 
+  /* Re-run when the OS setting changes rather than only reading it at mount.
+     Without this, turning "Reduce motion" off leaves the ducks frozen until the
+     page is reloaded — which looks exactly like the feature being broken, and
+     is the single most likely reason someone reports it as dead. */
+  const [reduced, setReduced] = useState<boolean | null>(null)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const sync = () => setReduced(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+
   useEffect(() => {
     const v = video.current
     const w = wrap.current
-    if (!v || !w) return
+    if (!v || !w || reduced === null) return
 
     /* The straight-facing pose, and the resting state for everyone who does not
        get the interaction. Set as soon as the duration is known. */
@@ -58,7 +70,7 @@ export function FooterDucks() {
     if (v.readyState >= 1) park()
     else v.addEventListener('loadedmetadata', park, { once: true })
 
-    if (prefersReduced() || !window.matchMedia('(pointer: fine)').matches) return
+    if (reduced || !window.matchMedia('(pointer: fine)').matches) return
 
     const ctx = gsap.context(() => {
       const state = { t: 0 }
@@ -131,7 +143,7 @@ export function FooterDucks() {
       ctx.revert()
       v.removeEventListener('loadedmetadata', park)
     }
-  }, [])
+  }, [reduced])
 
   return (
     <div className={styles.stage} ref={wrap}>
@@ -141,7 +153,7 @@ export function FooterDucks() {
       <video
         ref={video}
         className={styles.video}
-        src="/video/ducks-follow.mp4"
+        src="/video/ducks-follow.1cbddaf3.mp4"
         muted
         playsInline
         preload="auto"
