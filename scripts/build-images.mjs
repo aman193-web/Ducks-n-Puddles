@@ -11,7 +11,8 @@
  *    odd widths (1365, 1366, 1386) and the renders are only 621px wide.
  */
 import sharp from 'sharp'
-import { mkdir, writeFile, stat } from 'node:fs/promises'
+import { mkdir, writeFile, stat, readFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
 import path from 'node:path'
 import { photos, alphaAssets, videos, PHOTO_DIR, WIDTHS } from './lib/manifest.mjs'
 import { grades } from './lib/grades.mjs'
@@ -63,6 +64,23 @@ async function emit(base, pipeline, widths, { alpha = false } = {}) {
 const entries = {}
 
 // ---------- photographs ----------
+/**
+ * A short content hash of the SOURCE file, stored on the manifest entry and
+ * appended to every URL as ?v=.
+ *
+ * Derivative filenames are `<id>-<width>.<ext>` and never change, so replacing
+ * the art behind an existing id leaves every browser that has been to the site
+ * serving the old picture from cache — with no error, and nothing to notice
+ * until someone says the new image "is not there". That happened twice: the
+ * footer video, and then the peeking characters.
+ *
+ * A query string is enough. Next serves /img/* from public/ and ignores the
+ * query when resolving the file, so this costs nothing and needs no renaming.
+ */
+async function contentHash(file) {
+  return createHash('sha1').update(await readFile(file)).digest('hex').slice(0, 8)
+}
+
 for (const p of photos) {
   const src = path.join(PHOTO_DIR, p.src)
   let pipeline = sharp(src).rotate()                      // EXIF orientation FIRST
@@ -87,7 +105,7 @@ for (const p of photos) {
   const final = await sharp(await pipeline.clone().toBuffer()).metadata()
 
   entries[p.id] = {
-    id: p.id, tier: p.tier, alt: p.alt, widths: done, colour,
+    id: p.id, tier: p.tier, alt: p.alt, widths: done, colour, v: await contentHash(src),
     aspect: +(final.width / final.height).toFixed(4), formats: ['avif', 'webp', 'jpg'],
   }
   console.log(`photo  ${p.id.padEnd(18)} ${widths.length} widths  src ${srcW}x${srcH}  ${colour}`)
@@ -105,6 +123,7 @@ for (const v of videos) {
   const done = await emit(`poster-${v.id}`, pipeline, widths)
   entries[`poster-${v.id}`] = {
     id: `poster-${v.id}`, tier: 'B', alt: `Video still: ${v.id}`, widths: done, colour,
+    v: await contentHash(src),
     aspect: +(meta.width / meta.height).toFixed(4), formats: ['avif', 'webp', 'jpg'],
   }
   console.log(`poster ${v.id.padEnd(18)} ${widths.length} widths  ${colour}`)
@@ -117,7 +136,7 @@ for (const a of alphaAssets) {
   const widths = a.widths.filter((w) => w <= meta.width)
   const done = await emit(a.id, pipeline, widths, { alpha: true })
   entries[a.id] = {
-    id: a.id, tier: 'A', widths: done, alpha: true,
+    id: a.id, tier: 'A', widths: done, alpha: true, v: await contentHash(a.src),
     aspect: +(meta.width / meta.height).toFixed(4), formats: ['avif', 'webp'],
     nativeWidth: meta.width, nativeHeight: meta.height,
   }
