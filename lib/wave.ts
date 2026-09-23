@@ -71,3 +71,56 @@ function crestPathReversed(offsetY: number, periods: number): string {
 export const ribbonPath = (top: number, bottom: number, periods = 1) =>
   `${crestPath(top, periods)} L ${periods * PERIOD} ${CREST_TALL + bottom}` +
   `${crestPathReversed(bottom, periods)} Z`
+
+/**
+ * The viewBox height the hero draws the curve into. Lives here rather than in
+ * the component because the swimmers have to solve the same curve the SVG
+ * paints, and two copies of 640 would drift apart the first time one changed.
+ */
+export const SPAN = 640
+
+/**
+ * Solve `x(t) = u` for the cubic laid down by `seg`.
+ *
+ * Both control points sit at the segment's horizontal midpoint, so in local
+ * units x(t)/L is t^3 - 1.5t^2 + 1.5t — monotonic (its derivative 3t^2-3t+1.5
+ * has no real roots), which is what makes Newton safe from any start.
+ */
+function tForX(u: number): number {
+  let t = u
+  for (let i = 0; i < 5; i++) {
+    const f = t * t * t - 1.5 * t * t + 1.5 * t - u
+    const d = 3 * t * t - 3 * t + 1.5
+    t -= f / d
+  }
+  return t < 0 ? 0 : t > 1 ? 1 : t
+}
+
+/** [x0, x1, y0, y1] for the four segments `crestPath` emits, in one period. */
+const SEGMENTS: [number, number, number, number][] = [
+  [0, 330, CREST_TALL, TROUGH],
+  [330, 500, TROUGH, CREST_SHORT],
+  [500, 670, CREST_SHORT, TROUGH],
+  [670, PERIOD, TROUGH, CREST_TALL],
+]
+
+/**
+ * The height of the crest curve at any x, in the same units `crestPath` draws.
+ *
+ * This is the analytic twin of the path in the DOM: same segment table, same
+ * Bézier. It exists so the swimming ducks can sit ON the wave at whatever x
+ * they have reached, rather than on a straight line that the water crosses.
+ * The y within a segment is the cubic's own 3t^2-2t^3 — control points share
+ * their endpoints' y, which is what gives the profile horizontal tangents at
+ * every crest and trough.
+ */
+export function crestY(x: number, offsetY = 0): number {
+  const u = ((x % PERIOD) + PERIOD) % PERIOD
+  for (const [x0, x1, y0, y1] of SEGMENTS) {
+    if (u <= x1) {
+      const t = tForX((u - x0) / (x1 - x0))
+      return offsetY + y0 + (y1 - y0) * (3 * t * t - 2 * t * t * t)
+    }
+  }
+  return offsetY + CREST_TALL
+}

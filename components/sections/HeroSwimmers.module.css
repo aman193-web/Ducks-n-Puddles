@@ -1,0 +1,37 @@
+/* ==========================================================================
+   THREE DUCKS ON THE WAVE — the layer only. Everything that moves is written
+   from HeroSwimmers.tsx; there is deliberately no animation in here, because a
+   keyframe and a ticker writing the same transform is the one way this breaks.
+
+   z-index 5 is the point of the file: it puts them in front of all three wave
+   layers (far 1, body 2, crest 4) and behind the bottles (6), so they ride ON
+   the wave line and never cross the product.
+   ========================================================================== */
+.layer {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lane {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: block;
+  /* Off to the left until the first frame lands, so nothing is ever seen
+     stacked at the origin. */
+  transform: translateX(-200%);
+  /* Pivot on the waterline, not the middle of the picture: a duck tilting about
+     its centre lifts its own base off the wave as it turns. */
+  transform-origin: 50% 88%;
+  will-change: transform;
+}
+
+.lane img {
+  display: block;
+  inline-size: auto;
+  block-size: calc(clamp(62px, 6.2vw, 94px) * var(--size));
+  /* Enough shadow to hold the duck off the navy band it sits on, no more. */
+  filter: drop-shadow(0 5px 12px rgba(16, 38, 74, .22));
+}

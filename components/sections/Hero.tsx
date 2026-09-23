@@ -1,7 +1,8 @@
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { ducks } from '@/content/brand'
-import { bandPath, ribbonPath, PERIOD, BAND_NAVY, BAND_SKY } from '@/lib/wave'
+import { bandPath, ribbonPath, PERIOD, SPAN, BAND_NAVY, BAND_SKY } from '@/lib/wave'
+import { HeroSwimmers } from './HeroSwimmers'
 import styles from './Hero.module.css'
 
 /* -------------------------------------------------------------------------
@@ -25,33 +26,13 @@ import styles from './Hero.module.css'
 const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 const ORDER = ['vincey', 'chi-chi', 'goosey'] as const
 
-/* THE SWIMMERS, in the order the client's line-up reads left to right: blue,
-   pink, yellow. They cross rightward, so the yellow one leads and the blue one
-   trails.
-
-   `lead` is a negative animation-delay, and the three values are not decorative:
-   the crest band repeats every 50cqw (see the CSS), and 12s of travel IS 50cqw,
-   so a 12s stagger puts all three at the IDENTICAL point on the wave. That is
-   what lets one `--sink` seat all three, and what keeps the spacing honest as
-   the panel resizes.
-
-   `size` is the only thing that varies — a little difference in height so the
-   three read as being at different distances rather than on one rail. */
-const SWIMMERS = [
-  { id: 'vincey-swim', lead: -2,  park: '20cqw', size: '.92',  bob: '4.4s', rise: '6px' },
-  { id: 'chichi-swim', lead: -14, park: '48cqw', size: '1',    bob: '3.8s', rise: '7px' },
-  { id: 'goosey-swim', lead: -26, park: '76cqw', size: '1.07', bob: '4.1s', rise: '6px' },
-] as const
-
 const PERIODS = 4
 const W = PERIOD * PERIODS
 
-/* The viewBox height, not the element height, is what sets the wave's amplitude
-   once `preserveAspectRatio="none"` is on: the crest-to-trough distance is a
-   fixed 168 units, so 168/SPAN is the fraction of the element it occupies.
-   640 puts it at 26% — bold enough to read as the brand mark, shallow enough
-   that a bottle standing in it is never more than a quarter under. */
-const SPAN = 640
+/* SPAN — the viewBox height — is what sets the wave's amplitude once
+   `preserveAspectRatio="none"` is on: the crest-to-trough distance is a fixed
+   168 units, so 168/SPAN is the fraction of the element it occupies. It lives
+   in lib/wave.ts because HeroSwimmers has to solve the same curve. */
 
 /**
  * THE WATER, in three pieces that share one geometry.
@@ -81,7 +62,10 @@ function WaveBody({ className, depth }: { className?: string; depth: number }) {
 
 function WaveCrest({ className, depth }: { className?: string; depth: number }) {
   return (
-    <span className={className} aria-hidden="true" data-depth={depth}>
+    /* data-hero-wave is the swimmers' one measurement point: they read this
+       box for the curve's scale and position rather than recomputing it from
+       --water and --wave-drop. */
+    <span className={className} aria-hidden="true" data-depth={depth} data-hero-wave="">
       <svg viewBox={`0 0 ${W} ${SPAN}`} preserveAspectRatio="none">
         <path d={ribbonPath(0, BAND_NAVY, PERIODS)} fill="var(--duck-blue)" />
         <path d={ribbonPath(BAND_NAVY, BAND_NAVY + BAND_SKY, PERIODS)} fill="var(--sky)" />
@@ -159,31 +143,6 @@ export function Hero() {
               <i className={styles.bubble} /><i className={styles.bubble} />
             </div>
 
-            {/* -- swimming across it --
-                Behind the bottles and in front of the wave body, so a duck
-                passes BEHIND the product and the crest ribbon still cuts across
-                its hull: that overlap is the whole reason it reads as floating
-                rather than as a sticker sliding over the panel. */}
-            <div className={styles.swimmers} aria-hidden="true">
-              {SWIMMERS.map((s) => (
-                <span
-                  key={s.id}
-                  className={styles.lane}
-                  style={{
-                    ['--lead' as string]: `${s.lead}s`,
-                    ['--park' as string]: s.park,
-                    ['--size' as string]: s.size,
-                    ['--bob' as string]: s.bob,
-                    ['--rise' as string]: s.rise,
-                  }}
-                >
-                  <span className={styles.rider}>
-                    <Picture id={s.id} sizes="9vw" priority />
-                  </span>
-                </span>
-              ))}
-            </div>
-
             {/* -- standing in it -- */}
             <div className={styles.squad}>
               {squad.map((d, i) => (
@@ -200,8 +159,12 @@ export function Hero() {
               ))}
             </div>
 
-            {/* in front of the product, so the bottles stand IN the water */}
+            {/* The near band. It used to render in front of the bottles so they
+                stood IN the water; with the waterline dropped clear of them
+                that overlap no longer exists, which frees it to sit BEHIND the
+                swimmers — the layer the ducks ride on rather than hide under. */}
             <WaveCrest className={`${styles.wave} ${styles.waveCrest}`} depth={0.07} />
+            <HeroSwimmers />
             <span className={styles.glints} aria-hidden="true" data-depth="0.11">
               <i /><i /><i /><i /><i />
             </span>
