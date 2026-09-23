@@ -1,0 +1,43 @@
+/* ==========================================================================
+   THREE DUCKS ON THE WAVE — the layer only. Everything that moves is written
+   from HeroSwimmers.tsx; there is deliberately no animation in here, because a
+   keyframe and a ticker writing the same transform is the one way this breaks.
+
+   z-index 10 is the point of the file. The hero's scene stacks waveFar 1,
+   waveBody 2, water/echo 3, bottles 5, waveCrest 6, glints 7, copy 9 — so 10
+   puts the ducks in front of every one of them, which is what was asked: never
+   behind the wave, never behind the bottles, never behind the buttons. Only the
+   scroll cue (12) and the loading curtain (30) still sit above.
+
+   `pointer-events: none` is load-bearing at this height. The layer now covers
+   the CTA row, and without it the two buttons underneath would stop taking
+   clicks.
+   ========================================================================== */
+.layer {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lane {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: block;
+  /* Off to the left until the first frame lands, so nothing is ever seen
+     stacked at the origin. */
+  transform: translateX(-200%);
+  /* Pivot on the waterline, not the middle of the picture: a duck tilting about
+     its centre lifts its own base off the wave as it turns. */
+  transform-origin: 50% 88%;
+  will-change: transform;
+}
+
+.lane img {
+  display: block;
+  inline-size: auto;
+  block-size: calc(clamp(62px, 6.2vw, 94px) * var(--size));
+  /* Enough shadow to hold the duck off the navy band it sits on, no more. */
+  filter: drop-shadow(0 5px 12px rgba(16, 38, 74, .22));
+}

@@ -1,7 +1,8 @@
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { ducks } from '@/content/brand'
-import { bandPath, ribbonPath, PERIOD, BAND_NAVY, BAND_SKY } from '@/lib/wave'
+import { bandPath, ribbonPath, PERIOD, SPAN, BAND_NAVY, BAND_SKY } from '@/lib/wave'
+import { HeroSwimmers } from './HeroSwimmers'
 import styles from './Hero.module.css'
 
 /* -------------------------------------------------------------------------
@@ -28,12 +29,10 @@ const ORDER = ['vincey', 'chi-chi', 'goosey'] as const
 const PERIODS = 4
 const W = PERIOD * PERIODS
 
-/* The viewBox height, not the element height, is what sets the wave's amplitude
-   once `preserveAspectRatio="none"` is on: the crest-to-trough distance is a
-   fixed 168 units, so 168/SPAN is the fraction of the element it occupies.
-   640 puts it at 26% — bold enough to read as the brand mark, shallow enough
-   that a bottle standing in it is never more than a quarter under. */
-const SPAN = 640
+/* SPAN — the viewBox height — is what sets the wave's amplitude once
+   `preserveAspectRatio="none"` is on: the crest-to-trough distance is a fixed
+   168 units, so 168/SPAN is the fraction of the element it occupies. It lives
+   in lib/wave.ts because HeroSwimmers has to solve the same curve. */
 
 /**
  * THE WATER, in three pieces that share one geometry.
@@ -63,7 +62,10 @@ function WaveBody({ className, depth }: { className?: string; depth: number }) {
 
 function WaveCrest({ className, depth }: { className?: string; depth: number }) {
   return (
-    <span className={className} aria-hidden="true" data-depth={depth}>
+    /* data-hero-wave is the swimmers' one measurement point: they read this
+       box for the curve's scale and position rather than recomputing it from
+       --water and --wave-drop. */
+    <span className={className} aria-hidden="true" data-depth={depth} data-hero-wave="">
       <svg viewBox={`0 0 ${W} ${SPAN}`} preserveAspectRatio="none">
         <path d={ribbonPath(0, BAND_NAVY, PERIODS)} fill="var(--duck-blue)" />
         <path d={ribbonPath(BAND_NAVY, BAND_NAVY + BAND_SKY, PERIODS)} fill="var(--sky)" />
@@ -162,6 +164,11 @@ export function Hero() {
             <span className={styles.glints} aria-hidden="true" data-depth="0.11">
               <i /><i /><i /><i /><i />
             </span>
+
+            {/* Three ducks riding the waterline, last in the scene and highest
+                in it: they pass in FRONT of the bottles and the CTA row rather
+                than disappearing behind either. */}
+            <HeroSwimmers />
 
             {/* -- UI, inside the frame, as the reference keeps it -- */}
           </div>
