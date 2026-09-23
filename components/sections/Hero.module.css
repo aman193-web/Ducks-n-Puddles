@@ -154,28 +154,24 @@
      1440 exactly where it was, so no breakpoint is needed for it. */
   font-size: clamp(2.25rem, min(10.24vw, 13vh), 7.25rem);
   letter-spacing: .004em;
-  /* 0.78. RE-MEASURED, and the 0.808em this comment used to claim was wrong —
-     it was over-conservative and had been keeping the headline looser than it
-     needs to be. Taken off the rendered glyphs at 100px, line by line:
+  /* 0.75 — the value the design pass has asked for all along, and it is safe
+     now only because the headline is TWO lines rather than three.
 
-       "A friend"   ascent 59.7  descent  2.4
-       "for every"  ascent 62.3  descent 18.5   <- the 'y'
-       "adventure"  ascent 55.9  descent  3.5
+     At three lines the binding pair was "for every" -> "adventure": the 'y'
+     descending 18.5px into the ascenders of the line below, needing 74.4px at
+     100px type. 0.75 gave 75 against that — a 0.6px margin, thinner than the
+     difference between two browsers' text rendering, which is why it was
+     refused every time it was asked for.
 
-     The binding pair is "for every" -> "adventure": 18.5 + 55.9 = 74.4px, i.e.
-     0.744em. So 0.78 clears by 3.6px and 0.82 was leaving 7.6px unused.
+     Re-measured on the new break, "A friend for" / "every adventure": there is
+     no descender at the end of the first line at all, so the pair needs 58.3px
+     at 100px type. 0.75 clears it by 16.7px. The constraint was never the
+     leading; it was where the line broke.
 
-     The design pass has repeatedly asked for 0.75. That is 74.4 against 75 —
-     0.6px, which is below the variance between one browser's text rendering and
-     another's, so it would touch somewhere even though it computes as clear
-     here. 0.78 is the tightest value with margin that survives a different
-     engine.
-
-     It CAN go anywhere near this tight — well under the 1 the section headings
-     need — only because this headline's line breaks are hard-coded spans, so
-     its worst glyph pair is a 'y' (0.185em) rather than the 'j' (0.353em) that
-     turns up in reflowing headings. Change the wording and re-measure. */
-  line-height: .78;
+     Still nowhere near the 1 the section headings need, and for the same
+     reason: these breaks are hard-coded spans, so the worst pair cannot change
+     unless the wording does. Change the wording and re-measure. */
+  line-height: .75;
   color: var(--ink);
 }
 /* outer span clips, inner span is what rises */
@@ -194,7 +190,7 @@
   font-weight: 400;
   font-size: clamp(2.25rem, min(10.24vw, 13vh), 7.25rem);
   letter-spacing: .004em;
-  line-height: .78;
+  line-height: .75;
   color: rgba(255, 255, 255, .12);
   transform: scaleY(-1);
   filter: blur(2.4px);
@@ -427,7 +423,6 @@
   .title > span > span { animation: heroLine .95s cubic-bezier(.16, 1, .3, 1) both; }
   .title > span:nth-child(1) > span { animation-delay: .42s; }
   .title > span:nth-child(2) > span { animation-delay: .51s; }
-  .title > span:nth-child(3) > span { animation-delay: .60s; }
 
   /* rotate is part of the resting pose, so the outer two keep it while emerging */
   .bottle { animation: heroEmerge 1.1s cubic-bezier(.16, 1, .3, 1) both; }

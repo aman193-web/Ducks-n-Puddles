@@ -47,27 +47,6 @@
 .art > picture img { filter: drop-shadow(0 16px 26px rgba(16, 38, 74, .18)); }
 .art > picture img { inline-size: 100%; block-size: auto; }
 
-/* Goosey stands to the RIGHT of the bottle group, on the same ground line,
-   clear of the render rather than in front of it. The source is square, so
-   width is also height: the art block is 299px tall and this is anchored 6%
-   (18px) below it, which caps the character at ~317px before its head climbs
-   out of the block and onto the paragraph above. 180px leaves plenty of room. */
-.artDuck {
-  position: absolute;
-  z-index: 2;
-  inset-block-end: -8%;
-  /* Further out and larger than the single duck it replaced — three abreast at
-     the old 180px cap would have been 60px each. The offset is also what keeps
-     the group from lining up with the three bottles behind it; see the note in
-     Squad.tsx for why that matters. At -22% the ducks covered the third bottle
-     almost entirely — the bottles are the product, so the group sits further
-     out than the offset alone needs. */
-  inset-inline-end: -34%;
-  inline-size: min(58%, 272px);
-}
-@media (max-width: 899px) {
-  .artDuck { inline-size: min(56%, 220px); inset-inline-end: -10%; }
-}
 .sub { max-width: 42ch; }
 
 /* The three things membership means. A list, not cards: cards would make this

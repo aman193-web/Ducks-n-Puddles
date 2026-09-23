@@ -114,9 +114,8 @@ export function Hero() {
               </p>
 
               <h1 id="hero-title" className={`d ${styles.title}`}>
-                <span><span>A friend </span></span>
-                <span><span>for every </span></span>
-                <span><span>adventure</span></span>
+                <span><span>A friend for </span></span>
+                <span><span>every adventure</span></span>
               </h1>
 
               <div className={styles.ctas}>
@@ -130,7 +129,7 @@ export function Hero() {
             {/* the headline, thrown back off the water — decorative, so it is
                 mirrored and faded rather than repeated for a screen reader */}
             <p className={`d ${styles.echo}`} aria-hidden="true" data-depth="0.05">
-              <span>A friend</span><span>for every</span><span>adventure</span>
+              <span>A friend for</span><span>every adventure</span>
             </p>
 
             {/* -- the waterline itself -- */}
