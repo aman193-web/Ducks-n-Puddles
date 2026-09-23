@@ -69,7 +69,10 @@
 .text { display: grid; gap: var(--s-3); justify-items: start; }
 .title {
   font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: clamp(1.5rem, 2.9vw, 2.25rem);
+  /* 42px at desktop, up from 36. These three are the section's real content —
+     the character is beside each one and the row needs a head that can hold
+     its own against it. */
+  font-size: clamp(1.625rem, 3.4vw, 2.625rem);
   line-height: var(--lh-md);
   color: var(--ink);
 }

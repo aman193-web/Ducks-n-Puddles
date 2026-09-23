@@ -22,7 +22,17 @@
 }
 /* Centred display type needs a tighter measure than left-aligned does, or the
    eye loses the start of each line. */
-.inner h2 { max-width: 16ch; }
+/* 0.854 (70/82), tighter than the site-wide --lh-xl of 1.
+   That floor of 1 exists for the WORST heading on the page: Bangbang's `j`
+   inks to 0.353em against a declared 0.25em, so a heading whose line ends in
+   one needs 0.976em before the next line's ascenders touch it. THIS heading
+   has no such pair. Measured on its real glyphs: the line above ends "…are on"
+   with 2.9px of descent, the line below rises 49px, so 51.9px is the floor and
+   70px clears it by 18. The only descender in the sentence is the `y` of
+   "way.", which is the last word — so no line that is FOLLOWED by another can
+   ever carry one, at any width or line break. Safe as a ratio, not just at
+   82px. */
+.inner h2 { max-width: 16ch; line-height: 0.854; }
 .lead { max-width: 54ch; }
 
 /* ---- the act: a button standing in a puddle --------------------------- */
@@ -30,7 +40,8 @@
   position: relative;
   display: grid; place-items: center;
   margin-block-start: var(--s-3);
-  padding: clamp(var(--s-6), 4vw, var(--s-8)) clamp(var(--s-7), 6vw, var(--s-10));
+  /* No padding. It existed to give the white puddle room to sit around the
+     button; with the puddle gone it was 58px of nothing on every side. */
 }
 .ripple {
   position: absolute;
