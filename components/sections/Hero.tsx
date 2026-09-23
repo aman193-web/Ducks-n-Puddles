@@ -2,7 +2,6 @@ import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { ducks } from '@/content/brand'
 import { bandPath, ribbonPath, PERIOD, BAND_NAVY, BAND_SKY } from '@/lib/wave'
-import { HeroDucks } from './HeroDucks'
 import styles from './Hero.module.css'
 
 /* -------------------------------------------------------------------------
@@ -141,9 +140,6 @@ export function Hero() {
               <i className={styles.bubble} /><i className={styles.bubble} /><i className={styles.bubble} />
               <i className={styles.bubble} /><i className={styles.bubble} />
             </div>
-
-            {/* -- living in it -- */}
-            <HeroDucks />
 
             {/* -- standing in it -- */}
             <div className={styles.squad}>
