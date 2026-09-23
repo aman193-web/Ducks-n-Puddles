@@ -2,100 +2,81 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { Picture } from '@/components/Picture'
+import { asset } from '@/lib/assets'
 import { prefersReduced } from '@/lib/motion'
 import styles from './HeroDucks.module.css'
 
 /**
- * The pond, with something living in it.
+ * Ducks leaning in from the walls of the pond.
  *
- * Three additions, no change to the hero's layout, colour, type or CTAs:
- *   - a duck that swims the width of the pond, left to right, with a wake
- *   - one duck leaning in from each side wall, on a long offset cycle
+ * Three of them, one per character, each sliding out from behind a side wall,
+ * holding, and sliding back. No change to the hero's layout, colour, type or
+ * CTAs — this sits on top of the existing scene.
  *
- * WHERE THEY SIT, and why it is safe. Everything here is z-index 4: above the
- * water (3) so it is not lost in it, below the bottles (5) so the swimmer
- * passes BEHIND the product rather than in front of it, and below the near wave
- * crest (6) so the crest swallows each duck's lower half — the same trick that
- * already makes the bottles look like they are standing in water rather than on
- * it. Nothing is added above the waterline, which is where all the text lives,
- * so no duck can reach the headline or the buttons at any width.
+ * WHY THE SWIMMER WENT. A duck crossing the pond had to pass behind the copy
+ * column, and the copy ends exactly AT the waterline: anything tall enough to
+ * break the surface there is also tall enough to reach the CTA row. Keeping it
+ * clear meant sinking it into the dark water below the wave band, where it read
+ * as something lost rather than something swimming. The wall ducks do not have
+ * that problem — they sit at the edges, outside the text column entirely, so
+ * they can rise above the waterline where they are actually visible.
  *
- * WHICH ART. The side ducks use the `-peeking` set, which is cut off at the
- * left edge — drawn to emerge from behind something, so a panel wall is exactly
- * what they want to be behind. The right-hand one is mirrored in CSS. The
- * swimmer is `vincey-peek`, painted as an upper body, so a duck showing only
- * its top above the waterline needs no masking to look half-submerged.
+ * WHICH ART. The `-peeking` set, cut off at its left edge — drawn to come round
+ * something, so a panel wall is exactly what it wants to be behind. All three
+ * are mirrored in CSS, which puts that cut against the right wall.
  *
- * TRANSFORM DISCIPLINE. This hero runs four motion systems and the module
- * comment is explicit that each element belongs to exactly one. These elements
- * are new and belong to GSAP: nothing here carries `data-depth` (which would
- * make the pointer parallax write `translate`), a `data-bob`, or a CSS
- * entrance. GSAP owns their `transform` alone.
+ * TIMING. Each has its own delay, and the cycle is long enough that no two are
+ * out together: 2.2s out, 2.2s back, 9s waiting — a 13.4s round trip against
+ * delays 5s apart. Sharing one wall, they would otherwise stack up.
+ *
+ * TRANSFORM DISCIPLINE. This hero runs four motion systems and its own module
+ * comment insists each element belongs to exactly one. These belong to GSAP:
+ * none carries `data-depth` (pointer parallax writes `translate`), `data-bob`,
+ * or a CSS entrance.
  */
-const SWIM_SECONDS = 26
+type Wall = {
+  id: string
+  /** how far the duck's feet sit ABOVE the waterline, in px */
+  rise: number
+  delay: number
+}
+
+/* All three from the RIGHT wall, stacked blue over pink over yellow, every one
+   of them clear of the water. Order here is top to bottom.
+   The right edge is the only column with room for this: the copy owns the left
+   and the bottles sit inboard of it, so a 60px-wide duck at the frame's edge
+   passes outside both. They also arrive one at a time — 4.4s out against a
+   13.4s cycle, 5s apart — so the stack is never three ducks at once. */
+const WALLS: Wall[] = [
+  { id: 'vincey-peeking', rise: 250, delay: 2.5 },
+  { id: 'chichi-peeking', rise: 130, delay: 7.5 },
+  { id: 'goosey-peeking', rise: 34, delay: 12.5 },
+]
 
 export function HeroDucks() {
   const root = useRef<HTMLDivElement>(null)
-  const swimmer = useRef<HTMLSpanElement>(null)
-  const wake = useRef<HTMLSpanElement>(null)
-  const left = useRef<HTMLSpanElement>(null)
-  const right = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const el = root.current
-    if (!el) return
-
-    /* Reduced motion keeps the scene, drops the movement: the swimmer parks
-       mid-pond where it reads as a duck floating, and the wall ducks — which
-       only make sense as an arrival — stay out. */
-    if (prefersReduced()) {
-      if (swimmer.current) gsap.set(swimmer.current, { x: el.clientWidth * 0.34 })
-      return
-    }
+    if (!el || prefersReduced()) return
 
     const ctx = gsap.context(() => {
-      const width = () => el.clientWidth
-      const small = window.matchMedia('(max-width: 899px)').matches
-
-      if (swimmer.current && wake.current) {
-        /* One crossing, then a pause before the next — a duck every few seconds
-           would read as traffic. `none` easing because a swim is a constant
-           speed; anything eased looks like it is being pushed. */
-        const cross = gsap.timeline({ repeat: -1, repeatDelay: 7 })
-        cross.fromTo(
-          [swimmer.current, wake.current],
-          { x: -180 },
-          { x: () => width() + 180, duration: SWIM_SECONDS, ease: 'none' },
+      const ducks = gsap.utils.toArray<HTMLElement>(`.${styles.wall}`)
+      ducks.forEach((d) => {
+        gsap.fromTo(
+          d,
+          { xPercent: 104 },
+          {
+            xPercent: 14,
+            duration: 2.2,
+            ease: 'power3.out',
+            repeat: -1,
+            repeatDelay: 9,
+            yoyo: true,
+            delay: Number(d.dataset.delay ?? 0),
+          },
         )
-        /* Buoyancy and a lazy heading change, both independent of the crossing
-           so they keep running at the same rate however wide the panel is. */
-        gsap.to(swimmer.current, {
-          y: -7, rotate: 1.6, duration: 2.4,
-          ease: 'sine.inOut', yoyo: true, repeat: -1,
-        })
-        gsap.to(wake.current, {
-          opacity: 0.5, scaleX: 1.15, duration: 1.9,
-          ease: 'sine.inOut', yoyo: true, repeat: -1,
-        })
-      }
-
-      /* The wall ducks are desktop-only: on a portrait panel the bottles come
-         back to the centre and there is no margin left for anything to lean
-         into without crowding them. */
-      if (!small) {
-        for (const [ref, delay] of [[left, 2.5], [right, 13]] as const) {
-          if (!ref.current) continue
-          gsap.fromTo(
-            ref.current,
-            { xPercent: ref === left ? -104 : 104 },
-            {
-              xPercent: ref === left ? -14 : 14,
-              duration: 2.2, ease: 'power3.out',
-              repeat: -1, repeatDelay: 9, yoyo: true, delay,
-            },
-          )
-        }
-      }
+      })
     }, el)
 
     return () => ctx.revert()
@@ -103,17 +84,26 @@ export function HeroDucks() {
 
   return (
     <div className={styles.pond} ref={root} aria-hidden="true">
-      <span className={styles.wake} ref={wake} />
-      <span className={styles.swimmer} ref={swimmer}>
-        <Picture id="vincey-peek" sizes="120px" alt="" />
-      </span>
-
-      <span className={`${styles.wall} ${styles.wallLeft}`} ref={left}>
-        <Picture id="chichi-peeking" sizes="110px" alt="" />
-      </span>
-      <span className={`${styles.wall} ${styles.wallRight}`} ref={right}>
-        <Picture id="goosey-peeking" sizes="110px" alt="" />
-      </span>
+      {WALLS.map((w) => (
+        <span
+          key={w.id}
+          className={styles.wall}
+          data-delay={w.delay}
+          style={{
+            ['--rise' as string]: `${w.rise}px`,
+            /* The box needs a real aspect ratio. `block-size: 100%` on the <img>
+               resolves against the <picture> wrapper, whose height is auto, so
+               the percentage collapses and the image sizes itself by WIDTH
+               instead — measured, 120x295 inside a 152px box, overflowing it by
+               143px. With a definite height AND ratio here the width is
+               determined and the picture can simply fill it. Per duck from the
+               manifest, because the three silhouettes differ slightly. */
+            ['--peek-aspect' as string]: String(asset(w.id).aspect),
+          } as React.CSSProperties}
+        >
+          <Picture id={w.id} sizes="120px" alt="" />
+        </span>
+      ))}
     </div>
   )
 }
