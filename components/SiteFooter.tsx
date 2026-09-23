@@ -9,7 +9,7 @@ const EXPLORE = [
   { href: '/#features', label: 'Features' },
   { href: '/#store', label: 'The Range' },
   { href: '/#story', label: 'Our Story' },
-  { href: '/journal', label: 'Journal' },
+  { href: '/blog', label: 'Blog' },
 ]
 
 const HELP = [

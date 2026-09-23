@@ -3,13 +3,13 @@ import Link from 'next/link'
 import { Picture } from '@/components/Picture'
 import { posts, formatDate } from '@/content/journal'
 import { brand } from '@/content/brand'
-import styles from './journal.module.css'
+import styles from './blog.module.css'
 
 export const metadata: Metadata = {
   title: 'The Duck Pond',
   description:
     'Notes from the kitchen table — what we are learning, what we are changing, and what is worth knowing before you buy any kid’s water bottle.',
-  alternates: { canonical: '/journal' },
+  alternates: { canonical: '/blog' },
   openGraph: {
     type: 'website',
     title: `The Duck Pond | ${brand.name}`,
@@ -34,7 +34,7 @@ export default function JournalIndex() {
         <ul className={styles.list}>
           {all.map((p) => (
             <li key={p.slug} className={styles.row}>
-              <Link href={`/journal/${p.slug}`} className={styles.rowLink}>
+              <Link href={`/blog/${p.slug}`} className={styles.rowLink}>
                 <span className={styles.rowFigure}>
                   <Picture id={p.image} sizes="(min-width: 780px) 34vw, 92vw" alt="" />
                 </span>

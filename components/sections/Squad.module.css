@@ -74,31 +74,6 @@
 }
 .perks strong { font-weight: 600; }
 
-/* ---- the membership pass ------------------------------------------------
-   A header band on the form panel, so the panel announces what you are joining
-   before it asks for anything. Sun yellow with ink on it (11.2). */
-.pass {
-  display: flex; align-items: center; gap: var(--s-3);
-  margin-block-end: var(--s-6);
-  padding: var(--s-3) var(--s-4);
-  background: var(--sun-soft);
-  border: var(--border);
-  border-radius: var(--r);
-}
-.passMark {
-  display: grid; place-items: center;
-  inline-size: 40px; block-size: 40px; flex: none;
-  background: var(--paper);
-  border: var(--border);
-  border-radius: var(--r-pill);
-}
-.passMark img { inline-size: 24px; block-size: auto; display: block; }
-.passText { display: grid; gap: 1px; font-size: var(--fs-small); color: var(--ink); line-height: 1.35; }
-.passText strong {
-  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: 1.25rem; letter-spacing: .01em;
-}
-
 /* The form sits on its own raised ground so it reads as the thing to do. On the
    tinted ground that separation is a step UP to paper with the site's own
    outline, rather than the step down into navy it used to be. */

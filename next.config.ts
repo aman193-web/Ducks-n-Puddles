@@ -8,6 +8,14 @@ const config: NextConfig = {
     // runtime optimiser is unused. This keeps the build host-agnostic.
     unoptimized: true,
   },
+  /* /journal was the blog's URL until it was renamed. Kept as a permanent
+     redirect so anything already pointing at it still lands. */
+  async redirects() {
+    return [
+      { source: '/journal', destination: '/blog', permanent: true },
+      { source: '/journal/:slug', destination: '/blog/:slug', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {

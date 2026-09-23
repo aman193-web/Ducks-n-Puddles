@@ -10,9 +10,13 @@ import styles from './Journal.module.css'
 /**
  * The Duck Pond — three most recent posts.
  *
- * Every card links to a real page. A journal teaser whose "read more" goes
- * nowhere is worse than no journal at all, so the routes at /journal and
- * /journal/[slug] ship with this.
+ * Every card links to a real page. A teaser whose "read more" goes nowhere is
+ * worse than no blog at all, so the routes at /blog and /blog/[slug] ship with
+ * this.
+ *
+ * Called "Journal" in the code and "Blog" to the reader: the client asked for
+ * the visible name to change, and renaming the component, its stylesheet and
+ * content/journal.ts would be a large diff that changes nothing anyone sees.
  */
 export function Journal() {
   const latest = [...posts]
@@ -35,7 +39,7 @@ export function Journal() {
         <ul className={styles.grid}>
           {latest.map((p) => (
             <li key={p.slug} className={styles.card} data-anim="" data-anim-y="30">
-              <Link href={`/journal/${p.slug}`} className={styles.link}>
+              <Link href={`/blog/${p.slug}`} className={styles.link}>
                 <span className={styles.figure}>
                   <Picture id={p.image} sizes="(min-width: 900px) 30vw, 88vw" alt="" />
                 </span>
@@ -56,10 +60,9 @@ export function Journal() {
           ))}
         </ul>
 
-        {/* Three of the posts are shown; /journal has all of them, and until now
-            nothing on the homepage said so. */}
+        {/* Three of the posts are shown; /blog has all of them. */}
         <div className={styles.more_all} data-anim="">
-          <Btn href="/journal" colour="var(--sky-soft)">Read the journal</Btn>
+          <Btn href="/blog" colour="var(--sky-soft)">Read the blog</Btn>
         </div>
       </div>
     </section>

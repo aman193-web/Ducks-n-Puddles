@@ -138,28 +138,6 @@ export function Squad() {
         </div>
 
         <div className={styles.panel}>
-          {/* THE PASS. The client: "we'd like this to feel more like joining the
-              Ducks 'n Puddles community/world rather than simply signing up for
-              a newsletter." The copy beside the form already said what
-              membership means, and it still read as a signup box, because the
-              PANEL is what the eye lands on and the panel was three fields and
-              a button.
-
-              So the panel gets a header that names the thing you are joining
-              and states the terms, the way a membership card would. "Free,
-              always" is the honest version of a members' badge: there is no
-              tier, no paid version and nothing to upsell, so saying so removes
-              the suspicion that this is a funnel. */}
-          <div className={styles.pass}>
-            <span className={styles.passMark} aria-hidden="true">
-              <img src="/img/mascot-140.webp" width={34} height={38} alt="" />
-            </span>
-            <span className={styles.passText}>
-              <strong>The Duck Squad</strong>
-              <span>Free, always &mdash; and you can leave in one click.</span>
-            </span>
-          </div>
-
         {state === 'done' ? (
           <div className={styles.success} role="status" aria-live="polite">
             {/* Goosey cheering, because the moment someone joins the squad is
@@ -188,7 +166,14 @@ export function Squad() {
                     tabIndex={i === rovingIndex ? 0 : -1}
                     name={d.stickerName}
                     size="l"
-                    colour={d.colour}
+                    /* d.soft, not d.colour. Every other control on the site
+                       moved to the soft ramp; these two were the last at full
+                       saturation, which is why they read as un-updated beside
+                       everything else. It also buys contrast: --ink measures
+                       8.4 / 7.7 / 11.1 on the soft blues, pink and yellow
+                       against 4.97 / 4.50 / 8.88 on the full ones, where Chi
+                       Chi sat exactly ON the AA minimum with nothing spare. */
+                    colour={d.soft}
                     onClick={() => setDuck(d.slug as Duck)}
                   />
                 ))}

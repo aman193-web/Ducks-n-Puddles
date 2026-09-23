@@ -6,7 +6,7 @@ import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { posts, postBySlug, formatDate } from '@/content/journal'
 import { brand } from '@/content/brand'
-import styles from '../journal.module.css'
+import styles from '../blog.module.css'
 
 /* Three known posts, so every one is prerendered at build time rather than
    rendered on demand. */
@@ -25,12 +25,12 @@ export async function generateMetadata(
   return {
     title: post.title,
     description: post.excerpt,
-    alternates: { canonical: `/journal/${post.slug}` },
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: 'article',
       title: `${post.title} | ${brand.name}`,
       description: post.excerpt,
-      url: `${brand.domain}/journal/${post.slug}`,
+      url: `${brand.domain}/blog/${post.slug}`,
       publishedTime: post.date,
     },
   }
@@ -48,7 +48,7 @@ export default async function JournalPost(
   return (
     <article className={styles.page}>
       <div className="wrap">
-        <Link href="/journal" className={styles.back}>
+        <Link href="/blog" className={styles.back}>
           <ArrowLeft size={18} weight="bold" aria-hidden="true" />
           All notes
         </Link>
@@ -85,7 +85,7 @@ export default async function JournalPost(
             <ul>
               {more.map((p) => (
                 <li key={p.slug}>
-                  <Link href={`/journal/${p.slug}`}>{p.title}</Link>
+                  <Link href={`/blog/${p.slug}`}>{p.title}</Link>
                 </li>
               ))}
             </ul>
