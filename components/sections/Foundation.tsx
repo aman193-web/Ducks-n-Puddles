@@ -1,4 +1,5 @@
-import { Btn } from '@/components/ui/Btn'
+import Link from 'next/link'
+import { ArrowRight, Heart, UsersThree, HandHeart } from '@phosphor-icons/react/dist/ssr'
 import { Duck } from '@/components/ui/Duck'
 import { Motif } from '@/components/Motif'
 import { foundation } from '@/content/brand'
@@ -6,73 +7,89 @@ import { Ripple } from '@/components/ui/Ripple'
 import styles from './Foundation.module.css'
 
 /**
- * THE FOUNDATION — the one section besides the hero that claims a whole screen.
+ * THE FOUNDATION — rebuilt to the client's reference.
  *
- * Designed against the two banner references the client sent. What those share,
- * and what this now does:
+ * What the reference sets, and what this now does: a labelled chip naming the
+ * Foundation, a two-line headline, one paragraph of intent, a small
+ * "Our future focus" heading over three tiles, a plain note that the details
+ * are not settled, and an underlined text link rather than a button. The art
+ * stays on the right, seated on an organic blob.
  *
- *   - the headline carries ONE word in an accent colour
- *     ("Give to CHARITY. Create Change." / "A FOUNDATION for The Future")
- *   - the art sits on an ORGANIC BLOB rather than floating as a bare cutout
- *   - small marks are scattered in the margins, not a flat field
- *   - a labelled chip names the thing, top-left
+ * WHAT CHANGED FROM THE PREVIOUS PASS, so it is not re-added by accident:
+ *   - the headline no longer picks one word out in an accent colour; the
+ *     reference sets the whole thing in ink
+ *   - Goosey's pull quote is gone, replaced by the three focus tiles. The line
+ *     is kept in content/brand.ts because it is the sentence the whole idea
+ *     came from, but it is not rendered here
+ *   - the CTA is a link, not a button — a section that says its own details are
+ *     coming soon should not present a button as if there were something to do
  *
- * The earlier pass got the substance right and the design wrong: it never said
- * the word "Foundation" and the art was a transparent PNG on a flat ground,
- * which is why it read as a values paragraph rather than as a banner.
- *
- * ⚠️ The copy is still INTENT ONLY. No partner, percentage, pledge or
- * programme — see the TODO(client) on `foundation` in content/brand.ts. A
- * charitable claim about children is a real-world claim, not a copy placeholder.
+ * ⚠️ The copy is INTENT ONLY, and the three tiles are DIRECTIONS rather than
+ * commitments. No partner, percentage, pledge or launch date anywhere — see the
+ * TODO(client) on `foundation` in content/brand.ts. A charitable claim about
+ * children is a real-world claim, not a copy placeholder, and the note under the
+ * tiles is what keeps the tiles honest.
  */
+const ICONS = { children: Heart, families: UsersThree, community: HandHeart } as const
+
 export function Foundation() {
   return (
     <section className={styles.section} id="foundation" aria-labelledby="foundation-title">
-      {/* Scattered brand marks, on the references' pattern: a few small shapes
-          in the margins rather than one flat decorative field. */}
+      {/* Scattered brand marks, a few small shapes in the margins rather than
+          one flat decorative field. */}
       <span className={styles.scatter} aria-hidden="true">
-        <Motif name="droplets" /><Motif name="wave" /><Motif name="splash" />
-        <Motif name="footprint" /><Motif name="droplets" />
+        <Motif name="droplets" /><Motif name="waves" /><Motif name="splash" />
+        <Motif name="footprints" /><Motif name="droplets" />
       </span>
 
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
-          {/* The chip names the Foundation, which the first pass never did. */}
           <p className={styles.chip}>
             <span className={styles.chipMark} aria-hidden="true"><Motif name="duck" /></span>
             {foundation.name}
           </p>
 
-          <h2 id="foundation-title" className={`d d-mega ${styles.title}`} data-anim="">
-            {foundation.title.before}
-            <em className={styles.accent}>{foundation.title.accent}</em>
-            {foundation.title.after}
+          <h2 id="foundation-title" className={`d ${styles.title}`} data-anim="">
+            {foundation.title.map((line) => (
+              <span key={line}>{line}</span>
+            ))}
           </h2>
 
-          {foundation.body.map((p) => (
-            <p key={p.slice(0, 24)} className={`lead ${styles.body}`} data-anim="">{p}</p>
-          ))}
+          <p className={`lead ${styles.body}`} data-anim="">{foundation.body}</p>
 
-          <figure className={styles.quote} data-anim="" data-anim-rot="-1">
-            <blockquote className="hand">&ldquo;{foundation.quote}&rdquo;</blockquote>
-            <figcaption className="eyebrow">&mdash; {foundation.quoteBy}</figcaption>
-          </figure>
-
-          <div className={styles.cta}>
-            <Btn href="/#squad" colour="var(--paper)">Join the Duck Squad</Btn>
+          <div className={styles.focus} data-anim="">
+            <h3 className={`d ${styles.focusLabel}`}>{foundation.focusLabel}</h3>
+            <ul className={styles.tiles}>
+              {foundation.focus.map((f) => {
+                const Icon = ICONS[f.key as keyof typeof ICONS] ?? Heart
+                return (
+                  <li key={f.key} className={styles.tile}>
+                    <span className={styles.tileMark} aria-hidden="true">
+                      <Icon size={30} weight="fill" />
+                    </span>
+                    <h4 className={styles.tileTitle}>{f.title}</h4>
+                    <p className={styles.tileBody}>{f.body}</p>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
+
+          <p className={styles.note}>{foundation.note}</p>
+
+          <Link href="/#next" className={styles.link}>
+            {foundation.linkLabel}
+            <ArrowRight size={18} weight="bold" aria-hidden="true" />
+          </Link>
         </div>
 
-        {/* The art sits ON a blob, the way both references seat their photo in
-            an organic shape. The blob is the ground; the characters keep their
-            alpha and stand on it. Not decorative — this image IS the section's
-            argument, so it carries a real alt and renders on a phone too. */}
+        {/* The art sits ON a blob, the way the reference seats it in an organic
+            shape. Not decorative — this image IS the section's argument, so it
+            carries a real alt and renders on a phone too. */}
         <div className={styles.art}>
           <span className={styles.blob} aria-hidden="true" />
-          {/* "a puddle rippling" — the client's own example of the kind of
-              animation they wanted, and this is the one literal puddle on the
-              page: the three of them are standing IN it. Rings expand from where
-              they stand, under the characters and over the blob. Off entirely
+          {/* The one literal puddle on the page: the three of them are standing
+              IN it, so the rings expand from where they stand. Off entirely
               under prefers-reduced-motion (see Ripple). */}
           <Ripple className={styles.ripple} />
           <Duck

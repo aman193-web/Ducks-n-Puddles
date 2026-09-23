@@ -186,23 +186,35 @@ export const foundation = {
   eyebrow: 'More than a brand',
   /** The section used to never say the word "Foundation" anywhere, which is why
    *  it read as a general values block instead of what the client asked for.
-   *  The name now leads. */
-  name: 'The Ducks ’n Puddles Foundation',
-  /** Split so one word can take the accent colour, the way both reference
-   *  banners set their headline ("Give to CHARITY. Create Change."). */
-  title: { before: 'There’s always ', accent: 'room', after: ' in the puddle.' },
-  body: [
-    'Ducks ’n Puddles was never only meant to be a shelf of products. It started with '
-    + 'our own family, and the whole reason to build it was the children who would end '
-    + 'up holding it.',
-    'So we are building the Foundation alongside the brand rather than after it, because '
-    + 'giving back to children and families is part of the purpose. We are still putting '
-    + 'the shape of it together — when it is real you will hear exactly what it is, the '
-    + 'same way you hear everything else from us.',
+   *  The name leads. */
+  name: 'The Ducks \u2019n Puddles Foundation',
+  title: ['Growing with purpose.', 'Giving back with heart.'],
+  body:
+    'As Ducks \u2019n Puddles grows, we want our impact to grow with it. The Ducks \u2019n '
+    + 'Puddles Foundation is being created to support children and families and make '
+    + 'everyday adventures a little brighter.',
+  focusLabel: 'Our future focus',
+  /**
+   * Three DIRECTIONS, not three commitments, and the wording is doing that work
+   * deliberately: "comfort, confidence and joy" is what they want to give, not
+   * a programme that exists. The note underneath says so in plain words.
+   *
+   * ⚠️ Still no partner, percentage, pledge or launch date anywhere in this
+   * section — see the TODO(client) below. A charitable claim about children is a
+   * real-world claim and cannot be filled in as placeholder copy.
+   */
+  focus: [
+    { key: 'children', title: 'Children', body: 'Comfort, confidence and joy' },
+    { key: 'families', title: 'Families', body: 'Support for everyday care' },
+    { key: 'community', title: 'Community', body: 'Meaningful ways to give back' },
   ],
-  /** Goosey's own line from the character sheet. It is the argument for the whole
-   *  section, which is why he is the duck this section belongs to. */
-  quote: 'There’s always room for one more friend!',
+  note: 'Foundation details coming soon.',
+  linkLabel: 'Learn about our bigger purpose',
+  /** Goosey's line from the character sheet. It is not rendered in the section
+   *  any more — the reference design replaced the pull quote with the three
+   *  focus cards — but it is the sentence the whole idea came from, so it stays
+   *  here rather than being deleted. */
+  quote: 'There\u2019s always room for one more friend!',
   quoteBy: 'Goosey',
 } as const
 
