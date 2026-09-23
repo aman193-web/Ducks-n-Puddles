@@ -6,6 +6,23 @@ import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
 import styles from './DuckStage.module.css'
 
+/* THE FOOT MARGIN each -idle master carries under the character, as a fraction
+   of the master's own height. The masters are NOT trimmed and they are not
+   consistent with each other — measured off the alpha channel: Vincey 80/1254,
+   Chi Chi 22/1254, Goosey 20/1254. `align-items: flex-end` in .figure lines up
+   the boxes, so that difference is a difference in how far each duck hovers
+   above the ground. This is the correction; see .character in the stylesheet.
+
+   Trimming the masters instead would be the deeper fix, but they are drawn at
+   different scales within the frame (the art fills 72% / 67% / 62% of the box
+   width), so the frame is currently the only thing keeping the three the same
+   size on screen. Trimming would resize them against each other. */
+const FOOT: Record<string, string> = {
+  vincey: '6.4%',
+  'chi-chi': '1.8%',
+  goosey: '1.6%',
+}
+
 const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 
 /**
@@ -79,7 +96,10 @@ export function DuckStage() {
                   is called Meet the Ducks, and until now the only thing to meet
                   was a product render — which is the single biggest thing the
                   client asked us to change. */}
-              <div className={styles.figure}>
+              <div
+                className={styles.figure}
+                style={{ ['--foot' as string]: FOOT[d.slug] ?? '0%' }}
+              >
                 <span className={styles.puddle} aria-hidden="true" />
                 <Duck
                   who={d.slug} pose="idle" density="always" float speak
@@ -87,12 +107,15 @@ export function DuckStage() {
                   sizes="(min-width: 880px) 26vw, 56vw"
                   alt={d.name}
                 />
+                {/* No `data-bob` here. bob() takes its amplitude from DOM index
+                    and these three land at 3/4/5, which lifted a bottle STANDING
+                    ON GROUND by 18-22px. The character's own float carries the
+                    life in this figure; the bottle stays planted. */}
                 <Picture
                   id={assetFor(d.slug)}
                   sizes="(min-width: 880px) 16vw, 34vw"
                   alt={`The ${d.name} bottle`}
                   className={styles.bottle}
-                  data-bob=""
                 />
               </div>
             </div>

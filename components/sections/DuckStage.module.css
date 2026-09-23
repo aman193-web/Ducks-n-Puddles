@@ -102,7 +102,18 @@
 }
 /* The character is the taller of the two and sits slightly forward, so the pair
    reads as a duck holding its own bottle rather than as two stacked images. */
-.character { inline-size: clamp(170px, 26vw, 330px); z-index: 2; }
+.character {
+  inline-size: clamp(170px, 26vw, 330px); z-index: 2;
+  /* FEET ON THE GROUND. --foot (set per duck in DuckStage.tsx) cancels the
+     transparent margin the master carries under the character — without it
+     Vincey stood 13.6px clear of the puddle while the other two touched.
+
+     The extra 3.5px straddles the 7px idle float: the cycle then runs from just
+     into the puddle to just touching it, instead of from touching to 7px above.
+     `translate` is the free channel here — Duck.module.css owns `transform` for
+     the float and Quacker owns `scale` for the press. */
+  translate: 0 calc(var(--foot, 0%) + 3.5px);
+}
 .bottle {
   block-size: clamp(190px, 28vw, 380px);
   inline-size: auto; width: auto;
