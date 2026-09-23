@@ -5,7 +5,6 @@ import { Picture } from '@/components/Picture'
 import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
-import { Motif, type MotifName } from '@/components/Motif'
 import { PuddleFace } from '@/components/ui/PuddleFace'
 import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
@@ -26,12 +25,12 @@ type Duck = (typeof DUCKS)[number]
 /** What being in the Squad actually gets you. Belonging, not benefits: each
  *  line is a thing that is true of members today, written as "you are", not
  *  "you will receive". No dates, no discounts, no invented perks. */
-const SQUAD_PERKS: { mark: MotifName; title: string; body: string }[] = [
-  { mark: 'footprints', title: 'You are there first.',
+const SQUAD_PERKS: { title: string; body: string }[] = [
+  { title: 'You are there first.',
     body: 'You hear the day the ducks arrive before the shop does.' },
-  { mark: 'waves', title: 'You get a say.',
+  { title: 'You get a say.',
     body: 'Once a month we ask what to make next, and it changes what we build.' },
-  { mark: 'duck', title: 'You are in their world.',
+  { title: 'You are in their world.',
     body: 'The characters, the stories and the Foundation, as they happen.' },
 ]
 
@@ -112,7 +111,6 @@ export function Squad() {
           <ul className={styles.perks} data-anim="">
             {SQUAD_PERKS.map((p) => (
               <li key={p.title}>
-                <span className={styles.perkMark} aria-hidden="true"><Motif name={p.mark} /></span>
                 <span>
                   <strong>{p.title}</strong> {p.body}
                 </span>

@@ -32,16 +32,6 @@
   margin-block-start: var(--s-3);
   padding: clamp(var(--s-6), 4vw, var(--s-8)) clamp(var(--s-7), 6vw, var(--s-10));
 }
-.pool {
-  position: absolute; inset: 0;
-  z-index: 0;
-  background: var(--paper);
-  border: var(--border-lg);
-  /* The house puddle radius. Asymmetric on both axes — an ellipse here would
-     read as a button on a plate. */
-  border-radius: 70% 30% 52% 48% / 58% 72% 28% 42%;
-  rotate: -2.5deg;
-}
 .ripple {
   position: absolute;
   z-index: 1;

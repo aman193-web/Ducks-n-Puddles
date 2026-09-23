@@ -53,6 +53,8 @@
 /* The client's emphasis. Poppins has real weights, so this is a genuine bold
    rather than a synthesised one (font-synthesis is off site-wide). */
 .body strong { font-weight: 600; color: var(--ink); }
+/* The founding question, carried in full rather than in fragments. */
+.body p.stress { font-weight: 700; }
 
 /* The closing tagline. Set in the display face and a clear step above the body,
    so it reads as the story signing off rather than as a fifth paragraph — but

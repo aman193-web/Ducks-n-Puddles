@@ -49,7 +49,6 @@ export function WhatsNext() {
           {biggerPicture.map((row, i) => (
             <article key={row.title} className={styles.row} data-anim="" data-anim-y="40">
               <div className={styles.art}>
-                <span className={styles.pool} aria-hidden="true" />
                 <Duck
                   who={row.who}
                   pose={row.pose}

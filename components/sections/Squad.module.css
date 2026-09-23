@@ -68,21 +68,11 @@
    a pricing table, which is the opposite of the feeling asked for. */
 .perks { display: grid; gap: var(--s-4); list-style: none; padding: 0; margin: 0; max-width: 46ch; }
 .perks li {
-  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  display: grid;
   gap: var(--s-3); align-items: start;
   font-size: var(--fs-small); line-height: 1.5; color: var(--ink);
 }
 .perks strong { font-weight: 600; }
-/* No disc and no outline — the mark sits in the margin as ink, the way the
-   ribbon marks do, so this reads as brand detail rather than as a feature list
-   with bullet icons. */
-.perkMark {
-  display: grid; place-items: center;
-  inline-size: 26px; block-size: 26px;
-  color: var(--ink);
-  translate: 0 -1px;
-}
-.perkMark svg { inline-size: 24px; block-size: 24px; }
 
 /* ---- the membership pass ------------------------------------------------
    A header band on the form panel, so the panel announces what you are joining

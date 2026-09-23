@@ -51,10 +51,10 @@ export function ComingSoon() {
           hears it first.
         </p>
 
-        {/* The puddle sits UNDER the button: the thing you are being asked to
-            step into, directly beneath the step. */}
+        {/* The white puddle that used to sit under the button is gone. The
+            ripple stays: on its own it reads as water the button is standing
+            in, without a hard shape competing with it. */}
         <div className={styles.act} data-anim="">
-          <span className={styles.pool} aria-hidden="true" />
           <Ripple className={styles.ripple} />
           <div className={styles.btn}>
             <Btn href="/#squad" colour="var(--sun)">Join the Duck Squad</Btn>

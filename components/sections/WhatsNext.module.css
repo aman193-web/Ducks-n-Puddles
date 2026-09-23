@@ -58,22 +58,6 @@
   display: grid;
   place-items: end center;
 }
-/* The puddle each one stands in. Nearer 1.3:1 than 2:1, because organic
-   border-radius percentages collapse towards a plain ellipse as a box flattens
-   — the same trap the Coming Soon pool fell into twice. */
-.pool {
-  position: absolute;
-  z-index: 0;
-  inset-block-end: 2%;
-  inset-inline-start: 50%;
-  translate: -50% 0;
-  inline-size: min(92%, 290px);
-  aspect-ratio: 1 / .76;
-  background: var(--paper);
-  border: var(--border-lg);
-  border-radius: 70% 30% 52% 48% / 58% 72% 28% 42%;
-  rotate: -5deg;
-}
 .duck {
   position: relative;
   z-index: 1;

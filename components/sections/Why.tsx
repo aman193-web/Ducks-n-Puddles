@@ -1,6 +1,5 @@
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
-import { Motif } from '@/components/Motif'
 import { Duck } from '@/components/ui/Duck'
 import { brand } from '@/content/brand'
 import { BrandDetail } from '@/components/ui/BrandDetail'
@@ -30,7 +29,6 @@ const SIDES = [
   {
     k: 'parents',
     eyebrow: 'For parents',
-    motif: 'droplets' as const,
     head: 'One less thing to worry about.',
     body:
       'Everything we make gets used by somebody small, all day, every day. So it is '
@@ -41,7 +39,6 @@ const SIDES = [
   {
     k: 'children',
     eyebrow: 'For little ones',
-    motif: 'flower' as const,
     head: 'A friend who comes along.',
     body:
       'Chi Chi, Goosey and Vincey are not decoration. They are three little friends with '
@@ -68,9 +65,6 @@ export function Why() {
         <div className={styles.split}>
           {SIDES.map((s) => (
             <article key={s.k} className={styles.side} data-anim="" data-anim-y="24">
-              <span className={styles.mark} aria-hidden="true">
-                <Motif name={s.motif} />
-              </span>
               <p className={`eyebrow ${styles.eyebrow}`}>{s.eyebrow}</p>
               <h3 className="d d-md">{s.head}</h3>
               <p className={styles.body}>{s.body}</p>

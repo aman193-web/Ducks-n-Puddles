@@ -51,7 +51,9 @@ export function Story() {
               Hi, we&rsquo;re <strong>Larisa and Vinny</strong> &mdash; husband and wife,
               parents, and the founders of Ducks &rsquo;n Puddles.
             </p>
-            <p data-anim="">
+            {/* Set in full bold, not just an emphasised phrase: this is the
+                question the whole company is an answer to. */}
+            <p className={styles.stress} data-anim="">
               It began with a question: how could we make things that make life easier for
               parents, while helping little ones feel loved, safe and comforted?
             </p>
