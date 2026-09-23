@@ -134,15 +134,6 @@ export const alphaAssets = [
   { id: 'goosey-peeking', src: `${BRAND_DIR}/characters/goosey-peeking.png`, widths: [320, 640] },
   { id: 'vincey-peeking', src: `${BRAND_DIR}/characters/vincey-peeking.png`, widths: [320, 640] },
 
-  /* THE SWIMMING POSES. A side profile facing right, seated in a blue hull —
-     the only poses in the set drawn from the waterline rather than standing on
-     ground, which is what lets them cross the hero's pond without needing feet.
-     Trimmed on import: the swimmer is placed by its own bottom edge against the
-     wave, so transparent padding would push it off the surface. */
-  { id: 'chichi-swim',   src: `${BRAND_DIR}/characters/chichi-swim.png`,   widths: [240, 480] },
-  { id: 'goosey-swim',   src: `${BRAND_DIR}/characters/goosey-swim.png`,   widths: [240, 480] },
-  { id: 'vincey-swim',   src: `${BRAND_DIR}/characters/vincey-swim.png`,   widths: [240, 480] },
-
   { id: 'chichi-turn',   src: `${BRAND_DIR}/characters/chichi-turn.png`,   widths: [300, 600] },
   { id: 'goosey-turn',   src: `${BRAND_DIR}/characters/goosey-turn.png`,   widths: [300, 600] },
   { id: 'vincey-turn',   src: `${BRAND_DIR}/characters/vincey-turn.png`,   widths: [300, 600] },

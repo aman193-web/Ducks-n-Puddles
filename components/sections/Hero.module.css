@@ -46,25 +46,6 @@
   --water-base: 58%;
   --tide: 0%;
   --water: calc(var(--water-base) - var(--tide));
-  /* HOW MUCH LOWER THE DRAWN WATER SITS than the line the copy and the bottles
-     are composed against. The client's note was that the wave cut through the
-     headline, the CTAs and the bottles — measured at 1440, the highest crest
-     was 18px under the CTA row and bit 84px into the bottles.
-
-     A drop is not the same as moving --water. Raising --water would take the
-     copy column and the squad down with it, which the brief rules out, and
-     because the wave layers are pinned to the panel's bottom edge it would
-     also SHORTEN them — flattening the S the ducks are supposed to follow. So
-     the wave layers and everything below the surface move down by this, and
-     hang the same amount past the bottom (see .wave) to keep their height, and
-     with it the amplitude, exactly as it was. Every water layer shifts by the
-     same figure, so the far swell and the near band hold their spacing.
-
-     The figure is set by the bottles, which are the lowest thing it has to
-     clear: 13% cleared them by 33px and they read as hovering over the pond,
-     so it is tuned instead to bring the highest crest to within ~10px of their
-     bases. They stand AT the water rather than in it or above it. */
-  --wave-drop: 10.5%;
   position: relative;
   /* Full bleed: no gutter, no radius. --edge carries the site's text grid into
      the panel instead, so the headline still lines up with the header logo and
@@ -203,7 +184,7 @@
   z-index: 3;
   inset-inline-start: var(--edge);
   inset-inline-end: var(--gutter);
-  inset-block-start: calc(var(--water) + 2% + var(--wave-drop));
+  inset-block-start: calc(var(--water) + 2%);
   margin: 0;
   /* every metric here must match .title exactly — this is its reflection */
   font-weight: 400;
@@ -226,7 +207,7 @@
   position: absolute;
   z-index: 3;
   inset-inline: 0;
-  inset-block: calc(var(--water) + 5% + var(--wave-drop)) 0;
+  inset-block: calc(var(--water) + 5%) 0;
   overflow: clip;
   pointer-events: none;
 }
@@ -266,24 +247,22 @@
   position: absolute;
   display: block;
   inset-inline-start: 0;
-  /* hangs past the panel's foot by exactly the drop, so pushing the curve down
-     costs no height and the crest keeps its amplitude */
-  inset-block-end: calc(var(--wave-drop) * -1);
+  inset-block-end: 0;
   pointer-events: none;
   /* `translate` is reserved for pointer parallax; the drift lives on the svg */
 }
 .wave svg { inline-size: 100%; block-size: 100%; }
 
 .waveBody, .waveCrest {
-  inset-block-start: calc(var(--water) - 2% + var(--wave-drop));
+  inset-block-start: calc(var(--water) - 2%);
   inline-size: 200%;
 }
 .waveBody { z-index: 2; }
-.waveCrest { z-index: 4; }
+.waveCrest { z-index: 6; }
 
 .waveFar {
   z-index: 1;
-  inset-block-start: calc(var(--water) - 8% + var(--wave-drop));
+  inset-block-start: calc(var(--water) - 8%);
   inline-size: 260%;
   opacity: .45;
 }
@@ -293,7 +272,7 @@
   position: absolute;
   z-index: 7;
   inset-inline: 0;
-  inset-block: calc(var(--water) + 3% + var(--wave-drop)) 0;
+  inset-block: calc(var(--water) + 3%) 0;
   pointer-events: none;
 }
 .glints i {
@@ -311,12 +290,10 @@
 .glints i:nth-child(4) { inline-size: 40px; inset-inline-start: 71%; inset-block-start: 52%; }
 .glints i:nth-child(5) { inline-size: 58px; inset-inline-start: 84%; inset-block-start: 31%; }
 
-/* ---- the squad, standing at the line ----------------------------------- */
+/* ---- the squad, standing in the line ----------------------------------- */
 .squad {
   position: absolute;
-  /* above the swimmers (5), which are above all three wave layers: the ducks
-     ride the water, the product is never crossed by either */
-  z-index: 6;
+  z-index: 5;
   inset-inline: 0;
   /* the base sits BELOW the waterline, so the near wave swallows the bottom
      fifth of each bottle */
@@ -377,9 +354,7 @@
    page whose whole job is one signup.
    ========================================================================== */
 @media (max-width: 899px) {
-  /* A shallower drop on a portrait panel: the bottles sit higher relative to
-     the frame here, so less of one clears them. */
-  .panel { --water-base: 67%; --wave-drop: 7.5%; }
+  .panel { --water-base: 67%; }
 
   /* Portrait frame: the column leaves the waterline and pins to the TOP, the
      pond takes the bottom half. A different composition, not a squashed one. */

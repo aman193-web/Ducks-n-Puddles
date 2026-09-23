@@ -814,57 +814,6 @@
     "nativeWidth": 578,
     "nativeHeight": 1436
   },
-  "chichi-swim": {
-    "id": "chichi-swim",
-    "tier": "A",
-    "widths": [
-      240,
-      480
-    ],
-    "alpha": true,
-    "v": "8eba3da6",
-    "aspect": 0.7859,
-    "formats": [
-      "avif",
-      "webp"
-    ],
-    "nativeWidth": 947,
-    "nativeHeight": 1205
-  },
-  "goosey-swim": {
-    "id": "goosey-swim",
-    "tier": "A",
-    "widths": [
-      240,
-      480
-    ],
-    "alpha": true,
-    "v": "f33ab915",
-    "aspect": 0.7721,
-    "formats": [
-      "avif",
-      "webp"
-    ],
-    "nativeWidth": 942,
-    "nativeHeight": 1220
-  },
-  "vincey-swim": {
-    "id": "vincey-swim",
-    "tier": "A",
-    "widths": [
-      240,
-      480
-    ],
-    "alpha": true,
-    "v": "9d91dbe5",
-    "aspect": 0.862,
-    "formats": [
-      "avif",
-      "webp"
-    ],
-    "nativeWidth": 1043,
-    "nativeHeight": 1210
-  },
   "chichi-turn": {
     "id": "chichi-turn",
     "tier": "A",
