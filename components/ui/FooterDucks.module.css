@@ -1,51 +1,42 @@
-/* The three of them closing the page, turning to follow the cursor.
-   Replaces the row of three cropped bottle renders that used to sit here. */
+/* The three of them closing the page. Unlike the bottle row this replaces, the
+   frame is NOT cropped — the client's note on the supplied video is that all
+   three characters stay clearly visible, so it keeps its own aspect ratio and
+   the footer grows to fit rather than slicing it. */
 .stage {
   position: relative;
   z-index: 1;
   display: flex;
   justify-content: center;
-  /* Was clamp(--s-5, 3vw, --s-7). Most of what read as "too much padding" was
-     actually inside the video (see .frame); this is the remainder. */
-  margin-block-start: clamp(var(--s-2), 1.4vw, var(--s-4));
-  /* Decoration sitting under real links; it must never eat a click. */
+  margin-block-start: clamp(var(--s-5), 3vw, var(--s-7));
+  /* It is decoration sitting under real links; it must never eat a click. */
   pointer-events: none;
   /* GSAP writes x/y here. Promoting it up front keeps the parallax off the
      main thread's paint path. */
   will-change: transform;
 }
 
-/* ---- the frame ---------------------------------------------------------
-   The dead headroom is CROPPED IN THE ENCODE now, not in CSS. Measured off the
-   decoded frames, 166-182px of empty cream sat above the highest crest across
-   the six seconds — 23% of a 720px frame, and what read as a huge gap between
-   the copyright line and the ducks. 130px comes off the top at encode time,
-   leaving ~36px of clearance above the highest crest at any point in the turn.
-
-   Doing it in the encode rather than with object-fit means fewer pixels to
-   decode on every seek, and the CSS is just a box again. */
-.frame {
-  inline-size: min(100%, 760px);
+.video {
+  display: block;
+  /* 900, not 1180. At full width the frame rendered 664px tall and the footer
+     read as a video with some links above it rather than a footer with the
+     characters in it. */
+  inline-size: min(100%, 900px);
+  block-size: auto;
 
   /* The supplied frame is cream, but not THIS cream: measured, its ground is
-     rgb(252,244,228) against the footer's rgb(255,246,227). A 1.6-2.8% step
-     reads as a rectangle floating in the footer, and a radius only rounds its
-     corners. Fading the edges out dissolves the seam whatever the two colours
-     are, and survives a re-export on a different ground. The bottom is
-     deliberately unfaded: this is the last element on the page, so that edge
-     is the page edge. */
+     rgb(252,244,228) against the footer's rgb(255,246,227). A 1.6-2.8% step is
+     small in isolation and reads as a visible rectangle floating in the footer
+     — a radius does not hide it, it just rounds its corners. Fading the edges
+     to transparent dissolves the seam whatever the two colours are, which also
+     means it survives any re-export of the video on a different ground.
+     Bottom is deliberately NOT faded: this is the last element on the page, so
+     that edge is the page edge. */
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 7%, #000 100%);
+    linear-gradient(to bottom, transparent 0, #000 9%, #000 100%);
   -webkit-mask-composite: source-in;
   mask-image:
     linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 7%, #000 100%);
+    linear-gradient(to bottom, transparent 0, #000 9%, #000 100%);
   mask-composite: intersect;
-}
-
-.video {
-  display: block;
-  inline-size: 100%;
-  block-size: auto;
 }
