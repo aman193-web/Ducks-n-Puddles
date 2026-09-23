@@ -5,7 +5,11 @@
    colour, one per audience. */
 .section {
   background: var(--cream);
-  padding-block: var(--section-y);
+  /* Extra air on TOP. The marquee above bleeds downward — it is 118vw at -3.2deg
+     with negative block margins, so its low corner bites into whatever follows,
+     and the eyebrow was sitting right under it. The bottom keeps the normal
+     rhythm; only the ribbon side needs the clearance. */
+  padding-block: calc(var(--section-y) + clamp(32px, 4vw, 64px)) var(--section-y);
   position: relative;
   overflow: clip;
 }

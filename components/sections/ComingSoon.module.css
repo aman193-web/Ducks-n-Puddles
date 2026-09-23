@@ -1,88 +1,87 @@
 /* =============================================================================
-   COMING SOON
+   COMING SOON — a call-to-action band.
 
-   Sun yellow — the one full-saturation ground on the page, and it earns it:
-   this is the section that is supposed to feel like an announcement. --ink
-   measures 11.2 on it, so the copy is comfortable rather than shouted.
+   Centred, short, one button. Sun-soft ground (--ink measures 12.6 on it), so
+   it separates from the cream either side without becoming the loudest thing
+   on the page.
    ========================================================================== */
 .section {
   position: relative;
   overflow: clip;
   background: var(--sun-soft);
-  padding-block: var(--section-y);
+  padding-block: calc(var(--section-y) * 1.1);
   isolation: isolate;
 }
 
 .inner {
-  position: relative; z-index: 1;
+  position: relative; z-index: 2;
   display: grid;
-  gap: var(--flow-block);
-  align-items: center;
+  justify-items: center;
+  text-align: center;
+  gap: var(--flow-head);
 }
-@media (min-width: 900px) {
-  .inner { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); }
-}
+/* Centred display type needs a tighter measure than left-aligned does, or the
+   eye loses the start of each line. */
+.inner h2 { max-width: 16ch; }
+.lead { max-width: 54ch; }
 
-.copy { display: grid; justify-items: start; gap: var(--flow-head); }
-.body { max-width: 52ch; font-size: var(--fs-body); }
-
-.ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-6); margin-block-start: var(--s-2); }
-.proof {
-  font-size: var(--fs-small); font-weight: 600; color: var(--ink);
-  text-decoration: underline; text-underline-offset: 3px;
-}
-.proof:hover { text-decoration-thickness: 2px; }
-
-/* ---- the art ---------------------------------------------------------- */
-.art {
+/* ---- the act: a button standing in a puddle --------------------------- */
+.act {
   position: relative;
-  justify-self: center;
-  inline-size: min(100%, 420px);
-  aspect-ratio: 1 / .92;
-  display: grid;
-  place-items: end center;
+  display: grid; place-items: center;
+  margin-block-start: var(--s-3);
+  padding: clamp(var(--s-6), 4vw, var(--s-8)) clamp(var(--s-7), 6vw, var(--s-10));
 }
-/* The puddle he is looking into. Same organic radius as every other pool on the
-   site (PuddleFace / Foundation), so the shape language is one thing. */
-/* Sized like Foundation's blob, which is the one on this site that actually
-   reads as a puddle. The rule the two earlier attempts both broke: organic
-   border-radius percentages resolve towards a plain ellipse as the box gets
-   flatter, so a 2:1 box is always going to look like a white platter however
-   asymmetric the radii are. Nearer 1.3:1 is where the shape survives. */
 .pool {
-  position: absolute;
+  position: absolute; inset: 0;
   z-index: 0;
-  inset-block-end: 2%;
-  inset-inline-start: 50%;
-  translate: -50% 0;
-  inline-size: min(90%, 330px);
-  aspect-ratio: 1 / .78;
   background: var(--paper);
   border: var(--border-lg);
-  border-radius: 62% 38% 44% 56% / 52% 64% 36% 48%;
-  rotate: -5deg;
+  /* The house puddle radius. Asymmetric on both axes — an ellipse here would
+     read as a button on a plate. */
+  border-radius: 70% 30% 52% 48% / 58% 72% 28% 42%;
+  rotate: -2.5deg;
 }
 .ripple {
   position: absolute;
   z-index: 1;
-  inset-block-end: 18%;
+  inset-block-end: 14%;
   inset-inline-start: 50%;
   translate: -50% 0;
-  inline-size: min(46%, 190px);
-  aspect-ratio: 1 / .38;
+  inline-size: min(70%, 260px);
+  aspect-ratio: 1 / .34;
   color: var(--ink);
-  opacity: .3;
+  opacity: .26;
   pointer-events: none;
 }
-.duck {
-  position: relative;
-  z-index: 2;
-  inline-size: min(62%, 248px);
-  justify-self: center;
-  align-self: end;
-  margin-block-end: 12%;
-}
+.btn { position: relative; z-index: 2; }
 
-@media (max-width: 899px) {
-  .art { order: -1; inline-size: min(100%, 320px); }
+.proofLine {
+  font-size: var(--fs-small);
+  color: var(--ink);
+  margin-block-start: var(--s-2);
+}
+.proof {
+  color: var(--ink); font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.proof:hover { text-decoration-thickness: 2px; }
+
+/* ---- the two characters ----------------------------------------------
+   Anchored to the SECTION, outside the wrap, so they can never reach the
+   centred copy. Off below 1100px, where there is no margin for them to stand
+   in and they would sit on the paragraph. */
+.left, .right {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: 8%;
+  inline-size: clamp(120px, 15vw, 210px);
+  display: none;
+}
+.left  { inset-inline-start: clamp(8px, 3vw, 64px); }
+.right { inset-inline-end:   clamp(8px, 3vw, 64px); }
+
+@media (min-width: 1100px) {
+  .left, .right { display: block; }
 }

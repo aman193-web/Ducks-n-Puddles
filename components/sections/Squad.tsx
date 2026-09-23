@@ -189,7 +189,6 @@ export function Squad() {
                        would be tabIndex -1 and the group unreachable. */
                     tabIndex={i === rovingIndex ? 0 : -1}
                     name={d.stickerName}
-                    /* No motif: see NameSticker. The name is the whole control. */
                     size="l"
                     colour={d.colour}
                     onClick={() => setDuck(d.slug as Duck)}

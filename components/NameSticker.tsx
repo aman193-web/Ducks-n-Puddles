@@ -1,13 +1,7 @@
-import { Motif, type MotifName } from './Motif'
 import styles from './NameSticker.module.css'
 
 interface Props {
   name: string
-  /** Optional. The decal printed on the bottle carries the character's motif,
-   *  so the Store stickers keep it — but in the signup's duck PICKER the marks
-   *  were noise inside a control whose whole job is the name, so it is left off
-   *  there. Omit the prop and the sticker is name-only. */
-  motif?: MotifName
   colour: string
   size?: 's' | 'm' | 'l'
   as?: 'span' | 'button'
@@ -29,8 +23,12 @@ interface Props {
  * Chi Chi lands exactly ON 4.50, with nothing in hand — so if these colours or
  * this ink ever move, re-measure rather than assuming there is slack.
  */
+/* The motif that used to sit after the name is gone from every one of these.
+   The client asked for it twice — first off the signup's picker, then "remove
+   icons from chi chi, vincey, goosey button from everywhere". The name is the
+   whole label now, and the space the mark was taking has gone into the type. */
 export function NameSticker({
-  name, motif, colour, size = 'm', as = 'span', onClick, role, ariaChecked, tabIndex, className,
+  name, colour, size = 'm', as = 'span', onClick, role, ariaChecked, tabIndex, className,
 }: Props) {
   const Tag = as as 'span'
   return (
@@ -44,7 +42,6 @@ export function NameSticker({
       {...(as === 'button' ? { type: 'button' as const } : {})}
     >
       {name}
-      {motif && <Motif name={motif} className={styles.motif} />}
     </Tag>
   )
 }

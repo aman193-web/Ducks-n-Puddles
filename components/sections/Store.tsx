@@ -63,7 +63,7 @@ export function Store() {
                 <Picture id={assetFor(d.slug)} sizes="(min-width: 820px) 20vw, 55vw"
                          alt={`The ${d.name} bottle`} className={styles.bottle} />
               </div>
-              <NameSticker name={d.stickerName} motif={d.motif} colour={d.colour} size="m"
+              <NameSticker name={d.stickerName} colour={d.colour} size="m"
                            className={styles.badge} />
               {/* The client asked for both audiences to be spoken to at once and
                   for neither to get lost. Both lines were already here as two

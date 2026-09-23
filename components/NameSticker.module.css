@@ -13,7 +13,10 @@
   color: var(--ink); cursor: pointer;
   font-family: var(--font-display); font-synthesis: none;
   font-weight: 400; letter-spacing: .012em; line-height: 1.06;
-  font-size: calc(var(--h) * .40);
+  /* .48, up from .40 — about 17% bigger, which is the "little bigger" asked
+     for. It only fits because the motif came off: at .40 with a mark beside it
+     the name was a small word in a wide pill. */
+  font-size: calc(var(--h) * .48);
   white-space: nowrap;
   transition: transform var(--t) var(--spring);
 }
@@ -21,7 +24,6 @@
 .s { --h: 32px; }
 .m { --h: 42px; }
 .l { --h: clamp(48px, 5.4vw, 62px); }
-.motif { flex: none; inline-size: calc(var(--h) * .38); block-size: auto; }
 
 /* Selection is carried by SHAPE, not by colour or by dimming.
    The previous version faded the unselected stickers to 62% opacity, which on the

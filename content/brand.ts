@@ -216,28 +216,54 @@ export const foundation = {
  * Every row is a real intention from the discovery call, and none of them carries
  * a date — because none of them has one.
  */
-export const roadmap = [
+/**
+ * THE BIGGER PICTURE — what the CHARACTERS grow into.
+ *
+ * The client: "We'd love to start planting the idea that 'The bottles are just
+ * the beginning.' Eventually, the ducks will live through different products,
+ * stories, books, experiences and a much larger Ducks 'n Puddles world.
+ * Incorporating the illustrated characters into the website now will help
+ * establish that bigger vision from the beginning."
+ *
+ * This was a five-row product roadmap with an icon per row — The Quack Pack,
+ * Name it yours, Boxes that grow up, For the parents, First dibs. Read back
+ * against the brief that was the wrong section: a backlog of things to buy
+ * later, when the client's point is the opposite one. The ducks are CHARACTERS.
+ * The bottle is simply the first place most people will meet them.
+ *
+ * So: three directions the world grows in, each carried by an ILLUSTRATED
+ * CHARACTER rather than by a glyph, with the actual products sitting inside as
+ * evidence instead of as the headline. "First dibs" is gone from here entirely —
+ * it is a Duck Squad membership benefit and it is stated there.
+ *
+ * Still nothing dated and nothing promised: the products named are the ones the
+ * client has described, written as intent, and the third row says plainly that
+ * it is still being dreamt up rather than implying it is in production.
+ */
+export const biggerPicture = [
   {
-    title: 'The Quack Pack',
-    body: 'The books the characters came from. Chi Chi, Goosey and Vincey, with more of the world around them and stories that actually go somewhere.',
+    who: 'chi-chi' as const,
+    pose: 'wave',
+    title: 'Stories, and the books they came from',
+    body:
+      'Chi Chi, Goosey and Vincey began as characters in a book, not as bottles. The Quack Pack is where the rest of their world gets written \u2014 more of the pond, more of the friends in it, and stories that actually go somewhere.',
   },
   {
-    title: 'Name it yours',
-    body: 'The silicone sleeve on the bottom comes off, and we want your child’s name on it. This is the one we are most excited about, which is why we are not rushing it.',
+    who: 'goosey' as const,
+    pose: 'idle',
+    title: 'Things for every day',
+    body:
+      'A name on the bottom of every bottle, because it should be your child\u2019s. Boxes that grow up with them, from about two to about six. And the unglamorous half of small children \u2014 bath wipes, a spray for the table \u2014 made a little easier.',
   },
   {
-    title: 'Boxes that grow up',
-    body: 'Subscribe when they are two, and the box keeps growing with them until they are around six. Fewer decisions for you, something to look forward to for them.',
-  },
-  {
-    title: 'For the parents',
-    body: 'Bath wipes. A spray for the table, for before they eat off the table. The unglamorous half of having small children, made a little easier.',
-  },
-  {
-    title: 'First dibs',
-    body: 'When production is confirmed, the Duck Squad gets a window to claim their duck before the store opens to anybody else.',
+    who: 'vincey' as const,
+    pose: 'idle',
+    title: 'A world to be part of',
+    body:
+      'Past the products: places, moments and experiences where the three of them are real to a child rather than printed on something. That is the part we are still dreaming about \u2014 and the part we would most like the Duck Squad to help us shape.',
   },
 ]
+
 
 /* The `samples` prototype timeline and its <Samples> section are gone. The
    section opened "These are the ones that didn't make it", which is exactly the

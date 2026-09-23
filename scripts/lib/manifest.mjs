@@ -73,17 +73,15 @@ export const alphaAssets = [
   { id: 'mascot',         src: `${BRAND_DIR}/icons/mascot-icon.png`,    widths: [140, 280] },
   { id: 'splash',         src: `${BRAND_DIR}/icons/water-splash-icon.png`, widths: [334, 669] },
   /* ---- THE BRAND MARKS, as the client supplied them ----------------------
-     The ribbon separators. These are the client's own files at full size — the
-     footprint PAIR and the three-line mini-wave — trimmed of their transparent
-     margin so the mark fills its box rather than floating in the middle of a
-     1254px square. The older icons/*.png in this folder are the same artwork at
+     The footprint pair, the client's own file at full size, trimmed of its
+     transparent margin so the mark fills its box rather than floating in the
+     middle of a 1254px square. The mini-wave that used to be registered
+     alongside it is gone: as a 2.3:1 image it read as a stripe in the ribbon,
+     and the client supplied a compact wave SVG to replace it (see Motif). The older icons/*.png in this folder are the same artwork at
      91x80 and 98x57, too small to use at 2x anywhere.
      NOT hand-redrawn as SVG: that was tried, and at ribbon size the traced
      approximation read as a smudge. This is the real artwork. */
   { id: 'mark-footprints', src: `${BRAND_DIR}/icons/footprints-navy-hi.png`, widths: [72, 144] },
-  { id: 'mark-wave',       src: `${BRAND_DIR}/icons/mini-wave-navy-hi.png`,  widths: [72, 144] },
-  { id: 'mark-footprints-color', src: `${BRAND_DIR}/icons/footprints-color-hi.png`, widths: [72, 144] },
-  { id: 'mark-wave-sky',   src: `${BRAND_DIR}/icons/mini-wave-sky-hi.png`,   widths: [72, 144] },
 
   { id: 'pattern-primary',   src: `${BRAND_DIR}/patterns/primary-pattern-transparent.png`,   widths: [320, 640] },
   { id: 'pattern-secondary', src: `${BRAND_DIR}/patterns/secondary-pattern-transparent.png`, widths: [240, 480] },

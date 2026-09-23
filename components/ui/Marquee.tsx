@@ -1,31 +1,34 @@
+import { Motif, type MotifName } from '@/components/Motif'
 import { asset, fallbackSrc } from '@/lib/assets'
 import styles from './Marquee.module.css'
 
-/** The client's OWN artwork, as files — not a redraw of it.
+/** Three marks, all the client's own artwork, two of them as SVG.
  *
- *  This separator has been three things. Six Phosphor glyphs in outlined colour
- *  discs, which the client asked to remove. Then Phosphor without the discs,
- *  which was still wrong: their PawPrint is a cat's pad and their Bird a
- *  songbird, while this brand walks on a three-toed WEBBED foot. Then a
- *  hand-drawn SVG of the real shapes, which was the right subject but read as a
- *  smudge at ribbon size — two 15px feet inside a 30px box.
+ *  The long three-line wave is gone: as a 2.3:1 image it read as a stripe
+ *  across the band rather than as a mark, which the client asked to remove.
+ *  Its replacement is the compact wave SVG they supplied — the same three
+ *  crests inside a square box — alongside their splash SVG. Both are inline and
+ *  take `currentColor`, so they sit in ink on the yellow band and would follow
+ *  the ink anywhere else.
  *
- *  So: the actual files from media/brand/icons/, at full resolution, trimmed of
- *  their transparent margin so the mark fills its box. Two marks alternating,
- *  not four — the footprint pair and the mini-wave are the two the brand book
- *  gives in a flat single colour, and they are the two that read in ink on a
- *  tinted band.
- *
- *  Plain <img>, not <Picture>: one band renders ~60 of these, and 60 <picture>
- *  elements with two <source> children each is a lot of DOM for one cached 3KB
- *  file. Resolved through the manifest so the pipeline still owns the path. */
-const MARKS = ['mark-footprints', 'mark-wave'] as const
-
-const MARK_IMGS = MARKS.map((id) => {
-  const a = asset(id)
+ *  The footprints stay as an image: that one is a photograph-like PNG with no
+ *  single-colour vector to take its place, and it reads correctly at this size.
+ *  Mixing the two is fine because both are sized by HEIGHT, so a square SVG and
+ *  a 1.15:1 photo line up on the same optical baseline.
+ */
+const FOOTPRINTS = (() => {
+  const a = asset('mark-footprints')
   const w = a.widths[a.widths.length - 1]
-  return { src: fallbackSrc(id), w, h: Math.round(w / a.aspect) }
-})
+  return { src: fallbackSrc('mark-footprints'), w, h: Math.round(w / a.aspect) }
+})()
+
+type Mark = { motif: MotifName } | { img: typeof FOOTPRINTS }
+
+const MARKS: Mark[] = [
+  { motif: 'splash' },
+  { img: FOOTPRINTS },
+  { motif: 'waves' },
+]
 
 interface Props {
   items: string[]
@@ -69,10 +72,12 @@ export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = '
         <span className={styles.item} key={`${t}-${i}`}>
           {t}
           {(() => {
-            const m = MARK_IMGS[i % MARK_IMGS.length]
-            return (
-              <img src={m.src} width={m.w} height={m.h} alt="" aria-hidden="true"
+            const m = MARKS[i % MARKS.length]
+            return 'img' in m ? (
+              <img src={m.img.src} width={m.img.w} height={m.img.h} alt="" aria-hidden="true"
                    className={styles.mark} loading="lazy" decoding="async" />
+            ) : (
+              <Motif name={m.motif} className={styles.mark} />
             )
           })()}
         </span>
