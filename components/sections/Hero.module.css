@@ -290,6 +290,70 @@
 .glints i:nth-child(4) { inline-size: 40px; inset-inline-start: 71%; inset-block-start: 52%; }
 .glints i:nth-child(5) { inline-size: 58px; inset-inline-start: 84%; inset-block-start: 31%; }
 
+/* ---- the swimmers, crossing the line ------------------------------------
+   Three characters on a loop from off the left edge to off the right, sitting
+   IN the surface: z-index 4 puts them in front of the wave body (2) and behind
+   both the bottles (5) and the crest ribbon (6), so the near band of the wave
+   cuts across each hull as it passes. That single overlap is what separates a
+   duck floating in the pond from a duck sliding over a picture of one.
+
+   Three motions on three elements, one channel each, per the discipline at the
+   top of this file:
+     .lane  transform -> the crossing
+     .rider transform -> the heave
+     img    rotate    -> the tilt, a quarter-cycle ahead of the heave so the
+                         nose lifts on the climb and drops on the fall
+
+   FOLLOWING THE WAVE, literally. The crest layer is 200% of the panel holding
+   4 wave periods, and drifts translateX(-50%) over 24s in reverse — so the
+   water moves RIGHT at exactly one panel width per 24s, and one wave period is
+   half a panel width.
+
+   The swimmers are therefore given that same speed: 200cqw in 48s is one panel
+   width per 24s. A duck's position relative to the water is then CONSTANT, so
+   the surface under it never changes height and it can never hang in the air
+   over a trough or be buried by a crest — which is what a fixed height does,
+   the wave sweeping ~100px vertically beneath a duck that does not.
+
+   Both loops are commensurate (48s is exactly two drift periods), so the jump
+   back to the left edge lands on the same water every time, and it happens at
+   ~30s when the duck is off the right edge anyway.
+
+   cqw, not vw: `.swimmers` is the query container, so 100cqw is the panel's own
+   width. vw would include the scrollbar and slowly slide the ducks off the
+   crest they are sitting on. */
+.swimmers {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  container-type: inline-size;
+  pointer-events: none;
+}
+.lane {
+  position: absolute;
+  inset-inline-start: 0;
+  /* Seats the hull IN the surface, not on it: measured at 1440x900 this puts the
+     duck's base ~23px under the crest line, which is the whole blue hull plus a
+     few px of body — so the near band paints over everything that would be
+     underwater. One value for all three, because the 12s stagger is exactly one
+     wave period, so they ride identical water.
+
+     The figure also carries the phase. With the leads below, each duck rides the
+     TROUGH between two humps rather than the top of one: the water rises either
+     side of it, which is what a duck sitting in a swell looks like, and it keeps
+     their heads clear of the CTA row above. */
+  inset-block-end: calc(100% - var(--water) - 9.8%);
+  /* the resting position, and what reduced motion is left holding */
+  transform: translateX(var(--park));
+}
+.rider { display: block; }
+.rider img {
+  display: block;
+  inline-size: auto;
+  block-size: calc(clamp(76px, 6.4vw, 96px) * var(--size));
+  filter: drop-shadow(0 4px 10px rgba(16, 38, 74, .18));
+}
+
 /* ---- the squad, standing in the line ----------------------------------- */
 .squad {
   position: absolute;
@@ -412,6 +476,9 @@
 @keyframes heroEmerge  { from { opacity: 0; transform: translateY(54px) scale(.93); } to { opacity: 1; transform: none; } }
 @keyframes heroDrift   { to { transform: translateX(-50%); } }
 @keyframes heroGlint   { 0%, 100% { opacity: 0; transform: scaleX(.6); } 50% { opacity: .65; transform: scaleX(1); } }
+@keyframes heroSwim    { from { transform: translateX(-26cqw); } to { transform: translateX(174cqw); } }
+@keyframes heroRide    { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(var(--rise) * -1)); } }
+@keyframes heroTilt    { 0%, 100% { rotate: 0deg; } 25% { rotate: -2.4deg; } 50% { rotate: 0deg; } 75% { rotate: 2.4deg; } }
 @keyframes heroBubble  {
   0%   { opacity: 0; transform: translate(0, 40px); }
   12%  { opacity: .8; }
@@ -445,6 +512,10 @@
   .glints i:nth-child(4) { animation-delay: .6s; }
   .glints i:nth-child(5) { animation-delay: 3.1s; }
 
+  .lane     { animation: heroSwim 48s linear var(--lead) infinite; }
+  .rider    { animation: heroRide var(--bob) ease-in-out infinite; }
+  .rider img { animation: heroTilt var(--bob) ease-in-out infinite; }
+
   .waveFar svg { animation: heroDrift 38s linear infinite; }
   /* identical on purpose — see the note on .wave */
   .waveBody svg, .waveCrest svg { animation: heroDrift 24s linear infinite reverse; }
@@ -456,6 +527,25 @@
   .ctas  { animation-delay: .92s; }
   .cue   { animation-delay: 1.08s; }
 }
+
+/* The phone pond is a different sea. The panel is portrait and the wave carries
+   the same four periods across a third of the width, so each hump is ~195px
+   wide against a 77px crest-to-trough — steep, where the desktop's is long and
+   low. A duck seated in the TROUGH there is simply swallowed: measured, 39px of
+   it below a surface that climbs 77px on both sides of it.
+
+   So below 900px they ride the CREST instead — 2.5s further along the same
+   locked path, lifted to match, seated at the same 28px. Same water, the other
+   half of it. */
+@media (max-width: 899px) {
+  .lane { inset-block-end: calc(100% - var(--water) - 2%); }
+}
+/* The delay is set by the shorthand above, inside the motion query, so
+   the phase shift has to be re-stated after it or the shorthand wins. */
+@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
+  .lane { animation-delay: calc(var(--lead) - 2.5s); }
+}
+
 
 /* The outer bottles' resting rotation is set on .bottle, which the entrance also
    drives. Restore it once the entrance has finished by hanging it on the inner

@@ -25,6 +25,24 @@ import styles from './Hero.module.css'
 const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 const ORDER = ['vincey', 'chi-chi', 'goosey'] as const
 
+/* THE SWIMMERS, in the order the client's line-up reads left to right: blue,
+   pink, yellow. They cross rightward, so the yellow one leads and the blue one
+   trails.
+
+   `lead` is a negative animation-delay, and the three values are not decorative:
+   the crest band repeats every 50cqw (see the CSS), and 12s of travel IS 50cqw,
+   so a 12s stagger puts all three at the IDENTICAL point on the wave. That is
+   what lets one `--sink` seat all three, and what keeps the spacing honest as
+   the panel resizes.
+
+   `size` is the only thing that varies — a little difference in height so the
+   three read as being at different distances rather than on one rail. */
+const SWIMMERS = [
+  { id: 'vincey-swim', lead: -2,  park: '20cqw', size: '.92',  bob: '4.4s', rise: '6px' },
+  { id: 'chichi-swim', lead: -14, park: '48cqw', size: '1',    bob: '3.8s', rise: '7px' },
+  { id: 'goosey-swim', lead: -26, park: '76cqw', size: '1.07', bob: '4.1s', rise: '6px' },
+] as const
+
 const PERIODS = 4
 const W = PERIOD * PERIODS
 
@@ -139,6 +157,31 @@ export function Hero() {
               <span className={styles.caustic} /><span className={styles.caustic} /><span className={styles.caustic} />
               <i className={styles.bubble} /><i className={styles.bubble} /><i className={styles.bubble} />
               <i className={styles.bubble} /><i className={styles.bubble} />
+            </div>
+
+            {/* -- swimming across it --
+                Behind the bottles and in front of the wave body, so a duck
+                passes BEHIND the product and the crest ribbon still cuts across
+                its hull: that overlap is the whole reason it reads as floating
+                rather than as a sticker sliding over the panel. */}
+            <div className={styles.swimmers} aria-hidden="true">
+              {SWIMMERS.map((s) => (
+                <span
+                  key={s.id}
+                  className={styles.lane}
+                  style={{
+                    ['--lead' as string]: `${s.lead}s`,
+                    ['--park' as string]: s.park,
+                    ['--size' as string]: s.size,
+                    ['--bob' as string]: s.bob,
+                    ['--rise' as string]: s.rise,
+                  }}
+                >
+                  <span className={styles.rider}>
+                    <Picture id={s.id} sizes="9vw" priority />
+                  </span>
+                </span>
+              ))}
             </div>
 
             {/* -- standing in it -- */}
