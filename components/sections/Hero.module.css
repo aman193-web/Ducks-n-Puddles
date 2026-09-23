@@ -303,8 +303,10 @@
   justify-content: flex-end;
   gap: clamp(2px, 1.2vw, 22px);
   /* right-aligned to the text grid, then pushed further in so the cluster
-     sits inside the frame rather than against its edge */
-  padding-inline-end: calc(var(--edge) + clamp(0px, 8vw, 150px));
+     sits inside the frame rather than against its edge. The inset is half what
+     it was (8vw/150 -> 4vw/76), which slides the group right by ~57px at 1440 —
+     the "a little right" asked for, without letting it touch the frame. */
+  padding-inline-end: calc(var(--edge) + clamp(0px, 4vw, 76px));
   pointer-events: none;
 }
 .bottle { position: relative; display: block; }

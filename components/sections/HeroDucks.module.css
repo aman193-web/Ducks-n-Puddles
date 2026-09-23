@@ -1,0 +1,74 @@
+/* Life in the pond. See HeroDucks.tsx for the z-order reasoning — in short,
+   everything here is above the water and below both the bottles and the near
+   wave crest, so the ducks pass behind the product and the crest cuts them off
+   at the waterline. */
+.pond {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  /* The swimmer starts and ends outside the frame; without this it would widen
+     the page on its way past. */
+  overflow: clip;
+}
+
+.swimmer {
+  position: absolute;
+  /* Below the waterline by a little more than the bottles, so the crest takes
+     more of it — a duck IN the water, not standing in it. */
+  /* Anchored to the POND FLOOR, not to the waterline.
+     Measured why: the copy column ends AT the waterline, so anything tall
+     enough to break the surface on the left half is also tall enough to reach
+     the CTA row — at 3% below the line the swimmer's ink rose 75px above the
+     buttons. And this duck's ink fills 3.3%-96.7% of its box, so there is no
+     transparent padding to borrow back. Sitting it lower in the open water
+     below the wave band resolves both: fully visible, and it cannot reach the
+     text at any point in the crossing. */
+  inset-block-end: 9%;
+  inset-inline-start: 0;
+  inline-size: clamp(76px, 9vw, 132px);
+  will-change: transform;
+}
+.swimmer img { inline-size: 100%; block-size: auto; display: block; }
+
+/* The line it leaves behind. A flattened ring rather than a shape, so it reads
+   as disturbed water and not as an object. */
+.wake {
+  position: absolute;
+  inset-block-end: 8%;
+  inset-inline-start: 0;
+  inline-size: clamp(56px, 7vw, 104px);
+  block-size: 10px;
+  margin-inline-start: -14px;
+  border-block-start: var(--bw-lg) solid rgba(255, 255, 255, .55);
+  border-radius: 50%;
+  opacity: .28;
+  will-change: transform, opacity;
+}
+
+/* ---- the side walls ----------------------------------------------------
+   The `-peeking` art is cut off at its left edge, so the cut butts against the
+   panel wall and the duck reads as coming round it. The right-hand one is
+   mirrored, which puts its cut edge against the right wall instead. */
+/* Sized by HEIGHT, and this is the whole trap. The `-peeking` art is a tall
+   half-duck at 0.40 wide-to-tall, so a width of 124px made it ~300px TALL — it
+   reared up out of the pond past the waterline and stood beside the CTA row.
+   Height is the dimension that has to be controlled for this artwork; the width
+   then follows from the silhouette, around 52px. */
+.wall {
+  position: absolute;
+  inset-block-end: 6%;
+  block-size: clamp(88px, 10vw, 140px);
+  inline-size: auto;
+  will-change: transform;
+}
+.wall img { block-size: 100%; inline-size: auto; width: auto; display: block; }
+.wallLeft { inset-inline-start: 0; }
+.wallRight { inset-inline-end: 0; scale: -1 1; }
+
+/* Portrait: the bottles come back to the centre and take the lower half, so
+   there is no wall left to lean into. The swimmer stays — it crosses behind
+   everything and is the part that makes the pond feel alive. */
+@media (max-width: 899px) {
+  .wall { display: none; }
+}
