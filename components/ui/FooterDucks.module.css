@@ -1,0 +1,42 @@
+/* The three of them closing the page. Unlike the bottle row this replaces, the
+   frame is NOT cropped — the client's note on the supplied video is that all
+   three characters stay clearly visible, so it keeps its own aspect ratio and
+   the footer grows to fit rather than slicing it. */
+.stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-block-start: clamp(var(--s-5), 3vw, var(--s-7));
+  /* It is decoration sitting under real links; it must never eat a click. */
+  pointer-events: none;
+  /* GSAP writes x/y here. Promoting it up front keeps the parallax off the
+     main thread's paint path. */
+  will-change: transform;
+}
+
+.video {
+  display: block;
+  /* 900, not 1180. At full width the frame rendered 664px tall and the footer
+     read as a video with some links above it rather than a footer with the
+     characters in it. */
+  inline-size: min(100%, 900px);
+  block-size: auto;
+
+  /* The supplied frame is cream, but not THIS cream: measured, its ground is
+     rgb(252,244,228) against the footer's rgb(255,246,227). A 1.6-2.8% step is
+     small in isolation and reads as a visible rectangle floating in the footer
+     — a radius does not hide it, it just rounds its corners. Fading the edges
+     to transparent dissolves the seam whatever the two colours are, which also
+     means it survives any re-export of the video on a different ground.
+     Bottom is deliberately NOT faded: this is the last element on the page, so
+     that edge is the page edge. */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 9%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 9%, #000 100%);
+  mask-composite: intersect;
+}

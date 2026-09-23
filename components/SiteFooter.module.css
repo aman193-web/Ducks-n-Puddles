@@ -9,14 +9,15 @@
 
    Ours differs in two places on purpose: the top edge is the brand's measured
    wave rather than their scallops, and the cropped mascots are the top half of
-   the three bottles — the product, not a character illustration.
+   the three characters, on the cursor-following video (see FooterDucks).
    ========================================================================== */
 .footer {
   position: relative;
   background: var(--cream);
   /* NOT clipped. The duck rides higher than the wave band is tall, so a clip
      here decapitated it. Clipping happens where it is actually needed: .crest
-     stops the swimmer at the viewport edge, .bottles crops the product. */
+     stops the swimmer at the viewport edge. The characters that close the page
+     are a video now and keep their own aspect, so nothing crops them. */
 }
 
 /* ---- the waterline, with a duck on it ---------------------------------- */
@@ -139,44 +140,4 @@
   align-items: baseline; justify-content: space-between;
   padding-block: var(--s-5) 0;
   font-size: var(--fs-micro);
-}
-
-/* ---- the squad, cropped by the page's own bottom edge ------------------
-   The row is SHORTER than the renders inside it and clips them, so the bottles
-   read as rising out of the bottom of the page rather than as three images that
-   happen to be cut off. */
-.bottles {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: clamp(4px, 3vw, 46px);
-  /* Headroom at the top so the hover lift has somewhere to go — without it the
-     row clipped the ducks' heads the moment they rose. */
-  padding-block-start: 34px;
-  block-size: clamp(222px, 25vw, 358px);
-  margin-block-start: clamp(var(--s-5), 3vw, var(--s-7));
-  overflow: clip;
-}
-.bottle { display: block; flex: 0 0 auto; }
-.bottle img {
-  inline-size: auto;
-  /* Bigger renders cropped tighter: ~60% of each bottle shows, which lands the
-     cut just below the blue sleeve's wave and leaves the name decal whole. At
-     the old 55% the row sliced straight through VINCEY / CHI CHI / GOOSEY. */
-  block-size: clamp(320px, 38vw, 540px);
-  transition: transform .6s var(--spring);
-}
-/* the middle one stands prouder, as it does in the hero — by rising, not by
-   growing, so all three still show the same amount of bottle */
-.bottle:nth-child(2) { margin-block-start: -18px; }
-
-.bottles:hover .bottle:nth-child(1) img { transform: translateY(-10px) rotate(-3deg); }
-.bottles:hover .bottle:nth-child(2) img { transform: translateY(-12px); }
-.bottles:hover .bottle:nth-child(3) img { transform: translateY(-10px) rotate(3deg); }
-
-@media (max-width: 560px) {
-  .bottles { gap: 0; }
-  .bottle:nth-child(1) { margin-inline-end: -6vw; }
-  .bottle:nth-child(3) { margin-inline-start: -6vw; }
 }

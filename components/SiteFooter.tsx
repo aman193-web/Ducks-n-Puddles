@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { Picture } from './Picture'
-import { brand, ducks } from '@/content/brand'
+import { FooterDucks } from './ui/FooterDucks'
+import { brand } from '@/content/brand'
 import { WaveEdge } from './ui/WaveEdge'
 import styles from './SiteFooter.module.css'
 
@@ -23,8 +23,6 @@ const HELP = [
 const IG = 'M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.7 4.92 4.92.06 1.28.07 1.67.07 4.9s-.01 3.62-.07 4.9c-.15 3.22-1.66 4.77-4.92 4.92-1.28.06-1.67.07-4.9.07s-3.62-.01-4.9-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.11 15.62 2.1 15.23 2.1 12s.01-3.62.07-4.9C2.32 3.88 3.83 2.33 7.1 2.18 8.38 2.12 8.77 2.2 12 2.2Zm0 3.1a6.7 6.7 0 1 0 0 13.4 6.7 6.7 0 0 0 0-13.4Zm0 11.05a4.35 4.35 0 1 1 0-8.7 4.35 4.35 0 0 1 0 8.7Zm6.96-11.3a1.57 1.57 0 1 0 0 3.13 1.57 1.57 0 0 0 0-3.13Z'
 const FB = 'M14.5 8.5H17V5.2c-.43-.06-1.7-.19-3.18-.19-3.15 0-5.3 1.9-5.3 5.4V13H5.4v3.7h3.12V24h3.83v-7.3h3.1l.48-3.7h-3.58v-2.2c0-1.07.3-1.8 1.86-1.8Z'
 const MAIL = 'M3.5 5.5h17a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-17a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Zm.9 2L12 12.6l7.6-5.1'
-
-const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 
 /**
  * Footer, rebuilt on Koa's (measured at /collections/refill-pack, 1440):
@@ -120,21 +118,15 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* ---- the squad, cropped by the page's own bottom edge ----
-              NO character cameo here, deliberately. This row is a tuned crop —
-              540px renders in a 358px box, so ~60% of each bottle shows and the
-              cut lands below the name decal. An illustrated duck in front of it
-              is 50% clipped by that same box and its feet land on the decals;
-              the only clear ground is outside the bottle group, and that gap
-              closes below about 1400px. The illustrated trio lives in the Duck
-              Squad section instead, which has a column built for art. */}
-      <div className={styles.bottles} aria-hidden="true">
-        {ducks.map((d) => (
-          <span key={d.slug} className={styles.bottle}>
-            <Picture id={assetFor(d.slug)} sizes="(min-width: 900px) 22vw, 40vw" alt="" />
-          </span>
-        ))}
-      </div>
+      {/* ---- the squad, at the foot of the page ----
+              This was three bottle renders cropped by the page's bottom edge.
+              It is the characters now, on the supplied video, turning to follow
+              the cursor — the client asked for the bottles here to become the
+              ducks. Not cropped: their note is that all three stay clearly
+              visible, so the frame keeps its aspect and the footer grows.
+              See FooterDucks for the seek-throttling and the reduced-motion
+              and touch paths. */}
+      <FooterDucks />
     </footer>
   )
 }
