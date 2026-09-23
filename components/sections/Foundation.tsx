@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import { ArrowRight, Heart, UsersThree, HandHeart } from '@phosphor-icons/react/dist/ssr'
-import { Duck } from '@/components/ui/Duck'
 import { Motif } from '@/components/Motif'
+import { Picture } from '@/components/Picture'
 import { foundation } from '@/content/brand'
-import { Ripple } from '@/components/ui/Ripple'
 import styles from './Foundation.module.css'
 
 /**
@@ -83,23 +82,25 @@ export function Foundation() {
           </Link>
         </div>
 
-        {/* The art sits ON a blob, the way the reference seats it in an organic
-            shape. Not decorative — this image IS the section's argument, so it
-            carries a real alt and renders on a phone too. */}
-        <div className={styles.art}>
-          <span className={styles.blob} aria-hidden="true" />
-          {/* The one literal puddle on the page: the three of them are standing
-              IN it, so the rings expand from where they stand. Off entirely
-              under prefers-reduced-motion (see Ripple). */}
-          <Ripple className={styles.ripple} />
-          <Duck
-            who="trio" pose="puddle"
-            density="always"
-            className={styles.trio}
-            sizes="(min-width: 900px) 42vw, 86vw"
-            alt="Chi Chi, Goosey and Vincey standing together in one puddle"
+        {/* A PHOTOGRAPH, not the characters. The illustrated trio is the brand
+            talking about itself; a foundation section is about the children it
+            is for, and a real photograph is the only thing that says so.
+
+            Masked to the house organic shape rather than a rectangle, so it
+            belongs to the same visual language as the Story photo.
+
+            `tint={false}`: the pipeline sampled this image's dominant colour as
+            #080808 — the other photographs on the site land around #a89888 —
+            and a near-black placeholder flashing on a pale yellow section is
+            worse than none. The mask has nothing behind it to hide anyway. */}
+        <figure className={styles.art} data-anim="" data-anim-y="26">
+          <Picture
+            id="foundation-children"
+            sizes="(min-width: 900px) 46vw, 92vw"
+            className={styles.photo}
+            tint={false}
           />
-        </div>
+        </figure>
       </div>
     </section>
   )

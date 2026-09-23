@@ -42,6 +42,19 @@ export const photos = [
     role: 'portrait', focal: { x: 0.42, y: 0.24 },
     alt: 'A smiling child sitting in the sand among dune grass.' },
 
+  /* The Foundation section's photograph.
+     Unsplash, "a group of kids sitting in a hammock in the woods" by Alexandr
+     Podvalny (unsplash.com/@freestockpro), photo id 1638202951770-2240942c7d1c.
+     Unsplash License: free for commercial use, no permission needed, attribution
+     appreciated but not required.
+     Tier B: it is atmosphere, never a product context — and it must never be
+     used as one, because it is a stock photograph of children who have nothing
+     to do with this brand. `none` grade: it is already warm and the two site
+     grades are tuned for the client's own shoots. */
+  { id: 'foundation-children', src: 'foundation-children.jpg', tier: 'B', grade: 'none',
+    role: 'band', focal: { x: 0.5, y: 0.45 },
+    alt: 'Four children playing together around a hammock in a sunlit wood.' },
+
   // ---- Tier C: prototypes. "From Sample to Shelf" only, always captioned. ----
   { id: 'sample-turf',     src: '165A6600.JPG', tier: 'C', grade: 'chlorine', role: 'sample',
     alt: 'Three early Ducks ’n Puddles sample bottles standing on grass in warm backlight.' },

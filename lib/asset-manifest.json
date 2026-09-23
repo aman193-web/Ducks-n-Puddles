@@ -134,6 +134,29 @@
       "jpg"
     ]
   },
+  "foundation-children": {
+    "id": "foundation-children",
+    "tier": "B",
+    "alt": "Four children playing together around a hammock in a sunlit wood.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280,
+      1536,
+      1920
+    ],
+    "colour": "#080808",
+    "v": "fbd02495",
+    "aspect": 1.5,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
   "sample-turf": {
     "id": "sample-turf",
     "tier": "C",
