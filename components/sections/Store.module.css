@@ -94,41 +94,6 @@
 .foot { margin-block-start: var(--s-6); max-width: var(--measure); }
 @media (min-width: 820px) { .cards { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 
-/* ---- the first drop -----------------------------------------------------
-   A single strip on paper, between the lead and the three bottles. Paper and an
-   outline rather than a colour block: it is a piece of news, not a promotion,
-   and a saturated banner here would read as the sales-driven tone the client
-   asked us to stay away from. */
-.drop {
-  display: grid;
-  gap: var(--s-3) var(--s-5);
-  align-items: center;
-  padding: var(--card-pad);
-  margin-block-end: var(--flow-block);
-  background: var(--paper);
-  border: var(--border-lg);
-  border-radius: var(--r-lg);
-}
-@media (min-width: 760px) {
-  .drop { grid-template-columns: auto minmax(0, 1fr) auto; }
-}
-.dropMark {
-  display: grid; place-items: center;
-  inline-size: 46px; block-size: 46px;
-  border-radius: var(--r-pill);
-  background: var(--sun-soft);
-  border: var(--border);
-  color: var(--ink);
-  flex: none;
-}
-.dropMark svg { inline-size: 26px; block-size: 26px; }
-.dropText { display: grid; gap: var(--s-1); }
-.dropTitle {
-  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: clamp(1.25rem, 1.9vw, 1.625rem); line-height: var(--lh-md);
-  color: var(--ink);
-}
-.dropBody { font-size: var(--fs-small); color: var(--ink); max-width: 52ch; }
 
 /* ---- the two voices ----------------------------------------------------
    Child line then parent line, each labelled, separated by a hairline so they

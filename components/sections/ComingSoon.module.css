@@ -1,0 +1,88 @@
+/* =============================================================================
+   COMING SOON
+
+   Sun yellow — the one full-saturation ground on the page, and it earns it:
+   this is the section that is supposed to feel like an announcement. --ink
+   measures 11.2 on it, so the copy is comfortable rather than shouted.
+   ========================================================================== */
+.section {
+  position: relative;
+  overflow: clip;
+  background: var(--sun-soft);
+  padding-block: var(--section-y);
+  isolation: isolate;
+}
+
+.inner {
+  position: relative; z-index: 1;
+  display: grid;
+  gap: var(--flow-block);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .inner { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); }
+}
+
+.copy { display: grid; justify-items: start; gap: var(--flow-head); }
+.body { max-width: 52ch; font-size: var(--fs-body); }
+
+.ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-6); margin-block-start: var(--s-2); }
+.proof {
+  font-size: var(--fs-small); font-weight: 600; color: var(--ink);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.proof:hover { text-decoration-thickness: 2px; }
+
+/* ---- the art ---------------------------------------------------------- */
+.art {
+  position: relative;
+  justify-self: center;
+  inline-size: min(100%, 420px);
+  aspect-ratio: 1 / .92;
+  display: grid;
+  place-items: end center;
+}
+/* The puddle he is looking into. Same organic radius as every other pool on the
+   site (PuddleFace / Foundation), so the shape language is one thing. */
+/* Sized like Foundation's blob, which is the one on this site that actually
+   reads as a puddle. The rule the two earlier attempts both broke: organic
+   border-radius percentages resolve towards a plain ellipse as the box gets
+   flatter, so a 2:1 box is always going to look like a white platter however
+   asymmetric the radii are. Nearer 1.3:1 is where the shape survives. */
+.pool {
+  position: absolute;
+  z-index: 0;
+  inset-block-end: 2%;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: min(90%, 330px);
+  aspect-ratio: 1 / .78;
+  background: var(--paper);
+  border: var(--border-lg);
+  border-radius: 62% 38% 44% 56% / 52% 64% 36% 48%;
+  rotate: -5deg;
+}
+.ripple {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: 18%;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: min(46%, 190px);
+  aspect-ratio: 1 / .38;
+  color: var(--ink);
+  opacity: .3;
+  pointer-events: none;
+}
+.duck {
+  position: relative;
+  z-index: 2;
+  inline-size: min(62%, 248px);
+  justify-self: center;
+  align-self: end;
+  margin-block-end: 12%;
+}
+
+@media (max-width: 899px) {
+  .art { order: -1; inline-size: min(100%, 320px); }
+}

@@ -458,3 +458,26 @@
 @media (prefers-reduced-motion: reduce) {
   .curtain { display: none; }
 }
+
+/* ---- the coming-soon badge ---------------------------------------------
+   The hero sits on deep water, so this is the brand's sun yellow with ink on
+   it (11.2) rather than anything translucent — it has to survive the photo
+   behind it at every panel height. */
+.rally { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+.soon {
+  display: inline-flex; align-items: center;
+  min-block-size: 30px;
+  padding-inline: var(--s-4);
+  background: var(--sun);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--r-pill);
+  font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
+  white-space: nowrap;
+  rotate: -1.5deg;
+}
+.rallyText { white-space: nowrap; }
+@media (max-width: 559px) {
+  .rally { gap: var(--s-2); }
+  .rallyText { white-space: normal; }
+}

@@ -4,7 +4,6 @@ import { Sticker } from '@/components/ui/Sticker'
 import { NameSticker } from '@/components/NameSticker'
 import { Duck } from '@/components/ui/Duck'
 import { BrandDetail } from '@/components/ui/BrandDetail'
-import { Motif } from '@/components/Motif'
 import { Ripple } from '@/components/ui/Ripple'
 import { ducks } from '@/content/brand'
 import styles from './Store.module.css'
@@ -38,35 +37,6 @@ export function Store() {
             the beginning.
           </p>
         </div>
-
-        {/* THE FIRST DROP. The client: "we'd love the website to create a little
-            more anticipation around the first drop ... something that makes
-            people feel like they're discovering Ducks 'n Puddles early and gives
-            them a reason to join the Duck Squad."
-
-            This sits directly above the three bottles, which is the moment
-            someone decides they want one and the moment they find out they
-            cannot have one yet. It is deliberately NOT a countdown, a stock
-            counter or a fake scarcity line: there is no date to count to, and
-            inventing urgency for a children's brand is not a copy decision.
-            What it does say is true and is itself the reason to join — the shop
-            is not open, the Squad is how you find out when it is.
-
-            (This replaces the small mono "first drop" pill that the Design Mode
-            pass removed. That deletion and this request arrived together and
-            pull opposite ways; the client's brief wins, so the line is back —
-            louder, and now carrying the CTA it was missing.) */}
-        <aside className={styles.drop} data-anim="">
-          <span className={styles.dropMark} aria-hidden="true"><Motif name="splash" /></span>
-          <div className={styles.dropText}>
-            <p className={styles.dropTitle}>The first drop has not landed yet.</p>
-            <p className={styles.dropBody}>
-              You are early &mdash; which is the good part. The Duck Squad hears the day
-              the ducks arrive, before the shop opens to anyone else.
-            </p>
-          </div>
-          <Btn href="/#squad" colour="var(--sun-soft)">Be first to know</Btn>
-        </aside>
 
         <div className={styles.cards}>
           {ducks.map((d) => (

@@ -42,14 +42,18 @@
   white-space: nowrap;
 }
 
-/* Each phrase is followed by a brand mark — puddle, splash, footprint, wave,
-   duck — rather than a coloured glyph in an outlined disc. Full ink at 1em:
-   at .78em and 42% opacity these read as smudges rather than as icons, which
-   was the note. No disc, no outline; the mark is the whole thing. */
+/* Each phrase is followed by one of the brand's own marks — the footprint pair
+   and the mini-wave, alternating. Sized by HEIGHT with width auto, because the
+   two have different aspect ratios (the pair is nearly square, the wave is 2.3:1)
+   and matching their heights is what makes them read as one set. `width: auto`
+   is load-bearing: the <img> carries a width attribute and without this the
+   wave renders at its full 144px. */
 .mark {
   flex: none;
-  inline-size: 1.15em; block-size: 1.15em;
-  color: var(--ink);
+  display: block;
+  block-size: 1.15em;
+  inline-size: auto;
+  width: auto;
   /* Optically centred on the letterforms, not on the line box: at line-height 1
      the box carries descender space the word barely uses, which parks the mark
      fractionally low against the text. */

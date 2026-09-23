@@ -527,6 +527,70 @@
     "nativeWidth": 669,
     "nativeHeight": 359
   },
+  "mark-footprints": {
+    "id": "mark-footprints",
+    "tier": "A",
+    "widths": [
+      72,
+      144
+    ],
+    "alpha": true,
+    "aspect": 1.1503,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 972,
+    "nativeHeight": 845
+  },
+  "mark-wave": {
+    "id": "mark-wave",
+    "tier": "A",
+    "widths": [
+      72,
+      144
+    ],
+    "alpha": true,
+    "aspect": 2.2722,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1152,
+    "nativeHeight": 507
+  },
+  "mark-footprints-color": {
+    "id": "mark-footprints-color",
+    "tier": "A",
+    "widths": [
+      72,
+      144
+    ],
+    "alpha": true,
+    "aspect": 1.0969,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 917,
+    "nativeHeight": 836
+  },
+  "mark-wave-sky": {
+    "id": "mark-wave-sky",
+    "tier": "A",
+    "widths": [
+      72,
+      144
+    ],
+    "alpha": true,
+    "aspect": 2.4606,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1250,
+    "nativeHeight": 508
+  },
   "pattern-primary": {
     "id": "pattern-primary",
     "tier": "A",

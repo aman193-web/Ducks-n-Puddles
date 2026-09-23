@@ -1,19 +1,31 @@
-import { Motif, type MotifName } from '@/components/Motif'
+import { asset, fallbackSrc } from '@/lib/assets'
 import styles from './Marquee.module.css'
 
-/** The brand's OWN marks, not a general-purpose icon set.
+/** The client's OWN artwork, as files — not a redraw of it.
  *
- *  These were Phosphor icons for one commit, and the client's artwork showed
- *  why that was wrong: Phosphor's PawPrint is a cat's pad and its Bird is a
- *  songbird, while Ducks 'n Puddles walks on a three-toed WEBBED foot and its
- *  wave is three stacked crests. A generic icon of roughly the right subject is
- *  still the wrong brand.
+ *  This separator has been three things. Six Phosphor glyphs in outlined colour
+ *  discs, which the client asked to remove. Then Phosphor without the discs,
+ *  which was still wrong: their PawPrint is a cat's pad and their Bird a
+ *  songbird, while this brand walks on a three-toed WEBBED foot. Then a
+ *  hand-drawn SVG of the real shapes, which was the right subject but read as a
+ *  smudge at ribbon size — two 15px feet inside a 30px box.
  *
- *  These four are the marks from media/brand/icons/ — footprints, mini-wave,
- *  splash, duck — in ink, no disc, cycled so the band never repeats one mark
- *  across its width. The DISC is what the client asked to remove; the marks
- *  themselves were never the problem. */
-const MARKS: MotifName[] = ['footprints', 'waves', 'splash', 'duck']
+ *  So: the actual files from media/brand/icons/, at full resolution, trimmed of
+ *  their transparent margin so the mark fills its box. Two marks alternating,
+ *  not four — the footprint pair and the mini-wave are the two the brand book
+ *  gives in a flat single colour, and they are the two that read in ink on a
+ *  tinted band.
+ *
+ *  Plain <img>, not <Picture>: one band renders ~60 of these, and 60 <picture>
+ *  elements with two <source> children each is a lot of DOM for one cached 3KB
+ *  file. Resolved through the manifest so the pipeline still owns the path. */
+const MARKS = ['mark-footprints', 'mark-wave'] as const
+
+const MARK_IMGS = MARKS.map((id) => {
+  const a = asset(id)
+  const w = a.widths[a.widths.length - 1]
+  return { src: fallbackSrc(id), w, h: Math.round(w / a.aspect) }
+})
 
 interface Props {
   items: string[]
@@ -32,7 +44,10 @@ interface Props {
  * these are Phosphor again, in ink at full opacity, no disc and no outline,
  * cycling through four water-and-duck marks rather than repeating one.
  */
-export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = 'ltr', seconds = 32 }: Props) {
+/* 50s, up from 32. The client asked for it to be slower: at 32 the band moved
+   fast enough to read as an alert rather than as atmosphere, and the marks
+   blurred past before you could see what they were. */
+export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = 'ltr', seconds = 50 }: Props) {
   /* The loop is seamless only when HALF the track is at least as wide as the
      band, because the animation translates exactly -50%. The band is 118vw and
      keeps growing with the viewport, while the item text stops growing once
@@ -53,7 +68,13 @@ export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = '
       {loop.map((t, i) => (
         <span className={styles.item} key={`${t}-${i}`}>
           {t}
-          <Motif name={MARKS[i % MARKS.length]} className={styles.mark} />
+          {(() => {
+            const m = MARK_IMGS[i % MARK_IMGS.length]
+            return (
+              <img src={m.src} width={m.w} height={m.h} alt="" aria-hidden="true"
+                   className={styles.mark} loading="lazy" decoding="async" />
+            )
+          })()}
         </span>
       ))}
     </span>
