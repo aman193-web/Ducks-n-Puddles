@@ -3,7 +3,11 @@ import styles from './NameSticker.module.css'
 
 interface Props {
   name: string
-  motif: MotifName
+  /** Optional. The decal printed on the bottle carries the character's motif,
+   *  so the Store stickers keep it — but in the signup's duck PICKER the marks
+   *  were noise inside a control whose whole job is the name, so it is left off
+   *  there. Omit the prop and the sticker is name-only. */
+  motif?: MotifName
   colour: string
   size?: 's' | 'm' | 'l'
   as?: 'span' | 'button'
@@ -16,9 +20,14 @@ interface Props {
 
 /**
  * Ink is --ink on all three character colours — a deliberate departure from the
- * product's printed white. Measured: navy scores 4.3 / 3.9 / 7.7 on Vincey blue,
- * Chi Chi pink and Goosey yellow (all pass AA-Large at these display sizes),
- * whereas white on Goosey yellow would score 1.7 and is never permitted.
+ * product's printed white. RE-MEASURED off the rendered pills, because the
+ * figures here before (4.3 / 3.9 / 7.7) were wrong and understated all three:
+ * navy scores 4.97 on Vincey blue, 4.50 on Chi Chi pink and 8.88 on Goosey
+ * yellow, so every one clears AA for normal-size text. White on Goosey yellow
+ * would score 1.7 and is never permitted.
+ *
+ * Chi Chi lands exactly ON 4.50, with nothing in hand — so if these colours or
+ * this ink ever move, re-measure rather than assuming there is slack.
  */
 export function NameSticker({
   name, motif, colour, size = 'm', as = 'span', onClick, role, ariaChecked, tabIndex, className,
@@ -35,7 +44,7 @@ export function NameSticker({
       {...(as === 'button' ? { type: 'button' as const } : {})}
     >
       {name}
-      <Motif name={motif} className={styles.motif} />
+      {motif && <Motif name={motif} className={styles.motif} />}
     </Tag>
   )
 }
