@@ -1,7 +1,10 @@
 /* The panel carries up to 96px of its own padding, so a full --section-y below
    it doubled up and made Newsletter->faq the widest ink gap on the page at
    313px against a 160-260 band. */
-.section { background: var(--cream); padding-block: 0 calc(var(--section-y) * 0.45); }
+/* --paper, not --cream. The band sits between Journal and the FAQ, both of
+   which are paper, so a cream ground here drew a stripe across the page behind
+   the yellow panel rather than letting it sit on one continuous surface. */
+.section { background: var(--paper); padding-block: 0 calc(var(--section-y) * 0.45); }
 
 .panel {
   display: grid;

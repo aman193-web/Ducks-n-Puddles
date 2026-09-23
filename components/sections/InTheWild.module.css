@@ -90,15 +90,3 @@
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }
 
 /* Vincey peeking over the top edge of the section, above the rail. */
-/* Fully INSIDE the section. Hanging him above the top edge relied on
-   `overflow-x: clip; overflow-y: visible`, which is not a one-axis clip: per
-   spec a `visible` paired with a non-`visible` computes to `auto`, so the
-   section clipped him anyway and took 30px off his head. */
-.cameo {
-  position: absolute;
-  z-index: 2;
-  inline-size: clamp(96px, 11vw, 150px);
-  inset-block-start: calc(var(--section-y) * 0.12);
-  inset-inline-end: clamp(12px, 8vw, 150px);
-}
-@media (max-width: 899px) { .cameo { display: none; } }

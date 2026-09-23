@@ -242,22 +242,16 @@ export const foundation = {
  */
 export const biggerPicture = [
   {
-    who: 'chi-chi' as const,
-    pose: 'wave',
     title: 'Stories, and the books they came from',
     body:
       'Chi Chi, Goosey and Vincey began as characters in a book, not as bottles. The Quack Pack is where the rest of their world gets written \u2014 more of the pond, more of the friends in it, and stories that actually go somewhere.',
   },
   {
-    who: 'goosey' as const,
-    pose: 'idle',
     title: 'Things for every day',
     body:
       'A name on the bottom of every bottle, because it should be your child\u2019s. Boxes that grow up with them, from about two to about six. And the unglamorous half of small children \u2014 bath wipes, a spray for the table \u2014 made a little easier.',
   },
   {
-    who: 'vincey' as const,
-    pose: 'idle',
     title: 'A world to be part of',
     body:
       'Past the products: places, moments and experiences where the three of them are real to a child rather than printed on something. That is the part we are still dreaming about \u2014 and the part we would most like the Duck Squad to help us shape.',

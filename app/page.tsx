@@ -7,7 +7,6 @@ import { Why } from '@/components/sections/Why'
 import { DuckStage } from '@/components/sections/DuckStage'
 import { Specs } from '@/components/sections/Specs'
 import { Store } from '@/components/sections/Store'
-import { ComingSoon } from '@/components/sections/ComingSoon'
 import { Story } from '@/components/sections/Story'
 import { Foundation } from '@/components/sections/Foundation'
 import { WhatsNext } from '@/components/sections/WhatsNext'
@@ -42,11 +41,10 @@ import { WaveEdge } from '@/components/ui/WaveEdge'
  * reader meets the ducks, then the thing they can own, then the reasons — rather
  * than reading a spec sheet about a product they have not seen.
  *
- * Pre-launch now has THREE places, at the client's request: the hero chip, a
- * dedicated Coming Soon section directly after the range, and the waitlist at
- * the foot. Everywhere else the page still shows the product the way any brand
- * with stock on the shelf would — the anticipation is concentrated, not
- * sprinkled over every section.
+ * Pre-launch lives in the hero chip and the waitlist at the foot. The
+ * dedicated Coming Soon section that sat after the range has been removed at
+ * the client's request; the "not yet, and the Squad hears first" message is
+ * still carried by the hero badge and by the Duck Squad itself.
  */
 export default function HomePage() {
   return (
@@ -61,10 +59,6 @@ export default function HomePage() {
       <Why />
       <DuckStage />
       <Store />
-      {/* Straight after the range: the moment someone wants a bottle is the
-          moment they need to know they cannot have one yet, and why that is
-          good news rather than bad. */}
-      <ComingSoon />
       <Specs />
       <WaveEdge above="var(--sky-soft)" fill="var(--cream)" />
       <Story />

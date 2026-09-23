@@ -1,34 +1,16 @@
 import { Motif, type MotifName } from '@/components/Motif'
-import { asset, fallbackSrc } from '@/lib/assets'
 import styles from './Marquee.module.css'
 
-/** Three marks, all the client's own artwork, two of them as SVG.
+/** Three marks, all the brand's own, all inline SVG on `currentColor`.
  *
- *  The long three-line wave is gone: as a 2.3:1 image it read as a stripe
- *  across the band rather than as a mark, which the client asked to remove.
- *  Its replacement is the compact wave SVG they supplied — the same three
- *  crests inside a square box — alongside their splash SVG. Both are inline and
- *  take `currentColor`, so they sit in ink on the yellow band and would follow
- *  the ink anywhere else.
- *
- *  The footprints stay as an image: that one is a photograph-like PNG with no
- *  single-colour vector to take its place, and it reads correctly at this size.
- *  Mixing the two is fine because both are sized by HEIGHT, so a square SVG and
- *  a 1.15:1 photo line up on the same optical baseline.
+ *  The footprints were a raster here until now, and mixing the two is what made
+ *  the row look inconsistent: the PNG is painted brand navy #294F96 while the
+ *  splash and wave take --ink #10264A, so one mark of the three read visibly
+ *  bluer — and its box was 41.6px against their 36.4, because a raster of a
+ *  different aspect cannot share their square. On one colour contract and one
+ *  square, all three now match on both ribbons.
  */
-const FOOTPRINTS = (() => {
-  const a = asset('mark-footprints')
-  const w = a.widths[a.widths.length - 1]
-  return { src: fallbackSrc('mark-footprints'), w, h: Math.round(w / a.aspect) }
-})()
-
-type Mark = { motif: MotifName } | { img: typeof FOOTPRINTS }
-
-const MARKS: Mark[] = [
-  { motif: 'splash' },
-  { img: FOOTPRINTS },
-  { motif: 'waves' },
-]
+const MARKS: MotifName[] = ['splash', 'footprints', 'waves']
 
 interface Props {
   items: string[]
@@ -71,15 +53,7 @@ export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = '
       {loop.map((t, i) => (
         <span className={styles.item} key={`${t}-${i}`}>
           {t}
-          {(() => {
-            const m = MARKS[i % MARKS.length]
-            return 'img' in m ? (
-              <img src={m.img.src} width={m.img.w} height={m.img.h} alt="" aria-hidden="true"
-                   className={styles.mark} loading="lazy" decoding="async" />
-            ) : (
-              <Motif name={m.motif} className={styles.mark} />
-            )
-          })()}
+          <Motif name={MARKS[i % MARKS.length]} className={styles.mark} />
         </span>
       ))}
     </span>

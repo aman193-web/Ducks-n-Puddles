@@ -67,17 +67,20 @@ export function Motif({ name, size = 24, className }: { name: MotifName; size?: 
   }
 
   if (name === 'footprints') {
-    // A pair mid-stride, as the brand book prints them: one foot set back and
-    // turned out, the other forward. Both are the same path as `footprint`, so
-    // the single decal and the pair can never drift apart.
+    // The brand's own footprint pair, from media/brand/icons/footprints-navy —
+    // one path, on currentColor.
+    //
+    // It used to be the raster in the ribbon, and that was the whole problem:
+    // the PNG is painted in brand navy #294F96 while the splash and wave beside
+    // it are SVG on --ink #10264A, so one mark read visibly bluer than the other
+    // two. It was the wrong SIZE too — a 41.6px box against their 36.4 — because
+    // a raster of a different aspect cannot share their square.
+    //
+    // The polygonal tracing that made this unusable at 1em before is not
+    // visible here: 91 units across a 36px box puts the vertices 0.4px apart.
     return (
-      <svg {...common}>
-        <g transform="translate(0.4 0.2) scale(0.6) rotate(-12 12 12)">
-          <path d={FOOT_WEB} /><path d={FOOT_SPUR} />
-        </g>
-        <g transform="translate(9.4 8.6) scale(0.6) rotate(26 12 12)">
-          <path d={FOOT_WEB} /><path d={FOOT_SPUR} />
-        </g>
+      <svg {...common} viewBox="0 0 91 80">
+        <path fillRule="evenodd" clipRule="evenodd" d="M 52 34 L 52 38 L 50 41 L 50 43 L 48 47 L 48 50 L 47 51 L 47 55 L 46 56 L 46 60 L 45 61 L 46 66 L 50 70 L 58 70 L 59 69 L 62 69 L 63 68 L 65 68 L 66 67 L 68 67 L 69 66 L 74 65 L 82 61 L 80 59 L 79 60 L 75 60 L 74 59 L 68 59 L 66 57 L 72 45 L 74 43 L 74 41 L 73 40 L 72 40 L 69 43 L 66 44 L 58 50 L 56 48 L 56 44 L 55 43 L 55 40 L 54 39 L 54 37 L 55 36 L 54 34 Z M 31 9 L 29 9 L 28 10 L 28 12 L 26 14 L 24 18 L 24 20 L 21 25 L 20 25 L 11 16 L 10 14 L 8 15 L 10 19 L 10 23 L 11 24 L 11 27 L 12 28 L 12 30 L 13 31 L 14 36 L 16 39 L 16 41 L 18 43 L 18 44 L 22 46 L 27 46 L 29 45 L 41 32 L 41 31 L 43 29 L 45 25 L 47 24 L 47 22 L 46 21 L 44 22 L 43 24 L 41 24 L 33 28 L 31 26 Z" />
       </svg>
     )
   }

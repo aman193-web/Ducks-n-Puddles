@@ -1,6 +1,6 @@
+import { BookOpenText, Package, UsersThree } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
-import { Duck } from '@/components/ui/Duck'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { biggerPicture } from '@/content/brand'
 import styles from './WhatsNext.module.css'
@@ -8,26 +8,22 @@ import styles from './WhatsNext.module.css'
 /**
  * THE BIGGER PICTURE — "the bottles are just the beginning".
  *
- * Rebuilt against the client's actual words, having first built the wrong
- * thing. Their brief:
+ * The client's brief for this section is to plant the idea that the ducks will
+ * live through products, stories, books and experiences — a whole world rather
+ * than a range. That argument is in the copy and it has not changed.
  *
- *   "We'd love to start planting the idea that 'The bottles are just the
- *    beginning.' Eventually, the ducks will live through different products,
- *    stories, books, experiences and a much larger Ducks 'n Puddles world.
- *    Incorporating the illustrated characters into the website now will help
- *    establish that bigger vision from the beginning."
+ * What changed is the shape. Each direction had a full-size illustrated
+ * character beside it in an alternating two-column row, and three of those ran
+ * to most of a screen each: the section was the tallest on the page for the
+ * least content. It is a three-across grid now, one icon per column, matching
+ * the details section so the two read as the same kind of list.
  *
- * What was here was a five-row product roadmap, each row a card with an icon in
- * a disc. Every word of it was true and the whole thing still missed the point:
- * a list of future SKUs argues that there will be more to BUY. The client is
- * arguing that there will be more to KNOW — that these are characters with a
- * world, and the bottle is only the door into it. They even say how to show it:
- * put the illustrated characters in.
- *
- * So the rows are the characters now, at size, one per direction, alternating
- * sides so it reads as a story rather than as a table. No icons anywhere in the
- * section — the character IS the mark.
+ * The icons are Phosphor at the same 44px in the same soft ink well Specs uses.
+ * The characters have not gone from the site — they carry the Meet the Ducks
+ * panels, the range cards and the footer, all of which have room for them.
  */
+const ICONS = [BookOpenText, Package, UsersThree]
+
 export function WhatsNext() {
   return (
     <section className={styles.section} id="next" aria-labelledby="next-title">
@@ -45,29 +41,20 @@ export function WhatsNext() {
           </p>
         </div>
 
-        <div className={styles.rows}>
-          {biggerPicture.map((row, i) => (
-            <article key={row.title} className={styles.row} data-anim="" data-anim-y="40">
-              <div className={styles.art}>
-                <Duck
-                  who={row.who}
-                  pose={row.pose}
-                  density="always"
-                  float
-                  /* Alternate which way they face so each one looks INTO its own
-                     column of text rather than away from it. */
-                  flip={i % 2 === 1}
-                  className={styles.duck}
-                  sizes="(min-width: 900px) 26vw, 56vw"
-                />
-              </div>
-              <div className={styles.text}>
+        <ul className={styles.grid}>
+          {biggerPicture.map((row, i) => {
+            const Icon = ICONS[i] ?? BookOpenText
+            return (
+              <li key={row.title} className={styles.card} data-anim="" data-anim-y="30">
+                <span className={styles.icon} aria-hidden="true">
+                  <Icon size={44} weight="regular" />
+                </span>
                 <h3 className={styles.title}>{row.title}</h3>
                 <p className={styles.body}>{row.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+              </li>
+            )
+          })}
+        </ul>
 
         <div className={styles.cta}>
           <Btn href="/#squad" colour="var(--sun-soft)">Be first to know</Btn>

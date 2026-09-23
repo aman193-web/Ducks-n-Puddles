@@ -36,7 +36,8 @@
   /* Halved from clamp(1.625rem, 3.9vw, 3.75rem). Together with sentence case and
      weight 500, this is the "lighter, less in-your-face" the client asked for —
      the band is still a band, it just stops shouting. */
-  font-size: clamp(1.125rem, 2.2vw, 1.875rem);
+  /* 34px at desktop, up from 30 — the client asked for a little more. */
+  font-size: clamp(1.25rem, 2.5vw, 2.125rem);
   line-height: 1;
   color: var(--ink);
   white-space: nowrap;
