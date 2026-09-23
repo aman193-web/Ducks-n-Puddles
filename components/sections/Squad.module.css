@@ -115,5 +115,7 @@
 .success { display: grid; gap: var(--s-4); justify-items: center; text-align: center; }
 
 
-/* Goosey cheering, in place of the puddle face, on form success. */
-.success_duck { inline-size: min(56%, 200px); margin-inline: auto; }
+/* The puddle face on form success. 180px, as it was before a duck render
+   briefly took its place — big enough for the eye-tracking to read as looking
+   at you rather than as a twitch. */
+.success_face { inline-size: min(56%, 180px); margin-inline: auto; }

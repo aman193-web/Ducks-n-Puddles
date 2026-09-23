@@ -6,7 +6,6 @@ import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
 import { PuddleFace } from '@/components/ui/PuddleFace'
-import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
 import { DUCKS } from '@/lib/subscribe-schema'
 import { BrandDetail } from '@/components/ui/BrandDetail'
@@ -131,11 +130,14 @@ export function Squad() {
         <div className={styles.panel}>
         {state === 'done' ? (
           <div className={styles.success} role="status" aria-live="polite">
-            {/* Goosey cheering, because the moment someone joins the squad is
-                exactly "there's always room for one more friend". */}
-            <Duck who="goosey" pose="cheer" density="always"
-                  className={styles.success_duck} float
-                  sizes="180px" />
+            {/* The puddle face, back in place of the Goosey render. Its eyes
+                follow the cursor, so the panel that confirms you joined is the
+                one thing on the page that looks back — which a still image of a
+                duck cannot do. It rests centred on touch and under reduced
+                motion, where the face still reads. */}
+            <div className={styles.success_face}>
+              <PuddleFace colour="var(--sun)" />
+            </div>
             <h3 className="d d-lg">You&rsquo;re in.</h3>
             <p className="hand">Check your inbox to confirm &mdash; we only count you once you do.</p>
             <p className={styles.note}>Nothing there in a few minutes? Have a look in Promotions.</p>
