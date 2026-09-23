@@ -73,7 +73,7 @@ export function Store() {
                   style={{ ['--peek-aspect' as string]:
                     String(asset(`${assetFor(d.slug)}-peeking`).aspect) } as React.CSSProperties}
                 >
-                  <Duck who={d.slug} pose="peeking" density="always"
+                  <Duck who={d.slug} pose="peeking" density="always" speak
                         sizes="(min-width: 820px) 8vw, 22vw" />
                 </span>
                 <Picture id={assetFor(d.slug)} sizes="(min-width: 820px) 20vw, 55vw"

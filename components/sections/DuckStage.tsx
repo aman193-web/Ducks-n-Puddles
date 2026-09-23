@@ -82,7 +82,7 @@ export function DuckStage() {
               <div className={styles.figure}>
                 <span className={styles.puddle} aria-hidden="true" />
                 <Duck
-                  who={d.slug} pose="idle" density="always" float
+                  who={d.slug} pose="idle" density="always" float speak
                   className={styles.character}
                   sizes="(min-width: 880px) 26vw, 56vw"
                   alt={d.name}

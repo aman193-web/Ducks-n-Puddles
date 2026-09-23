@@ -87,15 +87,17 @@
   .grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(var(--s-6), 3.4vw, var(--s-8)); }
 }
 
-/* Chi Chi splashing at the foot of the photograph — the client's "bring the
+/* The three of them at the foot of the photograph — the client's "bring the
    product and character worlds together", and the one place on this page where
-   a character sits beside the real family. */
+   the characters sit beside the real family. Wider than the single duck it
+   replaced, because it is now three abreast: at the old 168px cap each one was
+   about 50px across. */
 .cameo {
   position: absolute;
   z-index: 3;
-  inline-size: clamp(96px, 13vw, 168px);
-  inset-block-end: -6%;
-  inset-inline-start: -5%;
+  inline-size: clamp(190px, 25vw, 320px);
+  inset-block-end: -8%;
+  inset-inline-start: -7%;
 }
 
 /* On a phone the photo stacks ABOVE the copy, so its min-height is pure scroll

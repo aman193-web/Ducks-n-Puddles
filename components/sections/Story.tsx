@@ -37,9 +37,10 @@ export function Story() {
           <figure className={styles.figure} data-anim="" data-anim-rot="-2">
             <Picture id="shell-hands" sizes="(min-width: 900px) 46vw, 92vw"
                      className={styles.photo} />
-            {/* Chi Chi, already in the puddle, beside the real family. */}
-            <Duck who="chi-chi" pose="splash" className={styles.cameo} float
-                  sizes="(min-width: 900px) 13vw, 26vw" />
+            {/* All three, beside the real family — it is a story about the three
+                of them, so one of them standing in for the set undersold it. */}
+            <Duck who="trio" pose="walk" className={styles.cameo} float speak
+                  sizes="(min-width: 900px) 24vw, 46vw" />
           </figure>
 
           <div className={styles.body}>

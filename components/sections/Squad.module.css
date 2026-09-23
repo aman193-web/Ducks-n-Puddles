@@ -55,12 +55,18 @@
 .artDuck {
   position: absolute;
   z-index: 2;
-  inset-block-end: -6%;
-  inset-inline-end: -14%;
-  inline-size: min(40%, 180px);
+  inset-block-end: -8%;
+  /* Further out and larger than the single duck it replaced — three abreast at
+     the old 180px cap would have been 60px each. The offset is also what keeps
+     the group from lining up with the three bottles behind it; see the note in
+     Squad.tsx for why that matters. At -22% the ducks covered the third bottle
+     almost entirely — the bottles are the product, so the group sits further
+     out than the offset alone needs. */
+  inset-inline-end: -34%;
+  inline-size: min(58%, 272px);
 }
 @media (max-width: 899px) {
-  .artDuck { inline-size: min(34%, 140px); inset-inline-end: -4%; }
+  .artDuck { inline-size: min(56%, 220px); inset-inline-end: -10%; }
 }
 .sub { max-width: 42ch; }
 

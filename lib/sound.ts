@@ -12,6 +12,18 @@
  * Instead: a persistent toggle, default OFF. Once a visitor turns it on, EVERY duck
  * on the site can talk. That turns one blocked sound into a talking website — and it
  * is measurable, which autoplay is not.
+ *
+ * CLICKING A DUCK is a separate path — `quack()` rather than `play()`.
+ * Sound that a visitor asks for by clicking a thing is not autoplay: none of the
+ * three reasons above applies to it, and WCAG 1.4.2 governs audio that starts on
+ * its own, not audio a click starts. So a click plays unless the visitor has
+ * EXPLICITLY silenced the site.
+ *
+ * That distinction needs three states, not two, which is why `isMuted()` reads
+ * localStorage directly instead of consulting `enabled`: absent (never chosen,
+ * so a click may speak), 'on' (everything speaks), 'off' (silence, including
+ * clicks). Collapsing absent and 'off' would make every duck on a first visit
+ * dead to the touch.
  */
 const KEY = 'dnp.sound'
 const SRC = '/media/audio/quack.mp3'
@@ -28,6 +40,7 @@ const listeners = new Set<Listener>()
 let enabled = false
 let el: HTMLAudioElement | null = null
 let remaining = 0
+let sequenceActive = false
 let gapTimer: number | undefined
 
 export function initSound() {
@@ -37,6 +50,12 @@ export function initSound() {
 }
 
 export function isSoundOn() { return enabled }
+
+/** Explicitly silenced, as opposed to merely never switched on. */
+export function isMuted() {
+  if (typeof window === 'undefined') return true
+  try { return window.localStorage.getItem(KEY) === 'off' } catch { return false }
+}
 
 export function setSound(on: boolean) {
   enabled = on
@@ -64,10 +83,13 @@ function element() {
   el.preload = 'none'
   el.volume = 0.55
   el.addEventListener('ended', () => {
-    if (remaining <= 0) return
+    /* `sequenceActive`, not `enabled`: a click-driven quack runs with the
+       toggle still off, and gating the second half on `enabled` would clip
+       every one of them to a single quack. */
+    if (remaining <= 0 || !sequenceActive) return
     remaining -= 1
     gapTimer = window.setTimeout(() => {
-      if (!el || !enabled) return
+      if (!el || !sequenceActive) return
       el.currentTime = 0
       void el.play().catch(() => {})
     }, GAP_MS)
@@ -75,21 +97,35 @@ function element() {
   return el
 }
 
+async function begin() {
+  const a = element()
+  window.clearTimeout(gapTimer)
+  remaining = QUACKS - 1 // the call below is the first of the pair
+  sequenceActive = true
+  a.currentTime = 0
+  await a.play()
+}
+
 /** Only fetched after opt-in — the file is never on the critical path. */
 export async function play() {
   if (!enabled) return
-  try {
-    const a = element()
-    window.clearTimeout(gapTimer)
-    remaining = QUACKS - 1 // the call below is the first of the pair
-    a.currentTime = 0
-    await a.play()
-  } catch { /* autoplay policy or decode failure — silent by design */ }
+  try { await begin() } catch { /* autoplay policy or decode failure — silent by design */ }
+}
+
+/**
+ * A duck was clicked. Plays unless the visitor has explicitly silenced the site;
+ * the click is itself the gesture that satisfies the autoplay policy, so this
+ * does not need the toggle to have been turned on first.
+ */
+export async function quack() {
+  if (isMuted()) return
+  try { await begin() } catch { /* blocked or undecodable — silent by design */ }
 }
 
 /** Stops mid-pair — used when the toggle is switched off. */
 export function stop() {
   remaining = 0
+  sequenceActive = false
   window.clearTimeout(gapTimer)
   if (el) { el.pause(); el.currentTime = 0 }
 }

@@ -119,17 +119,19 @@ export function Squad() {
           </ul>
           {/* the payoff, and the thing that was leaving this column half empty
               next to a form four times its height */}
-          {/* Goosey alone, greeting you beside the bottles — NOT the trio.
-              trio-walk runs Chi Chi, Goosey, Vincey left to right while the
-              bottle render runs Vincey, Chi Chi, Goosey, so overlaying them put
-              the pink duck in front of the blue VINCEY bottle and quietly
-              contradicted the "their Vincey" pairing the range cards make
-              properly. One character implies no mapping, and Goosey is the
-              right one to open a door with. */}
+          {/* All three now, at the client's request.
+              The reason it was Goosey alone before still stands and is handled
+              by placement rather than by dropping back to one: trio-walk runs
+              Chi Chi, Goosey, Vincey left to right while the bottle render runs
+              Vincey, Chi Chi, Goosey. Lined up one-to-one that would put the
+              pink duck in front of the blue VINCEY bottle and contradict the
+              "their Vincey" pairing the range cards make properly. So the group
+              sits BESIDE the bottles at its own scale, offset and overlapping —
+              read as a separate group, not as labels for the three behind. */}
           <div className={styles.art} aria-hidden="true">
             <Picture id="trio" sizes="(min-width: 900px) 42vw, 78vw" alt="" data-bob="" />
-            <Duck who="goosey" pose="wave" density="always" float
-                  className={styles.artDuck} sizes="(min-width: 900px) 14vw, 26vw" />
+            <Duck who="trio" pose="walk" density="always" float speak
+                  className={styles.artDuck} sizes="(min-width: 900px) 30vw, 50vw" />
           </div>
 
           <p className={styles.note}>

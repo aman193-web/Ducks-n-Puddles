@@ -10,7 +10,9 @@ import styles from './Marquee.module.css'
  *  different aspect cannot share their square. On one colour contract and one
  *  square, all three now match on both ribbons.
  */
-const MARKS: MotifName[] = ['splash', 'footprints', 'waves']
+/* The splash is out — the client's call: as a filled starburst it read as a
+   blot beside two open, linear marks rather than as one of a set. */
+const MARKS: MotifName[] = ['footprints', 'waves']
 
 interface Props {
   items: string[]

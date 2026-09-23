@@ -1,0 +1,31 @@
+/* The button is only a hit area — it must not draw anything, or every character
+   on the site would gain a box. It takes its position and size from the class
+   the section passes in, exactly as the bare <Duck> did. */
+.quacker {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  /* The duck inside is pointer-events: none, so this is what gets the click. */
+  pointer-events: auto;
+  /* GSAP and the section stylesheets drive `translate` / `rotate` on cameos;
+     nothing here may claim a transform channel. */
+  -webkit-tap-highlight-color: transparent;
+}
+.quacker:focus-visible {
+  outline: var(--bw-lg) solid var(--ink);
+  outline-offset: 4px;
+  border-radius: var(--r-sm);
+}
+/* A small press, so a click feels answered even with the sound silenced. */
+@media (prefers-reduced-motion: no-preference) {
+  .quacker { transition: scale var(--t-fast) var(--bounce); }
+  .quacker:active { scale: 0.94; }
+}
+
+/* The same rule <Duck> applies to itself, so a clickable cameo disappears on a
+   phone exactly as a plain one does — and takes its tab stop with it. */
+@media (max-width: 899px) {
+  .quacker[data-density='desktop'] { display: none; }
+}
