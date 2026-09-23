@@ -3,6 +3,7 @@ import { Btn } from '@/components/ui/Btn'
 import { Duck } from '@/components/ui/Duck'
 import { BookOpenText, Sparkle, Package, Drop, Confetti } from '@phosphor-icons/react/dist/ssr'
 import { roadmap } from '@/content/brand'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import styles from './WhatsNext.module.css'
 
 /** One icon and one field tint per row, so the five read as a set of different
@@ -46,6 +47,7 @@ export function WhatsNext() {
 
   return (
     <section className={styles.section} id="next" aria-labelledby="next-title">
+      <BrandDetail preset="paddle" />
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--sky-soft)" rot={-2} data-pop="" data-pop-rot="-2">The bigger picture</Sticker>

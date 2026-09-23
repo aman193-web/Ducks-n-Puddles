@@ -21,14 +21,37 @@
 }
 
 .mark {
-  position: absolute;
-  display: block;
   /* Scales with the viewport so a 46px mark on a 1440 page is not the same
      46px on a 1024 one, where the margins are much tighter. */
-  inline-size: clamp(calc(var(--m-size) * .62), calc(var(--m-size) * 0.055vw + var(--m-size) * .55), var(--m-size));
-  inset-inline-start: var(--m-x);
+  /* NOTE the middle term. It used to multiply --m-size (a px) BY 0.055vw
+     (another length), which is invalid in calc — multiplication needs a plain
+     number on one side. The whole clamp was therefore invalid and inline-size
+     silently fell back to auto. That was harmless while the value only sized
+     the mark; the moment the same value is also used to POSITION one it takes
+     the position down with it and every mark stacks at x=0. A unitless vw
+     term is the valid form. */
+  --w: clamp(calc(var(--m-size) * .62), calc(var(--m-size) * .55 + 1.2vw), var(--m-size));
+  /* Distance from the viewport edge to the CONTENT COLUMN — the same sum
+     .wrap does. A mark inside this lands on the copy. */
+  --edge: max(var(--gutter), (100vw - var(--max)) / 2);
+
+  position: absolute;
+  display: block;
+  inline-size: var(--w);
   inset-block-start: var(--m-y);
   translate: -50% -50%;
+}
+
+/* The x% positions the mark, but it can never cross into the text column: each
+   side clamps to the margin it lives in. Without this the marks are placed as a
+   PERCENTAGE of the section while the column is a fixed 1280px cap, so they
+   drift inward as the viewport narrows and start landing on paragraphs —
+   measured at 1200px, five of them did. 6px of air past the column edge. */
+.mark[data-side='l'] {
+  inset-inline-start: min(var(--m-x), calc(var(--edge) - var(--w) / 2 - 6px));
+}
+.mark[data-side='r'] {
+  inset-inline-start: max(var(--m-x), calc(100% - var(--edge) + var(--w) / 2 + 6px));
 }
 .mark svg { inline-size: 100%; block-size: auto; }
 

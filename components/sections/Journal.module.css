@@ -92,3 +92,7 @@
   }
   .card { flex: 0 0 auto; inline-size: min(76vw, 290px); scroll-snap-align: start; }
 }
+
+/* The link to the full journal. Centred under the three cards — the grid is the
+   content and this is a footnote to it, not a third column. */
+.more_all { display: flex; justify-content: center; margin-block-start: var(--flow-block); }

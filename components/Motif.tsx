@@ -14,9 +14,21 @@
  * rasterised PDF and are jagged polylines (the splash alone is 13KB of line
  * segments), which reads as crude at the 1em these are used at.
  */
-export type MotifName = 'droplets' | 'flower' | 'footprint' | 'splash' | 'wave' | 'duck'
+export type MotifName =
+  | 'droplets' | 'flower' | 'footprint' | 'splash' | 'wave' | 'duck'
+  /* The two the client sent artwork for. `footprints` is the WALKING PAIR from
+     media/brand/icons/footprints-*.png and `waves` the three-line mini-wave from
+     mini-wave-*.png — the shapes the brand book actually uses. The singular
+     `footprint` and `wave` stay: the first is the decal printed on Goosey's
+     bottle, the second is the single crest lib/wave.ts draws at full size. */
+  | 'footprints' | 'waves'
 
 const teardrop = 'M12 2c0 0 7 7.6 7 12a7 7 0 0 1-14 0c0-4.4 7-12 7-12Z'
+
+/* One webbed foot, in two pieces, so the single print and the pair are the same
+   drawing rather than two that drift apart. */
+const FOOT_WEB = 'M11.6 3.1c.5-.5 1.4-.3 1.6.4l1.5 5.2 4.6-2.5c.7-.4 1.4.3 1.1 1l-2.4 5.1 4.1.5c.8.1 1 1.1.3 1.5l-8.1 4.3a2 2 0 0 1-2.7-.8L8.2 11c-.4-.8.2-1.7 1-1.6l3.4.4-1.3-5.5a1 1 0 0 1 .3-1.2Z'
+const FOOT_SPUR = 'M6.7 15.6c1.5-.7 3 .1 3.4 1.5.4 1.5-.5 3-2 3.4-1.6.4-3-.5-3.3-2-.3-1.3.4-2.4 1.9-2.9Z'
 
 export function Motif({ name, size = 24, className }: { name: MotifName; size?: number; className?: string }) {
   const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'currentColor',
@@ -53,6 +65,37 @@ export function Motif({ name, size = 24, className }: { name: MotifName; size?: 
         <ellipse cx="4.4" cy="10.6" rx="2" ry="2.3" transform="rotate(-20 4.4 10.6)" />
         <ellipse cx="19.6" cy="10.6" rx="2" ry="2.3" transform="rotate(20 19.6 10.6)" />
         <path d="M2.2 18.6c0-1.6 4.4-2.9 9.8-2.9s9.8 1.3 9.8 2.9-4.4 2.9-9.8 2.9-9.8-1.3-9.8-2.9Zm3.4 0c0 .7 2.9 1.3 6.4 1.3s6.4-.6 6.4-1.3-2.9-1.3-6.4-1.3-6.4.6-6.4 1.3Z" />
+      </svg>
+    )
+  }
+
+  if (name === 'footprints') {
+    // A pair mid-stride, as the brand book prints them: one foot set back and
+    // turned out, the other forward. Both are the same path as `footprint`, so
+    // the single decal and the pair can never drift apart.
+    return (
+      <svg {...common}>
+        <g transform="translate(0.4 0.2) scale(0.6) rotate(-12 12 12)">
+          <path d={FOOT_WEB} /><path d={FOOT_SPUR} />
+        </g>
+        <g transform="translate(9.4 8.6) scale(0.6) rotate(26 12 12)">
+          <path d={FOOT_WEB} /><path d={FOOT_SPUR} />
+        </g>
+      </svg>
+    )
+  }
+
+  if (name === 'waves') {
+    // The mini-wave: three stacked crests with rounded caps. Stroked, not
+    // filled — the brand draws it as three lines of even weight, which a filled
+    // path cannot hold at 1em.
+    const crest = 'q3.1-2.2 6.2 0t6.2 0t6.2 0'
+    return (
+      <svg {...common} fill="none" stroke="currentColor"
+           strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d={`M2.4 6.2${crest}`} />
+        <path d={`M2.4 12${crest}`} />
+        <path d={`M2.4 17.8${crest}`} />
       </svg>
     )
   }

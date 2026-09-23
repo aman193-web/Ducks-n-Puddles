@@ -2,6 +2,7 @@ import { Btn } from '@/components/ui/Btn'
 import { Duck } from '@/components/ui/Duck'
 import { Motif } from '@/components/Motif'
 import { foundation } from '@/content/brand'
+import { Ripple } from '@/components/ui/Ripple'
 import styles from './Foundation.module.css'
 
 /**
@@ -68,6 +69,12 @@ export function Foundation() {
             argument, so it carries a real alt and renders on a phone too. */}
         <div className={styles.art}>
           <span className={styles.blob} aria-hidden="true" />
+          {/* "a puddle rippling" — the client's own example of the kind of
+              animation they wanted, and this is the one literal puddle on the
+              page: the three of them are standing IN it. Rings expand from where
+              they stand, under the characters and over the blob. Off entirely
+              under prefers-reduced-motion (see Ripple). */}
+          <Ripple className={styles.ripple} />
           <Duck
             who="trio" pose="puddle"
             density="always"

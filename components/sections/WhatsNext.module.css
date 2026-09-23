@@ -1,6 +1,6 @@
 .section {
   background: var(--cream); padding-block: var(--section-y);
-  position: relative; z-index: 2;
+  position: relative; z-index: 2; overflow: clip;
   margin-block-start: calc(var(--section-y) * -0.36);
   border-start-start-radius: var(--r-lg); border-start-end-radius: var(--r-lg);
 }

@@ -15,11 +15,31 @@ interface Mark {
  *  five magic numbers. Each is tuned to sit in a section's margins, clear of
  *  the text column. */
 const PRESETS: Record<string, Mark[]> = {
-  /* Footprints walking in from the edge — used where a character has just left. */
+  /* Footprints walking in from the edge — used where a character has just left.
+     Singles, deliberately: a trail of PAIRS would read as three ducks standing
+     still rather than as one duck walking. */
   trail: [
     { name: 'footprint', size: 30, x: 3, y: 74, rot: -16 },
     { name: 'footprint', size: 26, x: 8, y: 83, rot: 6 },
     { name: 'footprint', size: 22, x: 13, y: 91, rot: -8 },
+  ],
+  /* Quiet water. The three-line mini-wave in both margins — the lightest of the
+     presets, for a section whose copy already fills the middle. */
+  shallows: [
+    { name: 'waves', size: 54, x: 4, y: 24, rot: -4 },
+    { name: 'waves', size: 38, x: 94, y: 70, rot: 5 },
+  ],
+  /* A pair of prints and a crest: someone stopped here. */
+  paddle: [
+    { name: 'footprints', size: 52, x: 94, y: 18, rot: 12 },
+    { name: 'waves', size: 44, x: 5, y: 78, rot: -6 },
+    { name: 'droplets', size: 26, x: 8, y: 16, rot: 12 },
+  ],
+  /* Arriving: prints in, water up. For the section that asks someone to join. */
+  splashdown: [
+    { name: 'footprints', size: 46, x: 4, y: 16, rot: -10 },
+    { name: 'splash', size: 40, x: 95, y: 30, rot: 6 },
+    { name: 'waves', size: 50, x: 92, y: 84, rot: -3 },
   ],
   /* Droplets thrown across the upper corners. */
   droplets: [
@@ -29,15 +49,22 @@ const PRESETS: Record<string, Mark[]> = {
   ],
   /* The brand crest, repeated small along the bottom. */
   crests: [
-    { name: 'wave', size: 52, x: 7, y: 88, rot: 0 },
-    { name: 'wave', size: 40, x: 90, y: 82, rot: 0 },
+    { name: 'waves', size: 52, x: 7, y: 88, rot: 0 },
+    { name: 'waves', size: 40, x: 90, y: 82, rot: 0 },
   ],
   /* A duck silhouette and a splash — for a section a character has swum past. */
   wake: [
     { name: 'duck', size: 44, x: 96, y: 70, rot: 8 },
-    { name: 'splash', size: 30, x: 90, y: 80, rot: -12 },
-    /* was x:4 y:64, which landed on a reel caption */
-    { name: 'droplets', size: 24, x: 3, y: 40, rot: 10 },
+    /* y:24, up beside the section HEAD. Lower down it sits alongside the reels
+       rail, and that rail is full-bleed and scrolls horizontally — its captions
+       run to x=1596 on a 1440 screen, well past both .wrap and the viewport, so
+       the "stay outside the text column" clamp has nothing to clamp to there.
+       The head obeys .wrap, so the margin beside it is genuinely free. */
+    { name: 'splash', size: 30, x: 90, y: 24, rot: -12 },
+    /* No left-hand mark here. This preset's host is the reels rail, which is
+       full-bleed — it has no left margin for a mark to sit in, so one placed
+       there lands on a caption whatever y it is given (tried y:64, then y:40;
+       both hit). Two marks on the side that does have room. */
   ],
 }
 
@@ -78,6 +105,8 @@ export function BrandDetail({ preset, opacity, className }: Props) {
         <span
           key={`${m.name}-${i}`}
           className={styles.mark}
+          /* which margin this mark lives in; the CSS clamps it to that side */
+          data-side={m.x < 50 ? 'l' : 'r'}
           style={{
             ['--m-size' as string]: `${m.size}px`,
             ['--m-x' as string]: `${m.x}%`,

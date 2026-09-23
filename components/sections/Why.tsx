@@ -3,6 +3,7 @@ import { Btn } from '@/components/ui/Btn'
 import { Motif } from '@/components/Motif'
 import { Duck } from '@/components/ui/Duck'
 import { brand } from '@/content/brand'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import styles from './Why.module.css'
 
 /**
@@ -53,6 +54,7 @@ const SIDES = [
 export function Why() {
   return (
     <section className={styles.section} id="why" aria-labelledby="why-title">
+      <BrandDetail preset="shallows" />
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--goosey-soft)" rot={-2} data-pop="" data-pop-rot="-2">

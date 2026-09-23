@@ -16,6 +16,17 @@ import styles from './Story.module.css'
  * asking: the nickname explanation (the ducks are characters now, not labels for
  * the founders' children), the child's name in the pull quote, and the "spilled
  * water" framing. It closes on the official tagline, which is how they wrote it.
+ *
+ * The tagline line was cut for a while on the argument that it appears three
+ * times on one page (hero h1, ribbon, here). The client asked for it back: it is
+ * the last line of the copy they wrote, and a story that ends on its own tagline
+ * is not a repetition, it is a sign-off. It is back, and it stays.
+ *
+ * The <strong>s are the client's emphasis, also asked for by name ("the boldness
+ * of some text in our story is missing"). They fall on the people and the
+ * promise — the founders, the three characters, and what comes after the
+ * bottles — so the block has somewhere for an eye to land instead of reading as
+ * four even paragraphs of grey.
  */
 export function Story() {
   return (
@@ -36,28 +47,30 @@ export function Story() {
             <h2 id="story-title" className={`d ${styles.title}`} data-anim="">
               It started with our family.
             </h2>
-            <p data-anim="">
-              Hi, we&rsquo;re Larisa and Vinny &mdash; husband and wife, parents, and the
-              founders of Ducks &rsquo;n Puddles.
+            <p className={styles.lead} data-anim="">
+              Hi, we&rsquo;re <strong>Larisa and Vinny</strong> &mdash; husband and wife,
+              parents, and the founders of Ducks &rsquo;n Puddles.
             </p>
             <p data-anim="">
               It began with a question: how could we make things that make life easier for
               parents, while helping little ones feel loved, safe and comforted?
             </p>
             <p data-anim="">
-              Inspired by our own family, we created Chi&nbsp;Chi, Goosey and Vincey &mdash;
-              three little friends with personalities of their own, each bringing a different
-              kind of comfort and companionship to a child&rsquo;s everyday adventures.
+              Inspired by our own family, we created <strong>Chi&nbsp;Chi, Goosey and
+              Vincey</strong> &mdash; three little friends with personalities of their own,
+              each bringing a different kind of comfort and companionship to a
+              child&rsquo;s everyday adventures.
             </p>
             <p data-anim="">
-              We&rsquo;re starting with our character water bottles, but the bottles are just
-              the beginning. Our dream is a world of thoughtful products, stories and
+              We&rsquo;re starting with our character water bottles, but <strong>the bottles
+              are just the beginning</strong>. Our dream is a world of thoughtful products, stories and
               experiences that bring more ease to parents and more comfort, connection and
               magic to childhood.
             </p>
-            {/* The "A friend for every adventure." pull quote is gone: it is the
-                hero's h1 AND the last line of the client's own copy above, and
-                three times on one page is once too many. */}
+            {/* The sign-off the client's copy ends on. */}
+            <p className={styles.tagline} data-anim="">
+              A Friend for Every Adventure.
+            </p>
             <div className={styles.close} data-anim="">
               <span className={styles.sig}>
                 <img src="/img/mascot-140.webp" width={42} height={47} alt="" className="wiggle" />

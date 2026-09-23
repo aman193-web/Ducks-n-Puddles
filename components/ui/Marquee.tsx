@@ -1,17 +1,19 @@
-import { Drop, PawPrint, Waves, Bird } from '@phosphor-icons/react/dist/ssr'
+import { Motif, type MotifName } from '@/components/Motif'
 import styles from './Marquee.module.css'
 
-/** The separator set, from Phosphor — the same library Specs, the FAQ, the
- *  Journal and the reels rail already draw from, so the site speaks one icon
- *  language instead of keeping a hand-drawn set alive for the ribbon alone.
+/** The brand's OWN marks, not a general-purpose icon set.
  *
- *  What the client asked to remove was the outlined COLOUR DISC around each
- *  glyph, not icons as such: they suggested "little splashes/puddles or another
- *  subtle brand element". These are drop, pawprint, waves and bird — water and
- *  ducks — drawn in ink with no disc, and cycled so the band never repeats one
- *  mark across its width. Filled weight, because at ~1em a hairline outline
- *  disappears against the tinted band. */
-const MARKS = [Drop, PawPrint, Waves, Bird] as const
+ *  These were Phosphor icons for one commit, and the client's artwork showed
+ *  why that was wrong: Phosphor's PawPrint is a cat's pad and its Bird is a
+ *  songbird, while Ducks 'n Puddles walks on a three-toed WEBBED foot and its
+ *  wave is three stacked crests. A generic icon of roughly the right subject is
+ *  still the wrong brand.
+ *
+ *  These four are the marks from media/brand/icons/ — footprints, mini-wave,
+ *  splash, duck — in ink, no disc, cycled so the band never repeats one mark
+ *  across its width. The DISC is what the client asked to remove; the marks
+ *  themselves were never the problem. */
+const MARKS: MotifName[] = ['footprints', 'waves', 'splash', 'duck']
 
 interface Props {
   items: string[]
@@ -51,10 +53,7 @@ export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = '
       {loop.map((t, i) => (
         <span className={styles.item} key={`${t}-${i}`}>
           {t}
-          {(() => {
-            const Mark = MARKS[i % MARKS.length]
-            return <Mark weight="fill" className={styles.mark} />
-          })()}
+          <Motif name={MARKS[i % MARKS.length]} className={styles.mark} />
         </span>
       ))}
     </span>

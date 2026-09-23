@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
+import { Btn } from '@/components/ui/Btn'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { posts, formatDate } from '@/content/journal'
 import styles from './Journal.module.css'
@@ -54,6 +55,12 @@ export function Journal() {
             </li>
           ))}
         </ul>
+
+        {/* Three of the posts are shown; /journal has all of them, and until now
+            nothing on the homepage said so. */}
+        <div className={styles.more_all} data-anim="">
+          <Btn href="/journal" colour="var(--sky-soft)">Read the journal</Btn>
+        </div>
       </div>
     </section>
   )

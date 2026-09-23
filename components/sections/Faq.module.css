@@ -1,4 +1,9 @@
-.section { background: var(--paper); padding-block: var(--section-y); }
+/* position + clip so <BrandDetail> has something to be absolute inside and
+   nothing it draws can widen the page. */
+.section {
+  background: var(--paper); padding-block: var(--section-y);
+  position: relative; overflow: clip;
+}
 
 .head {
   display: grid; justify-items: start;
@@ -64,3 +69,21 @@
 @media (prefers-reduced-motion: reduce) {
   .mark, .mark svg, .q { transition: none; }
 }
+
+/* ---- the next step ------------------------------------------------------
+   The client asked that no one reach the end of a section without knowing what
+   to do next. Sits on the list's own hairline so it reads as the last row of
+   the FAQ rather than as a banner bolted underneath it. */
+.next {
+  display: grid;
+  gap: var(--s-4);
+  align-items: center;
+  margin-block-start: var(--flow-block);
+  padding-block-start: var(--s-6);
+  border-block-start: var(--border);
+}
+@media (min-width: 720px) {
+  .next { grid-template-columns: minmax(0, 1fr) auto; }
+}
+.nextText { font-size: var(--fs-body); color: var(--ink); }
+.nextBtns { display: flex; flex-wrap: wrap; gap: var(--s-3); }

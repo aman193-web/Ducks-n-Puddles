@@ -150,6 +150,22 @@
   border-radius: 58% 42% 47% 53% / 44% 58% 42% 56%;
   rotate: -6deg;
 }
+/* Between the blob (z 0) and the characters (z 1), centred on the waterline
+   they stand on rather than on the blob's box — the blob is rotated -6deg and
+   its visual centre sits low. */
+.ripple {
+  position: absolute;
+  z-index: 0;
+  inset-block-end: 16%;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: min(62%, 360px);
+  aspect-ratio: 1 / .34;
+  color: var(--ink);
+  opacity: .22;
+  pointer-events: none;
+}
+
 .trio {
   position: relative;
   z-index: 1;

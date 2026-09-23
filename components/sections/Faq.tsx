@@ -1,6 +1,8 @@
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
+import { Btn } from '@/components/ui/Btn'
 import { faqs, brand } from '@/content/brand'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import styles from './Faq.module.css'
 
 /**
@@ -16,6 +18,7 @@ import styles from './Faq.module.css'
 export function Faq() {
   return (
     <section className={styles.section} id="faq" aria-labelledby="faq-title">
+      <BrandDetail preset="shallows" />
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Questions</Sticker>
@@ -37,6 +40,18 @@ export function Faq() {
               <div className={styles.a}><p>{f.a}</p></div>
             </details>
           ))}
+        </div>
+
+        {/* The FAQ was the last thing before the signup with no next step on it
+            at all — you could read every answer and be left facing a full stop.
+            Two doors, neither of them a hard sell: back to the characters for
+            someone still deciding, forward to the Squad for someone who has. */}
+        <div className={styles.next} data-anim="">
+          <p className={styles.nextText}>Answered? There are two good next steps.</p>
+          <div className={styles.nextBtns}>
+            <Btn href="/#ducks" colour="var(--sky-soft)">Meet the ducks</Btn>
+            <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+          </div>
         </div>
       </div>
     </section>

@@ -5,10 +5,12 @@ import { Picture } from '@/components/Picture'
 import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
+import { Motif, type MotifName } from '@/components/Motif'
 import { PuddleFace } from '@/components/ui/PuddleFace'
 import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
 import { DUCKS } from '@/lib/subscribe-schema'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import styles from './Squad.module.css'
 
 type Duck = (typeof DUCKS)[number]
@@ -21,6 +23,18 @@ type Duck = (typeof DUCKS)[number]
  * Deliberately absent: signup counters, countdowns, "only 50 spots left", and any
  * number we cannot stand behind.
  */
+/** What being in the Squad actually gets you. Belonging, not benefits: each
+ *  line is a thing that is true of members today, written as "you are", not
+ *  "you will receive". No dates, no discounts, no invented perks. */
+const SQUAD_PERKS: { mark: MotifName; title: string; body: string }[] = [
+  { mark: 'footprints', title: 'You are there first.',
+    body: 'You hear the day the ducks arrive before the shop does.' },
+  { mark: 'waves', title: 'You get a say.',
+    body: 'Once a month we ask what to make next, and it changes what we build.' },
+  { mark: 'duck', title: 'You are in their world.',
+    body: 'The characters, the stories and the Foundation, as they happen.' },
+]
+
 export function Squad() {
   /* 'undecided' is still the value posted when nobody picks — it just no longer
      has a button of its own, which was an option competing with the three that
@@ -74,6 +88,7 @@ export function Squad() {
 
   return (
     <section className={styles.section} id="squad" aria-labelledby="squad-title">
+      <BrandDetail preset="splashdown" />
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
           <Sticker colour="var(--sun-soft)" rot={-3} data-pop="" data-pop-rot="-3">Join the Duck Squad</Sticker>
@@ -85,6 +100,25 @@ export function Squad() {
             know before anyone else when the ducks arrive, and once a month we ask what we
             should make next. We mean that literally; it changes what we build.
           </p>
+
+          {/* The client: "we'd like this to feel more like joining the Ducks 'n
+              Puddles community/world rather than simply signing up for a
+              newsletter." A form asking for an email reads as a newsletter no
+              matter what the heading says, so this states what MEMBERSHIP is
+              before the form asks for anything — three things you get by being
+              in, in the language of belonging rather than of subscribing.
+              Every line is something that is actually true today; none of it
+              promises a date, a discount or a programme that does not exist. */}
+          <ul className={styles.perks} data-anim="">
+            {SQUAD_PERKS.map((p) => (
+              <li key={p.title}>
+                <span className={styles.perkMark} aria-hidden="true"><Motif name={p.mark} /></span>
+                <span>
+                  <strong>{p.title}</strong> {p.body}
+                </span>
+              </li>
+            ))}
+          </ul>
           {/* the payoff, and the thing that was leaving this column half empty
               next to a form four times its height */}
           {/* Goosey alone, greeting you beside the bottles — NOT the trio.

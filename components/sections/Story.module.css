@@ -47,6 +47,23 @@
    but the design pass put every section heading on one size. */
 .title { color: var(--ink); font-size: var(--fs-xl); line-height: var(--lh-xl); }
 .body p { max-width: 58ch; font-size: var(--fs-body); }
+/* The opening line carries the two names, so it takes lead size — without it
+   the four paragraphs are one even grey block with no way in. */
+.body p.lead { font-size: var(--fs-lead); }
+/* The client's emphasis. Poppins has real weights, so this is a genuine bold
+   rather than a synthesised one (font-synthesis is off site-wide). */
+.body strong { font-weight: 600; color: var(--ink); }
+
+/* The closing tagline. Set in the display face and a clear step above the body,
+   so it reads as the story signing off rather than as a fifth paragraph — but
+   below the section heading, because it is not a second title. */
+.body p.tagline {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.375rem, 2.3vw, 2rem);
+  line-height: var(--lh-md);
+  color: var(--ink);
+  margin-block-start: var(--s-2);
+}
 .sig { display: flex; align-items: center; gap: var(--s-3); }
 .sig img { inline-size: 42px; height: auto; }
 

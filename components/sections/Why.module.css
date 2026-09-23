@@ -7,6 +7,7 @@
   background: var(--cream);
   padding-block: var(--section-y);
   position: relative;
+  overflow: clip;
 }
 
 .head {
