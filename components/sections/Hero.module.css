@@ -154,14 +154,28 @@
      1440 exactly where it was, so no breakpoint is needed for it. */
   font-size: clamp(2.25rem, min(10.24vw, 13vh), 7.25rem);
   letter-spacing: .004em;
-  /* 0.82. The design pass asked for 75/100 = 0.75; measured, this headline's
-     ink needs 0.808em between baselines, so 0.75 clipped the 'y' of "for every"
-     and overlapped the line below. 0.82 is as tight as it goes.
-     It CAN go this tight — well under the 1 the section headings need — only
-     because this headline's line breaks are hard-coded spans, so its worst
-     glyph pair is a 'y' (0.185em) rather than the 'j' (0.353em) that turns up in
-     reflowing headings. Change the wording and this needs re-measuring. */
-  line-height: .82;
+  /* 0.78. RE-MEASURED, and the 0.808em this comment used to claim was wrong —
+     it was over-conservative and had been keeping the headline looser than it
+     needs to be. Taken off the rendered glyphs at 100px, line by line:
+
+       "A friend"   ascent 59.7  descent  2.4
+       "for every"  ascent 62.3  descent 18.5   <- the 'y'
+       "adventure"  ascent 55.9  descent  3.5
+
+     The binding pair is "for every" -> "adventure": 18.5 + 55.9 = 74.4px, i.e.
+     0.744em. So 0.78 clears by 3.6px and 0.82 was leaving 7.6px unused.
+
+     The design pass has repeatedly asked for 0.75. That is 74.4 against 75 —
+     0.6px, which is below the variance between one browser's text rendering and
+     another's, so it would touch somewhere even though it computes as clear
+     here. 0.78 is the tightest value with margin that survives a different
+     engine.
+
+     It CAN go anywhere near this tight — well under the 1 the section headings
+     need — only because this headline's line breaks are hard-coded spans, so
+     its worst glyph pair is a 'y' (0.185em) rather than the 'j' (0.353em) that
+     turns up in reflowing headings. Change the wording and re-measure. */
+  line-height: .78;
   color: var(--ink);
 }
 /* outer span clips, inner span is what rises */
@@ -180,7 +194,7 @@
   font-weight: 400;
   font-size: clamp(2.25rem, min(10.24vw, 13vh), 7.25rem);
   letter-spacing: .004em;
-  line-height: .82;
+  line-height: .78;
   color: rgba(255, 255, 255, .12);
   transform: scaleY(-1);
   filter: blur(2.4px);
