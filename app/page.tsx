@@ -54,7 +54,9 @@ export default function HomePage() {
       <CardTilt />
       <Marquee
         items={['Flip-top straw', 'Sized for small hands', 'Dishwasher safe', 'Spill-resistant', 'BPA-free']}
-        colour="var(--sun-soft)" rot={-3.2}
+        /* Straight, and with no upward bleed: tilted, this band's high corner
+           crossed the fold and showed under the hero on first view. */
+        colour="var(--sun-soft)" rot={0}
       />
       <Why />
       <DuckStage />

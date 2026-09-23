@@ -69,6 +69,9 @@ export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = '
         ['--bg' as string]: colour,
         ['--rot' as string]: `${rot}deg`,
         ['--dur' as string]: `${seconds}s`,
+        /* A straight band has no rotated corners to absorb, so it keeps its
+           own box instead of being pulled up into the section above. */
+        ...(rot === 0 ? { ['--bleed' as string]: '0px' } : {}),
       } as React.CSSProperties}
     >
       {/* announced once, cleanly; the visual loop is hidden from assistive tech */}

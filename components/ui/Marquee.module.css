@@ -11,8 +11,12 @@
   /* Rotated, so the band's visual bounds sit well outside its box: the corners
      reach ~half the section width x sin(rot) beyond it. The negative margin
      absorbs the box, and the symmetric value is what keeps the gap above equal
-     to the gap below — they were visibly different before. */
-  margin-block: clamp(-44px, -2.9vw, -22px);
+     to the gap below — they were visibly different before.
+     It is ZERO for an unrotated band, set from the component: with no tilt
+     there is no overhang to absorb, and the pull-up only served to lift the
+     band into the section above — which is what made it break the fold under
+     the hero. */
+  margin-block: var(--bleed, clamp(-44px, -2.9vw, -22px));
   --dur: 32s;
   mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
