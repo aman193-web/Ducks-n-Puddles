@@ -703,6 +703,51 @@
     "nativeWidth": 1254,
     "nativeHeight": 1254
   },
+  "chichi-peeking": {
+    "id": "chichi-peeking",
+    "tier": "A",
+    "widths": [
+      320
+    ],
+    "alpha": true,
+    "aspect": 0.4268,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 589,
+    "nativeHeight": 1380
+  },
+  "goosey-peeking": {
+    "id": "goosey-peeking",
+    "tier": "A",
+    "widths": [
+      320
+    ],
+    "alpha": true,
+    "aspect": 0.3399,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 464,
+    "nativeHeight": 1365
+  },
+  "vincey-peeking": {
+    "id": "vincey-peeking",
+    "tier": "A",
+    "widths": [
+      320
+    ],
+    "alpha": true,
+    "aspect": 0.401,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 537,
+    "nativeHeight": 1339
+  },
   "chichi-turn": {
     "id": "chichi-turn",
     "tier": "A",

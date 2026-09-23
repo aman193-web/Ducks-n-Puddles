@@ -5,6 +5,8 @@ import { NameSticker } from '@/components/NameSticker'
 import { Duck } from '@/components/ui/Duck'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { Ripple } from '@/components/ui/Ripple'
+import { StorePeek } from './StorePeek'
+import { asset } from '@/lib/assets'
 import { ducks } from '@/content/brand'
 import styles from './Store.module.css'
 
@@ -48,20 +50,35 @@ export function Store() {
               {/* THE CHARACTER LOOKS OUT FROM BEHIND ITS OWN BOTTLE. This is the
                   client's "we want kids to understand that the Vincey bottle is
                   their Vincey" — the copy says it, this proves it.
-                  The `turn` pose is a three-quarter facing RIGHT, so placed to
-                  the left of the bottle it reads as peeking round it. It sat at
-                  the `idle` pose before, overlapping the bottle almost exactly
-                  and showing 14px of itself — which is to say, invisible.
-                  density="always": it is the point of the card, so it earns a
-                  phone. */}
-              <div className={styles.figure}>
+                  It is on the RIGHT now, on the supplied peeking art, and it
+                  starts fully hidden and slides out as the card arrives — see
+                  StorePeek. density="always": it is the point of the card, so
+                  it earns a phone. */}
+              <div className={styles.figure} data-peek-figure="">
                 <span className={styles.puddle} aria-hidden="true" />
                 <Ripple className={styles.ripple} />
-                <Duck who={d.slug} pose="turn" density="always" float
-                      className={styles.character}
-                      sizes="(min-width: 820px) 13vw, 34vw" />
+                {/* No `float` here. That keyframe animates `transform`, which is
+                    the same channel GSAP drives the slide on — the two would
+                    overwrite each other. The peek is the motion on this card. */}
+                {/* The box needs a REAL aspect ratio. With `inline-size: auto`
+                    against a percentage block-size the shrink-to-fit width
+                    resolved before the height was known and came out at 24-42px
+                    instead of ~80 — the ducks rendered as slivers, and the width
+                    even varied between measurements. The three silhouettes
+                    differ (0.34 to 0.43), so it comes per card from the
+                    manifest rather than being guessed once. */}
+                <span
+                  className={styles.character}
+                  data-peek-duck=""
+                  style={{ ['--peek-aspect' as string]:
+                    String(asset(`${assetFor(d.slug)}-peeking`).aspect) } as React.CSSProperties}
+                >
+                  <Duck who={d.slug} pose="peeking" density="always"
+                        sizes="(min-width: 820px) 8vw, 22vw" />
+                </span>
                 <Picture id={assetFor(d.slug)} sizes="(min-width: 820px) 20vw, 55vw"
-                         alt={`The ${d.name} bottle`} className={styles.bottle} />
+                         alt={`The ${d.name} bottle`} className={styles.bottle}
+                         data-peek-bottle="" />
               </div>
               <NameSticker name={d.stickerName} colour={d.colour} size="m"
                            className={styles.badge} />
@@ -93,6 +110,7 @@ export function Store() {
           ))}
         </div>
       </div>
+      <StorePeek />
     </section>
   )
 }

@@ -110,6 +110,17 @@ export const alphaAssets = [
   { id: 'vincey-peek',   src: `${BRAND_DIR}/characters/vincey-peek.png`,   widths: [300, 600] },
   /* Three-quarter, facing right — the pose that reads as looking out from
      behind something when it is placed to the LEFT of that thing. */
+  /* THE PEEKING POSES. Supplied by the client cut off at the left edge — each
+     one is a half-duck whose flat edge is meant to butt against the side of
+     something it is hiding behind. That cut is why these work where the `turn`
+     poses did not: a whole duck is 204px wide against a 129px bottle, so it can
+     never actually hide, while these are drawn to be half-hidden already.
+     Trimmed on import so the cut edge is exactly x=0 and the alignment to the
+     bottle's edge is predictable. */
+  { id: 'chichi-peeking', src: `${BRAND_DIR}/characters/chichi-peeking.png`, widths: [320, 640] },
+  { id: 'goosey-peeking', src: `${BRAND_DIR}/characters/goosey-peeking.png`, widths: [320, 640] },
+  { id: 'vincey-peeking', src: `${BRAND_DIR}/characters/vincey-peeking.png`, widths: [320, 640] },
+
   { id: 'chichi-turn',   src: `${BRAND_DIR}/characters/chichi-turn.png`,   widths: [300, 600] },
   { id: 'goosey-turn',   src: `${BRAND_DIR}/characters/goosey-turn.png`,   widths: [300, 600] },
   { id: 'vincey-turn',   src: `${BRAND_DIR}/characters/vincey-turn.png`,   widths: [300, 600] },

@@ -62,26 +62,63 @@
    `inline-size: auto`, which stretched it to 138x273. */
 .bottle { block-size: clamp(196px, 21vw, 270px); inline-size: auto; width: auto; }
 
-/* The character looks out from BEHIND the bottle: bottom-aligned to the same
-   ground, pushed far enough left that roughly half of it clears the bottle's
-   edge, and z-index 0 so the product still leads.
-   At -14% it cleared by 14px of a 135px body and was effectively invisible;
-   -46% shows the head, one wing and a foot, which is what "peeking" needs. */
+/* ---- the peeking character ---------------------------------------------
+   On the RIGHT of the bottle, and it genuinely hides behind it.
+
+   The art is the client's peeking set: each duck is cut off at its left edge,
+   so it is a half-duck 0.34-0.43 as wide as it is tall. That is what makes the
+   hiding possible — the `turn` poses this replaces are whole ducks 204px wide
+   against a 129px bottle, which cannot be hidden by it at any offset.
+
+   Sized by HEIGHT, not width, because the three silhouettes have different
+   aspects and matching their heights is what makes the row read as one set.
+   At 76% of the figure they come out 70-88px wide, comfortably inside the
+   bottle's 129px.
+
+   `inset-inline-start: calc(100% - var(--tuck))` puts the CUT EDGE that far
+   inside the bottle's right edge, so the cut itself is never visible — the
+   character always looks like it continues behind the product.
+
+   --tuck HAS TO EXCEED THE BOTTLE'S SHIFT. The bottle slides 30px left and
+   tilts 5deg, so its right edge retreats by 30px plus, at the height of the
+   duck's shoulders, about 6px more from the rotation (a -5deg tilt about the
+   centre moves the edge (h/2)·sin5 ≈ 12px, against the duck's top, which sits
+   above centre). At the original 22px the cut edge finished 14px PROUD of the
+   bottle and the straight cut showed as a vertical seam. 42px clears it with
+   room. Measuring this with getBoundingClientRect does not work — the box of a
+   rotated element is its AABB, which is wider than the real edge and reports a
+   clearance that is not there. z-index 0 keeps
+   it behind; StorePeek slides it in from xPercent -100, which is exactly its
+   own width and therefore exactly hidden, whichever duck it is.
+
+   THIS IS THE FINAL STATE. GSAP animates from hidden TO here, so a
+   reduced-motion visitor gets this composition with no JavaScript at all. */
 .character {
+  --tuck: 50px;
   position: absolute;
   z-index: 0;
-  /* Taller than the bottle's lower half, so the HEAD is what clears the edge.
-     At 152px the character was shorter than the 273px bottle and the only part
-     showing past it was a wing tip. */
-  inline-size: clamp(130px, 17vw, 200px);
   inset-block-end: -4px;
-  /* The offset is a share of the CHARACTER's own width, not the figure's — the
-     figure is as wide as whichever bottle render is in it, so a percentage
-     there moved the duck by a different amount on every card. -55% puts the
-     head and one wing clear while the body stays behind the bottle. */
-  inset-inline-start: 0;
-  translate: -55% 0;
+  inset-inline-start: calc(100% - var(--tuck));
+  block-size: 76%;
+  /* --peek-aspect is width/height, set per card in Store.tsx from the asset
+     manifest. With a definite height this fixes the width; `inline-size: auto`
+     alone did not, and produced 24px slivers. */
+  aspect-ratio: var(--peek-aspect, 0.4);
+  inline-size: auto;
+  pointer-events: none;
 }
+/* Scoped to .character, never `.figure img` — an unscoped rule here is what
+   once forced block-size onto the square character source and stretched it. */
+.character > *,
+.character img {
+  block-size: 100%;
+  inline-size: 100%;
+  width: 100%;
+  display: block;
+  /* The box already carries the right aspect, so filling it cannot distort. */
+  object-fit: contain;
+}
+
 .figure > picture:has(.bottle) { position: relative; z-index: 1; }
 .puddle {
   position: absolute; inset-block-end: -10px; inset-inline-start: 50%;
@@ -131,4 +168,7 @@
   .cardWrap { flex: 0 0 auto; inline-size: min(78vw, 300px); scroll-snap-align: start; }
   /* the resting tilts read as clutter in a tight row */
   .cards > .cardWrap .card { rotate: 0deg; }
+  /* Shorter and tucked further in on a phone: the card is 78vw here and the
+     full-size peek reached the voice labels underneath. */
+  .character { --tuck: 26px; block-size: 68%; }
 }
