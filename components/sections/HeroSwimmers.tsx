@@ -32,8 +32,17 @@ import styles from './HeroSwimmers.module.css'
    writes a transform here — see the channel note at the top of Hero.module.css.
    ------------------------------------------------------------------------- */
 
-/** Seconds for a duck to swim one wave period. Sets the rise-and-fall rhythm. */
-const RIDE = 13
+/**
+ * Seconds for a duck to swim one wave period. Sets the rise-and-fall rhythm,
+ * and — with the drift — how fast they cross.
+ *
+ * Only PART of the speed is here. A duck is carried by the water at one panel
+ * width per 24s whether it swims or not, so that 60px/s at 1440 is a floor this
+ * number cannot get under; it only governs the swim on top. 13 -> 18 takes the
+ * ground speed from 115px/s to 100px/s, which is a crossing of 14.4s rather
+ * than 12.5s.
+ */
+const RIDE = 18
 
 /** Where the leader starts, as a fraction of the panel. Far enough over that
  *  the trailing two are both on screen behind it on the first frame. */
