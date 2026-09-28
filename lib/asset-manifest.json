@@ -484,14 +484,14 @@
       2093
     ],
     "alpha": true,
-    "v": "c5d46b4f",
-    "aspect": 1.5401,
+    "v": "bc441c0d",
+    "aspect": 1.5036,
     "formats": [
       "avif",
       "webp"
     ],
     "nativeWidth": 2093,
-    "nativeHeight": 1359
+    "nativeHeight": 1392
   },
   "logo-primary": {
     "id": "logo-primary",
