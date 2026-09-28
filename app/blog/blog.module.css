@@ -84,7 +84,11 @@
    body-sized, so 68ch here would be ~580px and would squeeze the display type.
    720px is the prose measure plus room for the picture to breathe. */
 .article {
-  inline-size: min(100%, 720px);
+  /* The width has to travel WITH the type, not ahead of it. At a flat 860px the
+     column hit its maximum around 1000px wide while the prose was still pinned
+     at its 18px floor — 93 characters to a line, measured. Keyed to vw the two
+     rise together and the line stays in the 70s at every width. */
+  inline-size: min(100%, clamp(640px, 60vw, 860px));
   margin-inline: auto;
 }
 
@@ -116,9 +120,17 @@
   letter-spacing: .01em; line-height: 1.16;
   margin-block-start: var(--s-4);
 }
-.prose h2 { font-size: clamp(1.375rem, 2.2vw, 1.875rem); }
-.prose h3 { font-size: clamp(1.125rem, 1.7vw, 1.375rem); }
-.prose p { font-size: var(--fs-lead); line-height: 1.65; text-wrap: pretty; }
+.prose h2 { font-size: clamp(1.5rem, 2.5vw, 2.125rem); }
+.prose h3 { font-size: clamp(1.25rem, 1.9vw, 1.5rem); }
+/* Set ABOVE --fs-lead. This is the one place on the site that is read rather
+   than scanned, so it gets its own step (18 -> 23px) instead of borrowing the
+   size used for section intros. Leading comes down a little as the size goes
+   up, which is what keeps the block from opening into stripes. */
+.prose p {
+  font-size: clamp(1.125rem, 1.55vw, 1.4375rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
 .prose p:first-child { font-weight: 600; }
 
 .more { display: grid; gap: var(--s-5); margin-block-start: clamp(var(--s-7), 5vw, var(--s-8)); }
