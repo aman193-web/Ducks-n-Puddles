@@ -432,14 +432,14 @@
       621
     ],
     "alpha": true,
-    "v": "b8937138",
-    "aspect": 0.457,
+    "v": "da5f7ac0",
+    "aspect": 0.4459,
     "formats": [
       "avif",
       "webp"
     ],
-    "nativeWidth": 621,
-    "nativeHeight": 1359
+    "nativeWidth": 626,
+    "nativeHeight": 1404
   },
   "chichi": {
     "id": "chichi",
@@ -449,14 +449,14 @@
       621
     ],
     "alpha": true,
-    "v": "251efcba",
-    "aspect": 0.457,
+    "v": "63ec48b2",
+    "aspect": 0.4459,
     "formats": [
       "avif",
       "webp"
     ],
-    "nativeWidth": 621,
-    "nativeHeight": 1359
+    "nativeWidth": 626,
+    "nativeHeight": 1404
   },
   "goosey": {
     "id": "goosey",
@@ -466,14 +466,14 @@
       621
     ],
     "alpha": true,
-    "v": "1d57f683",
-    "aspect": 0.457,
+    "v": "57736206",
+    "aspect": 0.4459,
     "formats": [
       "avif",
       "webp"
     ],
-    "nativeWidth": 621,
-    "nativeHeight": 1359
+    "nativeWidth": 626,
+    "nativeHeight": 1404
   },
   "trio": {
     "id": "trio",
