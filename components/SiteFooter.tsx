@@ -46,8 +46,9 @@ export function SiteFooter() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.crest}>
-        <WaveEdge above="var(--vincey-soft)" fill="var(--cream)" />
+      {/* data-footer-crest: ScrollDuck steps aside when this arrives. */}
+      <div className={styles.crest} data-footer-crest="">
+        <WaveEdge above="var(--footer-above)" fill="var(--cream)" />
         <span className={styles.swimmer} aria-hidden="true">
           <span className={styles.paddle}>
             <img src="/img/mascot-140.webp" width={54} height={60} alt="" />

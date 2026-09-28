@@ -47,9 +47,19 @@ export function ScrollDuck() {
         },
       })
 
+      /* Step aside when the FOOTER arrives, not at a fraction of the scroll
+         height. The old `maxScroll - 55vh` is a guess that only holds on a long
+         page: on the blog index (2577px against a 900px viewport) it left the
+         rail lit while the footer's own waterline was already on screen, so two
+         different bodies of water overlapped. Measuring the crest is exact at
+         any page length. */
+      const crest = document.querySelector<HTMLElement>('[data-footer-crest]')
       ScrollTrigger.create({
         start: () => window.innerHeight * 0.9,
-        end: () => ScrollTrigger.maxScroll(window) - window.innerHeight * 0.55,
+        end: () => (crest
+          ? crest.getBoundingClientRect().top + window.scrollY - window.innerHeight
+          : ScrollTrigger.maxScroll(window) - window.innerHeight * 0.55),
+        invalidateOnRefresh: true,
         onToggle: (self) => railEl.setAttribute('data-on', String(self.isActive)),
       })
 

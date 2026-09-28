@@ -46,8 +46,14 @@ export default async function JournalPost(
   const more = posts.filter((p) => p.slug !== post.slug).slice(0, 2)
 
   return (
+    <>
     <article className={styles.page}>
       <div className="wrap">
+        {/* One centred measure for the whole article. Everything used to be
+            left-aligned in the full wrap, which on a 1440 screen left a 64ch
+            column of text against ~700px of empty cream — the page read as
+            broken rather than as an article. */}
+        <div className={styles.article}>
         <Link href="/blog" className={styles.back}>
           <ArrowLeft size={18} weight="bold" aria-hidden="true" />
           All notes
@@ -71,27 +77,46 @@ export default async function JournalPost(
           {post.body.map((para, i) => <p key={i}>{para}</p>)}
         </div>
 
-        <aside className={styles.cta}>
-          <p className="lead">
-            We send one short email every couple of weeks, and the Duck Squad hears
-            about the bottles before this site does.
-          </p>
-          <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
-        </aside>
-
         {more.length > 0 && (
           <nav className={styles.more} aria-label="More notes">
             <h2 className={styles.moreTitle}>More from the pond</h2>
-            <ul>
+            {/* Cards, not a bare list of underlined titles. The picture and the
+                tag are what make someone read a second post. */}
+            <ul className={styles.moreList}>
               {more.map((p) => (
                 <li key={p.slug}>
-                  <Link href={`/blog/${p.slug}`}>{p.title}</Link>
+                  <Link href={`/blog/${p.slug}`} className={styles.moreCard}>
+                    <span className={styles.moreFigure}>
+                      <Picture id={p.image} sizes="(min-width: 700px) 22vw, 44vw" alt="" />
+                    </span>
+                    <span className={styles.moreBody}>
+                      <span className={styles.moreTag}>{p.tag}</span>
+                      <span className={styles.moreName}>{p.title}</span>
+                      <span className={styles.meta}>{p.readingMinutes} min read</span>
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
         )}
+        </div>
       </div>
     </article>
+
+    {/* The one invitation on this page, and the colour the footer's wave needs
+        above it. It used to be an inline box mid-article, which put a CTA
+        between the reader and the further reading. */}
+    <section className={styles.close}>
+      <div className={`wrap ${styles.closeInner}`}>
+        <h2 className={styles.closeTitle}>Get the next one by email.</h2>
+        <p className={styles.closeBlurb}>
+          We send one short note every couple of weeks, and the Duck Squad hears
+          about the bottles before this site does.
+        </p>
+        <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+      </div>
+    </section>
+    </>
   )
 }

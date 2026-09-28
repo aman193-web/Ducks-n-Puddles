@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Picture } from '@/components/Picture'
+import { Btn } from '@/components/ui/Btn'
 import { posts, formatDate } from '@/content/journal'
 import { brand } from '@/content/brand'
 import styles from './blog.module.css'
@@ -21,6 +22,7 @@ export default function JournalIndex() {
   const all = [...posts].sort((a, b) => b.date.localeCompare(a.date))
 
   return (
+    <>
     <div className={styles.page}>
       <div className="wrap">
         <header className={styles.masthead}>
@@ -54,5 +56,20 @@ export default function JournalIndex() {
         </ul>
       </div>
     </div>
+
+    {/* The page used to stop dead on the last row, straight into the footer's
+        waterline — which is also why that wave had nothing to transition FROM.
+        A closing band gives the wave its colour above and the index an ending. */}
+    <section className={styles.close}>
+      <div className={`wrap ${styles.closeInner}`}>
+        <h2 className={styles.closeTitle}>Get the next one by email.</h2>
+        <p className={styles.closeBlurb}>
+          One short note every couple of weeks. The Duck Squad hears about the
+          bottles before this site does.
+        </p>
+        <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+      </div>
+    </section>
+    </>
   )
 }

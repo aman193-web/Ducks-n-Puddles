@@ -1,4 +1,21 @@
-.page { background: var(--cream); padding-block: clamp(var(--s-7), 6vw, var(--s-9)); }
+.page { background: var(--cream); padding-block: clamp(var(--s-7), 6vw, var(--s-9)) clamp(var(--s-6), 4vw, var(--s-8)); }
+
+/* ---- the closing band ----------------------------------------------------
+   Full bleed and --vincey-soft ON PURPOSE. The footer's wave paints the colour
+   of the section above it into its own box; every other page on the site hands
+   it a blue band, and the blog handed it cream, which is why a stray light-blue
+   stripe appeared across the seam with the swimmer half-sunk in it. This is the
+   band the wave was always drawn against. */
+.close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
+.closeInner { display: grid; justify-items: start; gap: var(--s-4); }
+.closeTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.1;
+  font-size: clamp(1.5rem, 3.4vw, 2.75rem);
+  /* 18ch broke "Get the next one by / email." onto a one-word second line */
+  max-width: 24ch; text-wrap: balance;
+}
+.closeBlurb { max-width: 46ch; line-height: 1.6; }
 
 .masthead { display: grid; justify-items: start; gap: var(--s-4); margin-block-end: clamp(var(--s-7), 5vw, var(--s-9)); }
 
@@ -18,6 +35,23 @@
   transition: transform .6s cubic-bezier(.16, 1, .3, 1);
 }
 .rowLink:hover .rowFigure img { transform: scale(1.04); }
+/* The whole row is the target, so it needs to say so on hover — the picture
+   zoom alone is easy to miss on a text-led row. */
+.rowLink { transition: transform var(--t) var(--spring); }
+@media (hover: hover) {
+  .rowLink:hover { transform: translateY(-3px); }
+  .rowLink:hover .rowTitle { text-decoration-color: var(--sun); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rowLink, .rowFigure img { transition: none; }
+  .rowLink:hover { transform: none; }
+  .rowLink:hover .rowFigure img { transform: none; }
+}
+.rowTitle {
+  text-decoration: underline; text-decoration-thickness: 3px;
+  text-decoration-color: transparent; text-underline-offset: .22em;
+  transition: text-decoration-color var(--t-fast) ease;
+}
 .rowBody { display: grid; justify-items: start; gap: var(--s-3); }
 .rowTitle {
   font-family: var(--font-display); font-synthesis: none;
@@ -40,7 +74,20 @@
   font-size: var(--fs-micro); color: var(--ink-soft);
 }
 
-/* ---- post ---------------------------------------------------------------- */
+/* ---- post ----------------------------------------------------------------
+   ONE COLUMN, CENTRED. Every part of the article — the back link, the head, the
+   picture, the prose, the CTA and the further reading — shares this measure, so
+   the page has a single axis instead of a 64ch column of text pinned to the left
+   of a 1136px wrap with the other 700px empty.
+
+   px, not ch: `ch` resolves against the element's OWN font-size, and this box is
+   body-sized, so 68ch here would be ~580px and would squeeze the display type.
+   720px is the prose measure plus room for the picture to breathe. */
+.article {
+  inline-size: min(100%, 720px);
+  margin-inline: auto;
+}
+
 .back {
   display: inline-flex; align-items: center; gap: var(--s-2);
   min-block-size: 44px;
@@ -61,26 +108,53 @@
 
 /* A single measured column. Long-form is the one place on this site where the
    line length matters more than filling the width. */
-.prose { display: grid; gap: var(--s-5); max-width: 64ch; }
+.prose { display: grid; gap: var(--s-5); }
+/* Structure for posts that have it. None of the three drafts use sub-headings
+   yet; these exist so the first one that does is not unstyled. */
+.prose h2, .prose h3 {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .01em; line-height: 1.16;
+  margin-block-start: var(--s-4);
+}
+.prose h2 { font-size: clamp(1.375rem, 2.2vw, 1.875rem); }
+.prose h3 { font-size: clamp(1.125rem, 1.7vw, 1.375rem); }
 .prose p { font-size: var(--fs-lead); line-height: 1.65; text-wrap: pretty; }
 .prose p:first-child { font-weight: 600; }
 
-.cta {
-  display: grid; justify-items: start; gap: var(--s-4);
-  max-width: 64ch;
-  margin-block: clamp(var(--s-7), 5vw, var(--s-9)) var(--s-7);
-  padding: clamp(20px, 2.4vw, 32px);
-  background: var(--sky); border: var(--border-lg); border-radius: var(--r-lg);
-}
-
-.more { display: grid; gap: var(--s-4); max-width: 64ch; }
+.more { display: grid; gap: var(--s-5); margin-block-start: clamp(var(--s-7), 5vw, var(--s-8)); }
 .moreTitle {
   font-family: var(--font-display); font-synthesis: none;
   font-weight: 400; letter-spacing: .01em;
   font-size: var(--fs-md);
 }
-.more ul { display: grid; gap: var(--s-3); list-style: none; padding: 0; margin: 0; }
-.more a {
-  display: inline-flex; min-block-size: 44px; align-items: center;
-  font-weight: 700; text-decoration: underline; text-underline-offset: .3em;
+.moreList { display: grid; gap: var(--s-4); list-style: none; padding: 0; margin: 0; }
+@media (min-width: 620px) { .moreList { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.moreCard {
+  display: grid; gap: var(--s-3); align-content: start;
+  text-decoration: none; color: var(--ink);
+  transition: transform var(--t) var(--spring);
+}
+.moreCard:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 6px; border-radius: var(--r); }
+@media (hover: hover) {
+  .moreCard:hover { transform: translateY(-3px); }
+  .moreCard:hover .moreName { text-decoration-color: var(--sun); }
+}
+@media (prefers-reduced-motion: reduce) { .moreCard { transition: none; } .moreCard:hover { transform: none; } }
+
+.moreFigure {
+  display: block; overflow: clip;
+  border: var(--border); border-radius: var(--r); background: var(--sky);
+}
+.moreFigure img { inline-size: 100%; block-size: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+.moreBody { display: grid; justify-items: start; gap: 6px; }
+.moreTag {
+  font-family: var(--font-mono); font-size: var(--fs-micro);
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft);
+}
+.moreName {
+  font-weight: 700; line-height: 1.3;
+  text-decoration: underline; text-decoration-thickness: 2px;
+  text-decoration-color: transparent; text-underline-offset: .28em;
+  transition: text-decoration-color var(--t-fast) ease;
 }

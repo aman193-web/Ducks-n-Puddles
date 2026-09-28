@@ -105,6 +105,19 @@
   .measure { max-width: var(--measure); }
 }
 
+/* THE COLOUR ABOVE THE FOOTER'S WAVE.
+
+   WaveEdge paints its own box with the colour of the section above it, because
+   the area over the crest is the edge's own box and would otherwise show the
+   page ground through the seam. The footer had that colour written in as a
+   literal, which made it silently a REQUIREMENT that every page end on a blue
+   band — /blog did not, and drew a stray light-blue stripe between cream
+   content and a cream footer with the swimmer half-sunk in it.
+
+   Naming it does not remove the requirement, but it states it: a page that
+   closes on something other than this has to say so. */
+:root { --footer-above: var(--vincey-soft); }
+
 @layer utils {
   .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
   .sect { padding-block: var(--section-y); position: relative; }
