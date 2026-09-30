@@ -29,14 +29,13 @@ export function Store() {
       <BrandDetail preset="trail" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--chichi-soft)" rot={2} data-pop="" data-pop-rot="2">Our first product</Sticker>
+          <Sticker colour="var(--chichi-soft)" rot={2} data-pop="" data-pop-rot="2">The bottles</Sticker>
           <h2 id="store-title" className="d d-xl" data-anim="">
-            Every duck comes as a bottle.
+            A Friend for Every Adventure.
           </h2>
           <p className="lead measure" data-anim="">
-            The Vincey bottle is their Vincey. Same nine ounces and the same straw on all
-            three &mdash; what changes is who is coming with them. And the bottles are just
-            the beginning.
+            Meet the first Ducks &rsquo;n Puddles Collection &mdash; thoughtfully designed
+            water bottles made for little hands and everyday adventures.
           </p>
         </div>
 
@@ -82,20 +81,13 @@ export function Store() {
               </div>
               <NameSticker name={d.stickerName} colour={d.soft} size="m"
                            className={styles.badge} />
-              {/* The client asked for both audiences to be spoken to at once and
-                  for neither to get lost. Both lines were already here as two
-                  undifferentiated paragraphs; labelling them makes the pair
-                  legible — child first, then parent. */}
-              <div className={styles.voices}>
-                <p className={styles.voice}>
-                  <span className={`eyebrow ${styles.voiceLabel}`}>For little ones</span>
-                  {d.personality}
-                </p>
-                <p className={styles.voice}>
-                  <span className={`eyebrow ${styles.voiceLabel}`}>For parents</span>
-                  {d.forParents}
-                </p>
-              </div>
+              {/* NAME, ROLE, LINK. The two labelled paragraphs that used to sit
+                  here — "For little ones" and "For parents" — are gone at the
+                  client's request: the characters are introduced properly one
+                  section up, and repeating them here was the "too many words"
+                  the revision opened with. The role is the only line that earns
+                  its place, because it is what tells you which duck this is. */}
+              <p className={styles.role}>{d.role}</p>
               {/* query BEFORE the fragment. `/#squad?duck=x` makes the browser look for
                   an element with id="squad?duck=x", so it matched nothing and the
                   click scrolled nowhere. */}
@@ -103,7 +95,7 @@ export function Store() {
                   the last loud thing on the page. The character is still
                   identified by its own hue, one step lighter. */}
               <Btn href={`/?duck=${d.slug}#squad`} colour={d.soft} block>
-                I want {d.name}
+                Explore {d.name}
               </Btn>
             </article>
             </div>

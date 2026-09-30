@@ -172,3 +172,14 @@
      full-size peek reached the voice labels underneath. */
   .character { --tuck: 26px; block-size: 68%; }
 }
+
+
+/* The one line of copy left on a card. It replaces the two labelled voices, so
+   it sits where they did and carries the same top margin. */
+.role {
+  font-family: var(--font-hand);
+  font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+  line-height: 1.35;
+  color: var(--ink);
+  margin-block: var(--s-2) var(--s-4);
+}

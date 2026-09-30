@@ -56,9 +56,10 @@ export function DuckStage() {
           <h2 id="ducks-title" className="d d-xl" data-anim="">
             Meet the ducks.
           </h2>
+          {/* The client's line, verbatim. It sets up the whole section: each
+              duck is not a personality profile, it is one reminder. */}
           <p className="lead measure" data-anim="">
-            Three little friends, each with their own kind of heart. Your child will know
-            which one is theirs.
+            Three little friends. Three big reminders.
           </p>
         </div>
       </div>
@@ -76,20 +77,20 @@ export function DuckStage() {
                 <Sticker colour="var(--cream)" rot={-2}>{d.role}</Sticker>
                 <h3 id={`duck-${d.slug}`} className={`d d-mega ${styles.name}`}>{d.name}</h3>
                 <p className={styles.personality}>{d.personality}</p>
-                <p className={`hand ${styles.says}`}>&ldquo;{d.saying}&rdquo;</p>
 
-                <p className={styles.parents}>
-                  <span className={`eyebrow ${styles.parentsLabel}`}>For parents</span>
-                  {d.forParents}
+                {/* ONE PARAGRAPH, ONE MESSAGE. The client removed the quote, the
+                    "For parents" box and the "What X helps with" chips from this
+                    section — four blocks of copy per duck where they wanted two.
+                    `saying`, `forParents` and `teaches` are all still in
+                    content/brand.ts; nothing was deleted, it simply is not shown
+                    here any more.
+
+                    The message is set as a quotation because that is how it was
+                    asked for: the duck saying it to the child. A speech bubble
+                    is the design half of the same note and is still to come. */}
+                <p className={styles.message}>
+                  <span aria-hidden="true">&ldquo;</span>{d.message}<span aria-hidden="true">&rdquo;</span>
                 </p>
-
-                <div className={styles.teaches}>
-                  <p className={`eyebrow ${styles.teachesLabel}`}>What {d.name} helps with</p>
-                  <ul className={styles.chips}>
-                    {d.teaches.map((t) => <li key={t}>{t}</li>)}
-                  </ul>
-                </div>
-
               </div>
 
               {/* The CHARACTER leads and the bottle stands with it. This section

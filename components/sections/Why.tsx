@@ -29,22 +29,24 @@ const SIDES = [
   {
     k: 'parents',
     eyebrow: 'For parents',
-    head: 'One less thing to worry about.',
+    head: 'Products that make you go \u201cahhh.\u201d',
     body:
-      'Everything we make gets used by somebody small, all day, every day. So it is '
-      + 'designed around how that actually goes — easy to carry, easy to clean, easy to '
-      + 'hand over on a morning that is already running late.',
-    foot: brand.rallyCry,
+      'Parenting is a lot\u2026 we get it. Everything we create is thoughtfully designed '
+      + 'to bring a little more ease, comfort, and convenience to everyday life, so you '
+      + 'can spend less time worrying about the little things and more time being present '
+      + 'for what matters most.',
+    foot: 'Your Kids Matter. We Give a Duck.',
   },
   {
     k: 'children',
     eyebrow: 'For little ones',
-    head: 'A friend who comes along.',
+    head: 'A Friend for Every Adventure.',
     body:
-      'Chi Chi, Goosey and Vincey are not decoration. They are three little friends with '
-      + 'personalities of their own, and the one your child picks becomes theirs — for the '
-      + 'first day of school, the long car ride, and every puddle in between.',
-    foot: 'Safe. Loved. Brave.',
+      'More than a water bottle \u2014 a little friend to bring comfort wherever they go. '
+      + 'From the first day of school to playdates, sports, family trips, and every puddle '
+      + 'in between, each duck has a name, a personality, and a special way of being there '
+      + 'for your little one.',
+    foot: 'Comfort. Connection. Confidence.',
   },
 ]
 

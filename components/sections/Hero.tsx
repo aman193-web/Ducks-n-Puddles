@@ -105,16 +105,11 @@ export function Hero() {
                 headline and the CTA can never collide with each other or with
                 the surface however short the panel gets. */}
             <div className={styles.copy}>
-              {/* The pre-launch state, said in the first screen. It was a plain
-                  mono line ending in "arriving soon", which the client read as
-                  the coming-soon message being absent — at 12px, grey, and
-                  tucked above a 116px headline, effectively it was. The badge
-                  carries it now and the sentence sits beside it. */}
-              <p className={`mono ${styles.rally}`}>
-                <span className={styles.soon}>Coming soon</span>
-                <span className={styles.rallyText}>Meet Chi&nbsp;Chi, Goosey &amp; Vincey</span>
-              </p>
-
+              {/* The "Coming soon / Meet Chi Chi, Goosey & Vincey" line that used
+                  to sit here is gone at the client's request — the hero reads
+                  cleaner without it. The pre-launch state is still said, in the
+                  two places it belongs: the header's Store chip and the Duck
+                  Squad signup. */}
               <h1 id="hero-title" className={`d ${styles.title}`}>
                 <span><span>A friend for </span></span>
                 <span><span>every adventure</span></span>

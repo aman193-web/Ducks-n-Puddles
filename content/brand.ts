@@ -21,8 +21,8 @@ export const brand = {
    *  sentence the homepage has to land before anything else — it is what the brand
    *  stands for beyond the products, and it deliberately names BOTH audiences in
    *  one line: ease for the parent, comfort for the child. */
-  why: 'Thoughtfully designed products that make life easier for parents while helping '
-     + 'little ones feel safe, loved, confident, and ready for every adventure.',
+  why: 'We make thoughtful products that support parents and bring comfort and '
+     + 'positivity to kids.',
   closing: 'Every great adventure begins with a smile.',
   founders: 'Larisa & Vinny',
   place: 'South Florida',
@@ -58,6 +58,17 @@ export interface Duck {
   /** The character's own saying, verbatim from the sheet. Drives the tap-to-speak
    *  interaction once the illustrated poses land. */
   saying: string
+  /**
+   * THE DEFINING MESSAGE — the two words this duck exists to say to a child.
+   *
+   * Not a synonym for `saying`. `saying` is chatter in the character's own voice
+   * ("Take your time"); this is the reminder the character stands for, and the
+   * client asked for it to read as if the duck were saying it straight to the
+   * child. The deeper reading behind each, from the same document: Vincey ->
+   * self-trust, Chi Chi -> self-expression, Goosey -> connection. That mapping
+   * is the reasoning behind the three, not copy, so it is not rendered.
+   */
+  message: string
   /** Parent-facing: the child this duck is for. */
   forParents: string
   bobMs: number
@@ -76,11 +87,12 @@ export const ducks: Duck[] = [
     role: 'The Calm Companion',
     core: 'Calm + Gentle',
     personality:
-      "Vincey is gentle strength. He's thoughtful, observant, calm, and quietly brave — "
-      + "the friend who sits beside you until you're ready. Vincey reminds children that "
-      + "bravery doesn't have to be loud.",
+      'Vincey is the friend who takes his time. Calm, gentle, and always close by, he '
+      + 'reminds little ones to trust themselves, go at their own pace, and find courage '
+      + 'within.',
     teaches: ['Emotional safety', 'Patience', 'Quiet courage', 'Trust', 'Self-acceptance'],
     saying: "Take your time. I'll be right here.",
+    message: 'Trust Yourself',
     forParents: 'For the one who needs a minute before they join in.',
     bobMs: 5200,
   },
@@ -96,11 +108,12 @@ export const ducks: Duck[] = [
     role: 'The Brave Spark',
     core: 'Bold + Brave',
     personality:
-      "Chi Chi is the duck who runs toward life. She's bold, expressive, imaginative, and "
-      + 'completely comfortable being herself. If there is a puddle nearby, she has '
-      + 'probably already jumped in it.',
+      'Chi Chi is the friend who\u2019s always ready for the next adventure. Bold, '
+      + 'imaginative, and proudly herself, she reminds little ones to follow their '
+      + 'curiosity, try new things, and have the confidence to shine.',
     teaches: ['Confidence', 'Courage', 'Self-expression', 'Leadership', 'Being proud of who you are'],
     saying: "Let's do it!",
+    message: 'Be Yourself',
     forParents: 'For the one who is halfway out the door before you find your keys.',
     bobMs: 5900,
   },
@@ -116,11 +129,12 @@ export const ducks: Duck[] = [
     role: 'The Sunshine Friend',
     core: 'Optimistic + Comforting',
     personality:
-      'Goosey is pure warmth. He is optimistic, affectionate, welcoming, and always '
-      + 'looking for ways to make someone smile — the friend who saves you a seat before '
-      + 'you have asked for one.',
+      'Goosey is the friend who believes there\u2019s always room for one more. Warm, '
+      + 'cheerful, and welcoming, he reminds little ones to choose kindness, include '
+      + 'others, and help everyone feel like they belong.',
     teaches: ['Kindness', 'Gratitude', 'Empathy', 'Friendship', 'Inclusion'],
     saying: "There's always room for one more friend!",
+    message: 'Share Yourself',
     forParents: 'For the one who narrates the entire day at full volume.',
     bobMs: 6700,
   } as Duck,
@@ -140,20 +154,42 @@ export const duckBySlug = (slug: string) => ducks.find((d) => d.slug === slug)
 --------------------------------------------------------------------------- */
 export interface Spec {
   key: string
+  /** The feature, as a short title. */
   label: string
+  /** The fact. */
   value?: string
+  /** Why the fact matters, where it is not self-evident. Four of the seven rows
+   *  carry one; the other three say everything in the fact itself, and a padded
+   *  third line on those would be the "too many words" the client opened with. */
+  benefit?: string
   status: 'confirmed' | 'pending'
   note?: string
 }
 
+/**
+ * Rewritten to the client's Sep 2026 copy: a short feature title, the key
+ * detail, and a benefit only where one is needed. The old rows mixed registers —
+ * some read as a specification ("Holds / 9 oz"), others as a full sentence — and
+ * that inconsistency is exactly what the revision asked us to fix.
+ *
+ * ⚠️ ONE FACT CHANGED, not just its wording. The old `clean` row said the cap
+ * must be hand-washed; the client's new copy and their own footnote both say the
+ * bottle AND cap are dishwasher safe, with only the silicone sleeve hand-washed.
+ * Published on their written instruction — a care claim is a real-world claim,
+ * so it is flagged here rather than quietly swapped.
+ */
 export const specs: Spec[] = [
-  { key: 'capacity',   label: 'Holds',         value: '9 oz', status: 'confirmed' },
-  { key: 'lid',        label: 'Lid',           value: 'Flip-top straw with a snap closure', status: 'confirmed' },
-  { key: 'spill',      label: 'Spills',        value: 'Spill-resistant by design', status: 'confirmed' },
-  { key: 'clean',      label: 'Cleaning',      value: 'Bottle goes in the dishwasher. Hand-wash the cap and sleeve.', status: 'confirmed' },
-  { key: 'bpa',        label: 'BPA',           value: 'BPA-free', status: 'confirmed' },
-  { key: 'grip',       label: 'Built for',     value: 'Small hands — lightweight, easy to grip', status: 'confirmed' },
-  { key: 'age',        label: 'Ages',          value: 'Toddlers and preschoolers', status: 'confirmed' },
+  { key: 'capacity', label: 'Just the right size', value: '9 oz',
+    benefit: 'Sized for little hands', status: 'confirmed' },
+  { key: 'lid', label: 'Flip-top straw', value: 'Snaps securely closed',
+    benefit: 'Easy sipping on the go', status: 'confirmed' },
+  { key: 'spill', label: 'Spill-resistant', value: 'Made for everyday adventures',
+    benefit: 'Because spills happen.', status: 'confirmed' },
+  { key: 'clean', label: 'Easy to clean', value: 'Dishwasher-safe bottle & cap*',
+    benefit: 'Less cleanup for busy parents.', status: 'confirmed' },
+  { key: 'bpa', label: 'BPA-free', value: 'Your kids matter. We give a duck.', status: 'confirmed' },
+  { key: 'grip', label: 'Little-hand friendly', value: 'Lightweight + easy to grip', status: 'confirmed' },
+  { key: 'age', label: 'Made for little ones', value: 'Designed for toddlers & preschoolers', status: 'confirmed' },
 
   { key: 'material',   label: 'Material',      status: 'pending' },
   { key: 'cert',       label: 'Certification', status: 'pending', note: 'The live site says "CDA certified" — no such standard exists. Confirm with the manufacturer (likely CPSIA) before publishing.' },
@@ -165,6 +201,8 @@ export const specs: Spec[] = [
 ]
 
 export const confirmedSpecs = specs.filter((s) => s.status === 'confirmed')
+/** The asterisk on the `clean` row. */
+export const specsFootnote = 'Bottle and cap are dishwasher safe. Hand-wash silicone sleeve.'
 export const pendingSpecCount = specs.filter((s) => s.status === 'pending').length
 
 /* --------------------------------------------------------------------------- */
@@ -191,29 +229,39 @@ export const foundation = {
   title: ['Growing with purpose.', 'Giving back with heart.'],
   body:
     'As Ducks \u2019n Puddles grows, we want our impact to grow with it. The Ducks \u2019n '
-    + 'Puddles Foundation is being created to support children and families and make '
-    + 'everyday adventures a little brighter.',
-  focusLabel: 'Our future focus',
+    + 'Puddles Foundation extends \u201cA Friend for Every Adventure\u201d beyond our '
+    + 'products \u2014 bringing comfort, connection, and support to children, families, '
+    + 'and communities.',
   /**
-   * Three DIRECTIONS, not three commitments, and the wording is doing that work
-   * deliberately: "comfort, confidence and joy" is what they want to give, not
-   * a programme that exists. The note underneath says so in plain words.
+   * COMFORT / CONNECTION / SUPPORT — the client's Sep 2026 wording, replacing
+   * Children / Families / Community.
    *
-   * ⚠️ Still no partner, percentage, pledge or launch date anywhere in this
-   * section — see the TODO(client) below. A charitable claim about children is a
-   * real-world claim and cannot be filled in as placeholder copy.
+   * ⚠️ STILL INTENT, AND STILL DELIBERATELY SO. The new copy is warmer and more
+   * specific in TONE ("mentorship", "resources, education, opportunities") but
+   * it still names no partner, no percentage, no pledge, no programme and no
+   * date — because none has been supplied. Read it as what the Foundation is
+   * FOR, which is what it says, not as a list of things that already run.
+   *
+   * TODO(client): supply the Foundation's actual commitment — who it gives to,
+   * in what form, and how much — before anything more specific than this ships.
    */
   focus: [
-    { key: 'children', title: 'Children', body: 'Comfort, confidence and joy' },
-    { key: 'families', title: 'Families', body: 'Support for everyday care' },
-    { key: 'community', title: 'Community', body: 'Meaningful ways to give back' },
+    { key: 'comfort', title: 'Comfort',
+      body: 'Creating safe, nurturing spaces where children and families feel seen, loved, and cared for.' },
+    { key: 'connection', title: 'Connection',
+      body: 'Building meaningful relationships, mentorship, and community so no one has to navigate life alone.' },
+    { key: 'support', title: 'Support',
+      body: 'Providing resources, education, opportunities, and practical support to help families move forward.' },
   ],
-  note: 'Foundation details coming soon.',
-  linkLabel: 'Learn about our bigger purpose',
-  /** Goosey's line from the character sheet. It is not rendered in the section
-   *  any more — the reference design replaced the pull quote with the three
-   *  focus cards — but it is the sentence the whole idea came from, so it stays
-   *  here rather than being deleted. */
+  note: 'Be a part of bringing the Ducks \u2019n Puddles Foundation to life.',
+  linkLabel: 'Make a Splash With Us',
+  /** TODO(client): the G1FTI campaign URL. Pointed at the Duck Squad signup in
+   *  the meantime rather than at a dead link — see Foundation.tsx. */
+  linkHref: '/#squad',
+  /** Goosey's line from the character sheet. Not rendered in the section — the
+   *  reference design replaced the pull quote with the three focus cards — but
+   *  it is the sentence the whole idea came from, so it stays here rather than
+   *  being deleted. */
   quote: 'There\u2019s always room for one more friend!',
   quoteBy: 'Goosey',
 } as const

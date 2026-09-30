@@ -129,3 +129,25 @@
   inset-inline-end: clamp(8px, 3vw, 64px);
 }
 @media (max-width: 899px) { .cameo { display: none; } }
+
+
+/* The benefit line — the third row of a card, and only on the four that have
+   one. Quieter than the fact above it, because it is the reason rather than
+   the thing. */
+.benefit {
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--ink);
+  opacity: .74;
+  margin-block-start: 4px;
+}
+
+/* The asterisk on "Dishwasher-safe bottle & cap*". Sits under the grid, at the
+   size the client asked for: smaller than the cards. */
+.footnote {
+  margin-block-start: var(--s-5);
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: var(--ink);
+  opacity: .7;
+}

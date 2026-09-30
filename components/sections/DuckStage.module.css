@@ -55,6 +55,17 @@
 /* The character description carries the panel, so it is set at lead size — but at
    600, not 700: this is warm prose now, not a slogan. */
 .personality { font-weight: 600; font-size: var(--fs-lead); line-height: 1.5; max-width: 42ch; }
+
+/* THE DEFINING MESSAGE. Display face, character colour, and big — with the
+   quote, the parents box and the chips gone this is the second of only two
+   things in the panel, so it has to carry the weight they used to. */
+.message {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.08; letter-spacing: .01em;
+  color: var(--ink);
+  margin-block-start: var(--s-4);
+}
 /* No cap, and balanced. `ch` is a poor unit here — it resolves against the
    handwriting face, where 42ch measured only 349px and still dropped the
    closing word of both quotes onto a line of its own. The text column governs

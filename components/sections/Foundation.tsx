@@ -29,7 +29,7 @@ import styles from './Foundation.module.css'
  * children is a real-world claim, not a copy placeholder, and the note under the
  * tiles is what keeps the tiles honest.
  */
-const ICONS = { children: Heart, families: UsersThree, community: HandHeart } as const
+const ICONS = { comfort: Heart, connection: UsersThree, support: HandHeart } as const
 
 export function Foundation() {
   return (
@@ -43,10 +43,9 @@ export function Foundation() {
 
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
-          <p className={styles.chip}>
-            <span className={styles.chipMark} aria-hidden="true"><Motif name="duck" /></span>
-            {foundation.name}
-          </p>
+          {/* The mark beside the name is gone at the client's request — "erase
+              the little yellow circle next to the wording". */}
+          <p className={styles.chip}>{foundation.name}</p>
 
           <h2 id="foundation-title" className={`d ${styles.title}`} data-anim="">
             {foundation.title.map((line) => (
@@ -56,8 +55,10 @@ export function Foundation() {
 
           <p className={`lead ${styles.body}`} data-anim="">{foundation.body}</p>
 
+          {/* "Our future focus" is gone: the three words below are the heading
+              now, and a label above them was the kind of scaffolding the whole
+              revision was about. */}
           <div className={styles.focus} data-anim="">
-            <h3 className={`d ${styles.focusLabel}`}>{foundation.focusLabel}</h3>
             <ul className={styles.tiles}>
               {foundation.focus.map((f) => {
                 const Icon = ICONS[f.key as keyof typeof ICONS] ?? Heart
@@ -76,7 +77,9 @@ export function Foundation() {
 
           <p className={styles.note}>{foundation.note}</p>
 
-          <Link href="/#next" className={styles.link}>
+          {/* TODO(client): this goes to the G1FTI campaign. Until that URL
+              arrives it points at the Duck Squad rather than nowhere. */}
+          <Link href={foundation.linkHref} className={styles.link}>
             {foundation.linkLabel}
             <ArrowRight size={18} weight="bold" aria-hidden="true" />
           </Link>

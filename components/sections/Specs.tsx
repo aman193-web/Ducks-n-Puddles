@@ -1,10 +1,10 @@
-import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby, Heart }
+import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby }
   from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { Duck } from '@/components/ui/Duck'
 import { BrandDetail } from '@/components/ui/BrandDetail'
-import { confirmedSpecs } from '@/content/brand'
+import { confirmedSpecs, specsFootnote } from '@/content/brand'
 import styles from './Specs.module.css'
 
 /**
@@ -45,11 +45,11 @@ export function Specs() {
             The details
           </Sticker>
           <h2 id="specs-title" className="d d-xl" data-anim="">
-            Everything a parent checks, checked.
+            Made with parents in mind.
           </h2>
           <p className="lead measure" data-anim="">
-            Nine ounces, a straw that snaps shut, and a bottle that goes straight in the
-            dishwasher. Small things, but they are the ones that make a morning easier.
+            Thoughtful, practical details designed for little hands and busy parents
+            &mdash; making everyday adventures a little easier.
           </p>
         </div>
 
@@ -63,23 +63,20 @@ export function Specs() {
                 </span>
                 <dt className={styles.key}>{s.label}</dt>
                 <dd className={styles.value}>{s.value}</dd>
+                {s.benefit && <dd className={styles.benefit}>{s.benefit}</dd>}
               </div>
             )
           })}
-
-          <div className={`${styles.card} ${styles.open}`} data-tilt="" data-anim="" data-anim-y="24">
-            <span className={styles.icon} aria-hidden="true">
-              <Heart size={44} weight="fill" />
-            </span>
-            <dt className={styles.key}>And the bit that matters</dt>
-            <dd className={styles.value}>
-              A bottle with a friend on it gets carried everywhere. That is the whole idea.
-            </dd>
-          </div>
+          {/* The dark "And the bit that matters" card is gone at the client's
+              request: the emotional half of the product is made in the three
+              sections above this one, and they want The Details to be about
+              function and nothing else. */}
         </dl>
 
+        <p className={styles.footnote}>{specsFootnote}</p>
+
         <div className={styles.cta}>
-          <Btn href="/#story" colour="var(--paper)">Where this came from</Btn>
+          <Btn href="/#story" colour="var(--paper)">Read Our Story</Btn>
         </div>
       </div>
     </section>
