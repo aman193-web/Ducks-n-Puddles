@@ -23,7 +23,12 @@
   /* Lighter than --goosey-soft (#FEDA7C), which at full strength made a page's
      worth of saturated yellow behind small text. Mixed toward paper, the ground
      recedes and the tiles, photograph and headline all sit on it more calmly. */
-  background: color-mix(in srgb, var(--goosey-soft) 42%, var(--paper));
+  /* 65%, up from 42%. The page ground moved toward Goosey at the client's
+     request and this section's own ground was already there — the two landed
+     5 units apart, so the Foundation stopped reading as its own band and ran
+     straight into the cream Story above it. 34 units apart now, and --ink
+     measures 12.2 against it. */
+  background: color-mix(in srgb, var(--goosey-soft) 65%, var(--paper));
   /* `svh` so a phone with its toolbars showing still gets exactly one screen
      and never an accidental scroll — the hero panel's reasoning. */
   min-block-size: 100svh;
@@ -61,6 +66,12 @@
     grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
     column-gap: clamp(var(--s-7), 4vw, var(--s-9));
   }
+  /* The copy and the photograph share row 1; the three boxes take the whole
+     width underneath. Placed explicitly rather than by source order, so the
+     reading order (copy, photo, boxes) is free to differ from the layout. */
+  .copy  { grid-column: 1; grid-row: 1; }
+  .art   { grid-column: 2; grid-row: 1; }
+  .tiles { grid-column: 1 / -1; grid-row: 2; }
 }
 
 .copy { display: grid; justify-items: start; gap: var(--flow-head); }
@@ -112,15 +123,9 @@
    Three DIRECTIONS on small paper tiles, in place of the pull quote the earlier
    pass carried. They are deliberately small and quiet: a section whose own note
    says the details are not settled should not present three big promises. */
-.focus { display: grid; gap: var(--s-4); justify-items: start; inline-size: 100%; }
-.focusLabel {
-  font-size: clamp(1.125rem, 1.7vw, 1.375rem);
-  line-height: var(--lh-md);
-  color: var(--ink);
-}
 .tiles {
   display: grid;
-  gap: var(--s-3);
+  gap: clamp(12px, 1.4vw, 20px);
   list-style: none; padding: 0; margin: 0;
   inline-size: 100%;
 }
@@ -172,7 +177,11 @@
   line-height: var(--lh-md);
   color: var(--ink);
 }
-.tileBody { font-size: var(--fs-small); color: var(--ink); max-width: 20ch; }
+/* No 20ch cap. It was written for "Comfort, confidence and joy" — three or
+   four words — and the client's replacement runs to about ninety characters,
+   which that cap turned into six lines in a 150px column. The tile's own width
+   is the measure now. */
+.tileBody { font-size: var(--fs-small); line-height: 1.5; color: var(--ink); }
 
 /* The honesty line, and the reason the tiles above are allowed to exist. */
 .note { font-size: var(--fs-small); color: var(--ink); opacity: .72; }

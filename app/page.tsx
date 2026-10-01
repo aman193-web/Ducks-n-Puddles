@@ -71,7 +71,7 @@ export default function HomePage() {
       <WhatsNext />
       <Marquee
         items={['A friend for every adventure', 'Comfort, carried', 'Quack']}
-        colour="var(--chichi-soft)" rot={2.6} dir="rtl" seconds={58}
+        colour="var(--chichi-soft)" rot={2.6} dir="rtl" seconds={86}
       />
       <InTheWild />
       {/* Reviews stays out, deliberately, and stays BUILT: the four quotes are

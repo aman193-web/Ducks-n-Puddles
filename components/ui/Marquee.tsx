@@ -34,7 +34,7 @@ interface Props {
 /* 50s, up from 32. The client asked for it to be slower: at 32 the band moved
    fast enough to read as an alert rather than as atmosphere, and the marks
    blurred past before you could see what they were. */
-export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = 'ltr', seconds = 50 }: Props) {
+export function Marquee({ items, colour = 'var(--sun-soft)', rot = -3.2, dir = 'ltr', seconds = 74 }: Props) {
   /* The loop is seamless only when HALF the track is at least as wide as the
      band, because the animation translates exactly -50%. The band is 118vw and
      keeps growing with the viewport, while the item text stops growing once

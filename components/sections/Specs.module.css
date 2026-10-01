@@ -49,20 +49,34 @@
    Fixed column counts rather than auto-fit, because auto-fit left a ragged
    final row that made the set look unfinished — which is the one thing this
    section must not imply. */
+/* SEVEN CARDS, and seven is the awkward number here. A four-column grid leaves
+   a hole in the second row now that the eighth (the dark card) is gone, and
+   seven columns — which I tried and measured — puts each card at 140px, where
+   "SPILL-RESISTANT" breaks across two lines and the set stops looking uniform,
+   which is the opposite of the note.
+
+   Flex, not grid: the cards keep a four-up basis and the remainder CENTRES,
+   so it reads as 4 over 3 rather than as 4 over 3 with a gap at the end. */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--card-gap);
+  --gap: var(--card-gap);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
   margin: 0;
 }
-@media (min-width: 680px)  { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (min-width: 1000px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.card { flex: 0 1 calc((100% - var(--gap)) / 2); }
+@media (min-width: 680px)  { .card { flex-basis: calc((100% - 2 * var(--gap)) / 3); } }
+@media (min-width: 1000px) { .card { flex-basis: calc((100% - 3 * var(--gap)) / 4); } }
 
 .card {
   display: grid;
   align-content: start;
-  gap: var(--s-2);
-  padding: var(--card-pad);
+  gap: 4px;
+  /* Not --card-pad. These are the smallest cards on the site now — a label, a
+     fact and sometimes one more line — and the shared card padding was sized
+     for cards with a paragraph in them. */
+  padding: clamp(14px, 1.4vw, 20px);
   background: var(--cream);
   border-radius: var(--r-lg);
   /* CardTilt writes the four --tilt-* values; with none set the card is flat,
@@ -80,9 +94,10 @@
    own and real size — at 34px light it was a footnote above the label. */
 .icon {
   display: grid; place-items: center;
-  inline-size: clamp(56px, 5vw, 68px);
-  block-size: clamp(56px, 5vw, 68px);
-  margin-block-end: var(--s-3);
+  /* Down from 56-68px. At seven across, a 68px disc was most of the card. */
+  inline-size: clamp(40px, 3.1vw, 48px);
+  block-size: clamp(40px, 3.1vw, 48px);
+  margin-block-end: 10px;
   /* A neutral well, not the section's own blue — a sky tile on a cream card
      repeated the ground colour and made the glyph fight it. Ink at 6% reads as
      a soft warm grey on cream and stays neutral on the inverted card too. */
@@ -103,16 +118,12 @@
 }
 .value {
   margin: 0;
-  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  font-size: clamp(.9375rem, 1vw, 1.0625rem);
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.35;
   text-wrap: pretty;
 }
 
-/* the closing card is the emotional one, so it inverts */
-.open { background: var(--ink); color: var(--cream); }
-.open .icon { background: rgba(255, 255, 255, .09); color: var(--sun); }
-.open .key { color: var(--sky); }
 
 .cta { margin-block-start: var(--flow-block); display: flex; justify-content: center; }
 

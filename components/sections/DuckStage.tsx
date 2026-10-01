@@ -85,12 +85,8 @@ export function DuckStage() {
                     content/brand.ts; nothing was deleted, it simply is not shown
                     here any more.
 
-                    The message is set as a quotation because that is how it was
-                    asked for: the duck saying it to the child. A speech bubble
-                    is the design half of the same note and is still to come. */}
-                <p className={styles.message}>
-                  <span aria-hidden="true">&ldquo;</span>{d.message}<span aria-hidden="true">&rdquo;</span>
-                </p>
+                    The message itself lives in the FIGURE, not here — see the
+                    speech bubble below. */}
               </div>
 
               {/* The CHARACTER leads and the bottle stands with it. This section
@@ -101,6 +97,12 @@ export function DuckStage() {
                 className={styles.figure}
                 style={{ ['--foot' as string]: FOOT[d.slug] ?? '0%' }}
               >
+                {/* THE REMINDER, SPOKEN. The client asked for the defining message
+                    to sit in a speech bubble next to the duck "making it look
+                    like the character is sharing their reminder directly with
+                    the child" — so it belongs to the character, not to the copy
+                    column it started in. */}
+                <p className={styles.bubble}>{d.message}</p>
                 <span className={styles.puddle} aria-hidden="true" />
                 <Duck
                   who={d.slug} pose="idle" density="always" float speak

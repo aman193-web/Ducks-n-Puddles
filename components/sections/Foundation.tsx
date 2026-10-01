@@ -58,27 +58,8 @@ export function Foundation() {
           {/* "Our future focus" is gone: the three words below are the heading
               now, and a label above them was the kind of scaffolding the whole
               revision was about. */}
-          <div className={styles.focus} data-anim="">
-            <ul className={styles.tiles}>
-              {foundation.focus.map((f) => {
-                const Icon = ICONS[f.key as keyof typeof ICONS] ?? Heart
-                return (
-                  <li key={f.key} className={styles.tile}>
-                    <span className={styles.tileMark} aria-hidden="true">
-                      <Icon size={30} weight="fill" />
-                    </span>
-                    <h4 className={styles.tileTitle}>{f.title}</h4>
-                    <p className={styles.tileBody}>{f.body}</p>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-
           <p className={styles.note}>{foundation.note}</p>
 
-          {/* TODO(client): this goes to the G1FTI campaign. Until that URL
-              arrives it points at the Duck Squad rather than nowhere. */}
           <Link href={foundation.linkHref} className={styles.link}>
             {foundation.linkLabel}
             <ArrowRight size={18} weight="bold" aria-hidden="true" />
@@ -104,6 +85,26 @@ export function Foundation() {
             tint={false}
           />
         </figure>
+
+        {/* THE THREE BOXES, full width. They were inside the copy column, which
+            is half the section — and the client's new wording is three or four
+            times longer than the "Comfort, confidence and joy" it replaced, so
+            three boxes in half a column ran to six lines each in a 150px
+            measure. Across the whole section they are three boxes again. */}
+        <ul className={styles.tiles}>
+          {foundation.focus.map((f) => {
+            const Icon = ICONS[f.key as keyof typeof ICONS] ?? Heart
+            return (
+              <li key={f.key} className={styles.tile} data-anim="" data-anim-y="20">
+                <span className={styles.tileMark} aria-hidden="true">
+                  <Icon size={30} weight="fill" />
+                </span>
+                <h3 className={styles.tileTitle}>{f.title}</h3>
+                <p className={styles.tileBody}>{f.body}</p>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </section>
   )
