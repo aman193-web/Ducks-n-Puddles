@@ -1,7 +1,11 @@
 /* Image left on a colour panel, copy right — the reference's two-up. Type is a
    step down from the section headings elsewhere and the copy is trimmed so the
    whole thing lands in one frame rather than running past the fold. */
-.section { background: var(--cream); padding-block: var(--section-y);
+/* HEIGHT. The client's copy runs a paragraph longer than what it replaced, so
+   this section grew by about one. Most of what can be taken back without
+   touching their words or the type scale is here: the standard section padding
+   is generous for a block that is already a full screen tall. */
+.section { background: var(--cream); padding-block: calc(var(--section-y) * .78);
   position: relative;
   overflow-x: clip;
 }
@@ -41,26 +45,36 @@
 }
 
 
-.body { display: grid; justify-items: start; gap: var(--s-3); }
+/* 10px, not --s-3's 12. Eight gaps in this column, so two pixels each is 16
+   off the section — and at 1.52 leading the paragraphs already separate. */
+.body { display: grid; justify-items: start; gap: 10px; }
 /* a section heading, so it takes the section heading's leading */
 /* The full section size. It stepped down to --fs-lg for its narrower column,
    but the design pass put every section heading on one size. */
 .title { color: var(--ink); font-size: var(--fs-xl); line-height: var(--lh-xl); }
-.body p { max-width: 58ch; font-size: var(--fs-body); }
+/* HEIGHT. The client's copy is a paragraph longer than what it replaced and the
+   section grew with it. 58ch capped the text at ~464px inside a ~594px column,
+   so every paragraph wrapped a line earlier than it had to purely to honour a
+   measure the column was already enforcing. Widened to the column, with the
+   leading brought in a step — both still well inside a readable line. */
+.body p { max-width: 72ch; font-size: var(--fs-body); line-height: 1.52; }
 /* The opening line carries the two names, so it takes lead size — without it
    the four paragraphs are one even grey block with no way in. */
 .body p.lead { font-size: var(--fs-lead); }
-/* The client's emphasis. Poppins has real weights, so this is a genuine bold
-   rather than a synthesised one (font-synthesis is off site-wide). */
-.body strong { font-weight: 600; color: var(--ink); }
-/* The founding question, carried in full rather than in fragments. */
-.body p.stress { font-weight: 700; }
+/* The client's emphasis, on the four passages their document marks and nothing
+   else. Poppins has real weights, so this is a genuine bold rather than a
+   synthesised one (font-synthesis is off site-wide), and 700 rather than 600
+   because at --fs-body inside a paragraph 600 barely separates from the text
+   around it — which is what "the boldness should be similar to the doc" means. */
+.body strong { font-weight: 700; color: var(--ink); }
 
 /* The closing tagline. Set in the display face and a clear step above the body,
    so it reads as the story signing off rather than as a fifth paragraph — but
    below the section heading, because it is not a second title. */
 .body p.tagline {
-  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  /* 500, not 400: it is the fourth of the client's bold passages, but it is set
+     in the display face at 32px where a true bold closes the counters up. */
+  font-family: var(--font-display); font-synthesis: none; font-weight: 500;
   font-size: clamp(1.375rem, 2.3vw, 2rem);
   line-height: var(--lh-md);
   color: var(--ink);
@@ -84,7 +98,13 @@
      wrapped onto separate rows. At ~620px the paragraphs lose a line each and
      the close row fits on one, for about 150px off the section. The photo gives
      up 25px of width to buy it. */
-  .grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(var(--s-6), 3.4vw, var(--s-8)); }
+  /* 5fr/7fr. Measured at both ends before settling, because the two disagree:
+     at 1440 the extra width changes nothing — the paragraphs break to four lines
+     at 593px and at 634px alike — but at 1024 it is worth 90px off the section,
+     because down there the column is narrow enough that one more fr genuinely
+     drops a line from three paragraphs. So it is kept for the width that needs
+     it, and costs the wide one about five characters a line. */
+  .grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(var(--s-6), 3.4vw, var(--s-8)); }
 }
 
 /* The three of them at the foot of the photograph — the client's "bring the

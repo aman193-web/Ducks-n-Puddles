@@ -42,8 +42,16 @@
      columns its label wraps — left intrinsic it pushed out of the card. The
      auto/auto/1fr rows keep all three CTAs on one baseline whatever the
      personality line does. */
-  display: grid; gap: var(--flow-head); justify-items: stretch;
-  grid-template-rows: auto auto auto 1fr auto;
+  /* FIVE ROWS FOR FOUR CHILDREN was the spacing bug. The template dated from
+     when a card carried the figure, the sticker and TWO labelled paragraphs
+     before the CTA; with those paragraphs gone the button landed in the `1fr`
+     row and absorbed every pixel of slack the tallest card created. Four rows
+     for four children, with the slack above the button where it belongs.
+
+     The gap comes down with it: --flow-head is the spacing for a heading and
+     its paragraph, and between a sticker and a one-line role it read as a hole. */
+  display: grid; gap: clamp(10px, 1.1vw, 16px); justify-items: stretch;
+  grid-template-rows: auto auto 1fr auto;
   background: var(--duck-field); border: var(--border-lg); border-radius: var(--r-lg);
   box-shadow: var(--shadow); padding: var(--card-pad);
   position: relative; min-inline-size: 0;
@@ -181,5 +189,8 @@
   font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
   line-height: 1.35;
   color: var(--ink);
-  margin-block: var(--s-2) var(--s-4);
+  /* No margins. They were inherited from the two-paragraph layout and stacked
+     on top of the grid gap — 32px above this line and 40px below it. */
+  margin: 0;
+  align-self: start;
 }
