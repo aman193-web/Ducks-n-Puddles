@@ -23,12 +23,7 @@
   /* Lighter than --goosey-soft (#FEDA7C), which at full strength made a page's
      worth of saturated yellow behind small text. Mixed toward paper, the ground
      recedes and the tiles, photograph and headline all sit on it more calmly. */
-  /* 65%, up from 42%. The page ground moved toward Goosey at the client's
-     request and this section's own ground was already there — the two landed
-     5 units apart, so the Foundation stopped reading as its own band and ran
-     straight into the cream Story above it. 34 units apart now, and --ink
-     measures 12.2 against it. */
-  background: color-mix(in srgb, var(--goosey-soft) 65%, var(--paper));
+  background: color-mix(in srgb, var(--goosey-soft) 42%, var(--paper));
   /* `svh` so a phone with its toolbars showing still gets exactly one screen
      and never an accidental scroll — the hero panel's reasoning. */
   min-block-size: 100svh;

@@ -60,17 +60,12 @@
   --ink-soft: #3A5580;
 
   /* ---- section grounds. Flat blocks; colour is how sections are separated.
-          MEASURED: --ink passes AA or better on sun (11.2), cream (13.1), sky (7.1),
+          MEASURED: --ink passes AA or better on sun (11.2), cream (14.0), sky (7.1),
           goosey (8.9), warm-orange (7.0), splash (5.3), orange (5.0), vincey (5.0),
           chichi (4.5). It FAILS on Duck Blue (1.9) — so Duck Blue is a shape fill
           and a border colour only, NEVER a ground for text. Dark sections use
           --deep, where white (15.0) and sun (11.2) both sing. ---- */
-  /* Warmed ~13% toward Goosey at the client's request — "more vibrant and
-     cheerful, closer to Goosey's yellow, while still keeping it soft/light
-     enough that it doesn't feel overwhelming". Measured before and after:
-     --ink falls from 14.0 to 13.1 against it, which is three times AA, and
-     every other pairing on the page was re-measured rather than assumed. */
-  --cream:  #FFEFC8;
+  --cream:  #FFF6E3;
   --paper:  #FFFDF7;
   --deep:   #10264A;
 
