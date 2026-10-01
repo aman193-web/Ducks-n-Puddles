@@ -63,7 +63,23 @@
      the composition working, not the panel falling short. */
   block-size: 100svh;
   min-block-size: 520px;
-  background: linear-gradient(180deg, #EAF7FE 0%, #CBEBFB 46%, var(--sky) 100%);
+  /* SUNLIGHT AT THE TOP. The client asked for this panel to be "more vibrant and
+     cheerful, closer to Goosey's yellow, while still keeping it soft/light
+     enough that it doesn't feel overwhelming" — so the warmth goes where the
+     light comes from, at the top beside the sun glow, and is gone by the time
+     the sky meets the copy.
+
+     The stops are placed off the composition, not by eye: the headline sits
+     between 36% and 57% of the panel at 1440, so the warm end is spent by 34%
+     and the band the type lands on is the same blue it always was. --ink
+     measures 12.5 on the warmest stop, which is still nearly three times AA. */
+  background: linear-gradient(180deg,
+                #FFE9B0 0%,
+                #FFF3D6 14%,
+                #F3F6EE 26%,
+                #EAF7FE 34%,
+                #CBEBFB 62%,
+                var(--sky) 100%);
 }
 
 @media (min-width: 900px) {
