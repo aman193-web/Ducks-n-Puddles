@@ -69,16 +69,22 @@
      light comes from, at the top beside the sun glow, and is gone by the time
      the sky meets the copy.
 
-     The stops are placed off the composition, not by eye: the headline sits
-     between 36% and 57% of the panel at 1440, so the warm end is spent by 34%
-     and the band the type lands on is the same blue it always was. --ink
-     measures 12.5 on the warmest stop, which is still nearly three times AA. */
+     Carried most of the way down the sky rather than sitting in a band at the
+     top: the warmth now reaches past the headline and only turns blue as it
+     approaches the waterline at 70%. Eight stops, not four, because a long
+     warm-to-cool run across this few degrees of hue shows its seams if you
+     ask it to turn too quickly.
+
+     --ink measures 12.5 on the warmest stop and better on every other one, so
+     the headline is above three times AA wherever the panel puts it. */
   background: linear-gradient(180deg,
                 #FFE9B0 0%,
-                #FFF3D6 14%,
-                #F3F6EE 26%,
-                #EAF7FE 34%,
-                #CBEBFB 62%,
+                #FFEFC4 16%,
+                #FDF3D8 32%,
+                #F7F5E6 44%,
+                #EFF6F2 54%,
+                #E4F4FB 64%,
+                #CBEBFB 80%,
                 var(--sky) 100%);
 }
 
@@ -130,6 +136,16 @@
   block-size: 40%;
   background: radial-gradient(60% 100% at 22% 60%, rgba(255, 255, 255, .8), transparent 70%),
               radial-gradient(46% 100% at 78% 30%, rgba(255, 255, 255, .62), transparent 72%);
+  /* THE BLUE LINE. Neither radial has faded out by the time this box ends, so
+     the element's own bottom edge cut a dead-straight seam across the sky at
+     exactly 6% + 40% = 46% of the panel — which is the middle of the headline.
+     Measured off the painted pixels: an 8-value step from one row to the next,
+     small in absolute terms and glaring on a smooth gradient, which is what
+     the eye is built to find.
+
+     Masking the last third of the box takes the cut out without moving the
+     light. */
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
   z-index: 1;
 }
 
