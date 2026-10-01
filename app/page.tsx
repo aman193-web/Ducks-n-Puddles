@@ -69,9 +69,14 @@ export default function HomePage() {
           so the two read as one movement rather than two bands. */}
       <Foundation />
       <WhatsNext />
+      {/* OPTION 2 of the two the client offered for this band: the three
+          characters and the tagline, "more like a playful branded moment rather
+          than another text-heavy element". Option 1 was to delete the band and
+          lean on the wave transition between The Details and Our Story — which
+          already exists — so it would have removed a beat without adding one. */}
       <Marquee
-        items={['A friend for every adventure', 'Comfort, carried', 'Quack']}
-        colour="var(--chichi-soft)" rot={2.6} dir="rtl" seconds={86}
+        items={['A Friend for Every Adventure']}
+        colour="var(--chichi-soft)" rot={2.6} dir="rtl" seconds={86} faces
       />
       <InTheWild />
       {/* Reviews stays out, deliberately, and stays BUILT: the four quotes are

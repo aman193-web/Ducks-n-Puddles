@@ -18,6 +18,13 @@ import styles from './Journal.module.css'
  * the visible name to change, and renaming the component, its stylesheet and
  * content/journal.ts would be a large diff that changes nothing anyone sees.
  */
+/** The first sentence only, for the card previews. Falls back to the whole
+ *  string when there is no sentence break to find. */
+const firstSentence = (t: string) => {
+  const m = t.match(/^[\s\S]*?[.!?](?=\s|$)/)
+  return m ? m[0] : t
+}
+
 export function Journal() {
   const latest = [...posts]
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -29,10 +36,10 @@ export function Journal() {
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--sky-soft)" rot={2} data-pop="" data-pop-rot="2">The duck pond</Sticker>
-          <h2 id="journal-title" className="d d-xl" data-anim="">Notes from the kitchen table.</h2>
+          <h2 id="journal-title" className="d d-xl" data-anim="">From Our Pond to Yours.</h2>
           <p className="lead" data-anim="">
-            What we are learning, what we are changing, and the odd thing worth knowing
-            before you buy any bottle at all.
+            Stories, parenting thoughts, behind-the-scenes moments, and things we&rsquo;re
+            learning along the way.
           </p>
         </div>
 
@@ -45,10 +52,18 @@ export function Journal() {
                 </span>
                 <span className={styles.meta}>
                   <span className={styles.tag}>{p.tag}</span>
-                  <span className={styles.date}>{p.readingMinutes} min read</span>
+                  {/* The reading time is gone from the card at the client's
+                      request — "make '3 min read' smaller/lighter or remove it
+                      entirely". It is still on the post itself, where someone
+                      deciding whether to start actually wants it. */}
                 </span>
                 <h3 className={styles.title}>{p.title}</h3>
-                <p className={styles.excerpt}>{p.excerpt}</p>
+                {/* ONE SENTENCE. "Limit article previews to one sentence
+                    maximum" — the excerpts in content run to two, so the card
+                    takes the first and the post page still gets the whole
+                    thing. */}
+                <p className={styles.excerpt}>{firstSentence(p.excerpt)}</p>
+                <span className={styles.more} aria-hidden="true">Read more &rarr;</span>
                 <span className={styles.more}>
                   Read it <ArrowRight size={18} weight="bold" aria-hidden="true" />
                 </span>

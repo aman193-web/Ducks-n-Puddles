@@ -84,3 +84,11 @@
   justify-content: center;
   margin-block-start: var(--flow-block);
 }
+
+
+/* STORIES / PRODUCTS / EXPERIENCES. Sits above the title, in the mono eyebrow
+   face, so the three cards read as three directions of one thing. */
+.label {
+  color: var(--ink-soft);
+  margin-block-end: 2px;
+}

@@ -67,3 +67,18 @@
 
 @keyframes slide { to { transform: translate3d(-50%, 0, 0); } }
 @media (prefers-reduced-motion: reduce) { .track { animation: none; } }
+
+
+/* ---- the character band (Marquee faces) ---------------------------------
+   The pink band's Option 2. Same track and the same loop, but each repeat is
+   the three ducks and the tagline rather than a phrase and a mark. */
+.faceItem { gap: clamp(10px, 1.4vw, 22px); }
+.faces { display: inline-flex; align-items: flex-end; gap: clamp(2px, .5vw, 8px); }
+.face {
+  display: block;
+  inline-size: auto;
+  /* `em`, so the three stay in proportion to the line they travel with at every
+     width — .item's own clamp(1.25rem, 2.5vw, 2.125rem) does the scaling and
+     this does not have to know what it resolved to. */
+  block-size: 2em;
+}

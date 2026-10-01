@@ -96,3 +96,22 @@
 /* The link to the full journal. Centred under the three cards — the grid is the
    content and this is a footnote to it, not a third column. */
 .more_all { display: flex; justify-content: center; margin-block-start: var(--flow-block); }
+
+
+/* "Potentially add a simple 'Read More ->' under each." Not a link of its own —
+   the whole card is already one — so it is aria-hidden and purely an affordance
+   that says the card goes somewhere. */
+.more {
+  font-weight: 700;
+  font-size: var(--fs-small);
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: .28em;
+  transition: text-decoration-color var(--t-fast) ease;
+}
+@media (hover: hover) {
+  a:hover .more, a:focus-visible .more { text-decoration-color: var(--sun); }
+}
+@media (prefers-reduced-motion: reduce) { .more { transition: none; } }

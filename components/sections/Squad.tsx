@@ -24,13 +24,14 @@ type Duck = (typeof DUCKS)[number]
 /** What being in the Squad actually gets you. Belonging, not benefits: each
  *  line is a thing that is true of members today, written as "you are", not
  *  "you will receive". No dates, no discounts, no invented perks. */
+/* The client's Sep 2026 wording, verbatim. */
 const SQUAD_PERKS: { title: string; body: string }[] = [
-  { title: 'You are there first.',
-    body: 'You hear the day the ducks arrive before the shop does.' },
-  { title: 'You get a say.',
-    body: 'Once a month we ask what to make next, and it changes what we build.' },
-  { title: 'You are in their world.',
-    body: 'The characters, the stories and the Foundation, as they happen.' },
+  { title: 'Be the first to know.',
+    body: 'New ducks, products, stories, and launches \u2014 straight from the pond.' },
+  { title: 'Get a peek behind the scenes.',
+    body: 'Come along as we build Ducks \u2019n Puddles, from first ideas to finished products.' },
+  { title: 'Help shape what\u2019s next.',
+    body: 'We\u2019ll ask what you love, what you need, and what you\u2019d like us to create next.' },
 ]
 
 export function Squad() {
@@ -89,14 +90,14 @@ export function Squad() {
       <BrandDetail preset="splashdown" />
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
-          <Sticker colour="var(--sun-soft)" rot={-3} data-pop="" data-pop-rot="-3">Join the Duck Squad</Sticker>
+          <Sticker colour="var(--sun-soft)" rot={-3} data-pop="" data-pop-rot="-3">Join the family</Sticker>
           <h2 id="squad-title" className="d d-xl" data-anim="">
-            Come into the pond.
+            Come Into the Pond.
           </h2>
           <p className={`lead ${styles.sub}`} data-anim="">
-            The Duck Squad is where the Ducks &rsquo;n Puddles world opens up first. You will
-            know before anyone else when the ducks arrive, and once a month we ask what we
-            should make next. We mean that literally; it changes what we build.
+            Be part of the Ducks &rsquo;n Puddles world as it grows. Get little notes from
+            the pond, first looks at what&rsquo;s coming, and a chance to help shape what
+            we create next.
           </p>
 
           {/* The client: "we'd like this to feel more like joining the Ducks 'n
@@ -122,9 +123,6 @@ export function Squad() {
             <Picture id="trio" sizes="(min-width: 900px) 42vw, 78vw" alt="" data-bob="" />
           </div>
 
-          <p className={styles.note}>
-            We don&rsquo;t sell your address and we don&rsquo;t share it. One click to leave, any time.
-          </p>
         </div>
 
         <div className={styles.panel}>
@@ -145,7 +143,7 @@ export function Squad() {
         ) : (
           <form className={styles.form} onSubmit={onSubmit} noValidate>
             <fieldset className={styles.pick}>
-              <legend className={styles.pickLabel}>Which duck is your kid&rsquo;s?</legend>
+              <legend className={styles.pickLabel}>Which duck is your little one most like?</legend>
               <div className={styles.stickers} role="radiogroup" aria-label="Pick your duck">
                 {ducks.map((d, i) => (
                   <NameSticker
@@ -174,15 +172,15 @@ export function Squad() {
             </fieldset>
 
             <div className={styles.field}>
-              <label htmlFor="firstName">First name (optional)</label>
+              <label htmlFor="firstName">First name</label>
               <input id="firstName" name="firstName" autoComplete="given-name"
-                     placeholder="So we can say hi properly" />
+                     placeholder="So we know what to call you." />
             </div>
 
             <div className={styles.field}>
               <label htmlFor="email">Email</label>
               <input id="email" name="email" type="email" required autoComplete="email"
-                     placeholder="name@example.com" />
+                     placeholder="Where should we send your notes from the pond?" />
             </div>
 
             {/* Honeypot — positioned off-screen rather than display:none, which some bots skip. */}
@@ -196,7 +194,7 @@ export function Squad() {
             <div className={styles.consentRow}>
               <label className={styles.consent} htmlFor="consent">
                 <input id="consent" type="checkbox" name="consent" required />
-                <span>Email me about Ducks &rsquo;n Puddles. Nothing else, ever.</span>
+                <span>Yes, I&rsquo;d like to receive Ducks &rsquo;n Puddles emails.</span>
               </label>
               <a className={styles.privacy} href="/privacy">Read the privacy policy</a>
             </div>

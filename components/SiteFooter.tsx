@@ -4,17 +4,21 @@ import { brand } from '@/content/brand'
 import { WaveEdge } from './ui/WaveEdge'
 import styles from './SiteFooter.module.css'
 
+/* Relabelled and reordered to the client's Sep 2026 list. "Shipping & Returns"
+   is on their list marked "(when live)" and is deliberately NOT here — a link
+   to a page that does not exist is worse than no link. */
 const EXPLORE = [
-  { href: '/#ducks', label: 'The Ducks' },
-  { href: '/#features', label: 'Features' },
-  { href: '/#store', label: 'The Range' },
+  { href: '/#ducks', label: 'Meet the Ducks' },
+  { href: '/#store', label: 'The Bottles' },
   { href: '/#story', label: 'Our Story' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/#next', label: 'Our Bigger Vision' },
+  { href: '/#foundation', label: 'The Foundation' },
+  { href: '/blog', label: 'From the Pond' },
 ]
 
 const HELP = [
+  { href: '/#faq', label: 'FAQs' },
   { href: '/contact', label: 'Contact Us' },
-  { href: '/#faq', label: 'FAQ' },
   { href: '/privacy', label: 'Privacy Policy' },
   { href: '/terms', label: 'Terms of Service' },
   { href: '/accessibility', label: 'Accessibility' },
@@ -63,9 +67,10 @@ export function SiteFooter() {
           <div className={styles.signup}>
             <h2 className={styles.h}>{brand.tagline}</h2>
             <p className={styles.blurb}>
-              {brand.founders} &mdash; two parents in {brand.place}, making things we
-              wanted for our own kids. Write to us any time; it really is us reading it.
+              Thoughtful products for parents. Little friends for kids. Made to bring more
+              ease, comfort, and connection to everyday adventures.
             </p>
+            <p className={`hand ${styles.socialsLabel}`}>Come hang with us</p>
             <div className={styles.socials}>
               {SOCIALS.map((s) => (
                 <a
@@ -114,8 +119,8 @@ export function SiteFooter() {
         </div>
 
         <div className={styles.bottom}>
-          <span>&copy; {new Date().getFullYear()} {brand.name}. {brand.founders}, {brand.place}.</span>
-          <span className="hand">{brand.closing}</span>
+          <span>&copy; {new Date().getFullYear()} {brand.name}. All rights reserved.</span>
+          <span className="hand">Here&rsquo;s to all the adventures ahead.</span>
         </div>
       </div>
 
@@ -126,7 +131,15 @@ export function SiteFooter() {
               ducks. Not cropped: their note is that all three stay clearly
               visible, so the frame keeps its aspect and the footer grows.
               See FooterDucks for the seek-throttling and the reduced-motion
-              and touch paths. */}
+              and touch paths.
+
+              ⚠️ TWO ARTWORK CHANGES ARE OUTSTANDING HERE, not code ones. The
+              client asked for the blue pants/diapers to be added to all three so
+              they match their character designs, and for Chi Chi's pink to be
+              brighter and closer to her signature. These three are a single
+              pre-rendered video, so both need a new render from whoever produced
+              it — see media/video/. */}
+      <p className={styles.sendoff}>Come Back to the Pond Soon!</p>
       <FooterDucks />
     </footer>
   )

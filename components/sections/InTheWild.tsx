@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 import { Play, Pause } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
+import { brand } from '@/content/brand'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { reels } from '@/content/brand'
 import styles from './InTheWild.module.css'
@@ -49,10 +50,10 @@ export function InTheWild() {
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Out in the world</Sticker>
-          <h2 id="wild-title" className="d d-xl" data-anim="">Ducks in everyday life.</h2>
+          <h2 id="wild-title" className="d d-xl" data-anim="">Where Will Your Duck Go?</h2>
           <p className="lead measure" data-anim="">
-            Real kids, real families, real afternoons. This is what a duck looks like once
-            it belongs to somebody.
+            Big adventures, little moments, and every puddle in between &mdash;
+            Chi&nbsp;Chi, Vincey, and Goosey are ready to come along!
           </p>
         </div>
       </div>
@@ -81,7 +82,10 @@ export function InTheWild() {
                     : <Play size={22} weight="fill" aria-hidden="true" />}
                 </button>
               </div>
-              <p className={styles.cap}>{r.caption}</p>
+              {/* The caption used to print here. Removed at the client's request
+                  — "we'd like the visuals to speak for themselves" — but kept as
+                  the play button's accessible name above, because a video
+                  control still has to say which clip it controls. */}
             </li>
           )
         })}
@@ -89,7 +93,9 @@ export function InTheWild() {
 
       <div className="wrap">
         <div className={styles.cta}>
-          <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+          {/* Social, not the signup: the client asked for this section to send
+              people to where the pictures keep coming from. */}
+          <Btn href={brand.instagram} colour="var(--sun-soft)">Follow along on Instagram</Btn>
         </div>
       </div>
     </section>

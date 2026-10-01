@@ -97,6 +97,7 @@
 }
 .blurb { font-size: var(--fs-small); max-width: 42ch; line-height: 1.6; }
 
+.socialsLabel { margin-block-start: var(--s-4); color: var(--ink); }
 .socials { display: flex; gap: var(--s-3); margin-block-start: var(--s-2); }
 .social {
   display: grid; place-items: center;
@@ -140,4 +141,18 @@
   align-items: baseline; justify-content: space-between;
   padding-block: var(--s-5) 0;
   font-size: var(--fs-micro);
+}
+
+
+/* "One simple line above their heads, centered." The send-off, and the thing
+   that turns the three at the foot of the page into the brand waving you out
+   rather than a decorative strip. */
+.sendoff {
+  position: relative; z-index: 1;
+  margin-block: clamp(var(--s-6), 4vw, var(--s-8)) 0;
+  text-align: center;
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.375rem, 3vw, 2.25rem);
+  line-height: var(--lh-md);
+  color: var(--ink);
 }

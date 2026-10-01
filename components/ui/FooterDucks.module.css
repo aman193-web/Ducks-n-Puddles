@@ -7,7 +7,11 @@
   z-index: 1;
   display: flex;
   justify-content: center;
-  margin-block-start: clamp(var(--s-5), 3vw, var(--s-7));
+  /* Pulled up at the client's request — "reduce some of the empty cream space
+     above the characters and bring the ducks higher up on the page, so they're
+     more prominent". The send-off line now carries the space that used to be
+     empty here. */
+  margin-block-start: 0;
   /* It is decoration sitting under real links; it must never eat a click. */
   pointer-events: none;
   /* GSAP writes x/y here. Promoting it up front keeps the parallax off the

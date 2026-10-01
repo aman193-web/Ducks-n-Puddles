@@ -32,12 +32,12 @@ export function WhatsNext() {
         <div className={styles.head}>
           <Sticker colour="var(--sky-soft)" rot={-2} data-pop="" data-pop-rot="-2">The bigger picture</Sticker>
           <h2 id="next-title" className="d d-xl" data-anim="">
-            The bottles are just the beginning.
+            We&rsquo;re Only Getting Started.
           </h2>
           <p className="lead" data-anim="">
-            Chi&nbsp;Chi, Goosey and Vincey are characters first. The bottle is simply where
-            most people will meet them &mdash; the rest of their world is already being
-            drawn.
+            Chi&nbsp;Chi, Goosey, and Vincey are more than characters on a bottle.
+            We&rsquo;re building a world around them &mdash; through stories, thoughtful
+            products, and experiences that grow with little ones and their families.
           </p>
         </div>
 
@@ -45,10 +45,15 @@ export function WhatsNext() {
           {biggerPicture.map((row, i) => {
             const Icon = ICONS[i] ?? BookOpenText
             return (
-              <li key={row.title} className={styles.card} data-anim="" data-anim-y="30">
+              <li key={row.key} className={styles.card} data-anim="" data-anim-y="30">
                 <span className={styles.icon} aria-hidden="true">
                   <Icon size={44} weight="regular" />
                 </span>
+                {/* The client's three rows carry a LABEL as well as a title now —
+                    STORIES / PRODUCTS / EXPERIENCES — which is what makes the
+                    three read as the three directions rather than as three
+                    unrelated headlines. */}
+                <p className={`eyebrow ${styles.label}`}>{row.label}</p>
                 <h3 className={styles.title}>{row.title}</h3>
                 <p className={styles.body}>{row.body}</p>
               </li>
@@ -57,7 +62,7 @@ export function WhatsNext() {
         </ul>
 
         <div className={styles.cta}>
-          <Btn href="/#squad" colour="var(--sun-soft)">Be first to know</Btn>
+          <Btn href="/#squad" colour="var(--sun-soft)">Be The First To Know</Btn>
         </div>
       </div>
     </section>

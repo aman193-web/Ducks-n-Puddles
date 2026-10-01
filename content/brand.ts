@@ -190,9 +190,15 @@ export const specs: Spec[] = [
   { key: 'bpa', label: 'BPA-free', value: 'Your kids matter. We give a duck.', status: 'confirmed' },
   { key: 'grip', label: 'Little-hand friendly', value: 'Lightweight + easy to grip', status: 'confirmed' },
   { key: 'age', label: 'Made for little ones', value: 'Designed for toddlers & preschoolers', status: 'confirmed' },
+  /* The FAQ now says "ideal for ages 2\u20136". Kept broader on the card because that
+     is the wording the client specified for this grid. */
 
-  { key: 'material',   label: 'Material',      status: 'pending' },
-  { key: 'cert',       label: 'Certification', status: 'pending', note: 'The live site says "CDA certified" — no such standard exists. Confirm with the manufacturer (likely CPSIA) before publishing.' },
+  /* Supplied at last, in the Sep 2026 FAQ copy. Left as `pending` rather than
+     promoted into the rendered grid: the client wrote them as FAQ answers, not
+     as feature cards, and the seven cards above are the seven they specified.
+     The notes record where the wording came from. */
+  { key: 'material',   label: 'Material',      status: 'pending', note: 'Client (Sep 2026 FAQ): "stainless steel with BPA-free materials". Confirm with the manufacturer before promoting to a feature card.' },
+  { key: 'cert',       label: 'Certification', status: 'pending', note: 'Client (Sep 2026 FAQ): "independently tested to meet applicable U.S. children\u2019s product safety requirements". This REPLACES the live site\u2019s "CDA certified", which names a standard that does not exist. Published in the FAQ on their written instruction; get it in writing from the manufacturer.' },
   { key: 'insulation', label: 'Insulation',    status: 'pending' },
   { key: 'dimensions', label: 'Dimensions',    status: 'pending' },
   { key: 'weight',     label: 'Weight',        status: 'pending' },
@@ -255,9 +261,8 @@ export const foundation = {
   ],
   note: 'Be a part of bringing the Ducks \u2019n Puddles Foundation to life.',
   linkLabel: 'Make a Splash With Us',
-  /** TODO(client): the G1FTI campaign URL. Pointed at the Duck Squad signup in
-   *  the meantime rather than at a dead link — see Foundation.tsx. */
-  linkHref: '/#squad',
+  /** The G1FTI campaign, supplied in the 24 Sep revisions. */
+  linkHref: 'https://g1fti.com/project/ducksnpuddles',
   /** Goosey's line from the character sheet. Not rendered in the section — the
    *  reference design replaced the pull quote with the three focus cards — but
    *  it is the sentence the whole idea came from, so it stays here rather than
@@ -302,21 +307,32 @@ export const foundation = {
  */
 export const biggerPicture = [
   {
-    title: 'Stories, and the books they came from',
+    key: 'stories',
+    label: 'Stories',
+    title: 'A world of their own.',
     body:
-      'Chi Chi, Goosey and Vincey began as characters in a book, not as bottles. The Quack Pack is where the rest of their world gets written \u2014 more of the pond, more of the friends in it, and stories that actually go somewhere.',
+      'Through The Quack Pack books and future stories, the ducks come to life through '
+      + 'adventures, friendships, and positive lessons for little ones.',
   },
   {
-    title: 'Things for every day',
+    key: 'products',
+    label: 'Products',
+    title: 'Products You Can Trust.',
     body:
-      'A name on the bottom of every bottle, because it should be your child\u2019s. Boxes that grow up with them, from about two to about six. And the unglamorous half of small children \u2014 bath wipes, a spray for the table \u2014 made a little easier.',
+      'We thoughtfully create products that make everyday parenting a little easier \u2014 '
+      + 'with carefully considered details that bring more convenience, trust, and peace '
+      + 'of mind.',
   },
   {
-    title: 'A world to be part of',
+    key: 'experiences',
+    label: 'Experiences',
+    title: 'Bringing Their World to Life.',
     body:
-      'Past the products: places, moments and experiences where the three of them are real to a child rather than printed on something. That is the part we are still dreaming about \u2014 and the part we would most like the Duck Squad to help us shape.',
+      'Our bigger dream is to bring Ducks \u2019n Puddles beyond the page and into real '
+      + 'life \u2014 creating experiences filled with imagination, connection, lasting '
+      + 'memories, and a sense of belonging.',
   },
-]
+] as const
 
 
 /* The `samples` prototype timeline and its <Samples> section are gone. The
@@ -392,6 +408,9 @@ export const features = [
 ] as const
 
 /** Real clips from the family's own camera roll, transcoded for the web. */
+/* Captions removed at the client's request — "we'd like the visuals to speak
+   for themselves". The `caption` is still carried because it is the accessible
+   name for each clip; it is simply no longer printed under the card. */
 export const reels = [
   { id: 'duck-5',   poster: 'poster-duck-5',   caption: 'She picked hers before we did.' },
   { id: 'duck-2',   poster: 'poster-duck-2',   caption: 'Two ducks, one afternoon.' },
@@ -411,37 +430,64 @@ export const reels = [
  * certification questions are answered by saying they are not confirmed yet,
  * because the alternative is inventing a safety claim on a children's product.
  */
+/**
+ * THE FAQ, rewritten to the client's Sep 2026 copy.
+ *
+ * ⚠️ THREE OF THESE ANSWERS PUBLISH FACTS THE SITE PREVIOUSLY WITHHELD, on the
+ * client's written instruction and recorded here so there is a trail:
+ *
+ *   material  "stainless steel with BPA-free materials" — was `pending` in
+ *             `specs` because it had never been supplied.
+ *   safety    "independently tested to meet applicable U.S. children's product
+ *             safety requirements" — this is the claim that replaces the live
+ *             site's "CDA certified", which names a standard that does not
+ *             exist. The new wording is careful and plausible, but it is still
+ *             a safety claim about a children's product and it is the single
+ *             most consequential sentence on this page.
+ *   ages      "ideal for ages 2–6" — narrower than the old "toddlers and
+ *             preschoolers".
+ *
+ * TODO(client): confirm all three with the manufacturer in writing.
+ */
 export const faqs = [
   {
-    q: 'What is Ducks ’n Puddles?',
-    a: 'A children’s brand built around three little friends — Chi Chi, Goosey and Vincey — made by two parents in South Florida. Each one has their own personality, and the first thing they come as is a water bottle. A bottle with a friend on it gets carried, and a bottle that gets carried gets used. The bottles are just the beginning.',
+    q: 'What is Ducks \u2019n Puddles?',
+    a: 'Ducks \u2019n Puddles is a children\u2019s lifestyle brand built around one simple idea: A Friend for Every Adventure. We create thoughtful products that bring more ease to parents and comfort, confidence, and positive direction to kids. Through our characters, products, stories, experiences, and growing Foundation, our bigger vision is to create a world where children and families feel supported, connected, and cared for.',
   },
   {
-    q: 'How big is the bottle?',
-    a: 'It holds 9 oz. That is deliberately not the biggest bottle on the shelf — a full one-litre bottle is heavy enough that a small child stops carrying it themselves, which defeats the point.',
-  },
-  {
-    q: 'Does it leak?',
-    a: 'It has a flip-top straw with a snap closure and is designed to be spill-resistant. We test every sample the only way that counts: in a backpack, in a car seat, upside down, with a four-year-old in charge of it.',
+    q: 'Tell me about the water bottle.',
+    a: 'Our 9 oz bottles are thoughtfully designed for little hands and busy parents \u2014 lightweight, spill-resistant, BPA-free, and easy to clean, with a flip-top straw for sipping on the go. But it\u2019s more than a water bottle: each duck has a name and personality of its own, turning an everyday essential into a friend for every adventure.',
   },
   {
     q: 'How do I clean it?',
-    a: 'The bottle goes in the dishwasher. The cap and the silicone sleeve get a hand wash. That is the whole routine.',
+    a: 'The entire bottle is dishwasher safe! We just recommend hand-washing the silicone sleeve to help keep it looking its best.',
   },
   {
-    q: 'What age is it for?',
-    a: 'Toddlers and preschoolers. It is sized and weighted so a small child can pick it up, tip it and put it down again without help.',
+    q: 'What is it made of?',
+    a: 'Our bottles are made from stainless steel with BPA-free materials, thoughtfully selected with little ones and everyday use in mind.',
   },
   {
-    q: 'What is it made of, and is it certified?',
-    a: 'It is BPA-free. The exact material and the testing and certification details are still being confirmed with our manufacturer, and we are not going to publish either until they are. Every one of those lines will be on the features section before we take a single order — we would rather leave a gap than fill it with a guess.',
+    q: 'Is it spill-resistant?',
+    a: 'Yes! Our bottles are designed to be spill-resistant, with a flip-top straw that snaps securely closed \u2014 because we know spills happen.',
   },
   {
-    q: 'When can I buy one?',
-    a: 'There is no date yet. We are on our fourth sample and we would rather be late than ship something we would not hand our own kids. Join the Duck Squad and you will hear before this website does.',
+    q: 'Is it safety tested?',
+    a: 'Yes. Safety is something we take seriously, especially because we\u2019re parents too. Our bottles are independently tested to meet applicable U.S. children\u2019s product safety requirements before they reach little hands.',
   },
   {
-    q: 'How do I get in touch?',
-    a: 'Email us. Ducks ’n Puddles is a family project, so the two people who made it are the two people who read it.',
+    q: 'What ages is it for?',
+    a: 'Our bottles are designed with little ones in mind and are ideal for ages 2\u20136 \u2014 lightweight, easy to hold, and made for little hands.',
+  },
+  {
+    q: 'How can I get one?',
+    a: 'We\u2019re putting the finishing touches on our first Ducks \u2019n Puddles collection now! Join the family to be among the first to hear about launch updates and when the ducks are officially ready to come home.',
+  },
+  {
+    q: 'Will there be more Ducks \u2019n Puddles products?',
+    a: 'Absolutely! The bottles are just the beginning. We\u2019re creating more thoughtful products designed to make life a little easier for parents and bring more comfort, confidence, and positivity to kids. Stay close \u2014 there\u2019s lots more coming from the pond!',
+  },
+  {
+    q: 'How can I get in touch?',
+    a: 'We\u2019d love to hear from you! Send us a note through our contact page and it\u2019ll make its way to our team. Questions, ideas, feedback \u2014 we\u2019re all ears!',
   },
 ] as const

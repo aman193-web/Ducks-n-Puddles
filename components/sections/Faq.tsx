@@ -24,7 +24,8 @@ export function Faq() {
           <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Questions</Sticker>
           <h2 id="faq-title" className="d d-xl" data-anim="">Things parents ask us.</h2>
           <p className="lead" data-anim="">
-            If it is not here, email us &mdash; it goes straight to {brand.founders}.
+            Still wondering something? Send us an email &mdash; we&rsquo;re always happy
+            to talk.
           </p>
         </div>
 
@@ -47,10 +48,13 @@ export function Faq() {
             Two doors, neither of them a hard sell: back to the characters for
             someone still deciding, forward to the Squad for someone who has. */}
         <div className={styles.next} data-anim="">
-          <p className={styles.nextText}>Answered? There are two good next steps.</p>
+          <p className={styles.nextText}>
+            <strong>Come along for the adventure.</strong> Be part of Ducks &rsquo;n
+            Puddles as we grow.
+          </p>
           <div className={styles.nextBtns}>
-            <Btn href="/#ducks" colour="var(--sky-soft)">Meet the ducks</Btn>
-            <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+            <Btn href="/#squad" colour="var(--sun-soft)">Join the family</Btn>
+            <Btn href={brand.instagram} colour="var(--sky-soft)">Follow along</Btn>
           </div>
         </div>
       </div>

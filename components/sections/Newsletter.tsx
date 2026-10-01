@@ -20,8 +20,9 @@ export function Newsletter() {
           </h2>
           <div className={styles.right}>
             <p className={styles.blurb}>
-              Come into the Ducks &rsquo;n Puddles world before anyone else. Little notes
-              from the pond, and first word when the ducks arrive.
+              Come be part of the Ducks &rsquo;n Puddles world as it grows &mdash; with
+              little notes from the pond, behind-the-scenes peeks, and first access to
+              what&rsquo;s coming next.
             </p>
             <FooterSignup />
           </div>
