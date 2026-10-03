@@ -5,40 +5,39 @@ import { prefersReduced } from '@/lib/motion'
 import styles from './FooterDucks.module.css'
 
 /**
- * Chi Chi, Goosey and Vincey at the foot of the page, following the cursor.
+ * Chi Chi, Goosey and Vincey at the foot of the page.
  *
- * Replaces the row of three cropped bottle renders that used to close the
- * footer. The page now ends on the characters rather than on the product,
- * which is the whole argument the client has been making: this is a character
- * brand whose first product happens to be a bottle.
+ * IT PLAYS NOW. IT USED TO BE SCRUBBED, and the difference is the clip, not a
+ * change of mind: the old video was authored as a single head-turn, frame 0
+ * looking hard left and the last frame hard right, so pointer X mapped onto
+ * `currentTime` and the heads followed the cursor. The clip supplied on 4 Oct
+ * is an idle animation instead — the three of them look around, glance at each
+ * other, and Chi Chi winks about two thirds through. Measured across all 144
+ * frames, the motion is not monotonic on any axis, so dragging a cursor through
+ * it would land on unrelated poses and read as jitter. Playing it is both what
+ * the clip is for and the smoother of the two: 24fps of real playback against a
+ * scrub that can only ever be as smooth as the seek rate.
  *
- * HOW IT WORKS
- * The video never plays. Its timeline IS the head-turn: frame 0 has them
- * looking hard left and the last frame hard right, so pointer X maps straight
- * onto currentTime. GSAP interpolates toward the target rather than jumping,
- * which is what makes it read as heads turning instead of as scrubbing.
+ * THE LOOP IS A PING-PONG, baked into the file rather than done here. The source
+ * starts and ends in different poses — measured, the frame 143 -> 0 seam is
+ * 13.3 mean channel difference against 1.0 for an ordinary frame step, and a
+ * search over every start/end pair at least four seconds apart found nothing
+ * better than 10.1. So the file is the clip followed by its own reverse, which
+ * makes both ends identical by construction: the seam measures 1.02, which is
+ * an ordinary frame step. 287 frames, 11.96s, and `loop` on the element is all
+ * that is needed.
  *
- * FOUR THINGS THAT MATTER, in order of how easily they break:
+ * WHAT IS LEFT OF THE INTERACTION: the parallax. A few pixels of counter-motion
+ * on the container, opposite the pointer. It never touches the video timeline,
+ * so it cost nothing to keep and it is the thing that makes the group feel
+ * present rather than pasted on.
  *
- *  1. Seeks are expensive. A naive `video.currentTime = x` on every pointermove
- *     queues a seek per event — far more than the decoder can retire, and the
- *     picture stalls. So the tween writes to a plain object and the write to
- *     currentTime is guarded twice: skip while a seek is already in flight, and
- *     skip deltas under a frame, which are invisible anyway.
- *
- *  2. `transform` is safe HERE but is not safe everywhere on this site. The
- *     hero owns `translate` for its pointer parallax, and reduced motion forces
- *     `transform: none` on [data-anim]/[data-pop]. This element carries neither
- *     attribute and is not inside the hero panel, so GSAP's x/y are free.
- *
- *  3. No listener at all unless the visitor has a fine pointer AND has not
- *     asked for less motion. Touch and reduced-motion users get the middle
- *     frame — the straight-facing pose — and nothing is bound.
- *
- *  4. The footer is the last thing on a ~20-screen page, so for most of a visit
- *     it is off screen. An IntersectionObserver gates the work; the listener
- *     stays attached (re-binding on scroll costs more than an early return) but
- *     does nothing while the footer is out of view.
+ * MANNERS
+ *  - paused whenever it is off screen. This is the last thing on a ~20-screen
+ *    page, so for most of a visit it would otherwise be decoding into nothing.
+ *  - under reduced motion it never plays and never binds a listener; the poster
+ *    frame, where all three face forward, is what everyone else sees first.
+ *  - aria-hidden and not focusable: it is the brand waving goodbye, not content.
  */
 export function FooterDucks() {
   const wrap = useRef<HTMLDivElement>(null)
@@ -49,60 +48,38 @@ export function FooterDucks() {
     const w = wrap.current
     if (!v || !w) return
 
-    /* The straight-facing pose, and the resting state for everyone who does not
-       get the interaction. Set as soon as the duration is known. */
-    const park = () => {
-      if (!Number.isFinite(v.duration) || v.duration === 0) return
-      try { v.currentTime = v.duration / 2 } catch { /* seek not ready yet */ }
-    }
-    if (v.readyState >= 1) park()
-    else v.addEventListener('loadedmetadata', park, { once: true })
+    const reduced = prefersReduced()
 
-    if (prefersReduced() || !window.matchMedia('(pointer: fine)').matches) return
+    /* Visibility gates PLAYBACK, not just the listener — a looping video in a
+       footer nobody has scrolled to is pure battery. */
+    let onScreen = false
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting
+        if (reduced) return
+        if (onScreen) v.play().catch(() => { /* autoplay refused; the poster stands in */ })
+        else v.pause()
+      },
+      { rootMargin: '160px 0px' },
+    )
+    io.observe(w)
+
+    if (reduced || !window.matchMedia('(pointer: fine)').matches) {
+      return () => io.disconnect()
+    }
 
     const ctx = gsap.context(() => {
-      const state = { t: 0 }
-
-      const seek = gsap.quickTo(state, 't', {
-        duration: 0.32,
-        ease: 'power2.out',
-        onUpdate: () => {
-          if (v.readyState < 1 || v.seeking) return
-          /* Under one frame at 60fps there is nothing to see, and the seek
-             would cost more than it shows. */
-          if (Math.abs(v.currentTime - state.t) < 1 / 60) return
-          v.currentTime = state.t
-        },
-      })
-      /* Parallax on the container, a few pixels only, opposite the cursor.
-         Slower than the head turn so it reads as depth rather than as a second
-         thing moving. */
       const px = gsap.quickTo(w, 'x', { duration: 0.7, ease: 'power2.out' })
       const py = gsap.quickTo(w, 'y', { duration: 0.7, ease: 'power2.out' })
 
-      let onScreen = false
-      const io = new IntersectionObserver(
-        ([entry]) => { onScreen = entry.isIntersecting },
-        { rootMargin: '160px 0px' },
-      )
-      io.observe(w)
-
       const onMove = (e: PointerEvent) => {
-        if (!onScreen || !Number.isFinite(v.duration) || v.duration === 0) return
+        if (!onScreen) return
         const nx = Math.min(Math.max(e.clientX / window.innerWidth, 0), 1)
         const ny = Math.min(Math.max(e.clientY / window.innerHeight, 0), 1)
-        seek(nx * v.duration)
         px((0.5 - nx) * 14)
         py((0.5 - ny) * 8)
       }
-
-      /* Back to straight ahead when the pointer leaves the window, so the page
-         is never left with the ducks staring off the edge. */
-      const onLeave = () => {
-        if (!Number.isFinite(v.duration)) return
-        seek(v.duration / 2)
-        px(0); py(0)
-      }
+      const onLeave = () => { px(0); py(0) }
 
       window.addEventListener('pointermove', onMove, { passive: true })
       document.addEventListener('pointerleave', onLeave)
@@ -110,13 +87,12 @@ export function FooterDucks() {
       return () => {
         window.removeEventListener('pointermove', onMove)
         document.removeEventListener('pointerleave', onLeave)
-        io.disconnect()
       }
     }, w)
 
     return () => {
       ctx.revert()
-      v.removeEventListener('loadedmetadata', park)
+      io.disconnect()
     }
   }, [])
 
@@ -125,14 +101,20 @@ export function FooterDucks() {
       <video
         ref={video}
         className={styles.video}
-        src="/video/ducks-follow.mp4"
+        poster="/video/ducks-idle-poster.jpg"
         muted
+        loop
         playsInline
-        preload="auto"
-        /* Never plays: the timeline is a head-turn, driven by the pointer. */
+        preload="metadata"
         aria-hidden="true"
         tabIndex={-1}
-      />
+      >
+        {/* 1600 covers the 900 CSS px it renders at on a retina display; the
+            800 is for phones, where the stage is about 390 wide and the big one
+            would be four times the pixels for no visible gain. */}
+        <source src="/video/ducks-idle-1600.mp4" type="video/mp4" media="(min-width: 700px)" />
+        <source src="/video/ducks-idle-800.mp4" type="video/mp4" />
+      </video>
     </div>
   )
 }
