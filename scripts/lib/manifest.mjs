@@ -143,6 +143,13 @@ export const alphaAssets = [
   { id: 'goosey-swim',   src: `${BRAND_DIR}/characters/goosey-swim.png`,   widths: [240, 480] },
   { id: 'vincey-swim',   src: `${BRAND_DIR}/characters/vincey-swim.png`,   widths: [240, 480] },
 
+  /* THE WINK, for "Your Kids Matter. We Give a Duck." on the parent side of Why.
+     Two candidates were supplied and both were rendered in place at the real
+     124px cameo size before choosing — see the note at the Why cameo. The one
+     not used stays on disk as vincey-wink-alt.png, unregistered, like the rest
+     of the unplaced poses. */
+  { id: 'vincey-wink', src: `${BRAND_DIR}/characters/vincey-wink.png`, widths: [260, 520] },
+
   { id: 'chichi-turn',   src: `${BRAND_DIR}/characters/chichi-turn.png`,   widths: [300, 600] },
   { id: 'goosey-turn',   src: `${BRAND_DIR}/characters/goosey-turn.png`,   widths: [300, 600] },
   { id: 'vincey-turn',   src: `${BRAND_DIR}/characters/vincey-turn.png`,   widths: [300, 600] },

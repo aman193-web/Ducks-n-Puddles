@@ -73,9 +73,24 @@ export function Why() {
               <p className={`hand ${styles.foot}`}>{s.foot}</p>
               {/* The parent side gets the calm one, the child side the brave
                   one. Two audiences, two characters, same size — which is the
-                  section's whole argument made visible. */}
+                  section's whole argument made visible.
+
+                  Vincey WINKS here, which is the client's note: "maybe make the
+                  duck winking an eye to coincide with the tagline LOL" — the
+                  tagline being "Your Kids Matter. We Give a Duck." directly
+                  above him.
+
+                  Two winking poses were supplied and both were put in this exact
+                  slot at its real 124px before choosing. The front-on one won on
+                  three counts: at this size its closed eye reads instantly while
+                  the angled one's is foreshortened into a smudge; it stands on a
+                  baseline, where the other's kicked-out leg juts into the card's
+                  rounded corner as a stray orange shape; and the cameo carries
+                  `float`, so a planted pose bobs like a hover while a mid-stride
+                  one bobs like a stumble. The other is on disk as
+                  vincey-wink-alt.png if the client prefers it. */}
               <Duck who={s.k === 'parents' ? 'vincey' : 'chi-chi'}
-                    pose={s.k === 'parents' ? 'idle' : 'wave'}
+                    pose={s.k === 'parents' ? 'wink' : 'wave'}
                     className={styles.cameo} float
                     sizes="(min-width: 820px) 10vw, 22vw" />
             </article>

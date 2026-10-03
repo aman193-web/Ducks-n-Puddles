@@ -865,6 +865,23 @@
     "nativeWidth": 1043,
     "nativeHeight": 1210
   },
+  "vincey-wink": {
+    "id": "vincey-wink",
+    "tier": "A",
+    "widths": [
+      260,
+      520
+    ],
+    "alpha": true,
+    "v": "e83e7f0e",
+    "aspect": 0.7796,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 941,
+    "nativeHeight": 1207
+  },
   "chichi-turn": {
     "id": "chichi-turn",
     "tier": "A",
