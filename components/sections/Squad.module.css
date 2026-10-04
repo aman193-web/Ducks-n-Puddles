@@ -38,23 +38,39 @@
 .art > picture img { filter: drop-shadow(0 16px 26px rgba(16, 38, 74, .18)); }
 .art > picture img { inline-size: 100%; block-size: auto; }
 
-/* THE THREE CHARACTERS, at the right-hand end of their own bottles.
-   Percentages of the art's own box on both axes, so the group keeps the same
-   relationship to the bottles at every width instead of drifting across them
-   as the column grows. 44% puts them at a little under half the bottles'
-   height, which is the proportion that reads as characters standing beside a
-   product rather than as a competing graphic. */
-.cast {
+/* ---- ONE DUCK PEEKING OUT FROM BEHIND EACH BOTTLE ------------------------
+   The Bottles section's move, which is what the client asked for here by
+   name. Three things make it work, and all three are also true over there:
+
+   THE ART IS THE PEEKING SET. Each duck is cut off at its left edge, so it is
+   a half-duck about 0.40 as wide as it is tall. A whole duck cannot hide
+   behind a 127px bottle at any offset; a half one can.
+
+   --edge IS MEASURED, NOT GUESSED. The three bottles in the trio render
+   occupy 0.5-28.2%, 35.3-63.6% and 70.6-99.2% of its width — read off the
+   file's own alpha channel. Those percentages are each bottle's right edge,
+   and they hold at every size because the render scales as one piece.
+
+   --tuck PUTS THE CUT EDGE INSIDE THE BOTTLE. The duck starts 34px to the
+   LEFT of the edge it hides behind, so the straight cut is always covered and
+   the character always looks like it continues behind the product. z-index 0
+   against the render's 1 is what keeps it there. */
+.art > picture { position: relative; z-index: 1; display: block; }
+.peek {
+  --tuck: 34px;
   position: absolute;
-  z-index: 2;
-  inline-size: 44%;
-  inset-inline-end: -14%;
-  /* The art's bottom IS the bottles' base, and the duck art carries about 15%
-     of transparent padding under its feet — so a small negative sits the two
-     ground lines on top of each other instead of leaving the ducks hovering. */
-  inset-block-end: -11%;
-  filter: drop-shadow(0 14px 22px rgba(16, 38, 74, .20));
+  z-index: 0;
+  inset-block-end: -2%;
+  inset-inline-start: calc(var(--edge) - var(--tuck));
+  /* Sized by HEIGHT so the three silhouettes, which differ, line up as a set.
+     --peek-aspect is width/height from the manifest; with a definite height it
+     fixes the width, which `inline-size: auto` alone does not. */
+  block-size: 62%;
+  aspect-ratio: var(--peek-aspect, 0.4);
+  inline-size: auto;
+  pointer-events: none;
 }
+.peek > *, .peek img { block-size: 100%; inline-size: 100%; display: block; }
 
 .sub { max-width: 42ch; }
 

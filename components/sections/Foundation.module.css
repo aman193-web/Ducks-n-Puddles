@@ -30,8 +30,16 @@
   display: grid;
   align-content: center;
   /* Tighter than --section-y: min-block-size already guarantees the screen, so
-     this only decides how much air the content gets inside it. */
-  padding-block: var(--s-8);
+     this only decides how much air the content gets inside it.
+
+     ASYMMETRIC, at the client's request for more room below. On a tall display
+     the content is centred with room to spare and the gap looks after itself;
+     on a 768px-tall laptop the section is pinned at exactly 100svh with zero
+     slack, so the 64px floor WAS the gap — three tiles finishing 64px above a
+     hard change to cream. The bottom now scales with the viewport instead, and
+     because the grid centres inside the padding box the extra also lifts the
+     whole composition slightly off the floor. */
+  padding-block: var(--s-8) clamp(84px, 11vh, 132px);
   overflow: clip;
   isolation: isolate;
 }

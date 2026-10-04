@@ -61,8 +61,14 @@ export const posts: Post[] = [
     ],
   },
   {
-    slug: 'naming-a-duck-after-your-kid',
-    title: 'Naming a duck after your kid',
+    /* RENAMED. "Naming a duck after your kid" was written when the ducks were
+       the founders' children; Our Story now says they are characters with
+       personalities of their own, and a headline promising otherwise undoes
+       that on the way past. The new one is what the post is actually about —
+       the paragraph the whole piece turns on is the bottle that got carried
+       once it had a name. Slug moved with it: nothing links here yet. */
+    slug: 'why-a-bottle-with-a-name-gets-carried',
+    title: 'Why a bottle with a name gets carried',
     tag: 'Life Lately',
     date: '2026-06-18',
     /* REWRITTEN. The old line said the three of them 'are real people',

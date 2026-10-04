@@ -30,6 +30,34 @@ const IG = 'M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.7 4.92 4.92.06 1.28.07 1.6
 const FB = 'M14.5 8.5H17V5.2c-.43-.06-1.7-.19-3.18-.19-3.15 0-5.3 1.9-5.3 5.4V13H5.4v3.7h3.12V24h3.83v-7.3h3.1l.48-3.7h-3.58v-2.2c0-1.07.3-1.8 1.86-1.8Z'
 const MAIL = 'M3.5 5.5h17a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-17a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Zm.9 2L12 12.6l7.6-5.1'
 
+/* -------------------------------------------------------------------------
+   THREE GLYPHS, ONE OPTICAL SIZE.
+
+   The three paths were drawn to different conventions and simply dropping
+   them into a shared 0 0 24 24 box showed it. Measured with getBBox in the
+   browser rather than guessed:
+
+     Instagram   19.8 x 19.8, centred on (12.0, 12.1)
+     Facebook    11.6 x 19.0, centred on (11.2, 14.5)  <- 2.5 units LOW
+     Envelope    19.0 x 13.0, centred on (12.0, 12.0)
+
+   So the "f" sat visibly below the middle of its tile while the envelope,
+   13 units tall against Instagram's 19.8, read as a smaller icon on the same
+   row. Neither is fixable by changing the svg's width.
+
+   `frame` reframes the viewBox on each glyph's OWN centre and zooms it until
+   its longest side is `target` units of a 24-unit box — which is the same as
+   scaling and centring the path, without touching the path data. The targets
+   differ on purpose: a filled square (Instagram) reads larger than a letter
+   of the same height, and a wide short envelope reads smaller, so matching
+   the numbers exactly would NOT match what the eye sees.
+   ------------------------------------------------------------------------- */
+const frame = (box: [number, number, number, number], target: number) => {
+  const [x, y, w, h] = box
+  const size = (24 / target) * Math.max(w, h)
+  return `${x + w / 2 - size / 2} ${y + h / 2 - size / 2} ${size} ${size}`
+}
+
 /**
  * Footer, rebuilt on Koa's (measured at /collections/refill-pack, 1440):
  *
@@ -44,23 +72,24 @@ const MAIL = 'M3.5 5.5h17a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-17a1 1 0 0 1-1-1v-11a1
  * bottles. A duck paddles across the waterline, left to right.
  */
 export function SiteFooter() {
-  /* THE PLATFORMS' OWN COLOURS, at the client's request — these were the
-     brand's pink and yellow before, which looked tidy but made the two
-     networks unrecognisable at 50px.
+  /* THE PLATFORMS' OWN COLOURS, SOLID. Instagram shipped as its real radial
+     gradient for a round and the client has asked for flat instead: five
+     stops in a 50px square is a lot of colour for a 21px glyph to sit on, and
+     beside two flat tiles it read as the odd one out rather than as the most
+     recognisable one.
 
-     Instagram is its real radial gradient, and the stop order matters: the
-     yellow corner is the one place a white glyph fails (1.85 against white),
-     so the gradient is anchored bottom-left where the mark is not, and the
-     glyph sits over the magenta at 4.73. Facebook is #1877F2, white on it
-     4.23. Email has no brand of its own so it takes --duck-blue, 7.92. All
-     three clear the 3.0 that WCAG asks of a non-text graphic. */
+     #E4405F is Instagram's own solid brand colour — the one they use wherever
+     the gradient will not fit, which is exactly this case. White on it
+     measures 4.07; Facebook's #1877F2 is 4.23; --duck-blue, which the envelope
+     borrows for want of a brand of its own, is 7.92. All three clear the 3.0
+     WCAG asks of a non-text graphic. */
   const SOCIALS = [
-    {
-      href: brand.instagram, label: 'Instagram', d: IG, fill: true,
-      bg: 'radial-gradient(circle at 28% 108%, #FEDA75 0%, #FA7E1E 22%, #D62976 52%, #962FBF 76%, #4F5BD5 100%)',
-    },
-    { href: brand.facebook, label: 'Facebook', d: FB, fill: true, bg: '#1877F2' },
-    { href: `mailto:${brand.email}`, label: 'Email us', d: MAIL, fill: false, bg: 'var(--duck-blue)' },
+    { href: brand.instagram, label: 'Instagram', d: IG, fill: true, bg: '#E4405F',
+      vb: frame([2.1, 2.2, 19.8, 19.8], 18.6) },
+    { href: brand.facebook, label: 'Facebook', d: FB, fill: true, bg: '#1877F2',
+      vb: frame([5.4, 5.0, 11.6, 19.0], 19.2) },
+    { href: `mailto:${brand.email}`, label: 'Email us', d: MAIL, fill: false, bg: 'var(--duck-blue)',
+      vb: frame([2.5, 5.5, 19.0, 13.0], 20.0) },
   ]
 
   return (
@@ -96,7 +125,7 @@ export function SiteFooter() {
                   style={{ ['--s-bg' as string]: s.bg } as React.CSSProperties}
                 >
                   <span className="vh">{s.label}</span>
-                  <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"
+                  <svg width="24" height="24" viewBox={s.vb} aria-hidden="true"
                        fill={s.fill ? 'currentColor' : 'none'}
                        stroke={s.fill ? 'none' : 'currentColor'}
                        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

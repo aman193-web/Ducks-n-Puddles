@@ -98,11 +98,20 @@
 .blurb { font-size: var(--fs-small); max-width: 42ch; line-height: 1.6; }
 
 .socialsLabel { margin-block-start: var(--s-4); color: var(--ink); }
-.socials { display: flex; gap: var(--s-3); margin-block-start: var(--s-2); }
+/* A row of three, so it can carry a real gap without crowding anything.
+   --s-3's 12px between 50px tiles read as one block of colour. */
+.socials { display: flex; gap: var(--s-4); margin-block-start: var(--s-3); }
 .social {
+  /* Grid + place-items centres the box; the GLYPH inside it is centred by its
+     own viewBox — see `frame` in SiteFooter.tsx, which is the half of this the
+     CSS cannot do. */
   display: grid; place-items: center;
   inline-size: 50px; block-size: 50px;
-  /* `background`, not background-color: Instagram's is a gradient. */
+  /* NO PADDING. A 24px glyph inside a 50px tile already leaves 13px of ground
+     on every side, and adding padding on top only squeezed the content box
+     below the glyph's own width — the svg then overflowed it and the padding
+     did nothing but confuse the next person to read this. The breathing room
+     is the difference between the two sizes, and that is where to change it. */
   background: var(--s-bg);
   /* White glyph on every tile now the grounds are the platforms' own — see the
      measured contrasts where SOCIALS is defined. */
@@ -113,6 +122,10 @@
   border: var(--border); border-radius: var(--r);
   transition: transform .35s var(--spring);
 }
+/* The svg is a grid item and therefore blockified, but it is still laid out in
+   a line box inside itself — which left all three glyphs sitting exactly 1px
+   low in their tiles. */
+.social svg { display: block; }
 .social:hover { transform: translateY(-3px) rotate(-6deg); }
 .social:active { transform: scale(.93); }
 

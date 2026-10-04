@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Picture } from '@/components/Picture'
+import { asset } from '@/lib/assets'
 import { Duck } from '@/components/ui/Duck'
 import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
@@ -122,21 +123,35 @@ export function Squad() {
               next to a form four times its height */}
           <div className={styles.art} aria-hidden="true">
             <Picture id="trio" sizes="(min-width: 900px) 42vw, 78vw" alt="" data-bob="" />
-            {/* THE CHARACTERS, BESIDE THEIR OWN BOTTLES. The client: "I'd also
-                consider showing the three actual character ducks alongside or
-                peeking around the bottles, rather than only the bottles. This
-                section is about joining the world/community, so the characters
-                should feel like they're welcoming you into it."
+            {/* ONE CHARACTER PER BOTTLE, PEEKING OUT FROM BEHIND IT — the
+                same move the Bottles section makes, which is what the client
+                asked for by name. The trio standing in front of the set read
+                as a second piece of artwork beside the product; hiding each
+                duck behind its own bottle reads as the characters being IN the
+                picture.
 
-                They stand at the right-hand end on the same ground line, in
-                front of the third bottle rather than beside the set — which is
-                what reads as the characters being WITH the product instead of
-                a second row of artwork next to it.
+                The peeking art is the set drawn for exactly this: each duck is
+                cut off at its left edge, so it is a half-duck about 0.40 as
+                wide as it is tall and genuinely hides behind a bottle. The
+                positions come from the trio render's own alpha, measured
+                rather than eyeballed — the three bottles occupy 0.5-28.2%,
+                35.3-63.6% and 70.6-99.2% of that image's width, so those are
+                the three right edges each duck tucks behind.
 
-                `float`, not `data-bob`: bob() in lib/motion.ts derives its
-                amplitude and period from DOM index, so a fourth bobbing element
-                in this section would silently re-time the bottles. */}
-            <Duck who="trio" pose="walk" className={styles.cast} float />
+                `density="always"` to match the Bottles section, where the
+                characters show on a phone too. */}
+            {ducks.map((d, i) => (
+              <span
+                key={d.slug}
+                className={styles.peek}
+                style={{
+                  ['--edge' as string]: ['28.2%', '63.6%', '99.2%'][i],
+                  ['--peek-aspect' as string]: String(asset(`${d.slug === 'chi-chi' ? 'chichi' : d.slug}-peeking`).aspect),
+                } as React.CSSProperties}
+              >
+                <Duck who={d.slug} pose="peeking" density="always" />
+              </span>
+            ))}
           </div>
 
         </div>

@@ -136,7 +136,19 @@
      is deliberately empty — that gap is what drops the top of the picture down
      to the first line of text. */
   .head { grid-column: 2; grid-row: 1; }
-  .figure { grid-column: 1; grid-row: 2; }
+  .figure {
+    grid-column: 1; grid-row: 2;
+    /* UP 74px, and it GROWS upward rather than sliding: the figure is
+       stretched into row 2, so a negative top margin extends its box while
+       the bottom stays pinned to the button. Moving it instead would have
+       bought the higher start by giving up the bottom alignment asked for
+       last round, and left 74px of cream under the picture.
+
+       74 is not arbitrary. It puts the top of the frame level with the cap
+       height of "We All Need a Friend." — so the picture now lines up with
+       the headline rather than with the first line of body copy. */
+    margin-block-start: -74px;
+  }
   .body { grid-column: 2; grid-row: 2; }
 }
 
@@ -150,7 +162,11 @@
    more than tidiness: the cameo is positioned against the FIGURE, so a figure
    taller than its own photograph would leave the ducks standing under it. */
 @media (min-width: 900px) and (max-width: 1099px) {
-  .figure { align-self: start; }
+  /* NO LIFT DOWN HERE. The figure does not stretch in this band — it takes a
+     fixed shape and sits at the top of its row — so a negative top margin
+     would not grow the picture, only slide it up and add another 74px of
+     cream under it. The lift is worth having only where it costs nothing. */
+  .figure { align-self: start; margin-block-start: 0; }
   .photo { block-size: auto; aspect-ratio: 4 / 5.5; min-block-size: 0; }
 }
 
