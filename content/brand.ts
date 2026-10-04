@@ -8,7 +8,13 @@
  */
 
 export const brand = {
-  name: "Ducks 'n Puddles",
+  /* The CURLY apostrophe, U+2019, which is the one every other string on the
+     site and in the client's own document uses. It was a straight quote here
+     and nowhere else, so the footer's copyright line was the one place the
+     brand name was spelled differently from the rest of the page. Bangbang
+     carries the glyph (checked when the font was subset — see app/layout.tsx)
+     and this string only ever sets in Poppins anyway. */
+  name: 'Ducks \u2019n Puddles',
   /** How the founders actually say it — used in <title> and schema alternateName
    *  so both spellings rank. */
   spokenName: 'Ducks and Puddles',

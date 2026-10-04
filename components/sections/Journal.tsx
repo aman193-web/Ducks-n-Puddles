@@ -63,9 +63,14 @@ export function Journal() {
                     takes the first and the post page still gets the whole
                     thing. */}
                 <p className={styles.excerpt}>{firstSentence(p.excerpt)}</p>
-                <span className={styles.more} aria-hidden="true">Read more &rarr;</span>
+                {/* ONE of these, not two. The client's "potentially add a
+                    simple 'Read More ->' under each" was added beside the
+                    card's existing "Read it" instead of replacing it, so every
+                    card has been carrying both. The client's wording wins; the
+                    arrow stays the icon component rather than a &rarr; glyph,
+                    which renders at a different weight to the label. */}
                 <span className={styles.more}>
-                  Read it <ArrowRight size={18} weight="bold" aria-hidden="true" />
+                  Read more <ArrowRight size={18} weight="bold" aria-hidden="true" />
                 </span>
               </Link>
               <p className={styles.published}>
