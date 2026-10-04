@@ -137,6 +137,21 @@ export const alphaAssets = [
   { id: 'chichi-peeking', src: `${BRAND_DIR}/characters/chichi-peeking.png`, widths: [320, 640] },
   { id: 'goosey-peeking', src: `${BRAND_DIR}/characters/goosey-peeking.png`, widths: [320, 640] },
   { id: 'vincey-peeking', src: `${BRAND_DIR}/characters/vincey-peeking.png`, widths: [320, 640] },
+  /* ---- THE DIRECTIONAL PEEKS, supplied Oct 2026 for Join the Family -------
+     Three poses cut for a specific edge, which is the whole point of them: the
+     `-peeking` set above is cut on the left edge only, so all three can hide
+     behind a bottle's RIGHT side and nowhere else. These are cut for one side
+     each — Vincey on his right edge so he leans out to the LEFT, Goosey on his
+     left edge so he leans out to the RIGHT, and Chi Chi along her bottom so
+     she comes over the TOP.
+
+     Trimmed of transparent margin on import, so a box of this id is all duck
+     and the placement maths can work off the box rather than off a guess at
+     where inside it the art starts. Widths stay under the trimmed native
+     (674 / 1099 / 676) — anything larger is silently dropped by emit(). */
+  { id: 'vincey-peek-left',  src: `${BRAND_DIR}/characters/vincey-peek-left.png`,  widths: [280, 560] },
+  { id: 'chichi-peek-top',   src: `${BRAND_DIR}/characters/chichi-peek-top.png`,   widths: [360, 720] },
+  { id: 'goosey-peek-right', src: `${BRAND_DIR}/characters/goosey-peek-right.png`, widths: [280, 560] },
 
   /* THE SWIMMING POSES. A side profile facing right, seated in a blue hull —
      the only poses in the set drawn from the waterline rather than standing on

@@ -29,60 +29,94 @@
   position: relative;
   justify-self: start;
   inline-size: min(100%, 460px);
-  /* the render was landing right on the paragraph's last line */
-  margin-block-start: var(--flow-eyebrow);
+  /* the render was landing right on the paragraph's last line — plus the room
+     Chi Chi needs above it, since she clears the top of the middle bottle by
+     about 70px and the perks list is directly overhead. */
+  margin-block-start: calc(var(--flow-eyebrow) + 76px);
 }
+@media (max-width: 899px) { .art { margin-block-start: var(--flow-eyebrow); } }
 /* The pool of light behind the bottles is gone at the client's request — it
    read as a white smudge rather than as separation. The drop shadow below is
    what lifts them off the ground now; it was always doing most of the work. */
 .art > picture img { filter: drop-shadow(0 16px 26px rgba(16, 38, 74, .18)); }
 .art > picture img { inline-size: 100%; block-size: auto; }
 
-/* ---- ONE DUCK PEEKING OUT FROM BEHIND EACH BOTTLE ------------------------
-   The Bottles section's move, which is what the client asked for here by
-   name. Three things make it work, and all three are also true over there:
+/* ---- ONE DUCK PER BOTTLE, EACH FROM ITS OWN SIDE -------------------------
+   Three things make this work, and the first is the art.
 
-   THE ART IS THE PEEKING SET. Each duck is cut off at its left edge, so it is
-   a half-duck about 0.40 as wide as it is tall. A whole duck cannot hide
-   behind a 127px bottle at any offset; a half one can.
+   THE POSES ARE CUT FOR A SIDE. The `-peeking` set the Bottles section uses is
+   cut on its left edge only, so all three of those can hide behind a bottle's
+   RIGHT side and nowhere else — which is why this section read as the same
+   move three times. These are cut one side each: Vincey on his right, so he
+   leans out LEFT; Goosey on his left, so he leans out RIGHT; Chi Chi along her
+   bottom, so she comes over the TOP.
 
-   --edge IS MEASURED, NOT GUESSED. The three bottles in the trio render
-   occupy 0.5-28.2%, 35.3-63.6% and 70.6-99.2% of its width — read off the
-   file's own alpha channel. Those percentages are each bottle's right edge,
-   and they hold at every size because the render scales as one piece.
+   --edge IS MEASURED. The three bottles in the trio render occupy 0.5-28.2%,
+   35.3-63.6% and 70.6-99.2% of its width, read off the file's own alpha. Those
+   percentages hold at every size because the render scales as one piece.
 
-   --tuck PUTS THE CUT EDGE INSIDE THE BOTTLE. The duck starts 34px to the
-   LEFT of the edge it hides behind, so the straight cut is always covered and
-   the character always looks like it continues behind the product. z-index 0
-   against the render's 1 is what keeps it there. */
+   --tuck PUTS THE CUT EDGE INSIDE THE BOTTLE, so the straight cut is never
+   visible and each character always looks like it continues behind the
+   product. z-index 0 against the render's 1 is what keeps it there — and it is
+   what makes the entrance read as coming OUT from behind a bottle rather than
+   fading in beside one. */
 .art > picture { position: relative; z-index: 1; display: block; }
+
 .peek {
-  /* THE NUMBERS ARE THE BOTTLES SECTION'S, measured off it rather than picked
-     to look about right — the client asked for this to match, and at the first
-     pass it did not. Over there a duck is 0.74 of its bottle's height and
-     clears its edge by 51px, which shows head, shoulder, wing and feet as one
-     connected silhouette. Here it was 0.62 and 42px: enough for a face and a
-     pair of feet with the whole body hidden between them, so each duck read as
-     two disconnected scraps rather than one character behind a bottle.
-     38px of tuck against the larger duck lands the visible width back on 51. */
-  --tuck: 38px;
+  /* A PERCENTAGE OF THE ART, not a pixel count. The ducks scale with the
+     render, so a fixed tuck would hide more of them the narrower the column
+     got — at 900px a 34px tuck left 32px of duck against 56px at 1440. */
+  --tuck: 12%;
   position: absolute;
   z-index: 0;
-  /* ABOVE the base, not below it. The bottles' own ink stops about 1% short of
-     this box, and at -2% the feet finished 6px UNDER them — a duck standing in
-     front of the shelf rather than behind the bottle. The Bottles section sits
-     its ducks 3px above the base; 2% is the same 3px here. */
-  inset-block-end: 2%;
-  inset-inline-start: calc(var(--edge) - var(--tuck));
-  /* Sized by HEIGHT so the three silhouettes, which differ, line up as a set.
-     --peek-aspect is width/height from the manifest; with a definite height it
-     fixes the width, which `inline-size: auto` alone does not. */
-  block-size: 74%;
-  aspect-ratio: var(--peek-aspect, 0.4);
+  /* Sized by HEIGHT so the three silhouettes, which have different aspects,
+     line up as a set. --peek-aspect is width/height from the manifest; with a
+     definite height it fixes the width, which `inline-size: auto` alone does
+     not — that produced 24px slivers when the Bottles section first tried it. */
+  aspect-ratio: var(--peek-aspect, 0.58);
   inline-size: auto;
   pointer-events: none;
 }
-.peek > *, .peek img { block-size: 100%; inline-size: 100%; display: block; }
+.peek img { block-size: 100%; inline-size: 100%; display: block; }
+
+/* THE TWO SIDE DUCKS, and their height is set by how much of them should SHOW
+   rather than by how tall they ought to be. These poses are about 0.58 as wide
+   as they are tall where the Bottles section's are 0.40 — half again as much
+   duck for the same height — so carrying that section's 0.74 over unchanged
+   put 98px of Vincey outside the picture and into the page gutter. 62% with a
+   12% tuck lands the exposed width back on ~56px, which is a head, a beak and
+   one eye: a duck looking round a bottle rather than standing beside one.
+
+   THE BOTTOM EDGE IS THE BOTTLES' OWN. Unlike the `-peeking` set, these poses
+   have no feet — they are cut flat along the bottom as well as down one side,
+   drawn to be interrupted by an edge. So the flat cut is put exactly where the
+   bottles' base is (the render's ink stops at 99.1% of its box), and it reads
+   as the ground all four of them are standing on. Three pixels higher and it
+   reads as a sticker with its bottom sliced off. */
+.fromLeft, .fromRight { block-size: 62%; inset-block-end: 0.9%; }
+/* Cut on his RIGHT edge, so the TUCK is measured from the right. */
+.fromLeft  { inset-inline-end: calc(100% - var(--edge) - var(--tuck)); }
+/* Cut on his LEFT edge. */
+.fromRight { inset-inline-start: calc(var(--edge) - var(--tuck)); }
+
+/* OVER THE TOP OF THE MIDDLE BOTTLE. She is cut along her bottom, so the tuck
+   is vertical: her lower edge finishes 34px INSIDE the bottle's silhouette,
+   behind the cap, and only her head and wings clear it.
+
+   Narrower than the bottle on purpose — 0.95 aspect at 33% of the art is about
+   96px against a 127px bottle — so there is bottle either side of her and
+   nothing of the cut shows. `translate` for the centring rather than a margin,
+   because the width is derived from the aspect ratio and is not a number this
+   rule can subtract; GSAP writes `transform` on the same element, and the two
+   are different properties, so they compose instead of overwriting. */
+.fromTop {
+  block-size: 33%;
+  /* Her tuck is vertical and therefore its own number: --tuck is a percentage
+     of the INLINE axis, which is the wrong axis for a duck coming over a top. */
+  inset-block-end: calc(100% - 14%);
+  inset-inline-start: var(--edge);
+  translate: -50% 0;
+}
 
 .sub { max-width: 42ch; }
 

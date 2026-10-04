@@ -5,6 +5,10 @@
    and the brief is the opposite: it should look like the character simply said
    the thing.
    ========================================================================== */
+/* THE FRAME, and nothing else. It used to be the animated element; it is now
+   deliberately still, because the thinking dots live in here too and they must
+   not scale with the balloon — they are a separate thought that hands over to
+   it. `.balloon` below is what GSAP drives. */
 .bubble {
   position: relative;
   display: block;
@@ -13,12 +17,51 @@
   aspect-ratio: 200 / 170;
   /* `cqw` below is measured against this box. */
   container-type: inline-size;
+  pointer-events: none;
+}
+
+.balloon {
+  position: absolute;
+  inset: 0;
   /* GSAP scales this element, and the tail tip is at 77%/94% of the viewBox —
      so the bubble grows out of the point nearest the beak instead of swelling
-     from its own middle. */
+     from its own middle. It is also where the dots collapse to, which is what
+     makes the two halves of the sequence read as one movement. */
   transform-origin: 77% 94%;
-  pointer-events: none;
   filter: drop-shadow(0 7px 14px rgba(16, 38, 74, .16));
+}
+
+/* ---- THE THINKING BEAT --------------------------------------------------
+   Three dots on a small piece of the balloon's own material: cream, navy
+   outline, same radius language. Sitting at the tail end of the frame, which
+   is the end nearest the duck's head — so the thought appears where the duck
+   is, and the balloon then grows out of that same point.
+
+   Sized in `cqw` like everything else in here, so the dots keep their
+   proportion to the bubble at every breakpoint rather than becoming specks on
+   a phone. */
+.think {
+  position: absolute;
+  inset-block-end: 1%;
+  inset-inline-end: 9%;
+  inline-size: 44cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5cqw;
+  padding: 4.5cqw 6cqw;
+  background: var(--paper);
+  border: max(1.5px, 1.6cqw) solid var(--ink);
+  border-radius: 999px;
+  transform-origin: 86% 88%;
+  filter: drop-shadow(0 4px 9px rgba(16, 38, 74, .16));
+}
+.think i {
+  display: block;
+  inline-size: 6cqw;
+  block-size: 6cqw;
+  border-radius: 50%;
+  background: var(--ink);
 }
 
 .shape {

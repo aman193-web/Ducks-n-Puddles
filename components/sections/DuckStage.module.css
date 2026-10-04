@@ -50,6 +50,12 @@
    which either pins properly or scrolls honestly. */
 @media (max-width: 899px) {
   .panel { min-block-size: 0; }
+  /* ROOM FOR THE BUBBLE. Without the 100svh floor the panel sizes to its own
+     content, and the speech bubble sits ABOVE the duck's crown — measured at
+     390px it was finishing 11px over the panel's top edge, where `overflow:
+     clip` took the top off the shape. The panel's own padding is what it peeks
+     into. */
+  .panel { padding-block-start: calc(var(--s-6) + 22px); }
 }
 .inner { display: grid; gap: var(--s-6); align-items: center; }
 

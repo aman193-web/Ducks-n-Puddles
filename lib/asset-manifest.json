@@ -814,6 +814,57 @@
     "nativeWidth": 578,
     "nativeHeight": 1436
   },
+  "vincey-peek-left": {
+    "id": "vincey-peek-left",
+    "tier": "A",
+    "widths": [
+      280,
+      560
+    ],
+    "alpha": true,
+    "v": "78b674b6",
+    "aspect": 0.5871,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 674,
+    "nativeHeight": 1148
+  },
+  "chichi-peek-top": {
+    "id": "chichi-peek-top",
+    "tier": "A",
+    "widths": [
+      360,
+      720
+    ],
+    "alpha": true,
+    "v": "b50e528e",
+    "aspect": 0.9491,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1099,
+    "nativeHeight": 1158
+  },
+  "goosey-peek-right": {
+    "id": "goosey-peek-right",
+    "tier": "A",
+    "widths": [
+      280,
+      560
+    ],
+    "alpha": true,
+    "v": "0342c476",
+    "aspect": 0.5778,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 676,
+    "nativeHeight": 1170
+  },
   "chichi-swim": {
     "id": "chichi-swim",
     "tier": "A",
