@@ -28,18 +28,22 @@
      zero-width box never intersects the viewport, so it never loaded at all. */
   justify-items: stretch;
   align-content: stretch;
-  /* Reserve the box BEFORE the image arrives, so there is no layout shift and
-     the grid row has a height to work with from first paint. */
-  min-block-size: 100%;
+  /* No longer stretched to the copy's height — the photo has its own cap now,
+     so the figure takes the photo's height and sits at the top of the row. */
+  align-self: start;
 }
-.figure > picture { display: block; block-size: 100%; }
+.figure > picture { display: block; }
 /* Scoped to .photo, NOT `.figure img`. Unscoped it also caught the Chi Chi
    cameo and stretched a square source to 187x566 under `object-fit: cover`. */
 .photo {
   inline-size: 100%;
-  /* fills the column the copy sets, rather than the copy waiting on the photo */
-  block-size: 100%;
-  min-block-size: clamp(320px, 42vw, 560px);
+  /* Capped, not stretched. It used to fill whatever height the copy set, which
+     with the client's longer copy made it a 790px portrait slab — taller than
+     anything else on the page and the reason the section read as oversized.
+     It sits at the top of its column now and the copy is free to run past it. */
+  block-size: auto;
+  aspect-ratio: 4 / 3.4;
+  max-block-size: clamp(300px, 36vw, 470px);
   object-fit: cover;
   border-radius: 34% / 30%;          /* squircle, as the reference masks its shots */
 }

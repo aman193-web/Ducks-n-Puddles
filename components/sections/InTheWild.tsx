@@ -1,6 +1,6 @@
 'use client'
-import { useRef, useState } from 'react'
-import { Play, Pause } from '@phosphor-icons/react/dist/ssr'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Play, Pause, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { brand } from '@/content/brand'
@@ -26,10 +26,57 @@ import styles from './InTheWild.module.css'
  *
  * A horizontal scroll-snap rail rather than a carousel library: it is keyboard
  * and trackpad native, needs no JS to scroll, and degrades to a plain scroller.
+ *
+ * ARROWS, because a trackpad is not the only input. On macOS the scrollbar is an
+ * overlay that fades away, so the rail looked self-explanatory in testing; on
+ * Windows it is a permanent grey bar under the cards, which is both ugly and the
+ * ONLY affordance a mouse user gets — there is no two-finger swipe to discover.
+ * So the bar is hidden on every platform and replaced by two buttons that page
+ * the rail by one card. They disable themselves at each end, they are real
+ * <button>s so the keyboard and screen readers get them, and the rail still
+ * scrolls natively if the JS never arrives.
  */
 export function InTheWild() {
   const [active, setActive] = useState<string | null>(null)
   const refs = useRef<Record<string, HTMLVideoElement | null>>({})
+
+  const rail = useRef<HTMLUListElement>(null)
+  /* `null` until the rail has been measured, so the buttons are not rendered
+     disabled-looking for a frame before anyone can use them. */
+  const [ends, setEnds] = useState<{ start: boolean; end: boolean } | null>(null)
+
+  const measure = useCallback(() => {
+    const el = rail.current
+    if (!el) return
+    const max = el.scrollWidth - el.clientWidth
+    /* 2px of slack: sub-pixel layout means scrollLeft rarely lands exactly on
+       the maximum, and a button that never enables at the end is worse than
+       one that enables a pixel early. */
+    setEnds({ start: el.scrollLeft <= 2, end: el.scrollLeft >= max - 2 })
+  }, [])
+
+  useEffect(() => {
+    const el = rail.current
+    if (!el) return
+    measure()
+    el.addEventListener('scroll', measure, { passive: true })
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => { el.removeEventListener('scroll', measure); ro.disconnect() }
+  }, [measure])
+
+  /* One card plus one gap per press, read off the DOM rather than hard-coded —
+     the card is a clamp() and the gap is a token, so neither is a number this
+     file should know. */
+  const page = (dir: 1 | -1) => {
+    const el = rail.current
+    if (!el) return
+    const card = el.querySelector('li')
+    const step = card
+      ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(el).columnGap || '0')
+      : el.clientWidth * 0.8
+    el.scrollBy({ left: step * dir, behavior: 'smooth' })
+  }
 
   const toggle = (id: string) => {
     const v = refs.current[id]
@@ -58,7 +105,7 @@ export function InTheWild() {
         </div>
       </div>
 
-      <ul className={styles.rail} aria-label="Clips from the duck pond">
+      <ul className={styles.rail} ref={rail} aria-label="Clips from the duck pond">
         {reels.map((r) => {
           const playing = active === r.id
           return (
@@ -90,6 +137,23 @@ export function InTheWild() {
           )
         })}
       </ul>
+
+      {/* The rail's own controls, on the content edge under it. Hidden from
+          assistive tech: a screen reader moves through the list itself, where
+          every card is already reachable, and two buttons that only scroll
+          would be noise. */}
+      <div className="wrap">
+        <div className={styles.controls} aria-hidden="true">
+          <button type="button" className={styles.arrow} onClick={() => page(-1)}
+                  disabled={ends?.start ?? false} tabIndex={-1}>
+            <CaretLeft size={20} weight="bold" />
+          </button>
+          <button type="button" className={styles.arrow} onClick={() => page(1)}
+                  disabled={ends?.end ?? false} tabIndex={-1}>
+            <CaretRight size={20} weight="bold" />
+          </button>
+        </div>
+      </div>
 
       <div className="wrap">
         <div className={styles.cta}>

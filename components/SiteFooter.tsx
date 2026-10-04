@@ -42,10 +42,23 @@ const MAIL = 'M3.5 5.5h17a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-17a1 1 0 0 1-1-1v-11a1
  * bottles. A duck paddles across the waterline, left to right.
  */
 export function SiteFooter() {
+  /* THE PLATFORMS' OWN COLOURS, at the client's request — these were the
+     brand's pink and yellow before, which looked tidy but made the two
+     networks unrecognisable at 50px.
+
+     Instagram is its real radial gradient, and the stop order matters: the
+     yellow corner is the one place a white glyph fails (1.85 against white),
+     so the gradient is anchored bottom-left where the mark is not, and the
+     glyph sits over the magenta at 4.73. Facebook is #1877F2, white on it
+     4.23. Email has no brand of its own so it takes --duck-blue, 7.92. All
+     three clear the 3.0 that WCAG asks of a non-text graphic. */
   const SOCIALS = [
-    { href: brand.instagram, label: 'Instagram', bg: 'var(--chichi)', d: IG, fill: true },
-    { href: brand.facebook, label: 'Facebook', bg: 'var(--sun)', d: FB, fill: true },
-    { href: `mailto:${brand.email}`, label: 'Email us', bg: 'var(--sky)', d: MAIL, fill: false },
+    {
+      href: brand.instagram, label: 'Instagram', d: IG, fill: true,
+      bg: 'radial-gradient(circle at 28% 108%, #FEDA75 0%, #FA7E1E 22%, #D62976 52%, #962FBF 76%, #4F5BD5 100%)',
+    },
+    { href: brand.facebook, label: 'Facebook', d: FB, fill: true, bg: '#1877F2' },
+    { href: `mailto:${brand.email}`, label: 'Email us', d: MAIL, fill: false, bg: 'var(--duck-blue)' },
   ]
 
   return (

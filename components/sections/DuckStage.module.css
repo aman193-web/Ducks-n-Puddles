@@ -162,6 +162,10 @@
   block-size: clamp(190px, 28vw, 380px);
   inline-size: auto; width: auto;
   position: relative; z-index: 1;
+  /* Pulled toward the character. The figure centres the pair, and with the
+     speech bubble now over the duck's crown the group read as drifting right —
+     32px closes the gap without the two touching. */
+  inset-inline-start: -32px;
 }
 .puddle {
   position: absolute; inset-block-end: -14px; inset-inline-start: 50%;

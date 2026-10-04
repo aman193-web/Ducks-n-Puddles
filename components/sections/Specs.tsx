@@ -59,7 +59,7 @@ export function Specs() {
             return (
               <div key={s.key} className={styles.card} data-tilt="" data-anim="" data-anim-y="24">
                 <span className={styles.icon} aria-hidden="true">
-                  <Icon size={26} weight="regular" />
+                  <Icon size={21} weight="regular" />
                 </span>
                 <dt className={styles.key}>{s.label}</dt>
                 <dd className={styles.value}>{s.value}</dd>

@@ -70,13 +70,19 @@
 @media (min-width: 1000px) { .card { flex-basis: calc((100% - 3 * var(--gap)) / 4); } }
 
 .card {
+  /* TWO COLUMNS, so the glyph sits BESIDE its label instead of on a row of its
+     own. That is most of the compaction: the icon row and the label row were
+     each costing full height, and together they say one thing. The fact and the
+     benefit then span the full width underneath. */
   display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 9px;
+  row-gap: 3px;
   align-content: start;
-  gap: 4px;
-  /* Not --card-pad. These are the smallest cards on the site now — a label, a
-     fact and sometimes one more line — and the shared card padding was sized
-     for cards with a paragraph in them. */
-  padding: clamp(14px, 1.4vw, 20px);
+  /* Not --card-pad. These are the smallest cards on the site — a label, a fact
+     and sometimes one more line — and the shared card padding was sized for
+     cards with a paragraph in them. */
+  padding: clamp(12px, 1.1vw, 16px) clamp(13px, 1.2vw, 17px);
   background: var(--cream);
   border-radius: var(--r-lg);
   /* CardTilt writes the four --tilt-* values; with none set the card is flat,
@@ -94,10 +100,11 @@
    own and real size — at 34px light it was a footnote above the label. */
 .icon {
   display: grid; place-items: center;
-  /* Down from 56-68px. At seven across, a 68px disc was most of the card. */
-  inline-size: clamp(40px, 3.1vw, 48px);
-  block-size: clamp(40px, 3.1vw, 48px);
-  margin-block-end: 10px;
+  grid-column: 1; grid-row: 1;
+  /* Down from 56-68px, and again now that it shares a row with the label. */
+  inline-size: clamp(32px, 2.4vw, 38px);
+  block-size: clamp(32px, 2.4vw, 38px);
+  margin-block-end: 0;
   /* A neutral well, not the section's own blue — a sky tile on a cream card
      repeated the ground colour and made the glyph fight it. Ink at 6% reads as
      a soft warm grey on cream and stays neutral on the inverted card too. */
@@ -112,15 +119,20 @@
 .icon svg { display: block; }
 
 .key {
+  grid-column: 2; grid-row: 1;
+  align-self: center;
   font-family: var(--font-mono); font-weight: 500;
-  font-size: var(--fs-micro); letter-spacing: .1em; text-transform: uppercase;
+  font-size: var(--fs-micro); letter-spacing: .09em; text-transform: uppercase;
+  line-height: 1.2;
   color: var(--ink-soft);
 }
 .value {
+  grid-column: 1 / -1;
   margin: 0;
+  margin-block-start: 5px;
   font-size: clamp(.9375rem, 1vw, 1.0625rem);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.3;
   text-wrap: pretty;
 }
 
@@ -146,17 +158,19 @@
    one. Quieter than the fact above it, because it is the reason rather than
    the thing. */
 .benefit {
-  font-size: var(--fs-small);
-  line-height: 1.45;
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  font-size: 15px;
+  line-height: 1.4;
   color: var(--ink);
   opacity: .74;
-  margin-block-start: 4px;
 }
 
 /* The asterisk on "Dishwasher-safe bottle & cap*". Sits under the grid, at the
    size the client asked for: smaller than the cards. */
 .footnote {
   margin-block-start: var(--s-5);
+  text-align: center;
   font-size: var(--fs-micro);
   line-height: 1.5;
   color: var(--ink);

@@ -102,7 +102,14 @@
 .social {
   display: grid; place-items: center;
   inline-size: 50px; block-size: 50px;
-  background: var(--s-bg); color: var(--ink);
+  /* `background`, not background-color: Instagram's is a gradient. */
+  background: var(--s-bg);
+  /* White glyph on every tile now the grounds are the platforms' own — see the
+     measured contrasts where SOCIALS is defined. */
+  color: #fff;
+  /* The ink outline stays. It is what keeps three very different grounds
+     reading as one row, and what separates the darkest of them from a cream
+     page. */
   border: var(--border); border-radius: var(--r);
   transition: transform .35s var(--spring);
 }

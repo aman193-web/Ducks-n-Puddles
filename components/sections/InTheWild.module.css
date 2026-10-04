@@ -40,8 +40,41 @@
   overscroll-behavior-inline: contain;
   scroll-snap-type: x mandatory;
   scroll-padding-inline-start: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
-  scrollbar-width: thin;
+  /* THE BAR IS HIDDEN, and the arrows below replace it. On macOS the scrollbar
+     is an overlay that fades out, so this rail looked fine; on Windows it is a
+     permanent grey bar sitting under the cards. Hiding it everywhere rather
+     than only there, because a control that exists on one platform and not
+     another is the harder thing to design around. */
+  scrollbar-width: none;
 }
+.rail::-webkit-scrollbar { display: none; }
+
+/* ---- the rail's controls ------------------------------------------------ */
+.controls {
+  display: flex;
+  gap: var(--s-3);
+  margin-block-start: var(--s-5);
+}
+.arrow {
+  display: grid; place-items: center;
+  inline-size: 46px; block-size: 46px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--spring), opacity var(--t-fast) ease;
+}
+.arrow:disabled { opacity: .32; cursor: default; }
+@media (hover: hover) {
+  .arrow:not(:disabled):hover { transform: translateY(-2px); }
+}
+.arrow:not(:disabled):active { transform: scale(.92); }
+@media (prefers-reduced-motion: reduce) { .arrow { transition: none; } }
+
+/* A trackpad or a touch screen already has a gesture for this, so the buttons
+   are for the input that does not: a mouse. */
+@media (hover: none) { .controls { display: none; } }
 .card {
   flex: 0 0 auto;
   inline-size: clamp(200px, 22vw, 268px);
