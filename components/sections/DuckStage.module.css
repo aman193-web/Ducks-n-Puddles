@@ -1,8 +1,7 @@
-/* Vincey's blue, which is also the first panel's. The three sticky panels are
-   opaque and cover this everywhere except the head — so the only thing this
-   colour does is put the introduction inside the blue section, which is what
-   the client asked for. */
-.section { background: var(--vincey-soft); position: relative; }
+/* Cream, and back on the client's second look. The head sat on Vincey's blue
+   for a round — the other half of their "within the blue section or centred"
+   note — and they prefer it outside. Centred it stays; blue it does not. */
+.section { background: var(--cream); position: relative; }
 /* Two-column head: the display line on the left, the lead paragraph bottom-aligned
    beside it. Capped at ~50ch and left-aligned, these heads left the entire right
    half of the page empty above every section. */
@@ -22,11 +21,9 @@
      the Batch 2 reorder put the Why section between them, so that allowance was
      stale and made this the widest ink gap on the page at 304px. */
   padding-block: var(--section-y) 0;
-  /* HALF of what it was. That gap used to separate a cream standfirst from a
-     blue panel, and a colour change needs room either side of it. The head is
-     now the same blue as the panel it introduces, so the two flow into each
-     other and the gap only has to be a breath. */
-  margin-block-end: calc(var(--section-y) * .5);
+  /* Full --section-y again. With the head back on cream this gap separates two
+     grounds, and a colour change needs room either side of it. */
+  margin-block-end: var(--section-y);
 }
 .head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 /* One column at every width now. The lead is six words — it does not need a

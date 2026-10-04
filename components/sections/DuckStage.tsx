@@ -5,7 +5,6 @@ import { Sticker } from '@/components/ui/Sticker'
 import { SpeechBubble } from '@/components/ui/SpeechBubble'
 import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
-import { WaveEdge } from '@/components/ui/WaveEdge'
 import styles from './DuckStage.module.css'
 
 /* THE FOOT MARGIN each -idle master carries under the character, as a fraction
@@ -67,19 +66,6 @@ const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 export function DuckStage() {
   return (
     <section className={styles.section} id="ducks" aria-labelledby="ducks-title">
-      {/* THE INTRODUCTION BELONGS TO THE BLUE, not to the cream above it. The
-          client offered two ways to make this head "feel more integrated with
-          the character sections" — centre it, or put it inside the blue
-          section — and has now asked for the second as well as the first. The
-          ground here is Vincey's own --vincey-soft, which is exactly the first
-          panel's colour, so the head and the panel it introduces are one
-          continuous block rather than a cream standfirst sitting above a blue
-          one. The wave carries the cream into it, as every other colour change
-          on this page does.
-
-          The sticky stack below is untouched: this is all above .stack, so the
-          scroll behaviour is the same as it was. */}
-      <WaveEdge above="var(--cream)" fill="var(--vincey-soft)" />
       <div className="wrap">
         <div className={styles.head}>
           <Sticker colour="var(--chichi-soft)" rot={2} data-pop="" data-pop-rot="2">The Quack Pack</Sticker>

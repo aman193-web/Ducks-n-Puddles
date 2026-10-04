@@ -57,15 +57,27 @@
    against the render's 1 is what keeps it there. */
 .art > picture { position: relative; z-index: 1; display: block; }
 .peek {
-  --tuck: 34px;
+  /* THE NUMBERS ARE THE BOTTLES SECTION'S, measured off it rather than picked
+     to look about right — the client asked for this to match, and at the first
+     pass it did not. Over there a duck is 0.74 of its bottle's height and
+     clears its edge by 51px, which shows head, shoulder, wing and feet as one
+     connected silhouette. Here it was 0.62 and 42px: enough for a face and a
+     pair of feet with the whole body hidden between them, so each duck read as
+     two disconnected scraps rather than one character behind a bottle.
+     38px of tuck against the larger duck lands the visible width back on 51. */
+  --tuck: 38px;
   position: absolute;
   z-index: 0;
-  inset-block-end: -2%;
+  /* ABOVE the base, not below it. The bottles' own ink stops about 1% short of
+     this box, and at -2% the feet finished 6px UNDER them — a duck standing in
+     front of the shelf rather than behind the bottle. The Bottles section sits
+     its ducks 3px above the base; 2% is the same 3px here. */
+  inset-block-end: 2%;
   inset-inline-start: calc(var(--edge) - var(--tuck));
   /* Sized by HEIGHT so the three silhouettes, which differ, line up as a set.
      --peek-aspect is width/height from the manifest; with a definite height it
      fixes the width, which `inline-size: auto` alone does not. */
-  block-size: 62%;
+  block-size: 74%;
   aspect-ratio: var(--peek-aspect, 0.4);
   inline-size: auto;
   pointer-events: none;

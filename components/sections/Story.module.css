@@ -193,8 +193,22 @@
      width and the child was reading as the backdrop to the ducks rather than
      the other way round. */
   inline-size: clamp(170px, 19vw, 272px);
-  inset-block-end: 5%;
-  inset-inline-start: 7%;
+  /* ON THE FLOOR OF THE FRAME. At 5% they stood a tenth of the way up a
+     picture that has since grown to 691px, with a field of sand under them —
+     which is what "floating in the middle" means. Their feet now sit about 4%
+     off the bottom edge.
+
+     AND THEREFORE CENTRED, which is not a style choice. The squircle's bottom
+     corners have a 34% horizontal radius, so the lower you go the narrower the
+     frame gets: at the ducks' new foot level it has closed in by about 81px a
+     side, leaving 314px of the 476 — enough for a 275px group only if it is in
+     the middle of it. Anywhere left of that and the pink duck is standing in
+     cream again, which is the bug this whole placement was written to fix.
+     `inset-inline: 0` plus `margin-inline: auto` does the centring without
+     touching `translate`, which the hero's pointer parallax owns site-wide. */
+  inset-block-end: -1%;
+  inset-inline: 0;
+  margin-inline: auto;
 }
 
 /* On a phone the photo stacks ABOVE the copy, so its min-height is pure scroll
