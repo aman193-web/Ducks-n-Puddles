@@ -34,7 +34,12 @@
   margin: 0;
   /* starts on the page's CONTENT edge so the first card lines up with the
      heading above it, and still bleeds off the right */
-  padding: 0 var(--gutter) 0 max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
+  /* Block padding so the tilted prints, their tape and the stagger have room:
+     overflow-x on a flex row makes the cross axis a scroll port too, so
+     anything leaning past the content box would be clipped without it. */
+  padding: 20px var(--gutter) 34px max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
+  /* The stagger below is margin-block-start, which a stretched item ignores. */
+  align-items: start;
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -81,19 +86,93 @@
   scroll-snap-align: start;
   display: grid; gap: var(--s-3);
 }
+
+/* ---- the scrapbook -------------------------------------------------------
+   "Make the photos/videos feel a little more organic rather than all identical
+   rigid cards. This section should feel almost like a family scrapbook /
+   social feed." So: a paper print, a strip of tape, and a lean.
+
+   THE LEAN IS `rotate:`, NOT `transform:`. It is a resting style, not motion,
+   and global.css sets `transform: none !important` on decorated elements under
+   reduced motion — a tilt written as a transform would be flattened for
+   exactly the people for whom nothing about it is a problem. As a standalone
+   property it survives, and it composes with the hover lift below instead of
+   fighting it. */
 .frame {
   position: relative;
+  /* The print's own mount: a little more paper under the picture than over it,
+     the way a photograph sits in an album. */
+  padding: 9px 9px 15px;
+  background: var(--paper);
+  /* A print has corners. The big --r-lg pill read as a UI card, which is the
+     thing this row was asked to stop looking like. */
+  border-radius: 5px;
+  border: 1px solid rgba(16, 38, 74, .10);
+  box-shadow: 0 12px 26px rgba(16, 38, 74, .16);
+  transition: rotate var(--t) var(--spring), translate var(--t) var(--spring),
+              box-shadow var(--t) ease;
+}
+.shot {
+  position: relative;
+  display: block;
   aspect-ratio: 9 / 16;
-  border-radius: var(--r-lg);
+  border-radius: 2px;
   overflow: clip;
   background: var(--sky);
-  border: var(--border-lg);
 }
-.frame video {
+.shot video {
   position: absolute; inset: 0;
   inline-size: 100%; block-size: 100%;
   object-fit: cover;
 }
+
+/* A strip of tape over the top edge, offset so it is never twice in the same
+   place. Warm and translucent rather than grey: it has cream and blue under it
+   at different points along the row and has to sit on both. */
+.tape {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: -11px;
+  inline-size: 64px; block-size: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 233, 176, .62) 0%,
+    rgba(255, 243, 214, .76) 45%,
+    rgba(255, 233, 176, .62) 100%);
+  border-inline: 1px dashed rgba(16, 38, 74, .10);
+  pointer-events: none;
+}
+
+/* FIVE STEPS, not two. The row holds five clips, so a 2n alternation would put
+   the same lean in the same place every other card and read as a pattern —
+   which is the opposite of candid. These are deliberately uneven. */
+.card:nth-child(5n + 1) .frame { rotate: -2.1deg; }
+.card:nth-child(5n + 2) .frame { rotate:  1.6deg; }
+.card:nth-child(5n + 3) .frame { rotate: -1.1deg; }
+.card:nth-child(5n + 4) .frame { rotate:  2.3deg; }
+.card:nth-child(5n + 5) .frame { rotate: -1.7deg; }
+.card:nth-child(5n + 1) .tape { inset-inline-start: 18%; rotate: -3.5deg; }
+.card:nth-child(5n + 2) .tape { inset-inline-start: 46%; rotate:  4deg; }
+.card:nth-child(5n + 3) .tape { inset-inline-start: 26%; rotate:  2.5deg; }
+.card:nth-child(5n + 4) .tape { inset-inline-start: 40%; rotate: -4.5deg; }
+.card:nth-child(5n + 5) .tape { inset-inline-start: 22%; rotate:  3deg; }
+/* The baseline breaks too. A row of prints all hung at the same height is
+   still a grid, however much each one leans. */
+.card:nth-child(5n + 2) { margin-block-start: 26px; }
+.card:nth-child(5n + 3) { margin-block-start: 9px; }
+.card:nth-child(5n + 4) { margin-block-start: 30px; }
+.card:nth-child(5n + 5) { margin-block-start: 14px; }
+
+/* Pick one up and it straightens. */
+@media (hover: hover) {
+  .card:hover .frame {
+    rotate: 0deg;
+    translate: 0 -7px;
+    box-shadow: 0 20px 36px rgba(16, 38, 74, .22);
+  }
+}
+@media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
+
 .play {
   position: absolute;
   inset-block-end: 10px; inset-inline-end: 10px;

@@ -13,7 +13,8 @@
 export interface Post {
   slug: string
   title: string
-  tag: 'Behind the scenes' | 'For parents' | 'Our story'
+  /** The client's three categories, named in the Sep 2026 revisions. */
+  tag: 'Behind the Puddles' | 'Things Worth Sharing' | 'Life Lately'
   /** ISO date. Shown as "12 September 2026". */
   date: string
   excerpt: string
@@ -27,7 +28,7 @@ export const posts: Post[] = [
   {
     slug: 'why-were-still-on-sample-four',
     title: 'Why we’re still on sample four',
-    tag: 'Behind the scenes',
+    tag: 'Behind the Puddles',
     date: '2026-08-21',
     excerpt:
       'Four rounds in, and the thing we keep changing is not the part you would expect. A short account of what each sample taught us.',
@@ -44,7 +45,7 @@ export const posts: Post[] = [
   {
     slug: 'what-to-look-for-in-a-kids-water-bottle',
     title: 'What to actually look for in a kid’s water bottle',
-    tag: 'For parents',
+    tag: 'Things Worth Sharing',
     date: '2026-07-30',
     excerpt:
       'Capacity, lid, cleaning, grip. Four things worth checking before you buy any bottle — ours included.',
@@ -62,17 +63,24 @@ export const posts: Post[] = [
   {
     slug: 'naming-a-duck-after-your-kid',
     title: 'Naming a duck after your kid',
-    tag: 'Our story',
+    tag: 'Life Lately',
     date: '2026-06-18',
+    /* REWRITTEN. The old line said the three of them 'are real people',
+       which Our Story now contradicts in as many words: they are 'three
+       little ducks with personalities of their own'. The post's point
+       survives the correction intact, because the point was never that
+       they are portraits — it is that a bottle with a name on it gets
+       carried, and that the name people will eventually print is their
+       own child's. */
     excerpt:
-      'Vincey, Chi Chi and Goosey are real people who are, at time of writing, asleep upstairs.',
+      'Three ducks with personalities of their own — and the name we are most looking forward to printing is not one of theirs.',
     image: 'dune-walk',
     readingMinutes: 3,
     body: [
       'We did not set out to start a brand. We set out to solve one evening, repeatedly: a child who would not drink water, and a cupboard of bottles that had all failed for a different reason.',
       'What worked, in the end, was not a better lid. It was giving the bottle a face. Once it had a face it had a name, and once it had a name it got carried to the car, to the beach, to bed.',
-      'So the three of them are named after our three. Vincey is calm, collected and comforting — the one who goes in first so everyone else knows it is alright. Chi Chi is funny, bold and already in the puddle. Goosey is happy, optimistic and the perfect sidekick.',
-      'That is not marketing copy invented in a meeting. Ask any parent to describe their kids in three words and you get something like this. We just printed it on a bottle.',
+      'So the three of them got names and personalities of their own. Vincey is calm, collected and comforting — the one who goes in first so everyone else knows it is alright. Chi Chi is funny, bold and already in the puddle. Goosey is happy, optimistic and the perfect sidekick.',
+      'They are not portraits of our kids, though our son did lend Vincey his name. They are three characters a child can pick between and recognise something of themselves in — which is a different thing, and the more useful one.',
       'The plan, eventually, is that the sleeve comes off and you put your own kid’s name on it instead. That one is not ready either — but it is the one we are most excited about, which is exactly why we are not rushing it.',
     ],
   },

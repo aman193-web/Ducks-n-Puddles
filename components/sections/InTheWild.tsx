@@ -110,7 +110,22 @@ export function InTheWild() {
           const playing = active === r.id
           return (
             <li key={r.id} className={styles.card}>
+              {/* THE MOUNT, and the SHOT inside it. The client asked for this
+                  row to feel "almost like a family scrapbook / social feed —
+                  candid, happy, real-life moments" rather than five identical
+                  rigid cards, so each clip now sits on a paper print with a
+                  piece of tape holding it down and its own slight tilt.
+
+                  The tilt is on the FRAME, never on the <li>. Two reasons, both
+                  load-bearing: page() measures a card's width off
+                  getBoundingClientRect to work out one scroll step, and the box
+                  of a rotated element is its bounding square, which is wider
+                  than the card and would make every arrow press overshoot. And
+                  scroll-snap would snap to that same inflated box. The list
+                  item stays square; only the picture leans. */}
               <div className={styles.frame}>
+                <span className={styles.tape} aria-hidden="true" />
+                <span className={styles.shot}>
                 <video
                   ref={(el) => { refs.current[r.id] = el }}
                   playsInline muted loop preload="none"
@@ -128,6 +143,7 @@ export function InTheWild() {
                     ? <Pause size={22} weight="fill" aria-hidden="true" />
                     : <Play size={22} weight="fill" aria-hidden="true" />}
                 </button>
+                </span>
               </div>
               {/* The caption used to print here. Removed at the client's request
                   — "we'd like the visuals to speak for themselves" — but kept as

@@ -85,5 +85,33 @@
 @media (min-width: 720px) {
   .next { grid-template-columns: minmax(0, 1fr) auto; }
 }
+/* ROOM FOR THE DUCKS. They rise about 60px over the top of the button they
+   stand behind, and at the old --s-6 that put their heads through the rule
+   above — which reads as a clipping accident rather than as a character. The
+   extra padding is the gap they peek INTO. Only from 900, which is where the
+   ducks appear at all. */
+@media (min-width: 900px) { .next { padding-block-start: 92px; } }
 .nextText { font-size: var(--fs-body); color: var(--ink); }
-.nextBtns { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.nextBtns { display: flex; flex-wrap: wrap; gap: var(--s-3); position: relative; }
+/* The buttons own the stacking order so the ducks can sit under them. Btn is
+   already position: relative, so this is only the z-index. */
+.nextBtns > a { z-index: 1; }
+
+/* Behind the first button, heads clear of its top edge. Anchored to the BOTTOM
+   so the amount showing stays the same whatever the button's height does at a
+   different breakpoint — anchoring the top would make the overlap a number
+   that only happens to be right at one size.
+
+   The art is square with the ducks occupying y 12.5%..85.1% of it, so at 176px
+   the ink is about 128px tall against a ~56px button: a little over half of
+   each duck shows, which is the proportion that reads as peeking rather than
+   as standing behind something. */
+.peek {
+  position: absolute;
+  inset-block-end: -4px;
+  inset-inline-start: 4px;
+  inline-size: 168px;
+  z-index: 0;
+  pointer-events: none;
+}
+@media (max-width: 899px) { .peek { display: none; } }

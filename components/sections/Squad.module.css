@@ -38,6 +38,24 @@
 .art > picture img { filter: drop-shadow(0 16px 26px rgba(16, 38, 74, .18)); }
 .art > picture img { inline-size: 100%; block-size: auto; }
 
+/* THE THREE CHARACTERS, at the right-hand end of their own bottles.
+   Percentages of the art's own box on both axes, so the group keeps the same
+   relationship to the bottles at every width instead of drifting across them
+   as the column grows. 44% puts them at a little under half the bottles'
+   height, which is the proportion that reads as characters standing beside a
+   product rather than as a competing graphic. */
+.cast {
+  position: absolute;
+  z-index: 2;
+  inline-size: 44%;
+  inset-inline-end: -14%;
+  /* The art's bottom IS the bottles' base, and the duck art carries about 15%
+     of transparent padding under its feet — so a small negative sits the two
+     ground lines on top of each other instead of leaving the ducks hovering. */
+  inset-block-end: -11%;
+  filter: drop-shadow(0 14px 22px rgba(16, 38, 74, .20));
+}
+
 .sub { max-width: 42ch; }
 
 /* The three things membership means. A list, not cards: cards would make this

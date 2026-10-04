@@ -1,0 +1,88 @@
+/* =============================================================================
+   THE STANDING PAGES — Contact, Privacy, Terms.
+
+   One stylesheet for the three of them because they are one template: a
+   masthead, a column of prose, and the blue closing band the footer's wave
+   needs to paint itself against (see the note in blog.module.css — hand that
+   wave a cream band and a stray light stripe appears across the seam).
+   ========================================================================== */
+.page {
+  background: var(--cream);
+  padding-block: clamp(var(--s-7), 6vw, var(--s-9)) clamp(var(--s-6), 4vw, var(--s-8));
+}
+
+.masthead {
+  display: grid; justify-items: start; gap: var(--s-4);
+  margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
+}
+.masthead .lede { max-width: 54ch; }
+
+/* ---- THE DRAFT NOTICE ----------------------------------------------------
+   Deliberately impossible to miss, and deliberately one element to delete.
+   These two pages carry placeholder wording at the client's request; shipping
+   placeholder terms silently, on a children's brand, is the kind of thing that
+   is only ever noticed by the wrong person. It states what it is, in plain
+   words, above the text it applies to. */
+.draft {
+  display: grid; gap: var(--s-2);
+  margin-block-end: clamp(var(--s-6), 4vw, var(--s-7));
+  padding: var(--s-4) var(--s-5);
+  background: var(--sun-soft);
+  border: var(--border-lg);
+  border-radius: var(--r-lg);
+  max-width: 62ch;
+}
+.draftTitle {
+  font-weight: 700; font-size: var(--fs-small);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.draft p { font-size: var(--fs-small); line-height: 1.6; margin: 0; }
+
+/* ---- prose --------------------------------------------------------------- */
+.prose { display: grid; gap: var(--s-6); max-width: 68ch; }
+.prose section { display: grid; gap: var(--s-3); }
+.prose h2 {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem); line-height: 1.15;
+  letter-spacing: .008em; color: var(--ink);
+}
+.prose p, .prose li { font-size: var(--fs-body); line-height: 1.62; color: var(--ink); }
+.prose ul { display: grid; gap: var(--s-2); padding-inline-start: 1.1em; margin: 0; }
+.prose a { color: var(--ink); text-underline-offset: .22em; }
+
+.updated {
+  font-size: var(--fs-small); color: var(--ink); opacity: .72;
+  margin-block-start: var(--s-6);
+}
+
+/* ---- contact: the ways in ------------------------------------------------ */
+.ways {
+  display: grid; gap: var(--s-4);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  max-width: 68ch;
+  list-style: none; padding: 0; margin: 0;
+}
+.way {
+  display: grid; gap: var(--s-2); align-content: start;
+  padding: var(--s-5);
+  background: var(--paper);
+  border: var(--border-lg);
+  border-radius: var(--r-lg);
+}
+.wayTitle {
+  font-weight: 700; font-size: var(--fs-small);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.way p { font-size: var(--fs-small); line-height: 1.55; margin: 0; }
+.way a { font-weight: 600; color: var(--ink); }
+
+/* ---- the closing band, as the blog index has ---------------------------- */
+.close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
+.closeInner { display: grid; justify-items: start; gap: var(--s-4); }
+.closeTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.1;
+  font-size: clamp(1.5rem, 3.4vw, 2.75rem);
+  max-width: 24ch; text-wrap: balance;
+}
+.closeBlurb { max-width: 46ch; line-height: 1.6; }

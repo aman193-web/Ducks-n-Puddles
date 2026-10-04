@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Picture } from '@/components/Picture'
+import { Duck } from '@/components/ui/Duck'
 import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
@@ -121,6 +122,21 @@ export function Squad() {
               next to a form four times its height */}
           <div className={styles.art} aria-hidden="true">
             <Picture id="trio" sizes="(min-width: 900px) 42vw, 78vw" alt="" data-bob="" />
+            {/* THE CHARACTERS, BESIDE THEIR OWN BOTTLES. The client: "I'd also
+                consider showing the three actual character ducks alongside or
+                peeking around the bottles, rather than only the bottles. This
+                section is about joining the world/community, so the characters
+                should feel like they're welcoming you into it."
+
+                They stand at the right-hand end on the same ground line, in
+                front of the third bottle rather than beside the set — which is
+                what reads as the characters being WITH the product instead of
+                a second row of artwork next to it.
+
+                `float`, not `data-bob`: bob() in lib/motion.ts derives its
+                amplitude and period from DOM index, so a fourth bobbing element
+                in this section would silently re-time the bottles. */}
+            <Duck who="trio" pose="walk" className={styles.cast} float />
           </div>
 
         </div>

@@ -16,12 +16,14 @@ const EXPLORE = [
   { href: '/blog', label: 'From the Pond' },
 ]
 
+/* The client's own list, and only theirs. Accessibility was an addition of
+   mine and is out at their request; "Shipping & Returns (when live)" stays out
+   until shipping is live, which is what the client's own note asks for. */
 const HELP = [
   { href: '/#faq', label: 'FAQs' },
   { href: '/contact', label: 'Contact Us' },
   { href: '/privacy', label: 'Privacy Policy' },
   { href: '/terms', label: 'Terms of Service' },
-  { href: '/accessibility', label: 'Accessibility' },
 ]
 
 const IG = 'M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.7 4.92 4.92.06 1.28.07 1.67.07 4.9s-.01 3.62-.07 4.9c-.15 3.22-1.66 4.77-4.92 4.92-1.28.06-1.67.07-4.9.07s-3.62-.01-4.9-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.11 15.62 2.1 15.23 2.1 12s.01-3.62.07-4.9C2.32 3.88 3.83 2.33 7.1 2.18 8.38 2.12 8.77 2.2 12 2.2Zm0 3.1a6.7 6.7 0 1 0 0 13.4 6.7 6.7 0 0 0 0-13.4Zm0 11.05a4.35 4.35 0 1 1 0-8.7 4.35 4.35 0 0 1 0 8.7Zm6.96-11.3a1.57 1.57 0 1 0 0 3.13 1.57 1.57 0 0 0 0-3.13Z'
@@ -114,7 +116,7 @@ export function SiteFooter() {
               </ul>
             </div>
             <div>
-              <h2 className={styles.colH}>Support</h2>
+              <h2 className={styles.colH}>Help</h2>
               <ul className={styles.links}>
                 {HELP.map((l) => <li key={l.href}><Link href={l.href}>{l.label}</Link></li>)}
               </ul>
