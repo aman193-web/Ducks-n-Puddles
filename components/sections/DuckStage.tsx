@@ -2,6 +2,7 @@
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
+import { SpeechBubble } from '@/components/ui/SpeechBubble'
 import { Duck } from '@/components/ui/Duck'
 import { ducks } from '@/content/brand'
 import styles from './DuckStage.module.css'
@@ -120,7 +121,7 @@ export function DuckStage() {
                     like the character is sharing their reminder directly with
                     the child" — so it belongs to the character, not to the copy
                     column it started in. */}
-                <p className={styles.bubble} data-pop="" data-pop-rot="-2">{d.message}</p>
+                <SpeechBubble message={d.message} className={styles.bubble} />
                 <span className={styles.puddle} aria-hidden="true" />
                 <Duck
                   who={d.slug} pose="idle" density="always" float speak

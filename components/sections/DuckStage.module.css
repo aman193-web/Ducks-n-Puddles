@@ -54,119 +54,43 @@
    600, not 700: this is warm prose now, not a slogan. */
 .personality { font-weight: 600; font-size: var(--fs-lead); line-height: 1.5; max-width: 42ch; }
 
-/* THE SPEECH BUBBLE.
-   A real one: a rounded bubble with a tapered tail aimed at the duck's beak,
-   not the two-dot trail that means a THOUGHT. The client asked for a speech
-   bubble and the words are the duck talking to the child, so the tail points.
+/* WHERE THE SPEECH BUBBLE SITS. The bubble itself — its shape, its type and
+   its entrance — belongs to SpeechBubble. This section only says where on the
+   duck it goes, and there is nothing of the old CSS box left: no border, no
+   radius, no pseudo-element tail, no idle keyframe.
 
-   SITS ON THE CROWN, not over the box. The duck's element is taller than the
-   duck — each master carries its own slab of transparent space above the head
-   (7.3% of the frame on Vincey, 1.0% on Goosey) — so placing the bubble off the
-   box left it floating half a head above one and almost touching another.
-   --crown, set per duck in DuckStage.tsx, takes that slack out first; the 14px
-   is then a real 14px of air above the feathers on all three.
+   ON THE CROWN, not over the box. The duck's element is taller than the duck —
+   each master carries its own slab of transparent space above the head (7.3%
+   of the frame on Vincey, 1.0% on Goosey) — and the character is additionally
+   nudged down by --foot to stand on the puddle. Taking both off is what puts
+   the gap at the same 12px on all three rather than 39px over one and almost
+   nothing over another.
 
-   Sized off the figure, not the viewport: the character is clamp(170px, 26vw,
-   330px), so a bubble measured in vw drifted off its head between breakpoints.
-   ========================================================================== */
+   AIMED AT THE HEAD. The duck is the figure's first child, so its centre sits
+   --duck-h/2 from the figure's left; with the bubble at 0 the tail pointed
+   148px wide of him into open sky. A quarter of the duck's width puts it over
+   the crown, which is where the tail's own angle expects to find a beak. */
 .bubble {
   position: absolute;
   z-index: 4;
-  /* 14px above the FEATHERS, which takes two corrections off the duck's box:
-     --crown, the transparent slab each master carries above the head, and
-     --foot, the nudge that pushes the character down onto the puddle. Without
-     the second the bubble measured 39px off the crown instead of 14 and the
-     tail pointed into open sky — the character had moved and the bubble had
-     not. The 3.5px is the float straddle from the same rule. */
   inset-block-end: calc(
-    var(--duck-h) * (1 - var(--crown, 0) - var(--foot, 0)) - 3.5px + 14px
+    var(--duck-h) * (1 - var(--crown, 0) - var(--foot, 0)) - 3.5px + 12px
   );
-  /* AIMED AT THE HEAD. The duck is the figure's first child, so its centre sits
-     --duck-h/2 from the figure's left; measured at 1440 that is 165px while the
-     bubble sat at 0, which left the tail pointing 148px wide of him into open
-     sky. A quarter of the duck's width brings the tail just inside his crown,
-     so the bubble reads as up-and-left of the head rather than beside it. */
-  inset-inline-start: calc(var(--duck-h) * .26);
-  /* The resting x offset lives in a variable so the breathe keyframe can carry
-     it too. Without that, the animation's `translate` would drop the offset and
-     the bubble would jump sideways the moment it started. */
-  --bx: 0%;
-  translate: var(--bx) 0;
-  margin: 0;
-  max-inline-size: 11ch;
-  padding: .66em 1em .72em;
-  background: var(--paper);
-  border: var(--border-lg);
-  border-radius: 1.6em;
-  box-shadow: 0 10px 22px rgba(16, 38, 74, .14);
-  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: clamp(1.125rem, 2.2vw, 1.875rem);
-  line-height: 1.1;
-  text-align: center;
-  color: var(--ink);
-  text-wrap: balance;
-  /* popStickers owns `transform` on [data-pop] and reduced motion sets it to
-     none, so the idle lives on `translate` — its own channel, and one that
-     survives the reduced-motion rule because the resting offset is in the same
-     keyframe. */
-  transform-origin: 20% 100%;
-}
-
-/* THE TAIL. A square rotated 45 degrees with two of its borders showing, which
-   is the only way to get a tapered tail that keeps the 2px ink outline running
-   unbroken around the whole bubble. The background patch over the seam is why
-   it reads as one shape rather than a diamond stuck underneath. */
-.bubble::before,
-.bubble::after {
-  content: '';
-  position: absolute;
-  inset-block-end: -11px;
-  inset-inline-start: 22%;
-  inline-size: 18px;
-  block-size: 18px;
-  background: var(--paper);
-  rotate: 45deg;
-}
-.bubble::before {
-  border-inline-end: var(--border-lg);
-  border-block-end: var(--border-lg);
-  border-end-end-radius: 4px;
-}
-/* Covers the hairline where the tail meets the bubble's own bottom border. */
-.bubble::after {
-  inset-block-end: -4px;
-  block-size: 12px; inline-size: 24px;
-  inset-inline-start: calc(22% - 3px);
-  rotate: 0deg;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  /* A slow breath, so the bubble feels spoken rather than printed. Small: at
-     3px it reads as the duck holding a thought, at more it reads as a wobble. */
-  .bubble { animation: bubbleBreathe 3.4s ease-in-out infinite alternate; }
-  .stack > :nth-child(2) .bubble { animation-duration: 3.9s; animation-delay: .5s; }
-  .stack > :nth-child(3) .bubble { animation-duration: 3.6s; animation-delay: .9s; }
-}
-@keyframes bubbleBreathe {
-  from { translate: var(--bx) 0; }
-  to   { translate: var(--bx) -3px; }
+  inset-inline-start: calc(var(--duck-h) * .24);
+  inline-size: clamp(104px, 11.5vw, 148px);
 }
 
 @media (max-width: 899px) {
+  /* Outboard of the head rather than above it. The panel stacks on a phone and
+     the figure starts hard against the top, so there is no sky to float in —
+     measured before this, the bubble's top landed at -68px, entirely off
+     screen. */
   .bubble {
-    inset-block-end: calc(var(--duck-h) * (.72 - var(--foot, 0)));
-    /* Back to the figure's edge on a phone: down here the bubble overlaps the
-       shoulder rather than floating over the crown, so it wants to be outboard
-       of the head, not above it. */
+    inset-block-end: calc(var(--duck-h) * (.70 - var(--foot, 0)));
     inset-inline-start: 0;
-    --bx: -8%;
-    translate: var(--bx) 0;
-    max-inline-size: 8ch;
-    font-size: 1.0625rem;
-    padding: .52em .78em .58em;
+    translate: -8% 0;
+    inline-size: clamp(84px, 25vw, 108px);
   }
-  .bubble::before { inline-size: 13px; block-size: 13px; inset-block-end: -8px; }
-  .bubble::after  { inline-size: 17px; block-size: 9px;  inset-block-end: -3px; }
 }
 
 /* No cap, and balanced. `ch` is a poor unit here — it resolves against the

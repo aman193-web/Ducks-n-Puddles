@@ -1,0 +1,68 @@
+/* ==========================================================================
+   A DUCK SAYING SOMETHING — the shell only. The entrance is a GSAP timeline in
+   SpeechBubble.tsx; there is deliberately no keyframe in here, and deliberately
+   no idle loop. A bubble that keeps bobbing reads as UI asking for attention,
+   and the brief is the opposite: it should look like the character simply said
+   the thing.
+   ========================================================================== */
+.bubble {
+  position: relative;
+  display: block;
+  /* The path's own proportions. Fixed, so the SVG never has to stretch and the
+     navy outline keeps an even weight all the way round. */
+  aspect-ratio: 200 / 170;
+  /* `cqw` below is measured against this box. */
+  container-type: inline-size;
+  /* GSAP scales this element, and the tail tip is at 77%/94% of the viewBox —
+     so the bubble grows out of the point nearest the beak instead of swelling
+     from its own middle. */
+  transform-origin: 77% 94%;
+  pointer-events: none;
+  filter: drop-shadow(0 7px 14px rgba(16, 38, 74, .16));
+}
+
+.shape {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+  overflow: visible;
+}
+.shape path {
+  fill: var(--paper);
+  stroke: var(--ink);
+  /* 4 of a 200-unit viewBox. Scales with the bubble, so the outline stays in
+     proportion instead of going spindly on a phone. */
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  /* Hairlines appear where the stroke straddles a fractional pixel at small
+     sizes; painting the fill under its own stroke hides the seam. */
+  paint-order: fill stroke;
+}
+
+/* THE BODY REGION, not the whole box. The path's body ends at y=124 of 170 and
+   its sides sit at x 8 and 192, so the text is inset to match — otherwise a
+   long word drifts into the tail. */
+.text {
+  position: absolute;
+  /* The path's body runs y 4%..73% and x 4%..96%; this sits just inside it, so
+     a wrapped line can use the full width without touching the outline. */
+  inset: 5% 7% 29% 7%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  /* Off the bubble's own width, so the type and the shape scale together at
+     every breakpoint rather than drifting apart between them. Set large enough
+     that all three messages break to two lines. Bangbang is condensed enough
+     that "Trust Yourself" still measured 109px against a 123px box at 18.5 and
+     stayed on one line, which left it floating as a label in a lot of cream;
+     two lines fill the body and read as something said. */
+  font-size: 22.5cqw;
+  line-height: 1.08;
+  letter-spacing: .005em;
+  color: var(--ink);
+  text-wrap: balance;
+}
