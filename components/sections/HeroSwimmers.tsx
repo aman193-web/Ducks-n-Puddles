@@ -90,7 +90,7 @@ export function HeroSwimmers() {
     const svg = band?.querySelector('svg') ?? null
     if (!band) return
 
-    let sx = 0, sy = 0, top = 0, width = 0, seat = 0
+    let sx = 0, sy = 0, top = 0, width = 0, seat = 0, bandW = 0
     let periodPx = 0, wrapPeriods = 1
     const heights: number[] = []
     const widths: number[] = []
@@ -105,6 +105,11 @@ export function HeroSwimmers() {
       sy = bandBox.height / SPAN
       top = bandBox.top - layerBox.top
       width = layerBox.width
+      /* The BAND's width, which is no longer simply twice the panel's. It is
+         max(200%, 2880px) now, so that the wavelength stops shrinking on a
+         phone — which means everything below that used to infer the drift from
+         the panel has to measure the band instead. */
+      bandW = bandBox.width
       periodPx = PERIOD * sx
       /* Sit the hull a little into the navy band rather than balanced on the
          hairline: these render in FRONT of the crest now, so this is the only
@@ -128,8 +133,10 @@ export function HeroSwimmers() {
       const ms = Number(anim.currentTime)
       const p = ((ms / 24000) % 1 + 1) % 1
       /* `reverse`, so the effect runs 1 -> 0 and the layer moves right. The
-         keyframe is translateX(-50%) of a box twice the panel's width. */
-      return -(width * (1 - p))
+         keyframe is translateX(-50%) OF THE BAND, which is half the band's own
+         width — not the panel's. Those were the same number while the band was
+         exactly 200%; they are not on a phone any more. */
+      return -(bandW / 2) * (1 - p)
     }
 
     measure()
@@ -203,10 +210,10 @@ export function HeroSwimmers() {
       if (!onScreen) return
       t += delta / 1000
       /* Ground speed is the water's plus the duck's own. The drift carries it
-         one panel width every 24s whether it swims or not; RIDE only says how
-         fast it works its way ALONG the swell, which is what sets the rhythm of
-         the rise and fall. */
-      const speed = width / 24 + (PERIOD / RIDE) * sx
+         half a BAND every 24s whether it swims or not; RIDE only says how fast
+         it works its way ALONG the swell, which is what sets the rhythm of the
+         rise and fall. */
+      const speed = (bandW / 2) / 24 + (PERIOD / RIDE) * sx
       const margin = 1.4 * Math.max(...heights)
       for (let i = 0; i < xs.length; i++) {
         xs[i] += (speed * delta) / 1000

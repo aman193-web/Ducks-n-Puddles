@@ -17,10 +17,25 @@ import styles from './DuckStage.module.css'
    different scales within the frame (the art fills 72% / 67% / 62% of the box
    width), so the frame is currently the only thing keeping the three the same
    size on screen. Trimming would resize them against each other. */
+/* Unitless, because TWO things now need it: the character's own downward
+   nudge, and the speech bubble, which has to subtract the same nudge or it
+   floats by exactly that much. A percentage would resolve against a different
+   box in each place. */
 const FOOT: Record<string, string> = {
-  vincey: '6.4%',
-  'chi-chi': '1.8%',
-  goosey: '1.6%',
+  vincey: '.064',
+  'chi-chi': '.018',
+  goosey: '.016',
+}
+
+/* THE SAME PROBLEM AT THE OTHER END. Each -idle master also carries a different
+   amount of transparent space ABOVE the head — measured off the alpha: Vincey
+   91/1254, Chi Chi 18/1254, Goosey 12/1254. The speech bubble is placed off the
+   duck's box, so without this it floats 50px over Vincey's head and sits almost
+   on Goosey's. Unitless, because the CSS multiplies it by the duck's height. */
+const CROWN: Record<string, string> = {
+  vincey: '.073',
+  'chi-chi': '.014',
+  goosey: '.010',
 }
 
 const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
@@ -95,14 +110,17 @@ export function DuckStage() {
                   client asked us to change. */}
               <div
                 className={styles.figure}
-                style={{ ['--foot' as string]: FOOT[d.slug] ?? '0%' }}
+                style={{
+                  ['--foot' as string]: FOOT[d.slug] ?? '0%',
+                  ['--crown' as string]: CROWN[d.slug] ?? '0',
+                }}
               >
                 {/* THE REMINDER, SPOKEN. The client asked for the defining message
                     to sit in a speech bubble next to the duck "making it look
                     like the character is sharing their reminder directly with
                     the child" — so it belongs to the character, not to the copy
                     column it started in. */}
-                <p className={styles.bubble}>{d.message}</p>
+                <p className={styles.bubble} data-pop="" data-pop-rot="-2">{d.message}</p>
                 <span className={styles.puddle} aria-hidden="true" />
                 <Duck
                   who={d.slug} pose="idle" density="always" float speak

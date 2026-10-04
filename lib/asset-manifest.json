@@ -689,14 +689,14 @@
       680
     ],
     "alpha": true,
-    "v": "7f2017e2",
-    "aspect": 1,
+    "v": "ab107b9a",
+    "aspect": 0.7374,
     "formats": [
       "avif",
       "webp"
     ],
-    "nativeWidth": 1254,
-    "nativeHeight": 1254
+    "nativeWidth": 907,
+    "nativeHeight": 1230
   },
   "goosey-wave": {
     "id": "goosey-wave",

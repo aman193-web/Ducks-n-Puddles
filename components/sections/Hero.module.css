@@ -285,9 +285,22 @@
 }
 .wave svg { inline-size: 100%; block-size: 100%; }
 
+/* THE WAVE KEEPS ITS WAVELENGTH, at every width.
+
+   These bands are a PERCENTAGE of the panel holding a fixed four periods, so
+   the wavelength used to shrink with the viewport: 720px a period at 1440 and
+   195px at 390, which is three and a half times tighter. That is why the phone
+   read as a row of spikes while the desktop read as a swell — same curve, far
+   too many of them in the space.
+
+   `max()` floors the band at its 1440 size. Above that it still scales with the
+   panel, exactly as before; below it the band simply overhangs further and gets
+   clipped, and the wavelength holds at 720px all the way down. The 200% is what
+   the drift needs to stay seamless (it translates -50% of its own width), so
+   the percentage has to stay in the expression rather than be replaced by it. */
 .waveBody, .waveCrest {
   inset-block-start: calc(var(--water) - 2%);
-  inline-size: 200%;
+  inline-size: max(200%, 2880px);
 }
 .waveBody { z-index: 2; }
 .waveCrest { z-index: 6; }
@@ -295,7 +308,8 @@
 .waveFar {
   z-index: 1;
   inset-block-start: calc(var(--water) - 8%);
-  inline-size: 260%;
+  /* Same floor, at this band's own ratio: 260% of 1440. */
+  inline-size: max(260%, 3744px);
   opacity: .45;
 }
 

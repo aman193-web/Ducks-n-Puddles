@@ -116,6 +116,10 @@ export const alphaAssets = [
   { id: 'chichi-idle',   src: `${BRAND_DIR}/characters/chichi-idle.png`,   widths: [420, 840] },
   { id: 'goosey-idle',   src: `${BRAND_DIR}/characters/goosey-idle.png`,   widths: [420, 840] },
   { id: 'vincey-idle',   src: `${BRAND_DIR}/characters/vincey-idle.png`,   widths: [420, 840] },
+  /* Trimmed on import, like the wink beside it. Untrimmed, the art filled only
+     72.3% of its frame against the wink's 100%, so the same 124px cameo box
+     rendered Chi Chi noticeably smaller than Vincey — the boxes matched and the
+     BIRDS did not. */
   { id: 'chichi-wave',   src: `${BRAND_DIR}/characters/chichi-wave.png`,   widths: [340, 680] },
   { id: 'goosey-wave',   src: `${BRAND_DIR}/characters/goosey-wave.png`,   widths: [340, 680] },
   { id: 'chichi-splash', src: `${BRAND_DIR}/characters/chichi-splash.png`, widths: [340, 680] },
