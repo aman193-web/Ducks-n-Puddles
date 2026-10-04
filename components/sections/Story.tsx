@@ -46,11 +46,21 @@ export function Story() {
                   sizes="(min-width: 900px) 24vw, 46vw" />
           </figure>
 
-          <div className={styles.body}>
+          {/* THE HEADING IS ITS OWN ROW, and that is what lets the photograph
+              line up with the copy rather than with the sticker. The client
+              asked for the picture to run from "Hi! We're Larisa" down to the
+              button; with the sticker and the title lifted out into row 1, the
+              figure and the remaining copy share row 2 and stretch to the same
+              height, so that alignment holds at every width without a single
+              hard-coded number. */}
+          <header className={styles.head}>
             <Sticker colour="var(--chichi-soft)" rot={-2} data-pop="" data-pop-rot="-2">Our story</Sticker>
             <h2 id="story-title" className={`d ${styles.title}`} data-anim="">
               We All Need a Friend.
             </h2>
+          </header>
+
+          <div className={styles.body}>
             <p className={styles.lead} data-anim="">
               Hi! We&rsquo;re Larisa and Vinny &mdash; husband and wife, parents to Lucy and
               Vincey, and the founders of Ducks &rsquo;n Puddles.

@@ -9,12 +9,16 @@
   position: relative;
   overflow-x: clip;
 }
-/* `stretch`, not `center`. Centred, the photograph floated at its natural
-   height against an 800px copy column and left a deep well of empty cream
-   under it — which is what read as the section being too tall. Stretching the
-   figure to the column balances the two and removes the dead space without
-   cutting any of the client's copy. */
-.grid { display: grid; gap: var(--s-7); align-items: stretch; }
+/* TWO ROWS, not one. Row 1 is the sticker and the heading; row 2 is the
+   photograph and the rest of the copy, side by side and stretched to each
+   other. That split is the whole trick behind the client's "start the photo
+   from 'Hi! We're Larisa' to the button": the figure cannot reach above its
+   own row, and the row begins exactly where the lead paragraph does. */
+.grid { display: grid; row-gap: var(--s-3); column-gap: var(--s-7); align-items: stretch; }
+
+/* Column 2 on the desktop two-up, full width when the thing stacks. The
+   placement lives in the min-900 block; here it is just a stack of two. */
+.head { display: grid; justify-items: start; gap: 10px; }
 
 /* No panel and no caption underneath — the pale blue box plus a caption made the
    photograph the smallest thing in its own half of the section. The squircle
@@ -22,36 +26,47 @@
 .figure {
   position: relative;
   display: grid;
+  /* ONE ROW AT 1fr, which is what gives <picture> a definite height to resolve
+     its own `block-size: 100%` against. `align-content: stretch` alone does
+     not: a grid row sized from its content is still an auto row, and a
+     percentage height inside an auto-height box collapses to nothing. */
+  grid-template-rows: minmax(0, 1fr);
   /* `stretch` on the inline axis so <picture> gets a real width: it is a bare
      wrapper with no content of its own, so under `place-items: center` it
      collapsed to 0 until the image loaded — and a lazy image inside a
      zero-width box never intersects the viewport, so it never loaded at all. */
   justify-items: stretch;
-  align-content: stretch;
-  /* No longer stretched to the copy's height — the photo has its own cap now,
-     so the figure takes the photo's height and sits at the top of the row. */
-  align-self: start;
+  /* Back to filling its row, on the client's note that the photo should run
+     from the first line of copy down to the button. Row 2 is exactly that
+     span, so stretching into it is the alignment — no magic height. */
+  align-self: stretch;
 }
-.figure > picture { display: block; }
+.figure > picture { display: block; block-size: 100%; min-block-size: 0; }
 /* Scoped to .photo, NOT `.figure img`. Unscoped it also caught the Chi Chi
    cameo and stretched a square source to 187x566 under `object-fit: cover`. */
 .photo {
   inline-size: 100%;
-  /* Capped, not stretched. It used to fill whatever height the copy set, which
-     with the client's longer copy made it a 790px portrait slab — taller than
-     anything else on the page and the reason the section read as oversized.
-     It sits at the top of its column now and the copy is free to run past it. */
-  block-size: auto;
-  aspect-ratio: 4 / 3.4;
-  max-block-size: clamp(300px, 36vw, 470px);
+  /* Fills its row. The crop this lands on is very nearly none at all: the
+     source is a 3:4 portrait (aspect 0.75 in the manifest) and the row it now
+     fills measures about 453x600, which is 0.755 — so the shot is shown
+     essentially whole rather than cut to a letterbox the way the old
+     `4 / 3.4` cap did. */
+  block-size: 100%;
+  /* A floor for the short-copy case, so the figure can never collapse to a
+     strip if this section's text is ever trimmed. */
+  min-block-size: clamp(300px, 34vw, 560px);
   object-fit: cover;
+  /* Biased up the frame. Wherever the box IS narrower than 3:4 the crop comes
+     off the bottom, which is sand — and sand is where the ducks stand anyway. */
+  object-position: 50% 30%;
   border-radius: 34% / 30%;          /* squircle, as the reference masks its shots */
 }
 
 
 /* 10px, not --s-3's 12. Eight gaps in this column, so two pixels each is 16
-   off the section — and at 1.52 leading the paragraphs already separate. */
-.body { display: grid; justify-items: start; gap: 10px; }
+   off the section — and at 1.52 leading the paragraphs already separate.
+   The sticker and the heading used to live in here; they are in .head now. */
+.body { display: grid; justify-items: start; gap: 10px; align-content: start; }
 /* a section heading, so it takes the section heading's leading */
 /* The full section size. It stepped down to --fs-lg for its narrower column,
    but the design pass put every section heading on one size. */
@@ -108,27 +123,82 @@
      because down there the column is narrow enough that one more fr genuinely
      drops a line from three paragraphs. So it is kept for the width that needs
      it, and costs the wide one about five characters a line. */
-  .grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(var(--s-6), 3.4vw, var(--s-8)); }
+  .grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    /* Row 1 takes the heading's height; row 2 takes everything left. */
+    grid-template-rows: auto minmax(0, 1fr);
+    column-gap: clamp(var(--s-6), 3.4vw, var(--s-8));
+    /* The same 10px the copy column uses between its own blocks, so the gap
+       under the heading matches the gaps under each paragraph. */
+    row-gap: 10px;
+  }
+  /* The heading sits over the COPY, not over the photograph. Column 1 of row 1
+     is deliberately empty — that gap is what drops the top of the picture down
+     to the first line of text. */
+  .head { grid-column: 2; grid-row: 1; }
+  .figure { grid-column: 1; grid-row: 2; }
+  .body { grid-column: 2; grid-row: 2; }
+}
+
+/* THE NARROW TWO-UP, 900 to 1099. The stretch is right everywhere the copy
+   column is wide enough to set a sane height — but down here it is not: at 900
+   the text runs 830px against a 338px picture, and a cover-fit at 0.41 throws
+   half the frame away sideways and leaves a pillar instead of a photograph.
+   So in this band the picture takes a fixed shape near the source's own 3:4
+   and sits at the top of its row, which still starts at the client's "Hi!
+   We're Larisa" line. The figure stops stretching with it, which matters for
+   more than tidiness: the cameo is positioned against the FIGURE, so a figure
+   taller than its own photograph would leave the ducks standing under it. */
+@media (min-width: 900px) and (max-width: 1099px) {
+  .figure { align-self: start; }
+  .photo { block-size: auto; aspect-ratio: 4 / 5.5; min-block-size: 0; }
 }
 
 /* The three of them at the foot of the photograph — the client's "bring the
    product and character worlds together", and the one place on this page where
-   the characters sit beside the real family. Wider than the single duck it
-   replaced, because it is now three abreast: at the old 168px cap each one was
-   about 50px across. */
+   the characters sit beside the real family.
+
+   BOTH INSETS ARE PERCENTAGES, and that is deliberate rather than tidy. The
+   frame is a squircle, `34% / 30%`, so its corner curve is a fixed shape in
+   normalised coordinates no matter what the figure measures — which means a
+   placement written in percentages of each axis keeps the same relationship to
+   that curve at every width. Written in pixels it would not: the corner would
+   move and the ducks would not.
+
+   The old `-8% / -7%` put them outside it. At foot level a 34% corner radius
+   has eaten the first third of the width, so the left two ducks were standing
+   past the edge of the picture with cream under their feet. Lifting them to
+   12% of the height off the bottom is where the curve has opened back out to
+   about 7% of the width, so all three now have frame beneath them. */
 .cameo {
   position: absolute;
   z-index: 3;
-  inline-size: clamp(190px, 25vw, 320px);
-  inset-block-end: -8%;
-  inset-inline-start: -7%;
+  /* Down from 320. Three abreast at the old cap came to 71% of the picture's
+     width and the child was reading as the backdrop to the ducks rather than
+     the other way round. */
+  inline-size: clamp(170px, 19vw, 272px);
+  inset-block-end: 5%;
+  inset-inline-start: 7%;
 }
 
 /* On a phone the photo stacks ABOVE the copy, so its min-height is pure scroll
    length — 320px of it. A 4:3 crop of the same shot reads the same at a third
    the cost, and the section came down 1.72 -> ~1.3 screens. */
 @media (max-width: 899px) {
-  .figure { min-block-size: 0; }
-  .photo { min-block-size: 0; aspect-ratio: 4 / 3; block-size: auto; }
+  /* Stacked, so there is no second column to line up with and the photo goes
+     back to its own shape — a 4:3 crop, which is a third of the scroll length
+     that a full-height portrait would cost on a phone. */
+  .figure { min-block-size: 0; grid-template-rows: auto; margin-block-end: var(--s-5); }
+  .figure > picture { block-size: auto; }
+  .photo { min-block-size: 0; aspect-ratio: 4 / 3; block-size: auto; object-position: 50% 32%; }
   .body { gap: var(--s-3); }
+}
+
+/* TABLET. 4:3 of a 677px column is 507px of photograph, which is most of the
+   screen before a word of the story — and the old fix for that was a flat
+   300px cap, i.e. a 2.2 letterbox cut out of a portrait shot. 16:10 is the
+   middle: 423px at 768, and a crop the picture survives. Phones keep 4:3,
+   where the column is narrow enough that it costs nothing. */
+@media (min-width: 600px) and (max-width: 899px) {
+  .photo { aspect-ratio: 16 / 10; }
 }
