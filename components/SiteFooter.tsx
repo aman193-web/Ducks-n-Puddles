@@ -171,7 +171,29 @@ export function SiteFooter() {
             over between the two notes either side of it. */}
         <div className={styles.bottom}>
           <span>&copy; {new Date().getFullYear()} {brand.name}. All rights reserved.</span>
-          <p className={styles.sendoff}>Come Back to the Pond Soon!</p>
+          {/* ARCHED, so it sits over the duck below it rather than across it.
+              An SVG textPath on a shallow circular arc — the radius is large
+              against the span, which is what makes it a rainbow over a head
+              rather than a logo round a badge.
+
+              The text is real text: selectable, searchable, and read as text,
+              which a path-converted word is not. `startOffset: 50%` with
+              `text-anchor: middle` centres it on the arc whatever its length,
+              so it stays centred if the wording changes. */}
+          {/* The viewBox starts ABOVE zero. Type on a path hangs its ascenders
+              above the path, and at the apex the arc is already only 29 units
+              down — so a box starting at 0 clipped the tops of the capitals.
+              -10 gives them room without moving the arc itself. */}
+          <svg className={styles.sendoff} viewBox="0 -10 560 142" role="img"
+               aria-label="Come Back to the Pond Soon!">
+            <path id="sendoff-arc" fill="none"
+                  d="M 24 116 A 420 420 0 0 1 536 116" />
+            <text>
+              <textPath href="#sendoff-arc" startOffset="50%" textAnchor="middle">
+                Come Back to the Pond Soon!
+              </textPath>
+            </text>
+          </svg>
           <span className="hand">Here&rsquo;s to all the adventures ahead.</span>
         </div>
       </div>
