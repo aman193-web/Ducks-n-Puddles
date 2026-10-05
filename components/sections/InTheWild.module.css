@@ -292,18 +292,27 @@
    half its box so the picture inside stops reading, and a round print beside
    square ones reads as a badge. */
 .under {
-  /* SIZED SO THE CARD MATCHES ITS NEIGHBOURS. Both of these are portrait, and
-     at 74% the pair came out 544 and 567 against a row running 364 to 495 —
-     the tallest things in it, which is the opposite of filling a hole. 46%
-     puts the two cards at about 450, in the middle of the range. */
-  inline-size: 46%;
-  justify-self: end;
+  /* FULL WIDTH, and the crop is what keeps the card's height honest.
+
+     Both of these stills are portrait. Dropped in at their own proportions
+     they ran the two cards to 544 and 567 against a row of 364 to 495 — the
+     tallest things in it, which is the opposite of filling a hole. Narrowing
+     them fixed the sum but left a small print adrift under a wide one.
+
+     So: the full width of the card, cropped to 3:2. A wide band out of a
+     portrait frame is about 196px tall under a 220px print, which puts both
+     cards at roughly 450 — the middle of the row. The band is taken from
+     above centre, because what is worth keeping in both of these is in the
+     upper half. */
+  inline-size: 100%;
   margin-block-start: 10px;
-  rotate: 4deg;
+  rotate: 2.4deg;
 }
-.card[data-i="1"] .under { justify-self: start; rotate: -5deg; }
+.under .shot { aspect-ratio: 3 / 2; }
+.under .shot img { object-position: 50% 38%; }
+.card[data-i="1"] .under { rotate: -3deg; }
 /* Its tape sits where the big print's does not, so the two do not line up. */
-.under .tape { --tape: #9FD3EE; --dots: 1; inset-inline-start: 56%; rotate: -5deg; inline-size: 50px; }
+.under .tape { --tape: #9FD3EE; --dots: 1; inset-inline-start: 58%; rotate: -5deg; inline-size: 54px; }
 .card[data-i="1"] .under .tape { --tape: #FBD96B; --dots: 0; inset-inline-start: 18%; rotate: 4deg; }
 
 .play {

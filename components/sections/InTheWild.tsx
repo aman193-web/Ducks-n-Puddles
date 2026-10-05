@@ -225,14 +225,12 @@ export function InTheWild() {
               {/* A SECOND, SMALLER PRINT UNDER A WIDE ONE. A landscape
                   photograph is half the height of the clips beside it, which
                   left a hole in the wall under every one; this fills it, and
-                  it brings the card back to its neighbours' height. A plain
-                  print, taped like the rest — a circle and a star were tried
-                  here and both were wrong. */}
+                  it brings the card back to its neighbours' height. Full width
+                  and cropped wide, which is what keeps the sum right — see the
+                  note on .under. A plain print, taped like the rest; a circle
+                  and a star were tried here and both were wrong. */}
               {r.kind === 'photo' && r.under && (
-                <div
-                  className={`${styles.frame} ${styles.under}`}
-                  style={{ ['--shot-aspect' as string]: String(asset(r.under.id).aspect) } as React.CSSProperties}
-                >
+                <div className={`${styles.frame} ${styles.under}`}>
                   <span className={styles.tape} aria-hidden="true" />
                   <span className={styles.shot}>
                     <Picture id={r.under.id} sizes="(min-width: 900px) 14vw, 42vw" alt={r.under.caption} />
