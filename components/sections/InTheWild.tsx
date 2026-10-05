@@ -1,6 +1,8 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Play, Pause, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
+import { Picture } from '@/components/Picture'
+import { asset } from '@/lib/assets'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { brand } from '@/content/brand'
@@ -126,16 +128,60 @@ export function InTheWild() {
         </div>
       </div>
 
-      <ul className={styles.rail} ref={rail} aria-label="Clips from the duck pond">
-        {reels.map((r) => {
+      {/* FOUR MARKS IN THE MARGINS, drawn rather than placed: a sun, a heart and
+          two little bursts of water, in the client's reference's own hand. They
+          are what stops the row reading as a gallery widget — a scrapbook page
+          has somebody's pen on it as well as the photographs.
+
+          Stroked, not filled, with round caps and deliberately uneven paths, so
+          they read as drawn. Decorative, so aria-hidden and pointer-events
+          none; gone below 900, where the row is a swipe and the margins they
+          live in do not exist. */}
+      <span className={styles.doodles} aria-hidden="true">
+        <svg className={styles.sun} viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="10.5" />
+          <circle cx="30" cy="30" r="4.5" />
+          <path d="M30 6.5v7M30 46.5v7M6.5 30h7M46.5 30h7M13.4 13.4l5 5M41.6 41.6l5 5M46.6 13.4l-5 5M18.4 41.6l-5 5" />
+        </svg>
+        <svg className={styles.heart} viewBox="0 0 52 46" fill="none">
+          <path d="M26 42C14.5 34.2 4 27 4 16.6 4 9.6 9.4 4.5 15.9 4.5c3.9 0 7.7 2 10.1 5.3 2.4-3.3 6.2-5.3 10.1-5.3C42.6 4.5 48 9.6 48 16.6 48 27 37.5 34.2 26 42Z" />
+        </svg>
+        <svg className={styles.dropsA} viewBox="0 0 46 40" fill="none">
+          <path d="M9 30C6 24 9.5 14 15 6M22 33c-2-7 1.5-17 7-25M35 30c-1.5-5 1-12 5-18" />
+        </svg>
+        <svg className={styles.dropsB} viewBox="0 0 40 36" fill="none">
+          <path d="M8 27c-2.5-5 .5-13 5-19M20 30c-1.6-6 1.2-14 5.6-21" />
+        </svg>
+      </span>
+
+      <ul className={styles.rail} ref={rail} aria-label="Photos and clips from the duck pond">
+        {reels.map((r, i) => {
           const playing = active === r.id
           return (
-            <li key={r.id} className={styles.card}>
-              {/* THE MOUNT, and the SHOT inside it. The client asked for this
-                  row to feel "almost like a family scrapbook / social feed —
-                  candid, happy, real-life moments" rather than five identical
-                  rigid cards, so each clip now sits on a paper print with a
-                  piece of tape holding it down and its own slight tilt.
+            <li
+              key={r.id}
+              className={styles.card}
+              data-i={i % 6}
+              data-kind={r.kind}
+              /* A photograph keeps its own proportions — no crop, which is what
+                 went wrong the first time the shapes were varied: forcing a
+                 shape onto vertical phone video cut the top and bottom off
+                 frames that were composed full-height. The stills are already
+                 landscape and portrait, so the variety comes free. */
+              style={r.kind === 'photo'
+                ? ({ ['--shot-aspect' as string]: String(asset(r.id).aspect) } as React.CSSProperties)
+                : undefined}
+            >
+              {/* THE MOUNT, and the SHOT inside it. The client's reference for
+                  this row is a scrapbook wall — prints of different sizes
+                  taped up, photographs and clips side by side — so each item
+                  sits on a paper mount with a piece of tape holding it down
+                  and its own slight tilt, and the row mixes the two kinds.
+
+                  `data-i` is what the stylesheet varies everything off: the
+                  width, the tape's colour and angle, the tilt, the baseline.
+                  Modulo 6 rather than 5, so the cycle does not land in step
+                  with any run of the same kind.
 
                   The tilt is on the FRAME, never on the <li>. Two reasons, both
                   load-bearing: page() measures a card's width off
@@ -147,29 +193,37 @@ export function InTheWild() {
               <div className={styles.frame}>
                 <span className={styles.tape} aria-hidden="true" />
                 <span className={styles.shot}>
-                <video
-                  ref={(el) => { refs.current[r.id] = el }}
-                  playsInline muted loop preload="none"
-                  poster={`/img/${r.poster}-1080.jpg`}
-                  onPlay={() => setActive(r.id)}
-                  onPause={() => setActive((a) => (a === r.id ? null : a))}
-                >
-                  <source src={`/media/video/${r.id}-1080.mp4`} type="video/mp4" media="(min-width: 900px)" />
-                  <source src={`/media/video/${r.id}-540.mp4`} type="video/mp4" />
-                </video>
+                  {r.kind === 'photo' ? (
+                    /* A still, and the row is better for having them: a strip
+                       of nothing but play buttons reads as a video player,
+                       which is the opposite of a camera roll. */
+                    <Picture id={r.id} sizes="(min-width: 900px) 24vw, 70vw" alt={r.caption} />
+                  ) : (
+                    <>
+                      <video
+                        ref={(el) => { refs.current[r.id] = el }}
+                        playsInline muted loop preload="none"
+                        poster={`/img/${r.poster}-1080.jpg`}
+                        onPlay={() => setActive(r.id)}
+                        onPause={() => setActive((a) => (a === r.id ? null : a))}
+                      >
+                        <source src={`/media/video/${r.id}-1080.mp4`} type="video/mp4" media="(min-width: 900px)" />
+                        <source src={`/media/video/${r.id}-540.mp4`} type="video/mp4" />
+                      </video>
 
-                <button type="button" className={styles.play} onClick={() => toggle(r.id)}>
-                  <span className="vh">{playing ? 'Pause' : 'Play'} &mdash; {r.caption}</span>
-                  {playing
-                    ? <Pause size={22} weight="fill" aria-hidden="true" />
-                    : <Play size={22} weight="fill" aria-hidden="true" />}
-                </button>
+                      <button type="button" className={styles.play} onClick={() => toggle(r.id)}>
+                        <span className="vh">{playing ? 'Pause' : 'Play'} &mdash; {r.caption}</span>
+                        {playing
+                          ? <Pause size={22} weight="fill" aria-hidden="true" />
+                          : <Play size={22} weight="fill" aria-hidden="true" />}
+                      </button>
+                    </>
+                  )}
                 </span>
               </div>
               {/* The caption used to print here. Removed at the client's request
                   — "we'd like the visuals to speak for themselves" — but kept as
-                  the play button's accessible name above, because a video
-                  control still has to say which clip it controls. */}
+                  the play button's accessible name, and as a photograph's alt. */}
             </li>
           )
         })}

@@ -38,11 +38,62 @@
 .head > :nth-child(3) { max-width: 46ch; }
 
 
+/* ---- the hand on the page ------------------------------------------------
+   A sun, a heart and two bursts of water in the margins around the row. They
+   sit BEHIND the prints (z-index 0 against the rail's own stacking) and are
+   placed in percentages of the section, so they stay in their corners rather
+   than drifting across the pictures as the viewport changes.
+
+   Stroked in the brand's own colours at a weight that reads as a felt pen,
+   never as an icon. Gone below 900, where the row is a swipe and there are no
+   margins for them to live in. */
+.doodles { display: none; }
+@media (min-width: 900px) {
+  .doodles {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .doodles svg {
+    position: absolute;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+  .sun {
+    inline-size: clamp(44px, 4.4vw, 62px);
+    inset-block-start: 22%; inset-inline-end: 7.5%;
+    stroke: var(--sun); stroke-width: 3;
+    rotate: -6deg;
+  }
+  .heart {
+    inline-size: clamp(34px, 3.4vw, 48px);
+    inset-block-end: 16%; inset-inline-end: 13%;
+    stroke: var(--chichi); stroke-width: 3.4;
+    rotate: 9deg;
+  }
+  .dropsA {
+    inline-size: clamp(34px, 3.6vw, 50px);
+    inset-block-start: 30%; inset-inline-start: 3.5%;
+    stroke: var(--paper); stroke-width: 3.2;
+    rotate: -10deg;
+  }
+  .dropsB {
+    inline-size: clamp(28px, 3vw, 40px);
+    inset-block-end: 20%; inset-inline-start: 8%;
+    stroke: var(--paper); stroke-width: 3.2;
+    rotate: 14deg;
+  }
+}
+
 /* ---- the rail ------------------------------------------------------------
    Bleeds past the wrap on purpose so the row reads as continuing off-screen,
    which is what makes a horizontal scroller legible as one. scroll-padding
    keeps the first card aligned to the page gutter rather than the viewport. */
 .rail {
+  position: relative; z-index: 1;
   display: flex;
   gap: var(--card-gap);
   margin: 0;
@@ -95,12 +146,27 @@
 /* A trackpad or a touch screen already has a gesture for this, so the buttons
    are for the input that does not: a mouse. */
 @media (hover: none) { .controls { display: none; } }
+/* A WALL OF PRINTS, NOT A STRIP OF CARDS. Everything below varies off
+   `data-i`, which the section sets as the item's index modulo 6 — width, tape
+   colour and angle, tilt, baseline. Six rather than five so the cycle never
+   lands in step with a run of the same kind of item.
+
+   Width is a multiplier on one shared clamp rather than six separate ones, so
+   the row still scales as a set and the proportions between the prints hold at
+   every breakpoint. */
 .card {
+  --w: 1;
   flex: 0 0 auto;
-  inline-size: clamp(200px, 22vw, 268px);
+  inline-size: calc(clamp(192px, 21vw, 258px) * var(--w));
   scroll-snap-align: start;
   display: grid; gap: var(--s-3);
 }
+.card[data-i="0"] { --w: 1; }
+.card[data-i="1"] { --w: 1.12; }
+.card[data-i="2"] { --w: .9; }
+.card[data-i="3"] { --w: 1.05; }
+.card[data-i="4"] { --w: .95; }
+.card[data-i="5"] { --w: 1.1; }
 
 /* ---- the scrapbook -------------------------------------------------------
    "Make the photos/videos feel a little more organic rather than all identical
@@ -130,11 +196,18 @@
 .shot {
   position: relative;
   display: block;
-  aspect-ratio: 9 / 16;
+  /* 9:16 for a clip, which is the shape it was shot in — forcing anything else
+     onto vertical phone video crops the top and bottom off a frame that was
+     composed full-height, which is exactly what went wrong the first time
+     these shapes were varied. A photograph sets --shot-aspect from its own
+     entry in the manifest, so the landscape ones come out wide and the
+     portrait ones tall with nothing cut off either. */
+  aspect-ratio: var(--shot-aspect, 9 / 16);
   border-radius: 2px;
   overflow: clip;
   background: var(--sky);
 }
+.shot picture, .shot img { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
 .shot video {
   position: absolute; inset: 0;
   inline-size: 100%; block-size: 100%;
@@ -145,15 +218,20 @@
    place. Warm and translucent rather than grey: it has cream and blue under it
    at different points along the row and has to sit on both. */
 .tape {
+  --tape: #F1E2BC;
   position: absolute;
   z-index: 2;
   inset-block-start: -11px;
   inline-size: 64px; block-size: 22px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 233, 176, .62) 0%,
-    rgba(255, 243, 214, .76) 45%,
-    rgba(255, 233, 176, .62) 100%);
+  /* Three layers: the spots (switched on per print with --dots), a soft
+     highlight down the middle so it reads as tape rather than as a swatch,
+     and the colour itself. */
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, calc(var(--dots, 0) * .85)) 1.5px, transparent 1.9px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .34) 48%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(var(--tape), var(--tape));
+  background-size: 8px 8px, auto, auto;
+  opacity: .88;
   border-inline: 1px dashed rgba(16, 38, 74, .10);
   pointer-events: none;
 }
@@ -161,22 +239,37 @@
 /* FIVE STEPS, not two. The row holds five clips, so a 2n alternation would put
    the same lean in the same place every other card and read as a pattern —
    which is the opposite of candid. These are deliberately uneven. */
-.card:nth-child(5n + 1) .frame { rotate: -2.1deg; }
-.card:nth-child(5n + 2) .frame { rotate:  1.6deg; }
-.card:nth-child(5n + 3) .frame { rotate: -1.1deg; }
-.card:nth-child(5n + 4) .frame { rotate:  2.3deg; }
-.card:nth-child(5n + 5) .frame { rotate: -1.7deg; }
-.card:nth-child(5n + 1) .tape { inset-inline-start: 18%; rotate: -3.5deg; }
-.card:nth-child(5n + 2) .tape { inset-inline-start: 46%; rotate:  4deg; }
-.card:nth-child(5n + 3) .tape { inset-inline-start: 26%; rotate:  2.5deg; }
-.card:nth-child(5n + 4) .tape { inset-inline-start: 40%; rotate: -4.5deg; }
-.card:nth-child(5n + 5) .tape { inset-inline-start: 22%; rotate:  3deg; }
+/* SIX STEPS, deliberately uneven. An even alternation puts the same lean in
+   the same place every other print and reads as a pattern — which is the
+   opposite of candid. */
+.card[data-i="0"] .frame { rotate: -2.1deg; }
+.card[data-i="1"] .frame { rotate:  1.6deg; }
+.card[data-i="2"] .frame { rotate: -1.1deg; }
+.card[data-i="3"] .frame { rotate:  2.3deg; }
+.card[data-i="4"] .frame { rotate: -1.7deg; }
+.card[data-i="5"] .frame { rotate:  1.2deg; }
+
+/* COLOURED TAPE, as the client's reference has it — pink and lilac spotted,
+   plain cream and butter between them. The dots are a second background layer
+   over the tint rather than an image, so they scale with the strip and cost
+   nothing. One print in six has no tape at all: a wall where every photograph
+   is held down the same way is a pattern again. */
+.card[data-i="0"] .tape { --tape: #F7AFCD; inset-inline-start: 14%; rotate: -3.5deg; inline-size: 62px; }
+.card[data-i="1"] .tape { --tape: #F1E2BC; inset-inline-start: 44%; rotate:  4deg;   inline-size: 56px; }
+.card[data-i="2"] .tape { --tape: #BCA9E9; inset-inline-start: 24%; rotate:  2.5deg; inline-size: 68px; }
+.card[data-i="3"] .tape { --tape: #FBD96B; inset-inline-start: 52%; rotate: -4.5deg; inline-size: 58px; }
+.card[data-i="4"] .tape { display: none; }
+.card[data-i="5"] .tape { --tape: #9FD3EE; inset-inline-start: 20%; rotate:  3deg;   inline-size: 64px; }
+/* Spots on two of them, plain on the rest. */
+.card[data-i="0"] .tape, .card[data-i="2"] .tape, .card[data-i="5"] .tape { --dots: 1; }
+
 /* The baseline breaks too. A row of prints all hung at the same height is
    still a grid, however much each one leans. */
-.card:nth-child(5n + 2) { margin-block-start: 26px; }
-.card:nth-child(5n + 3) { margin-block-start: 9px; }
-.card:nth-child(5n + 4) { margin-block-start: 30px; }
-.card:nth-child(5n + 5) { margin-block-start: 14px; }
+.card[data-i="1"] { margin-block-start: 26px; }
+.card[data-i="2"] { margin-block-start: 9px; }
+.card[data-i="3"] { margin-block-start: 30px; }
+.card[data-i="4"] { margin-block-start: 14px; }
+.card[data-i="5"] { margin-block-start: 22px; }
 
 /* Pick one up and it straightens. */
 @media (hover: hover) {

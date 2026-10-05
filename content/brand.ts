@@ -417,13 +417,42 @@ export const features = [
 /* Captions removed at the client's request — "we'd like the visuals to speak
    for themselves". The `caption` is still carried because it is the accessible
    name for each clip; it is simply no longer printed under the card. */
-export const reels = [
-  { id: 'duck-5',   poster: 'poster-duck-5',   caption: 'She picked hers before we did.' },
-  { id: 'duck-2',   poster: 'poster-duck-2',   caption: 'Two ducks, one afternoon.' },
-  { id: 'duck-end', poster: 'poster-duck-end', caption: 'The last sip is always the loudest.' },
-  { id: 'duck-3',   poster: 'poster-duck-3',   caption: 'Three of them, out in the world.' },
-  { id: 'duck-1',   poster: 'poster-duck-1',   caption: 'Straight from the pool to the towel.' },
-] as const
+/**
+ * THE WALL, and it is a mix on purpose.
+ *
+ * The client's reference for this row is a scrapbook: prints of different
+ * sizes taped to a wall, photographs and clips side by side rather than a
+ * uniform strip of video. So the list carries both kinds, interleaved, and the
+ * section decides how each one is framed.
+ *
+ * `caption` is never printed — it is the accessible name of a clip's play
+ * button, and the alt text of a photograph. The client asked for the captions
+ * to come off the cards ("we'd like the visuals to speak for themselves"); a
+ * control still has to say what it controls.
+ *
+ * The two tier-C photographs here are early samples, which the manifest marks
+ * "From Sample to Shelf only, always captioned". That rule is about not
+ * passing a prototype off as the finished product — in a row of the family's
+ * own camera roll, which is what every clip in it already is, they are the
+ * same bottles in the same hands.
+ */
+export type Reel =
+  | { kind: 'video'; id: string; poster: string; caption: string }
+  | { kind: 'photo'; id: string; caption: string }
+
+export const reels: Reel[] = [
+  { kind: 'video', id: 'duck-5',   poster: 'poster-duck-5',   caption: 'She picked hers before we did.' },
+  { kind: 'photo', id: 'sample-turf',     caption: 'Three bottles standing on sunlit grass.' },
+  { kind: 'video', id: 'duck-2',   poster: 'poster-duck-2',   caption: 'Two ducks, one afternoon.' },
+  { kind: 'video', id: 'duck-end', poster: 'poster-duck-end', caption: 'The last sip is always the loudest.' },
+  { kind: 'photo', id: 'sample-carry',    caption: 'A child carrying a bottle by its handle.' },
+  { kind: 'video', id: 'duck-3',   poster: 'poster-duck-3',   caption: 'Three of them, out in the world.' },
+  { kind: 'video', id: 'duck-4',   poster: 'poster-duck-4',   caption: 'A bottle going everywhere the day goes.' },
+  { kind: 'photo', id: 'sample-beach',    caption: 'Three bottles on wet sand at dusk.' },
+  { kind: 'video', id: 'duck-1',   poster: 'poster-duck-1',   caption: 'Straight from the pool to the towel.' },
+  { kind: 'video', id: 'duck-6',   poster: 'poster-duck-6',   caption: 'Another afternoon, another puddle.' },
+  { kind: 'photo', id: 'sample-mosaic',   caption: 'Three bottles on stone beside a blue fountain.' },
+]
 
 /* --------------------------------------------------------------------------- */
 
