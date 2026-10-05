@@ -86,18 +86,36 @@
    the gap at the same 12px on all three rather than 39px over one and almost
    nothing over another.
 
-   AIMED AT THE HEAD. The duck is the figure's first child, so its centre sits
-   --duck-h/2 from the figure's left; with the bubble at 0 the tail pointed
-   148px wide of him into open sky. A quarter of the duck's width puts it over
-   the crown, which is where the tail's own angle expects to find a beak. */
+   AIMED AT THE HEAD, and now solved for rather than estimated. The old `.24`
+   was a reasonable guess that put the tail 45-50px to the RIGHT of every
+   beak — far enough that the thought read as belonging to the air beside the
+   duck rather than to the duck.
+
+   The two ends of the sum:
+
+     THE HEAD. The duck is the figure's first child and the figure shrinks to
+     its content, so the character box starts at the figure's own left edge.
+     The head's centroid sits at 49.5% of that box — measured off the three
+     masters, which agree to within 2% (49.9 / 50.3 / 48.4), so one number
+     serves all three.
+
+     THE TAIL. The smallest circle of the chain is at 88.5% of the bubble's
+     width, in its own viewBox.
+
+   Line the two up and the bubble's left edge is head minus tail. It has to be
+   written against --bub rather than --duck-h because the two clamp at
+   different widths: the old rule drifted from 47px of error at 1440 to 5px at
+   390 for exactly that reason. */
 .bubble {
   position: absolute;
   z-index: 4;
+  /* Named, because the placement below needs to subtract it. */
+  --bub: clamp(104px, 11.5vw, 148px);
   inset-block-end: calc(
     var(--duck-h) * (1 - var(--crown, 0) - var(--foot, 0)) - 3.5px + 12px
   );
-  inset-inline-start: calc(var(--duck-h) * .24);
-  inline-size: clamp(104px, 11.5vw, 148px);
+  inset-inline-start: calc(var(--duck-h) * .495 - var(--bub) * .885);
+  inline-size: var(--bub);
 }
 
 @media (max-width: 899px) {
