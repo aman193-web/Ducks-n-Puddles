@@ -221,6 +221,24 @@ export function InTheWild() {
                   )}
                 </span>
               </div>
+
+              {/* A SECOND, SMALLER PRINT UNDER A WIDE ONE. A landscape
+                  photograph is half the height of the clips beside it, which
+                  left a hole in the wall under every one; this fills it, and
+                  it brings the card back to its neighbours' height. A plain
+                  print, taped like the rest — a circle and a star were tried
+                  here and both were wrong. */}
+              {r.kind === 'photo' && r.under && (
+                <div
+                  className={`${styles.frame} ${styles.under}`}
+                  style={{ ['--shot-aspect' as string]: String(asset(r.under.id).aspect) } as React.CSSProperties}
+                >
+                  <span className={styles.tape} aria-hidden="true" />
+                  <span className={styles.shot}>
+                    <Picture id={r.under.id} sizes="(min-width: 900px) 14vw, 42vw" alt={r.under.caption} />
+                  </span>
+                </div>
+              )}
               {/* The caption used to print here. Removed at the client's request
                   — "we'd like the visuals to speak for themselves" — but kept as
                   the play button's accessible name, and as a photograph's alt. */}

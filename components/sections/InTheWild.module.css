@@ -252,16 +252,17 @@
 /* COLOURED TAPE, as the client's reference has it — pink and lilac spotted,
    plain cream and butter between them. The dots are a second background layer
    over the tint rather than an image, so they scale with the strip and cost
-   nothing. One print in six has no tape at all: a wall where every photograph
-   is held down the same way is a pattern again. */
+   nothing. Every print is taped — the eleventh item lands on this step of the
+   cycle and is the last thing in the row, and one untaped print at the end
+   read as an oversight rather than as variety. */
 .card[data-i="0"] .tape { --tape: #F7AFCD; inset-inline-start: 14%; rotate: -3.5deg; inline-size: 62px; }
 .card[data-i="1"] .tape { --tape: #F1E2BC; inset-inline-start: 44%; rotate:  4deg;   inline-size: 56px; }
 .card[data-i="2"] .tape { --tape: #BCA9E9; inset-inline-start: 24%; rotate:  2.5deg; inline-size: 68px; }
 .card[data-i="3"] .tape { --tape: #FBD96B; inset-inline-start: 52%; rotate: -4.5deg; inline-size: 58px; }
-.card[data-i="4"] .tape { display: none; }
+.card[data-i="4"] .tape { --tape: #BCA9E9; inset-inline-start: 28%; rotate: -2deg;   inline-size: 66px; }
 .card[data-i="5"] .tape { --tape: #9FD3EE; inset-inline-start: 20%; rotate:  3deg;   inline-size: 64px; }
 /* Spots on two of them, plain on the rest. */
-.card[data-i="0"] .tape, .card[data-i="2"] .tape, .card[data-i="5"] .tape { --dots: 1; }
+.card[data-i="0"] .tape, .card[data-i="4"] .tape, .card[data-i="5"] .tape { --dots: 1; }
 
 /* The baseline breaks too. A row of prints all hung at the same height is
    still a grid, however much each one leans. */
@@ -280,6 +281,30 @@
   }
 }
 @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
+
+/* ---- THE SECOND PRINT, under a wide one ---------------------------------
+   The card is already a grid, so this is simply its second row: another .frame
+   with its own tape, smaller than the print above it and pushed to one side,
+   so it reads as a snapshot dropped under the big one rather than as a second
+   column.
+
+   A circle and a star were tried here and both were wrong — a star throws away
+   half its box so the picture inside stops reading, and a round print beside
+   square ones reads as a badge. */
+.under {
+  /* SIZED SO THE CARD MATCHES ITS NEIGHBOURS. Both of these are portrait, and
+     at 74% the pair came out 544 and 567 against a row running 364 to 495 —
+     the tallest things in it, which is the opposite of filling a hole. 46%
+     puts the two cards at about 450, in the middle of the range. */
+  inline-size: 46%;
+  justify-self: end;
+  margin-block-start: 10px;
+  rotate: 4deg;
+}
+.card[data-i="1"] .under { justify-self: start; rotate: -5deg; }
+/* Its tape sits where the big print's does not, so the two do not line up. */
+.under .tape { --tape: #9FD3EE; --dots: 1; inset-inline-start: 56%; rotate: -5deg; inline-size: 50px; }
+.card[data-i="1"] .under .tape { --tape: #FBD96B; --dots: 0; inset-inline-start: 18%; rotate: 4deg; }
 
 .play {
   position: absolute;
