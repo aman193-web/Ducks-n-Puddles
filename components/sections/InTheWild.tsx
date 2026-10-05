@@ -95,13 +95,34 @@ export function InTheWild() {
     <section className={styles.section} id="wild" aria-labelledby="wild-title">
       <BrandDetail preset="wake" />
       <div className="wrap">
-        <div className={styles.head}>
-          <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Out in the world</Sticker>
-          <h2 id="wild-title" className="d d-xl" data-anim="">Where Will Your Duck Go?</h2>
-          <p className="lead measure" data-anim="">
-            Big adventures, little moments, and every puddle in between &mdash;
-            Chi&nbsp;Chi, Vincey, and Goosey are ready to come along!
-          </p>
+        <div className={styles.headRow}>
+          <div className={styles.head}>
+            <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Out in the world</Sticker>
+            <h2 id="wild-title" className="d d-xl" data-anim="">Where Will Your Duck Go?</h2>
+            <p className="lead measure" data-anim="">
+              Big adventures, little moments, and every puddle in between &mdash;
+              Chi&nbsp;Chi, Vincey, and Goosey are ready to come along!
+            </p>
+          </div>
+
+          {/* The rail's own controls, at the head's right-hand end and level
+              with its last line — above the row they drive rather than under
+              it, so the thing you reach for is in view at the same moment the
+              cards are.
+
+              Hidden from assistive tech: a screen reader moves through the
+              list itself, where every card is already reachable, and two
+              buttons that only scroll would be noise. */}
+          <div className={styles.controls} aria-hidden="true">
+            <button type="button" className={styles.arrow} onClick={() => page(-1)}
+                    disabled={ends?.start ?? false} tabIndex={-1}>
+              <CaretLeft size={20} weight="bold" />
+            </button>
+            <button type="button" className={styles.arrow} onClick={() => page(1)}
+                    disabled={ends?.end ?? false} tabIndex={-1}>
+              <CaretRight size={20} weight="bold" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -153,23 +174,6 @@ export function InTheWild() {
           )
         })}
       </ul>
-
-      {/* The rail's own controls, on the content edge under it. Hidden from
-          assistive tech: a screen reader moves through the list itself, where
-          every card is already reachable, and two buttons that only scroll
-          would be noise. */}
-      <div className="wrap">
-        <div className={styles.controls} aria-hidden="true">
-          <button type="button" className={styles.arrow} onClick={() => page(-1)}
-                  disabled={ends?.start ?? false} tabIndex={-1}>
-            <CaretLeft size={20} weight="bold" />
-          </button>
-          <button type="button" className={styles.arrow} onClick={() => page(1)}
-                  disabled={ends?.end ?? false} tabIndex={-1}>
-            <CaretRight size={20} weight="bold" />
-          </button>
-        </div>
-      </div>
 
       <div className="wrap">
         <div className={styles.cta}>

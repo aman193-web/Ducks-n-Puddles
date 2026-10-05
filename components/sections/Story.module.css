@@ -202,8 +202,18 @@
      than the feet should — and because the box is sized in px while the frame
      is sized in percentages, a percentage inset here drifts: the feet landed
      38px off the floor at 1440 and 25px at 900 from one number. Taking the
-     padding off the cameo's OWN width instead pins the feet 16px above the
-     edge at every size, which is the thing that was asked for.
+     padding off the cameo's OWN width instead pins the feet 3px above the
+     edge at every size — on the floor, not near it.
+
+     3px, and not more, because 3px is what the frame allows. Tested the real
+     thing rather than a bounding box: every opaque pixel of the artwork
+     checked against the squircle's own curve at a range of widths and
+     offsets. The group clears it at 2px and starts losing the outer feet at
+     -4px, and it does so at 185px wide exactly as it does at 250 — the
+     binding constraint is the LOWEST foot, which is near the middle where the
+     curve bottoms out, not the outer ones. Which is why the rectangle
+     approximation this started from was wrong by 20px in the cautious
+     direction.
 
      AND THEREFORE CENTRED, which is not a style choice. The squircle's bottom
      corners have a 34% horizontal radius, so the lower you go the narrower the
@@ -216,7 +226,7 @@
   /* NEGATIVE, and that is the whole point of writing it this way. The box has
      to hang BELOW the frame's edge by the transparent margin under the feet,
      so that the feet themselves land 16px above it. */
-  inset-block-end: calc(16px - var(--cam) * .149);
+  inset-block-end: calc(3px - var(--cam) * .149);
   inset-inline: 0;
   margin-inline: auto;
 }

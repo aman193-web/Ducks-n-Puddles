@@ -55,19 +55,51 @@
    "SPILL-RESISTANT" breaks across two lines and the set stops looking uniform,
    which is the opposite of the note.
 
-   Flex, not grid: the cards keep a four-up basis and the remainder CENTRES,
-   so it reads as 4 over 3 rather than as 4 over 3 with a gap at the end. */
+   GRID, AND HALF-WIDTH COLUMNS. Flex got the centred remainder — four over
+   three, with the three centred rather than left with a gap at the end — but
+   it sizes each wrapped LINE on its own, so the four-card row came out 139px
+   tall against the three-card row's 113. Cards that are the same kind of thing
+   should be the same size, and only grid can say that across rows.
+
+   `grid-auto-rows: 1fr` is what does it: in a grid with no height of its own,
+   every `fr` row resolves to the same height — the tallest row's content. The
+   cards stay top-aligned inside it because .card sets `align-content: start`.
+
+   The columns are HALVES of a card, so an odd last row can be centred by
+   starting it one half-column in. That is the trick flex was here for, and it
+   survives.
+
+   TIED TO SEVEN CARDS. The offsets below name which card opens the short row,
+   so adding an eighth spec — or promoting one of the `pending` rows in
+   content/brand.ts — means revisiting them. */
 .grid {
   --gap: var(--card-gap);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
   gap: var(--gap);
+  /* two cards a row */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   margin: 0;
 }
-.card { flex: 0 1 calc((100% - var(--gap)) / 2); }
-@media (min-width: 680px)  { .card { flex-basis: calc((100% - 2 * var(--gap)) / 3); } }
-@media (min-width: 1000px) { .card { flex-basis: calc((100% - 3 * var(--gap)) / 4); } }
+/* START AND SPAN TOGETHER, always. `grid-column: span 2` is shorthand for
+   `start: span 2; end: auto`, so overriding only the START leaves the END at
+   auto and the card silently becomes ONE column wide — which is exactly what
+   happened to cards 5 and 7 the first time this was written. */
+.card { grid-column: span 2; }
+/* 2 a row: 2 + 2 + 2 + 1, so the last one centres */
+.card:nth-child(7) { grid-column: 2 / span 2; }
+
+@media (min-width: 680px) {
+  /* three a row: 3 + 3 + 1 */
+  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .card:nth-child(7) { grid-column: 3 / span 2; }
+}
+@media (min-width: 1000px) {
+  /* four a row: 4 + 3, and the three centre */
+  .grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .card:nth-child(7) { grid-column: span 2; }
+  .card:nth-child(5) { grid-column: 2 / span 2; }
+}
 
 .card {
   /* TWO COLUMNS, so the glyph sits BESIDE its label instead of on a row of its

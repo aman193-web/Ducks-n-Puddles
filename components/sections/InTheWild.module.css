@@ -9,12 +9,26 @@
   overflow-y: visible;
 }
 
+/* THE HEAD AND THE RAIL'S CONTROLS ON ONE ROW, the arrows at its right-hand
+   end and level with its last line. They used to sit under the rail; above it
+   they are in view at the moment the cards are, which is when somebody wants
+   them. `align-items: end` is what puts them on the baseline of the copy
+   rather than floating level with the heading. */
+.headRow {
+  display: grid;
+  gap: var(--s-5);
+  align-items: end;
+  margin-block-end: var(--flow-block);
+}
+@media (min-width: 720px) {
+  .headRow { grid-template-columns: minmax(0, 1fr) auto; }
+}
+
 /* shares the two-column head used across the site */
 .head {
   display: grid; justify-items: start;
   /* eyebrow -> heading; the lead gets its own, larger gap below */
   gap: var(--flow-eyebrow);
-  margin-block-end: var(--flow-block);
 }
 .head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 /* ONE COLUMN. The client: "the photos are the star here, so I'd reduce the
@@ -58,7 +72,8 @@
 .controls {
   display: flex;
   gap: var(--s-3);
-  margin-block-start: var(--s-5);
+  /* The row owns the spacing now that these sit inside it. */
+  justify-self: end;
 }
 .arrow {
   display: grid; place-items: center;
