@@ -192,11 +192,18 @@
   /* Down from 320. Three abreast at the old cap came to 71% of the picture's
      width and the child was reading as the backdrop to the ducks rather than
      the other way round. */
-  inline-size: clamp(170px, 19vw, 272px);
-  /* ON THE FLOOR OF THE FRAME. At 5% they stood a tenth of the way up a
-     picture that has since grown to 691px, with a field of sand under them —
-     which is what "floating in the middle" means. Their feet now sit about 4%
-     off the bottom edge.
+  /* Down from 272. The narrower the group, the lower it can stand: the frame's
+     bottom corners close in as you descend, and 275px of duck ran out of room
+     38px off the floor. 250 buys another 22px of descent. */
+  --cam: clamp(156px, 17.5vw, 250px);
+  inline-size: var(--cam);
+  /* ON THE FLOOR, and written so it STAYS there. The art carries 14.9% of
+     transparent margin under its feet, so the box has to sit that much lower
+     than the feet should — and because the box is sized in px while the frame
+     is sized in percentages, a percentage inset here drifts: the feet landed
+     38px off the floor at 1440 and 25px at 900 from one number. Taking the
+     padding off the cameo's OWN width instead pins the feet 16px above the
+     edge at every size, which is the thing that was asked for.
 
      AND THEREFORE CENTRED, which is not a style choice. The squircle's bottom
      corners have a 34% horizontal radius, so the lower you go the narrower the
@@ -206,7 +213,10 @@
      cream again, which is the bug this whole placement was written to fix.
      `inset-inline: 0` plus `margin-inline: auto` does the centring without
      touching `translate`, which the hero's pointer parallax owns site-wide. */
-  inset-block-end: -1%;
+  /* NEGATIVE, and that is the whole point of writing it this way. The box has
+     to hang BELOW the frame's edge by the transparent margin under the feet,
+     so that the feet themselves land 16px above it. */
+  inset-block-end: calc(16px - var(--cam) * .149);
   inset-inline: 0;
   margin-inline: auto;
 }

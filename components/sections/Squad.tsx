@@ -1,12 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { initGsap, prefersReduced } from '@/lib/motion'
 import { useSearchParams } from 'next/navigation'
 import { Picture } from '@/components/Picture'
-import { asset } from '@/lib/assets'
-import { Duck } from '@/components/ui/Duck'
 import { NameSticker } from '@/components/NameSticker'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
@@ -39,34 +34,6 @@ const SQUAD_PERKS: { title: string; body: string }[] = [
     body: 'We\u2019ll ask what you love, what you need, and what you\u2019d like us to create next.' },
 ]
 
-/**
- * WHO PEEKS OUT OF WHICH BOTTLE, AND FROM WHICH SIDE.
- *
- * `edge` is a percentage of the trio render's own width, read off the file's
- * alpha channel rather than guessed: its three bottles occupy 0.5-28.2%,
- * 35.3-63.6% and 70.6-99.2%. So 0.5% is the LEFT edge of the first bottle,
- * 49.45% is the middle of the second, and 99.2% is the RIGHT edge of the
- * third — and because they are percentages, each duck stays on its own bottle
- * at every width instead of sliding across the set as the column grows.
- *
- * `side` drives both the CSS placement and the direction the duck enters from,
- * which have to agree: a duck that is hidden to the RIGHT has to travel LEFT
- * to appear, or it slides further under the bottle instead of out from it.
- */
-const PEEKERS = [
-  { id: 'vincey-peek-left',  side: 'fromLeft'  as const, edge: '0.5%' },
-  { id: 'chichi-peek-top',   side: 'fromTop'   as const, edge: '49.45%' },
-  { id: 'goosey-peek-right', side: 'fromRight' as const, edge: '99.2%' },
-]
-
-/** Where each one starts: behind its bottle, offset the way it will travel
- *  back from. The numbers are the client's. */
-const PEEK_FROM = {
-  fromLeft:  { x: 35,  y: 0 },
-  fromTop:   { x: 0,   y: 45 },
-  fromRight: { x: -35, y: 0 },
-}
-
 export function Squad() {
   /* 'undecided' is still the value posted when nobody picks — it just no longer
      has a button of its own, which was an option competing with the three that
@@ -85,75 +52,6 @@ export function Squad() {
 
   useEffect(() => { mounted.current = Date.now() }, [])
 
-  /* ---- THE DUCKS COMING OUT FROM BEHIND THE BOTTLES ----------------------
-     GSAP owns x / y / opacity on these three outright. They carry no data-anim
-     or data-pop and are not inside the hero, so nothing else writes a
-     transform here — see the channel note at the top of Hero.module.css. The
-     horizontal centring of the middle duck is on `translate`, a different
-     property, so the two compose instead of overwriting each other. */
-  const art = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const root = art.current
-    if (!root) return
-    const els = Array.from(root.querySelectorAll<HTMLElement>('[data-peeker]'))
-    if (!els.length) return
-    /* The whole art block is display:none below 900px — the form is the job on
-       a phone. No boxes means nothing to animate and no observer to leave
-       running. */
-    if (!els[0].getClientRects().length) return
-
-    /* Composed and still, in their final positions, for anyone who asked for
-       less motion. The ducks are the point; they are never withheld. */
-    if (prefersReduced()) {
-      gsap.set(els, { opacity: 1, x: 0, y: 0 })
-      return
-    }
-
-    initGsap()
-    const ctx = gsap.context(() => {
-      els.forEach((el) => {
-        const from = PEEK_FROM[el.dataset.peeker as keyof typeof PEEK_FROM]
-        gsap.set(el, { opacity: 0, ...from })
-      })
-
-      const tl = gsap.timeline({ paused: true })
-      tl.to(els, {
-        opacity: 1, x: 0, y: 0,
-        duration: 0.8,
-        ease: 'back.out(1.4)',
-        stagger: 0.18,
-        /* THE IDLE STARTS ONLY WHEN THE ENTRANCE IS DONE. Both write `y`, so
-           overlapping them would have the loop fighting the arrival — and on
-           the middle duck, which arrives ON y, it would fight it visibly. */
-        onComplete: () => {
-          els.forEach((el, i) => {
-            gsap.to(el, {
-              y: -4,
-              duration: 2,
-              repeat: -1,
-              yoyo: true,
-              ease: 'sine.inOut',
-              /* Out of phase, so three ducks never breathe in lockstep. */
-              delay: i * 0.3,
-            })
-          })
-        },
-      })
-
-      ScrollTrigger.create({
-        trigger: root.closest('section') ?? root,
-        start: 'top 75%',
-        once: true,
-        onEnter: () => tl.play(),
-      })
-      /* A refresh partway down the page, or a jump straight to #squad, never
-         crosses that line — so the trigger never fires and three ducks would
-         sit at opacity 0 for good. */
-      if (root.getBoundingClientRect().top < window.innerHeight * 0.75) tl.play()
-    }, root)
-
-    return () => ctx.revert()
-  }, [])
 
   useEffect(() => {
     const q = params.get('duck')
@@ -222,39 +120,19 @@ export function Squad() {
           </ul>
           {/* the payoff, and the thing that was leaving this column half empty
               next to a form four times its height */}
-          <div className={styles.art} aria-hidden="true" ref={art}>
-            {/* THREE DUCKS, THREE DIFFERENT EDGES — and the art is cut for it.
-                The `-peeking` set every other section uses is cut on its left
-                edge only, so all three of those can hide behind a bottle's
-                RIGHT side and nowhere else; this is what made the first pass
-                here read as one move repeated three times. The new poses are
-                cut one side each: Vincey on his right so he leans out to the
-                LEFT of the first bottle, Chi Chi along her bottom so she comes
-                over the TOP of the middle one, Goosey on his left so he leans
-                out to the RIGHT of the last.
+          {/* ONE COMPOSED RENDER, supplied by the client: the three bottles
+              with the three characters already peeking around them — Vincey
+              out to the left, Chi Chi over the middle, Goosey out to the
+              right. It replaces the layered build this section used to do in
+              CSS, where each duck was its own cut-for-one-side pose tucked
+              behind a measured bottle edge and slid out by GSAP.
 
-                Every position is a percentage of the trio render's own alpha —
-                its three bottles occupy 0.5-28.2%, 35.3-63.6% and 70.6-99.2%
-                of the image's width — so the ducks stay on their bottles at any
-                size rather than drifting across them as the column grows.
-
-                The render is z-index 1 and the ducks 0, so they are genuinely
-                behind it: the entrance below slides each one OUT from under the
-                bottle rather than fading it in beside one. */}
-            <Picture id="trio" sizes="(min-width: 900px) 42vw, 78vw" alt="" data-bob="" />
-            {PEEKERS.map((pk) => (
-              <span
-                key={pk.id}
-                className={`${styles.peek} ${styles[pk.side]}`}
-                data-peeker={pk.side}
-                style={{
-                  ['--edge' as string]: pk.edge,
-                  ['--peek-aspect' as string]: String(asset(pk.id).aspect),
-                } as React.CSSProperties}
-              >
-                <Picture id={pk.id} sizes="(min-width: 900px) 10vw, 24vw" alt="" />
-              </span>
-            ))}
+              Nothing of that survives, and nothing of it should: the client's
+              own artwork settles the composition, and reproducing it from
+              three files plus six placement percentages would only be a slower
+              way of arriving at the same picture with more that can drift. */}
+          <div className={styles.art} aria-hidden="true">
+            <Picture id="trio-peek" sizes="(min-width: 900px) 46vw, 86vw" alt="" data-bob="" />
           </div>
 
         </div>
