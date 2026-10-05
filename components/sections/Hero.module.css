@@ -491,7 +491,12 @@
   .glints i:nth-child(4) { animation-delay: .6s; }
   .glints i:nth-child(5) { animation-delay: 3.1s; }
 
-  .waveFar svg { animation: heroDrift 38s linear infinite; }
+  /* `reverse`, like the two bands below it. It ran forwards — drifting right
+     to left against their left to right — on the argument that opposed layers
+     read as depth. On a wave they do not: they read as two currents, and the
+     client asked for one direction. It keeps its own 38s against their 24, so
+     the distance still shows in the SPEED rather than in the heading. */
+  .waveFar svg { animation: heroDrift 38s linear infinite reverse; }
   /* identical on purpose — see the note on .wave */
   .waveBody svg, .waveCrest svg { animation: heroDrift 24s linear infinite reverse; }
 
