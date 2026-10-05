@@ -80,7 +80,10 @@
   align-items: center;
   margin-block-start: var(--flow-block);
   padding-block-start: var(--s-6);
-  border-block-start: var(--border);
+  /* No rule. Every row of the list above already ends on one, so a further
+     hairline here read as one more empty question rather than as the start of
+     something else — and the three ducks now coming over the buttons are the
+     break between the two. */
 }
 @media (min-width: 720px) {
   .next { grid-template-columns: minmax(0, 1fr) auto; }

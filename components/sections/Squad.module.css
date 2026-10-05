@@ -31,10 +31,13 @@
   /* WIDER THAN THE OLD 460, because the picture is wider than it was. The two
      outer ducks and the one on top are inside the frame now, and the bottles
      themselves occupy only 68.6% of its width — measured off the file, at a
-     row just above their bases. At 460 they would have come out 140px smaller
-     than the row they replace; this keeps them close to the size they were
-     while letting the characters have the space the client drew them in. */
-  inline-size: min(100%, 620px);
+     row just above their bases, so a cap written for the bottles alone shrinks
+     them by nearly a third.
+
+     480, down from the column's full 536 on the client's second look: the
+     picture is the payoff of this column, not the subject of the section, and
+     at full width it was finishing 300px below the form beside it. */
+  inline-size: min(100%, 480px);
   /* The 76px that used to be here was headroom for a duck peeking ABOVE the
      box. She is inside the artwork now, so the art goes back to the ordinary
      gap — the render was landing on the paragraph's last line without it. */

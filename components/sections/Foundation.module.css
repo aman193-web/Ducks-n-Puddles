@@ -32,14 +32,13 @@
   /* Tighter than --section-y: min-block-size already guarantees the screen, so
      this only decides how much air the content gets inside it.
 
-     ASYMMETRIC, at the client's request for more room below. On a tall display
-     the content is centred with room to spare and the gap looks after itself;
-     on a 768px-tall laptop the section is pinned at exactly 100svh with zero
-     slack, so the 64px floor WAS the gap — three tiles finishing 64px above a
-     hard change to cream. The bottom now scales with the viewport instead, and
-     because the grid centres inside the padding box the extra also lifts the
-     whole composition slightly off the floor. */
-  padding-block: var(--s-8) clamp(84px, 11vh, 132px);
+     BOTH ENDS NOW, and scaled to the viewport. On a tall display the content
+     is centred with room to spare and the gaps look after themselves; on a
+     768px-tall laptop the section is pinned at exactly 100svh with zero slack,
+     so whatever is written here IS the gap — and at --s-8 that was the chip
+     starting 64px under a hard change of colour and the tiles finishing 64px
+     above the next one. */
+  padding-block: clamp(96px, 12vh, 150px);
   overflow: clip;
   isolation: isolate;
 }
