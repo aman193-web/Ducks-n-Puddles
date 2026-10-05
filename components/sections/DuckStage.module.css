@@ -50,12 +50,21 @@
    which either pins properly or scrolls honestly. */
 @media (max-width: 899px) {
   .panel { min-block-size: 0; }
-  /* ROOM FOR THE BUBBLE. Without the 100svh floor the panel sizes to its own
-     content, and the speech bubble sits ABOVE the duck's crown — measured at
-     390px it was finishing 11px over the panel's top edge, where `overflow:
-     clip` took the top off the shape. The panel's own padding is what it peeks
-     into. */
-  .panel { padding-block-start: calc(var(--s-6) + 22px); }
+  /* ROOM FOR THE BUBBLE, twice over.
+
+     Without the 100svh floor the panel sizes to its own content, so the top of
+     that content IS the top of the panel — and the thought bubble sits above
+     the duck's crown, which put it 11px over the edge where `overflow: clip`
+     took the top off the cloud. The padding is what it peeks into.
+
+     And the panel PINS BELOW THE HEADER rather than under it. The header is
+     sticky at top 0 and 92px tall, so a panel pinned at 0 hands its first 92px
+     to something drawn over them — on a phone that was the whole upper half of
+     the bubble. Pinning at the header's own height costs no scroll length,
+     because the strip it gives up is the strip the header was covering
+     anyway. Desktop keeps top: 0: those panels are a full 100svh with their
+     content centred, so nothing of theirs is near the top edge. */
+  .panel { padding-block-start: calc(var(--s-6) + 32px); top: var(--header-h); }
 }
 .inner { display: grid; gap: var(--s-6); align-items: center; }
 

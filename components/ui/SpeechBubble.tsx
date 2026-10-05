@@ -6,101 +6,103 @@ import { initGsap, prefersReduced } from '@/lib/motion'
 import styles from './SpeechBubble.module.css'
 
 /* -------------------------------------------------------------------------
-   A DUCK SAYING SOMETHING — and, first, thinking about it.
+   A DUCK HAVING A THOUGHT.
 
-   THE SHAPE is a single SVG path, not a CSS box with a pseudo-element stuck
-   underneath. That matters for two reasons: the navy outline runs round the
-   body AND the tail without a seam to patch over, and the silhouette can be
-   genuinely organic — each quadrant bulges differently, so it reads as drawn
-   rather than as a rounded rectangle. The tail curves rather than pointing,
-   which is what stops it looking like a tooltip.
+   THE SHAPE IS A CLOUD, and its tail is a chain of circles rather than a
+   drawn point — the classic thought bubble, which is what the client's
+   reference shows.
 
-   The path's own geometry is load-bearing in two places:
-     - the body occupies y 6..124 of a 170 viewBox, so the text sits in the top
-       ~72% and never strays into the tail
-     - the tail tip is at (153, 160), i.e. 77% / 94%, which is where the
-       balloon scales FROM and where the dots gather BEFORE it
+   The body is the HULL OF NINE OVERLAPPING CIRCLES, generated rather than
+   drawn by hand: walk the bumps in order, and for each consecutive pair run an
+   arc from one outer intersection to the next. Where two neighbours overlap
+   the hull takes a small concave notch, and those notches are the whole
+   difference between a cloud and a blob. The radii are deliberately uneven
+   (23-29 against an ellipse of 66 x 45) so it reads as drawn rather than as
+   nine identical circles on a circle. The ellipse is deliberately rounder than
+   a cloud usually is: the bumps eat into the interior from every side, and a
+   flatter body left no rectangle inside it tall enough for two lines of type.
 
-   THE SEQUENCE, which is the point of this file:
-     1. the character is already there — the panel brought it in
-     2. three dots arrive one at a time, by the duck's head
-     3. they collapse into the same point the balloon grows out of
-     4. the words land just behind the shape
+   THE TAIL IS THE ENTRANCE, which is the part worth getting right. In the
+   reference the smallest circle arrives first, then the middle one, then the
+   largest, and only then does the cloud puff out from behind the largest. The
+   smallest is the one nearest the duck's head — so the thought visibly rises
+   off the character instead of appearing beside it. That ordering is why the
+   dots are part of this SVG and not a separate indicator: they are the tail,
+   they stay on screen, and the cloud grows out of the last one.
 
-   Steps 2 and 3 are why the root element is no longer the animated one. The
-   dots must NOT scale with the balloon — they are a separate thought that
-   hands over to it — so the root is now a still frame and `.balloon` inside it
-   is what GSAP drives.
+   Geometry that other files depend on:
+     - the body occupies y 5.7..147.3 of a 200 viewBox, so the text sits in the
+       top ~70% and never strays into the tail
+     - the largest tail circle is at (152, 152), which is the transform-origin
+       (`svgOrigin`): the cloud grows OUT OF the thought rather than swelling
+       from its own middle
    ------------------------------------------------------------------------- */
-const PATH =
-  'M 99 6 C 152 6, 194 29, 192 66 C 190 98, 162 119, 127 124 '
-  + 'C 132 138, 141 150, 153 160 C 129 154, 110 140, 101 125 '
-  + 'C 49 123, 8 101, 8 65 C 8 27, 47 6, 99 6 Z'
+const BODY =
+  'M 22.8 103.3 A 26 26 0 0 1 24.7 54 A 23 23 0 0 1 57.9 29.7 '
+  + 'A 29 29 0 0 1 113.3 23.7 A 24 24 0 0 1 154.8 37.1 A 27 27 0 0 1 179.5 82.2 '
+  + 'A 23 23 0 0 1 159 117.4 A 28 28 0 0 1 108 134 A 24 24 0 0 1 62.9 127.5 '
+  + 'A 25 25 0 0 1 22.8 103.3 Z'
+
+/** Nearest the duck first. Stroke scales with the circle so a 3.8px dot is not
+ *  mostly outline. */
+const TAIL = [
+  { cx: 177, cy: 189, r: 3.8, sw: 2.3 },
+  { cx: 166, cy: 175, r: 6.5, sw: 3 },
+  { cx: 152, cy: 152, r: 11,  sw: 3.9 },
+]
 
 export function SpeechBubble({ message, className }: { message: string; className?: string }) {
-  const root = useRef<HTMLDivElement>(null)
-  const balloon = useRef<HTMLDivElement>(null)
-  const think = useRef<HTMLSpanElement>(null)
+  const root = useRef<SVGSVGElement>(null)
+  const body = useRef<SVGPathElement>(null)
   const text = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    const el = root.current
-    const bl = balloon.current
-    const th = think.current
+    const svg = root.current
+    const bd = body.current
     const tx = text.current
-    if (!el || !bl || !th || !tx) return
-
-    const dots = Array.from(th.querySelectorAll<HTMLElement>('i'))
+    if (!svg || !bd || !tx) return
+    const dots = Array.from(svg.querySelectorAll<SVGCircleElement>('[data-dot]'))
 
     /* Composed and still for anyone who asked for less motion — the words are
-       the point of this element, so they are never withheld. The thinking beat
-       is pure motion and has nothing to say, so it simply does not happen. */
+       the point of this element, so they are never withheld. */
     if (prefersReduced()) {
-      gsap.set(bl, { opacity: 1, scale: 1, y: 0 })
+      gsap.set([bd, ...dots], { opacity: 1, scale: 1 })
       gsap.set(tx, { opacity: 1 })
-      gsap.set(th, { display: 'none' })
       return
     }
 
     initGsap()
     const ctx = gsap.context(() => {
-      gsap.set(bl, { opacity: 0, scale: 0.75, y: 8 })
+      /* `svgOrigin` in the SVG's own user units, not percentages: a percentage
+         origin on an SVG child resolves against that child's bounding box, so
+         each circle would scale about itself and the cloud about its own
+         middle — which is precisely what this sequence is not. */
+      gsap.set(dots, { opacity: 0, scale: 0, transformOrigin: '50% 50%' })
+      gsap.set(bd, { opacity: 0, scale: 0.12, svgOrigin: '152 152' })
       gsap.set(tx, { opacity: 0 })
-      gsap.set(dots, { opacity: 0, scale: 0.3 })
 
-      const tl = gsap.timeline({
-        paused: true,
-        defaults: { overwrite: 'auto' },
-      })
+      const tl = gsap.timeline({ paused: true, defaults: { overwrite: 'auto' } })
 
-      /* THE THINKING. One dot at a time, each with a little overshoot, which is
-         what makes them read as arriving rather than as a loading spinner
-         fading up. 0.14s apart: slower and the duck looks stuck, faster and the
-         three of them read as one event. */
+      /* Smallest first, which is the one by the duck's head: the thought rises
+         off the character rather than arriving beside it. */
       tl.to(dots, {
         opacity: 1, scale: 1,
-        duration: 0.16,
-        ease: 'back.out(2.2)',
-        stagger: 0.14,
+        duration: 0.26,
+        ease: 'back.out(2.4)',
+        stagger: 0.16,
       })
-        /* The thought collapses INTO the point the balloon grows out of, so the
-           two are one movement rather than a swap. */
-        .to(th, {
-          opacity: 0, scale: 0.55,
-          duration: 0.22,
-          ease: 'power2.in',
-        }, '+=0.2')
-        .to(bl, {
-          opacity: 1, scale: 1, y: 0,
-          duration: 0.5,
+        /* Out of the largest circle, not out of nothing. */
+        .to(bd, {
+          opacity: 1, scale: 1,
+          duration: 0.52,
           ease: 'back.out(1.4)',
-        }, '-=0.08')
-        /* The words land just behind the shape, so it reads as the bubble
-           arriving and then being spoken into — not as one lump appearing. */
-        .to(tx, { opacity: 1, duration: 0.26, ease: 'power2.out' }, '-=0.2')
+        }, '-=0.04')
+        /* The words land just behind the shape, so it reads as the thought
+           arriving and then being filled in — not as one lump appearing. */
+        .to(tx, { opacity: 1, duration: 0.26, ease: 'power2.out' }, '-=0.18')
 
       const st = ScrollTrigger.create({
-        trigger: el.closest('article') ?? el,
+        trigger: svg.closest('article') ?? svg,
         start: 'top 72%',
         once: true,
         /* A beat before the first dot, so the character has visibly arrived and
@@ -111,29 +113,24 @@ export function SpeechBubble({ message, className }: { message: string; classNam
       /* If the panel is already past that point on load — a refresh partway
          down, or an anchor jump — the trigger never fires, so play it now
          rather than leaving the bubble at opacity 0 forever. */
-      if (st.progress > 0 || el.getBoundingClientRect().top < window.innerHeight * 0.72) {
+      if (st.progress > 0 || svg.getBoundingClientRect().top < window.innerHeight * 0.72) {
         tl.delay(0.25).play()
       }
-    }, el)
+    }, svg)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <div className={[styles.bubble, className].filter(Boolean).join(' ')} ref={root}>
-      {/* The thought, before the words. Three dots on the balloon's own
-          material — cream with a navy outline — so what arrives afterwards is
-          visibly the same object grown up rather than a different one. */}
-      <span className={styles.think} ref={think} aria-hidden="true">
-        <i /><i /><i />
-      </span>
-
-      <div className={styles.balloon} ref={balloon}>
-        <svg className={styles.shape} viewBox="0 0 200 170" aria-hidden="true" focusable="false">
-          <path d={PATH} />
-        </svg>
-        <span className={styles.text} ref={text}>{message}</span>
-      </div>
+    <div className={[styles.bubble, className].filter(Boolean).join(' ')}>
+      <svg className={styles.shape} viewBox="0 0 200 200" ref={root}
+           aria-hidden="true" focusable="false">
+        {TAIL.map((c) => (
+          <circle key={c.cx} data-dot="" cx={c.cx} cy={c.cy} r={c.r} strokeWidth={c.sw} />
+        ))}
+        <path d={BODY} ref={body} />
+      </svg>
+      <span className={styles.text} ref={text}>{message}</span>
     </div>
   )
 }
