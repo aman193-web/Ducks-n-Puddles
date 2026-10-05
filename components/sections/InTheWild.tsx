@@ -128,8 +128,8 @@ export function InTheWild() {
         </div>
       </div>
 
-      {/* FOUR MARKS IN THE MARGINS, drawn rather than placed: a sun, a heart and
-          two little bursts of water, in the client's reference's own hand. They
+      {/* THREE MARKS IN THE MARGINS, drawn rather than placed: a sun and two
+          little bursts of water, in the client's reference's own hand. They
           are what stops the row reading as a gallery widget — a scrapbook page
           has somebody's pen on it as well as the photographs.
 
@@ -142,9 +142,6 @@ export function InTheWild() {
           <circle cx="30" cy="30" r="10.5" />
           <circle cx="30" cy="30" r="4.5" />
           <path d="M30 6.5v7M30 46.5v7M6.5 30h7M46.5 30h7M13.4 13.4l5 5M41.6 41.6l5 5M46.6 13.4l-5 5M18.4 41.6l-5 5" />
-        </svg>
-        <svg className={styles.heart} viewBox="0 0 52 46" fill="none">
-          <path d="M26 42C14.5 34.2 4 27 4 16.6 4 9.6 9.4 4.5 15.9 4.5c3.9 0 7.7 2 10.1 5.3 2.4-3.3 6.2-5.3 10.1-5.3C42.6 4.5 48 9.6 48 16.6 48 27 37.5 34.2 26 42Z" />
         </svg>
         <svg className={styles.dropsA} viewBox="0 0 46 40" fill="none">
           <path d="M9 30C6 24 9.5 14 15 6M22 33c-2-7 1.5-17 7-25M35 30c-1.5-5 1-12 5-18" />
@@ -163,6 +160,12 @@ export function InTheWild() {
               className={styles.card}
               data-i={i % 6}
               data-kind={r.kind}
+              /* Says whether this card carries a second print underneath,
+                 because the two are sized from different ends: a card on its
+                 own takes a target HEIGHT and lets its width follow from the
+                 picture's shape, while a card with a companion is sized by
+                 width and makes its height up in two pieces. */
+              data-stack={r.kind === 'photo' && r.under ? 'two' : 'one'}
               /* A photograph keeps its own proportions — no crop, which is what
                  went wrong the first time the shapes were varied: forcing a
                  shape onto vertical phone video cut the top and bottom off

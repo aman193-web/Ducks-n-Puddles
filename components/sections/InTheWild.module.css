@@ -68,12 +68,6 @@
     stroke: var(--sun); stroke-width: 3;
     rotate: -6deg;
   }
-  .heart {
-    inline-size: clamp(34px, 3.4vw, 48px);
-    inset-block-end: 16%; inset-inline-end: 13%;
-    stroke: var(--chichi); stroke-width: 3.4;
-    rotate: 9deg;
-  }
   .dropsA {
     inline-size: clamp(34px, 3.6vw, 50px);
     inset-block-start: 30%; inset-inline-start: 3.5%;
@@ -156,17 +150,52 @@
    every breakpoint. */
 .card {
   --w: 1;
+  --hv: 1;
   flex: 0 0 auto;
-  inline-size: calc(clamp(192px, 21vw, 258px) * var(--w));
   scroll-snap-align: start;
   display: grid; gap: var(--s-3);
 }
-.card[data-i="0"] { --w: 1; }
-.card[data-i="1"] { --w: 1.12; }
-.card[data-i="2"] { --w: .9; }
-.card[data-i="3"] { --w: 1.05; }
-.card[data-i="4"] { --w: .95; }
-.card[data-i="5"] { --w: 1.1; }
+
+/* SIZED BY HEIGHT, NOT WIDTH, and that is what evens the row out. Setting the
+   widths and letting the heights fall where they may gave a row running 364 to
+   495: a clip is 9:16 and a portrait still is 2:3, so at the same width the
+   clip comes out a fifth taller before any variation is applied at all.
+
+   Giving each card a target height and letting its WIDTH follow from the
+   picture's own shape inverts that — the heights land within about 50px of
+   each other, and the widths vary more than they did before rather than less,
+   because a wide picture now needs a wide card to reach the same height. */
+.card[data-stack="one"] {
+  inline-size: auto;
+}
+.card[data-stack="one"] .shot {
+  block-size: calc(clamp(286px, 30vw, 418px) * var(--hv));
+  inline-size: auto;
+}
+.card[data-i="0"] { --hv: 1.02; }
+.card[data-i="1"] { --hv: .95; }
+.card[data-i="2"] { --hv: 1.05; }
+.card[data-i="3"] { --hv: .97; }
+.card[data-i="4"] { --hv: 1.03; }
+.card[data-i="5"] { --hv: .94; }
+
+/* A card with a second print under it is sized from the same target, which is
+   the only way the two kinds stay in step: sizing these by width while the
+   rest were sized by height left them 40px tall of the row at 1024, because a
+   vw-based width and a vw-based height saturate at different viewports.
+
+   Its height is the sum of two pieces, so the main print takes about half the
+   target and the companion's 3:2 crop makes up the rest. Half, not exactly
+   half: the companion is as wide as the card, so its height is the main
+   print's own aspect divided by 1.5 — 1:1 for the 3:2 still and 0.89:1 for the
+   4:3 one. 0.485 lands both inside the row, measured rather than reasoned to. */
+.card[data-stack="two"] {
+  inline-size: auto;
+}
+.card[data-stack="two"] > .frame:not(.under) .shot {
+  block-size: calc(clamp(286px, 30vw, 418px) * var(--hv) * .485);
+  inline-size: auto;
+}
 
 /* ---- the scrapbook -------------------------------------------------------
    "Make the photos/videos feel a little more organic rather than all identical
