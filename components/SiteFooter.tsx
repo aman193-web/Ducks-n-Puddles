@@ -162,8 +162,16 @@ export function SiteFooter() {
           <span className={styles.line} />
         </div>
 
+        {/* THREE THINGS ON ONE LINE. The send-off used to sit on a row of its
+            own under this one, which put a 36px display line in the middle of
+            an otherwise empty band of cream; level with the copyright it reads
+            as part of the page's last line rather than as a heading for the
+            ducks. Centred by the grid rather than by `text-align`, so it lands
+            on the page's centre and not on the midpoint of whatever is left
+            over between the two notes either side of it. */}
         <div className={styles.bottom}>
           <span>&copy; {new Date().getFullYear()} {brand.name}. All rights reserved.</span>
+          <p className={styles.sendoff}>Come Back to the Pond Soon!</p>
           <span className="hand">Here&rsquo;s to all the adventures ahead.</span>
         </div>
       </div>
@@ -183,7 +191,6 @@ export function SiteFooter() {
               brighter and closer to her signature. These three are a single
               pre-rendered video, so both need a new render from whoever produced
               it — see media/video/. */}
-      <p className={styles.sendoff}>Come Back to the Pond Soon!</p>
       <FooterDucks />
     </footer>
   )
