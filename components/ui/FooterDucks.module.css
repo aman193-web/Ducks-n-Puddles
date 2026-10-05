@@ -15,14 +15,17 @@
 
      The pull is a share of the video's WIDTH rather than a fixed number,
      because that is the only dimension CSS can see: the frame is 16:9 and
-     capped at 900, so 10% of `min(100%, 900px)` is a constant 18% of its own
-     height at every size. 90px at 1440, 39px on a phone, and the ducks land
-     about 35px under the line either way.
+     capped at 900, so a percentage of `min(100%, 900px)` is a fixed share of
+     its own height at every size.
+
+     5.6% of the width is 10% of the height — about 50px at 1440 — which
+     leaves the ducks roughly 75px under the line. 10% of the width was tried
+     first and put them at 35px, which the client read as touching it.
 
      The top of the frame tucks BEHIND the text while it does this — see the
      flat transparent stop on .video's mask, and the z-index on .bottom that
      keeps the words on top whatever the mask is doing. */
-  margin-block-start: calc(min(100%, 900px) * -0.1);
+  margin-block-start: calc(min(100%, 900px) * -0.056);
   /* It is decoration sitting under real links; it must never eat a click. */
   pointer-events: none;
   /* GSAP writes x/y here. Promoting it up front keeps the parallax off the
@@ -50,19 +53,20 @@
      short a run to dissolve the step, so the rectangle showed.
 
      THE TOP STOP IS FLAT, THEN FADES, and the flat part is the point. .stage
-     pulls the frame up by 18% of its own height so the ducks sit close under
-     the send-off; that band lands ON the page's last line of text. A gradient
-     through it would lay half-opaque cream over the words — which it did, and
-     it looked like a veil. So the first 18% is fully transparent, and the
-     dissolve happens between 18% and 24.5%, which is below the text and ends
-     exactly where the ducks' ink begins (24.7%, measured off the file). The
-     three numbers have to move together if any of them moves. */
+     pulls the frame up by 10% of its own height so the ducks sit under the
+     send-off rather than a screen below it; that band lands ON the page's last
+     line of text. A gradient through it would lay half-opaque cream over the
+     words — which it did, and it looked like a veil over them. So the first
+     10% is fully transparent, matching the pull exactly, and the dissolve runs
+     from there to 24.5%, which is below the text and ends where the ducks' ink
+     begins (24.7%, measured off the file). The pull and the flat stop have to
+     move together; the 24.5 is fixed by the artwork. */
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, transparent 18%, #000 24.5%, #000 100%);
+    linear-gradient(to bottom, transparent 0, transparent 10%, #000 24.5%, #000 100%);
   -webkit-mask-composite: source-in;
   mask-image:
     linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, transparent 18%, #000 24.5%, #000 100%);
+    linear-gradient(to bottom, transparent 0, transparent 10%, #000 24.5%, #000 100%);
   mask-composite: intersect;
 }
