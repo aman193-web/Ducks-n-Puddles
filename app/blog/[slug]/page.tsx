@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
-import { posts, postBySlug, formatDate } from '@/content/journal'
+import { posts, postBySlug, formatDate, categoryOf } from '@/content/journal'
 import { brand } from '@/content/brand'
 import styles from '../blog.module.css'
 
@@ -60,7 +60,15 @@ export default async function JournalPost(
         </Link>
 
         <header className={styles.postHead}>
-          <span className={styles.tag}>{post.tag}</span>
+          {/* THE TAG IS A LINK NOW. It is the one place a reader who likes a
+              post can ask for more of the same, and it was inert — the
+              category pages exist, so the label that names one should open
+              it. */}
+          {categoryOf(post)
+            ? <Link href={`/blog/category/${categoryOf(post)!.slug}`} className={styles.tagLink}>
+                {post.tag}
+              </Link>
+            : <span className={styles.tag}>{post.tag}</span>}
           <h1 className="d d-lg">{post.title}</h1>
           <p className={styles.meta}>
             <time dateTime={post.date}>{formatDate(post.date)}</time>

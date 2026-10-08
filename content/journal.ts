@@ -94,6 +94,54 @@ export const posts: Post[] = [
 
 export const postBySlug = (slug: string) => posts.find((p) => p.slug === slug)
 
+/* ---------------------------------------------------------------------------
+   CATEGORIES.
+
+   The client's three, in the order their document lists them, each with the
+   slug its own page lives at. Declared here rather than derived from the posts
+   so a category keeps its page — and its chip in the filter row — on the day
+   it happens to have nothing in it. A blog with one post per category, which
+   is what this is today, would otherwise lose two thirds of its navigation the
+   moment a draft moved.
+   --------------------------------------------------------------------------- */
+export type CategorySlug = 'behind-the-puddles' | 'things-worth-sharing' | 'life-lately'
+
+export interface Category {
+  slug: CategorySlug
+  /** Exactly the string a post's `tag` carries. */
+  label: Post['tag']
+  /** One line for the category page's own head and its <meta name="description">. */
+  blurb: string
+}
+
+export const categories: Category[] = [
+  { slug: 'behind-the-puddles', label: 'Behind the Puddles',
+    blurb: 'How the bottles get made, and what each round of samples taught us.' },
+  { slug: 'things-worth-sharing', label: 'Things Worth Sharing',
+    blurb: 'What we have learned that is worth passing on, whoever you end up buying from.' },
+  { slug: 'life-lately', label: 'Life Lately',
+    blurb: 'Where the ducks came from, and what the two of us are up to.' },
+]
+
+export const categoryBySlug = (slug: string) =>
+  categories.find((c) => c.slug === slug)
+
+/** The category a post belongs to, by its `tag`. */
+export const categoryOf = (post: Post) =>
+  categories.find((c) => c.label === post.tag)
+
+/** Newest first, like every other listing on the site. */
+export const postsInCategory = (slug: string) => {
+  const c = categoryBySlug(slug)
+  if (!c) return []
+  return posts
+    .filter((p) => p.tag === c.label)
+    .sort((a, b) => b.date.localeCompare(a.date))
+}
+
+export const postsNewestFirst = () =>
+  [...posts].sort((a, b) => b.date.localeCompare(a.date))
+
 export const formatDate = (iso: string) =>
   new Date(iso + 'T00:00:00Z').toLocaleDateString('en-GB', {
     day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',

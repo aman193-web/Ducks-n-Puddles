@@ -17,50 +17,114 @@
 }
 .closeBlurb { max-width: 46ch; line-height: 1.6; }
 
-.masthead { display: grid; justify-items: start; gap: var(--s-4); margin-block-end: clamp(var(--s-7), 5vw, var(--s-9)); }
-
-/* ---- index --------------------------------------------------------------- */
-.list { display: grid; gap: clamp(20px, 2.4vw, 34px); list-style: none; padding: 0; margin: 0; }
-.rowLink {
-  display: grid; gap: var(--s-4); align-items: center;
-  text-decoration: none; border-radius: var(--r-lg);
+.masthead {
+  display: grid; justify-items: start; gap: var(--s-4);
+  margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
 }
-.rowLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 6px; }
-.rowFigure {
+
+/* ---- the category filter row --------------------------------------------
+   The blog's navigation, and the one part of this page that has to be
+   identical on /blog and on every category page — a chip that shifts between
+   them reads as the page reloading rather than as a filter being applied. So
+   it is one component, and these are its only styles.
+
+   Wraps rather than scrolls. Four chips fit on a phone; a horizontal scroller
+   would hide the last of them behind an edge for no gain. */
+.filters {
+  display: flex; flex-wrap: wrap; gap: var(--s-3);
+  margin-block-start: var(--s-3);
+}
+.chip {
+  display: inline-flex; align-items: center;
+  min-block-size: 40px;
+  padding-inline: 16px;
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-pill);
+  font-size: var(--fs-small); font-weight: 600;
+  text-decoration: none; color: var(--ink);
+  transition: background-color var(--t-fast) ease, transform var(--t) var(--spring);
+}
+@media (hover: hover) { .chip:hover { background: var(--sun-soft); transform: translateY(-2px); } }
+.chip:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+/* THE CURRENT FILTER, and it is a real button-press state rather than a tint:
+   this row is the only thing telling you which page you are on. */
+.chip[aria-current='page'] { background: var(--sun); }
+@media (prefers-reduced-motion: reduce) { .chip { transition: none; } .chip:hover { transform: none; } }
+
+/* ---- bands --------------------------------------------------------------- */
+.featuredBand { margin-block-end: clamp(var(--s-7), 5vw, var(--s-9)); }
+.band { margin-block-end: clamp(var(--s-6), 4vw, var(--s-8)); }
+.bandHead {
+  display: grid; justify-items: start; gap: var(--s-2);
+  margin-block-end: var(--s-5);
+}
+.bandTitle {
+  font-family: var(--font-display); font-synthesis: none;
+  font-weight: 400; letter-spacing: .008em; line-height: 1.12;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+.bandCount { font-size: var(--fs-small); color: var(--ink-soft); }
+.bandBlurb { max-width: 54ch; line-height: 1.6; }
+.empty { max-width: 46ch; line-height: 1.6; }
+
+/* ---- a card, in its two shapes -------------------------------------------
+   `.featured` is the wide one: picture beside copy, two equal columns, the
+   reference's own proportion. `.card` is the stacked one the grids are built
+   from. They share every inner part, because they are the same component —
+   only the frame differs. */
+.cardLink {
+  display: grid; gap: var(--s-4);
+  text-decoration: none; color: var(--ink);
+  transition: transform var(--t) var(--spring);
+}
+.cardLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 6px; border-radius: var(--r-lg); }
+@media (hover: hover) {
+  .cardLink:hover { transform: translateY(-3px); }
+  .cardLink:hover .cardTitle,
+  .cardLink:hover .featuredTitle { text-decoration-color: var(--sun); }
+  .cardLink:hover .cardFigure img { transform: scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cardLink, .cardFigure img { transition: none; }
+  .cardLink:hover { transform: none; }
+  .cardLink:hover .cardFigure img { transform: none; }
+}
+
+.cardFigure {
   display: block; overflow: clip;
   border: var(--border-lg); border-radius: var(--r-lg); background: var(--sky);
 }
-.rowFigure img {
-  inline-size: 100%; block-size: auto; aspect-ratio: 16 / 10; object-fit: cover;
+.cardFigure img {
+  inline-size: 100%; block-size: auto;
+  aspect-ratio: 16 / 10; object-fit: cover;
   transition: transform .6s cubic-bezier(.16, 1, .3, 1);
 }
-.rowLink:hover .rowFigure img { transform: scale(1.04); }
-/* The whole row is the target, so it needs to say so on hover — the picture
-   zoom alone is easy to miss on a text-led row. */
-.rowLink { transition: transform var(--t) var(--spring); }
-@media (hover: hover) {
-  .rowLink:hover { transform: translateY(-3px); }
-  .rowLink:hover .rowTitle { text-decoration-color: var(--sun); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .rowLink, .rowFigure img { transition: none; }
-  .rowLink:hover { transform: none; }
-  .rowLink:hover .rowFigure img { transform: none; }
-}
-.rowTitle {
+
+.cardBody { display: grid; justify-items: start; gap: var(--s-3); align-content: start; }
+.cardMetaTop { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+
+.cardTitle, .featuredTitle {
+  font-family: var(--font-display); font-synthesis: none;
+  font-weight: 400; letter-spacing: .01em; line-height: 1.14;
+  text-wrap: balance;
   text-decoration: underline; text-decoration-thickness: 3px;
   text-decoration-color: transparent; text-underline-offset: .22em;
   transition: text-decoration-color var(--t-fast) ease;
 }
-.rowBody { display: grid; justify-items: start; gap: var(--s-3); }
-.rowTitle {
-  font-family: var(--font-display); font-synthesis: none;
-  font-weight: 400; letter-spacing: .01em; line-height: 1.14;
-  font-size: clamp(1.375rem, 2.6vw, 2.25rem); text-wrap: balance;
-}
+.cardTitle { font-size: clamp(1.125rem, 1.9vw, 1.4375rem); }
+.featuredTitle { font-size: clamp(1.5rem, 3.2vw, 2.5rem); }
+
 .excerpt { max-width: 52ch; text-wrap: pretty; }
-@media (min-width: 780px) {
-  .rowLink { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 3vw, 48px); }
+
+/* THE BADGE on the featured card. "Latest", not "Featured": there is no
+   editorial pick behind it — it is simply the newest post, and a label that
+   claims otherwise is a claim. */
+.badge {
+  padding: 5px 12px;
+  background: var(--ink); color: var(--paper);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
 }
 
 .tag {
@@ -69,10 +133,50 @@
   font-family: var(--font-mono); font-weight: 500;
   font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
 }
+/* The same pill, as a link. On the post page the category label opens its own
+   page, so it needs the affordance and the target size a chip has. */
+.tagLink {
+  display: inline-flex; align-items: center;
+  min-block-size: 36px;
+  padding: 0 14px;
+  background: var(--sun); border: var(--border); border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink);
+  transition: transform var(--t) var(--spring);
+}
+@media (hover: hover) { .tagLink:hover { transform: translateY(-2px); } }
+.tagLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .tagLink { transition: none; } .tagLink:hover { transform: none; } }
+
 .meta {
   display: flex; flex-wrap: wrap; gap: var(--s-2);
   font-size: var(--fs-micro); color: var(--ink-soft);
 }
+
+/* Two equal columns from 780, which is the reference's featured proportion.
+   Below that it stacks like every other card. */
+@media (min-width: 780px) {
+  .featured .cardLink {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 48px);
+    align-items: center;
+  }
+  .featured .cardFigure img { aspect-ratio: 4 / 3; }
+}
+
+/* ---- the grid ------------------------------------------------------------
+   One column, two from 620, three from 980 — the reference's three-up, with
+   the two steps underneath it that a phone and a tablet need. `align-items:
+   start` so a short card does not stretch its picture to match a tall one. */
+.grid {
+  display: grid; gap: clamp(24px, 3vw, 40px);
+  align-items: start;
+  list-style: none; padding: 0; margin: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 620px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 /* ---- post ----------------------------------------------------------------
    ONE COLUMN, CENTRED. Every part of the article — the back link, the head, the
