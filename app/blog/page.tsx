@@ -3,7 +3,7 @@ import { Btn } from '@/components/ui/Btn'
 import { postsNewestFirst } from '@/content/journal'
 import { brand } from '@/content/brand'
 import { BlogMasthead } from './BlogMasthead'
-import { PostCard } from './PostCard'
+import { BlogBrowser } from './BlogBrowser'
 import styles from './blog.module.css'
 
 export const metadata: Metadata = {
@@ -26,52 +26,25 @@ export const metadata: Metadata = {
  *   the rest in a grid, under a heading that counts them
  *   the closing band
  *
- * TWO PARTS OF THAT REFERENCE ARE DELIBERATELY NOT HERE, and both come back
- * on the day there is a backlog to justify them:
+ * ONE PART OF THAT REFERENCE IS STILL NOT HERE: the "Top Articles" row it runs
+ * between the featured article and the grid. It picks three from sixty-seven;
+ * picking three from twelve would still be a quarter of the page repeated —
+ * and there is no measure of "top" to pick them by, because there is no
+ * analytics on this site. It belongs here when there is both a backlog and a
+ * number to sort it on.
  *
- *   A "TOP ARTICLES" ROW. The reference runs one between the featured article
- *   and the latest grid. It picks three from sixty-seven. We have three posts
- *   in total, so the row would be the same three articles the grid underneath
- *   it is already showing — the page would list every post twice and call the
- *   second pass a recommendation.
- *
- *   PAGINATION. Nine to a page across eight pages over there; three posts and
- *   no second page here.
+ * Pagination likewise: nine to a page across eight pages over there, twelve
+ * posts and one page here.
  */
 export default function JournalIndex() {
   const all = postsNewestFirst()
-  const [featured, ...rest] = all
 
   return (
     <>
       <div className={styles.page}>
         <div className="wrap">
           <BlogMasthead />
-
-          {featured && (
-            <section className={styles.featuredBand} aria-label="Latest article">
-              <PostCard post={featured} featured />
-            </section>
-          )}
-
-          {rest.length > 0 && (
-            <section className={styles.band}>
-              <header className={styles.bandHead}>
-                <h2 className={styles.bandTitle}>More from the pond</h2>
-                <p className={styles.bandCount}>
-                  {rest.length} {rest.length === 1 ? 'article' : 'articles'}
-                </p>
-              </header>
-
-              <ul className={styles.grid}>
-                {rest.map((p) => (
-                  <li key={p.slug}>
-                    <PostCard post={p} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
+          <BlogBrowser posts={all} heading="More from the pond" featureFirst />
         </div>
       </div>
 

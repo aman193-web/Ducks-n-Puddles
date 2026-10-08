@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Btn } from '@/components/ui/Btn'
 import { categories, categoryBySlug, postsInCategory } from '@/content/journal'
 import { brand } from '@/content/brand'
 import { BlogMasthead } from '../../BlogMasthead'
-import { PostCard } from '../../PostCard'
+import { BlogBrowser } from '../../BlogBrowser'
 import styles from '../../blog.module.css'
 
 /* Every category gets a page at build time, including one that happens to be
@@ -58,34 +57,13 @@ export default async function CategoryPage(
     <>
       <div className={styles.page}>
         <div className="wrap">
-          <BlogMasthead active={category.slug} />
-
-          <section className={styles.band}>
-            <header className={styles.bandHead}>
-              <h2 className={styles.bandTitle}>{category.label}</h2>
-              <p className={styles.bandCount}>
-                {posts.length} {posts.length === 1 ? 'article' : 'articles'}
-              </p>
-              <p className={styles.bandBlurb}>{category.blurb}</p>
-            </header>
-
-            {posts.length > 0 ? (
-              <ul className={styles.grid}>
-                {posts.map((p) => (
-                  <li key={p.slug}>
-                    <PostCard post={p} />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              /* A category can be empty — they are declared, not derived — and
-                 an empty page still has to say something and offer a way on. */
-              <p className={styles.empty}>
-                Nothing in here yet. <Link href="/blog">Read everything else</Link> while
-                we write one.
-              </p>
-            )}
-          </section>
+          <BlogMasthead />
+          <BlogBrowser
+            posts={posts}
+            active={category.slug}
+            heading={category.label}
+            blurb={category.blurb}
+          />
         </div>
       </div>
 

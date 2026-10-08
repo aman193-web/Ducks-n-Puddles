@@ -22,6 +22,54 @@
   margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
 }
 
+/* ---- search + filters ----------------------------------------------------
+   The two controls that decide what is listed, on one row above the results
+   they govern. They stack on a phone, where a field beside four chips leaves
+   the field too narrow to type into. */
+.tools {
+  display: grid; gap: var(--s-4);
+  margin-block-end: clamp(var(--s-6), 4vw, var(--s-7));
+}
+@media (min-width: 900px) {
+  .tools { grid-template-columns: minmax(0, 320px) minmax(0, 1fr); align-items: center; }
+}
+
+.search { position: relative; display: flex; align-items: center; }
+.searchIcon {
+  position: absolute; inset-inline-start: 14px;
+  color: var(--ink-soft); pointer-events: none;
+}
+.searchInput {
+  inline-size: 100%;
+  min-block-size: 48px;
+  /* Room for the icon on one side and the clear button on the other, so a long
+     query never runs underneath either. */
+  padding: 0 44px;
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-pill);
+  font: inherit; font-size: var(--fs-small); color: var(--ink);
+}
+.searchInput::placeholder { color: var(--ink-soft); }
+.searchInput:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; }
+/* Safari draws its own clear button inside a type=search; ours is the only one. */
+.searchInput::-webkit-search-decoration,
+.searchInput::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.searchClear {
+  position: absolute; inset-inline-end: 8px;
+  display: grid; place-items: center;
+  inline-size: 32px; block-size: 32px;
+  border-radius: 50%; cursor: pointer;
+  color: var(--ink);
+}
+@media (hover: hover) { .searchClear:hover { background: var(--sun-soft); } }
+.searchClear:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; }
+
+/* A button that has to read as the link it behaves like. */
+.linkish {
+  font: inherit; color: inherit; cursor: pointer;
+  text-decoration: underline; text-underline-offset: .22em;
+}
+
 /* ---- the category filter row --------------------------------------------
    The blog's navigation, and the one part of this page that has to be
    identical on /blog and on every category page — a chip that shifts between
@@ -32,7 +80,6 @@
    would hide the last of them behind an edge for no gain. */
 .filters {
   display: flex; flex-wrap: wrap; gap: var(--s-3);
-  margin-block-start: var(--s-3);
 }
 .chip {
   display: inline-flex; align-items: center;
