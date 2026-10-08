@@ -10,20 +10,9 @@ import styles from './Newsletter.module.css'
  * form, this, and a footer field) is two too many — the same list, asked for
  * three times, reads as nagging rather than as an offer.
  */
-/**
- * `ground` overrides the band's own background. The footer's wave paints the
- * colour of whatever sits above it (`--footer-above`, globally --vincey-soft)
- * into its own box — so a page that ENDS on this section has to hand it that
- * colour or a stray blue stripe appears across the seam. On the home page this
- * section sits mid-page above two more, and keeps its paper.
- */
-export function Newsletter({ ground }: { ground?: string } = {}) {
+export function Newsletter() {
   return (
-    <section
-      className={styles.section}
-      style={ground ? { background: ground } : undefined}
-      aria-labelledby="newsletter-title"
-    >
+    <section className={styles.section} aria-labelledby="newsletter-title">
       <div className="wrap">
         <div className={styles.panel}>
           <h2 id="newsletter-title" className={`d ${styles.title}`}>

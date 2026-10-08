@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Btn } from '@/components/ui/Btn'
 import { Newsletter } from '@/components/sections/Newsletter'
 import { categories, categoryBySlug, postsInCategory } from '@/content/journal'
 import { brand } from '@/content/brand'
@@ -67,15 +68,25 @@ export default async function CategoryPage(
         </div>
       </div>
 
-      {/* THE SAME BAND THE HOME PAGE ENDS ITS PITCH ON, rather than this
-          page's own heading-and-a-button. One signup, one wording, one place
-          to change it — and it asks for the address here instead of sending
-          someone to the home page to be asked there.
+      {/* THE SIGNUP BAND, on its own paper ground exactly as the home page
+          carries it — a yellow panel inset straight onto blue was the panel
+          sitting IN the band rather than above it. */}
+      <Newsletter />
 
-          On --vincey-soft because the blog ENDS on it: the footer's wave
-          paints the colour above it into its own box, and that colour is blue
-          site-wide. */}
-      <Newsletter ground="var(--vincey-soft)" />
+      {/* AND THE BLUE BAND BACK UNDER IT. It is not only a send-off: the
+          footer's wave paints the colour above it into its own box, and that
+          colour is --vincey-soft site-wide, so a page that ends on paper
+          leaves a blue stripe across the seam. */}
+      <section className={styles.close}>
+        <div className={`wrap ${styles.closeInner}`}>
+          <h2 className={styles.closeTitle}>Get the next one by email.</h2>
+          <p className={styles.closeBlurb}>
+            One short note every couple of weeks. The Duck Squad hears about the
+            bottles before this site does.
+          </p>
+          <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+        </div>
+      </section>
     </>
   )
 }

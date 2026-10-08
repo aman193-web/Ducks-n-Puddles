@@ -21,10 +21,23 @@
    single line wherever there is room for one. */
 .lede { max-width: none; }
 
+/* ON THE SITE'S OWN FLOW SCALE, which this head was the only one not using.
+   A flat 16px between all three parts put the eyebrow and the standfirst hard
+   against a 64px headline and then dropped 53px to the controls — 1 : 1 : 3.3,
+   which reads as two things stuck together and a third adrift.
+
+   --flow-eyebrow pairs the eyebrow with the headline, --flow-head separates
+   the standfirst from it as the different thought it is, and the controls sit
+   a measured step below: about 15 / 22 / 33 at 1280. */
 .masthead {
-  display: grid; justify-items: start; gap: var(--s-4);
-  margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
+  display: grid; justify-items: start;
+  gap: var(--flow-eyebrow);
+  /* Less than --flow-block. The search field and the chips are not the next
+     section — they belong to the head above them, and the real break is the
+     one under THEM, before the results they govern. */
+  margin-block-end: clamp(24px, 2.6vw, 40px);
 }
+.masthead > :last-child { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 
 /* ---- search + filters ----------------------------------------------------
    The two controls that decide what is listed, on one row above the results
