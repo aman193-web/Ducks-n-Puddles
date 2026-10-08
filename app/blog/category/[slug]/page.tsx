@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Btn } from '@/components/ui/Btn'
+import { Newsletter } from '@/components/sections/Newsletter'
 import { categories, categoryBySlug, postsInCategory } from '@/content/journal'
 import { brand } from '@/content/brand'
 import { BlogMasthead } from '../../BlogMasthead'
@@ -67,16 +67,15 @@ export default async function CategoryPage(
         </div>
       </div>
 
-      <section className={styles.close}>
-        <div className={`wrap ${styles.closeInner}`}>
-          <h2 className={styles.closeTitle}>Get the next one by email.</h2>
-          <p className={styles.closeBlurb}>
-            One short note every couple of weeks. The Duck Squad hears about the
-            bottles before this site does.
-          </p>
-          <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
-        </div>
-      </section>
+      {/* THE SAME BAND THE HOME PAGE ENDS ITS PITCH ON, rather than this
+          page's own heading-and-a-button. One signup, one wording, one place
+          to change it — and it asks for the address here instead of sending
+          someone to the home page to be asked there.
+
+          On --vincey-soft because the blog ENDS on it: the footer's wave
+          paints the colour above it into its own box, and that colour is blue
+          site-wide. */}
+      <Newsletter ground="var(--vincey-soft)" />
     </>
   )
 }

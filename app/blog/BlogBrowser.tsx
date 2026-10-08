@@ -1,7 +1,7 @@
 'use client'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
-import { MagnifyingGlass, X } from '@phosphor-icons/react/dist/ssr'
+import { CaretLeft, CaretRight, MagnifyingGlass, X } from '@phosphor-icons/react/dist/ssr'
 import { categories, type Post } from '@/content/journal'
 import { PostCard } from './PostCard'
 import styles from './blog.module.css'
@@ -41,7 +41,13 @@ export function BlogBrowser({
   /** /blog leads with the newest post laid out wide; a category page does not. */
   featureFirst?: boolean
 }) {
+  /* Six, not the reference's nine. Twelve posts over nine is a full page and
+     then a page of three; over six it is two pages that both look like pages.
+     The number is the only thing to change when the backlog grows. */
+  const PER_PAGE = 6
+
   const [query, setQuery] = useState('')
+  const [page, setPage] = useState(1)
   const q = query.trim().toLowerCase()
 
   const results = useMemo(() => {
@@ -56,7 +62,30 @@ export function BlogBrowser({
 
   const searching = q.length > 0
   const [first, ...rest] = results
-  const grid = featureFirst && !searching ? rest : results
+  const listed = featureFirst && !searching ? rest : results
+
+  const pages = Math.max(1, Math.ceil(listed.length / PER_PAGE))
+  /* Clamped rather than reset, so a page number that stops existing — because
+     the search narrowed the list — lands on the last real page instead of on
+     an empty one. */
+  const current = Math.min(page, pages)
+  const grid = listed.slice((current - 1) * PER_PAGE, current * PER_PAGE)
+
+  /* Back to the first page whenever the list itself changes. Without this,
+     typing a query while on page 2 shows the second six of three results. */
+  const key = `${active ?? 'all'}:${q}`
+  const lastKey = useRef(key)
+  useEffect(() => {
+    if (lastKey.current !== key) { lastKey.current = key; setPage(1) }
+  }, [key])
+
+  /* The top of the list, not the top of the document: paging should move you
+     to the first new card, not back past the search field you just used. */
+  const listTop = useRef<HTMLDivElement>(null)
+  const goTo = (n: number) => {
+    setPage(n)
+    listTop.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+  }
 
   return (
     <>
@@ -111,7 +140,7 @@ export function BlogBrowser({
         </section>
       )}
 
-      <section className={styles.band}>
+      <section className={styles.band} ref={listTop}>
         <header className={styles.bandHead}>
           <h2 className={styles.bandTitle}>
             {searching ? 'Results' : heading}
@@ -119,6 +148,7 @@ export function BlogBrowser({
           <p className={styles.bandCount} role="status">
             {results.length} {results.length === 1 ? 'article' : 'articles'}
             {searching && <> for &ldquo;{query.trim()}&rdquo;</>}
+            {pages > 1 && <> &middot; page {current} of {pages}</>}
           </p>
           {blurb && !searching && <p className={styles.bandBlurb}>{blurb}</p>}
         </header>
@@ -131,7 +161,41 @@ export function BlogBrowser({
               </li>
             ))}
           </ul>
-        ) : (
+        ) : null}
+
+        {/* ONE PAGE, NO PAGER. A disabled Previous beside a disabled Next is
+            furniture that says the list is longer than it is. */}
+        {pages > 1 && (
+          <nav className={styles.pager} aria-label="Pagination">
+            <button
+              type="button" className={styles.pageArrow}
+              onClick={() => goTo(current - 1)} disabled={current === 1}
+            >
+              <CaretLeft size={18} weight="bold" aria-hidden="true" />
+              <span className="vh">Previous page</span>
+            </button>
+
+            {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
+              <button
+                key={n} type="button" className={styles.pageNum}
+                onClick={() => goTo(n)}
+                aria-current={n === current ? 'page' : undefined}
+              >
+                <span className="vh">Page </span>{n}
+              </button>
+            ))}
+
+            <button
+              type="button" className={styles.pageArrow}
+              onClick={() => goTo(current + 1)} disabled={current === pages}
+            >
+              <CaretRight size={18} weight="bold" aria-hidden="true" />
+              <span className="vh">Next page</span>
+            </button>
+          </nav>
+        )}
+
+        {grid.length === 0 && (
           <p className={styles.empty}>
             {searching ? (
               <>

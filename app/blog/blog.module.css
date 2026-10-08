@@ -17,6 +17,10 @@
 }
 .closeBlurb { max-width: 46ch; line-height: 1.6; }
 
+/* A standfirst, not prose: no reading-width cap, so a single sentence stays a
+   single line wherever there is room for one. */
+.lede { max-width: none; }
+
 .masthead {
   display: grid; justify-items: start; gap: var(--s-4);
   margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
@@ -210,6 +214,40 @@
     align-items: center;
   }
   .featured .cardFigure img { aspect-ratio: 4 / 3; }
+}
+
+/* ---- pagination ----------------------------------------------------------
+   Buttons, not links: the list is filtered in the browser, so a page is a
+   piece of state rather than a URL. Shown only when there is more than one —
+   a disabled Previous beside a disabled Next is furniture that claims the
+   list is longer than it is. */
+.pager {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: var(--s-2);
+  margin-block-start: clamp(var(--s-6), 4vw, var(--s-7));
+}
+.pageArrow, .pageNum {
+  display: grid; place-items: center;
+  min-inline-size: 44px; min-block-size: 44px;
+  padding-inline: 10px;
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-pill);
+  font-size: var(--fs-small); font-weight: 600;
+  color: var(--ink); cursor: pointer;
+  transition: transform var(--t) var(--spring), background-color var(--t-fast) ease;
+}
+@media (hover: hover) {
+  .pageArrow:not(:disabled):hover,
+  .pageNum:not([aria-current]):hover { background: var(--sun-soft); transform: translateY(-2px); }
+}
+.pageArrow:focus-visible, .pageNum:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+.pageArrow:disabled { opacity: .32; cursor: default; }
+/* The current page, in the same yellow the current category chip takes, so the
+   two "you are here" states on this page read as one idea. */
+.pageNum[aria-current='page'] { background: var(--sun); }
+@media (prefers-reduced-motion: reduce) {
+  .pageArrow, .pageNum { transition: none; }
+  .pageArrow:hover, .pageNum:hover { transform: none; }
 }
 
 /* ---- the grid ------------------------------------------------------------

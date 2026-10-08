@@ -12,7 +12,11 @@ export function BlogMasthead() {
     <header className={styles.masthead}>
       <p className="mono">The duck pond</p>
       <h1 className="d d-xl">Notes from the kitchen table.</h1>
-      <p className="lead measure">
+      {/* NO `measure` ON THIS ONE. The class caps a paragraph at a reading
+          width, which is right for prose and wrong for a standfirst: it broke
+          a single sentence over two lines with half the page empty beside it.
+          It still wraps on a phone, where it has to. */}
+      <p className={`lead ${styles.lede}`}>
         Two parents building a water bottle, writing down what they learn on the way.
       </p>
     </header>
