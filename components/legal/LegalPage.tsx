@@ -60,11 +60,12 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
     ? { href: '/privacy', label: 'Privacy Policy' }
     : { href: '/terms', label: 'Terms of Service' }
 
-  /* The document gives the address as a placeholder. Until the client supplies
-     the real one, show the address the rest of the site shows rather than
-     printing "[Add official support email]" at a visitor. */
-  const needsEmail = doc.contact.email.startsWith('[')
-  const email = needsEmail ? brand.email : doc.contact.email
+  /* The document gives the address as a placeholder, and brand.supportEmail is
+     still null, so there is genuinely no official address to print. Say that,
+     rather than quietly substituting the Gmail: a privacy policy naming a
+     personal mailbox as the contact point for data requests is a claim about
+     where those requests go, and it is not one anybody has made. */
+  const email = doc.contact.email.startsWith('[') ? brand.supportEmail : doc.contact.email
 
   return (
     <>
@@ -87,7 +88,10 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
                 the article, so a screen reader can skip the whole thing in one
                 move rather than hearing seventeen links before the text. */}
             <aside className={styles.rail} aria-label="On this page">
-              <p className={styles.railTitle}>On this page</p>
+              <p className={styles.railTitle}>
+                On this page
+                <span className={styles.railCount}>{doc.sections.length}</span>
+              </p>
               <LegalToc sections={doc.sections} />
             </aside>
 
@@ -115,12 +119,23 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
               <aside className={styles.card}>
                 <p className={styles.cardName}>{doc.contact.name}</p>
                 <p className={styles.cardPlace}>{doc.contact.place}</p>
-                <p className={styles.cardMail}>
-                  <a href={`mailto:${email}`}>{email}</a>
-                </p>
+                {email ? (
+                  <p className={styles.cardMail}>
+                    <a href={`mailto:${email}`}>{email}</a>
+                  </p>
+                ) : (
+                  <p className={styles.cardMail}>
+                    <span className={styles.cardGap}>Email address to be confirmed</span>
+                  </p>
+                )}
                 <p className={styles.cardMore}>
-                  Or use the <Link href="/contact">contact form</Link> &mdash; it reaches
-                  the same inbox.
+                  {email ? (
+                    <>Or use the <Link href="/contact">contact form</Link> &mdash; it
+                    reaches the same inbox.</>
+                  ) : (
+                    <>Until then the <Link href="/contact">contact form</Link> reaches
+                    us, and so does the address in the footer.</>
+                  )}
                 </p>
               </aside>
 

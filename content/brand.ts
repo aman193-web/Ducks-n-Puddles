@@ -32,7 +32,23 @@ export const brand = {
   closing: 'Every great adventure begins with a smile.',
   founders: 'Larisa & Vinny',
   place: 'South Florida',
+  /** The address the brand actually reads today — the one in the Instagram bio.
+   *  It works, so the footer and the contact form use it, but it is a personal
+   *  Gmail and not a support address. */
   email: 'ducksnpuddles7@gmail.com', // TODO(client): professional domain address
+  /**
+   * THE OFFICIAL SUPPORT ADDRESS, and it does not exist yet.
+   *
+   * The client's own Terms and Privacy documents (October 2026) leave it blank
+   * in both places — "[Add official support email]" and "[Add official privacy
+   * or support email]" — so there is nothing to put here. The legal pages print
+   * a marked placeholder rather than quietly substituting the Gmail, because a
+   * privacy policy naming a personal mailbox as its contact point is a claim
+   * about where your data requests go.
+   *
+   * TODO(client): set this and the placeholder disappears on its own.
+   */
+  supportEmail: null as string | null,
   instagram: 'https://www.instagram.com/ducksnpuddles/',
   facebook: 'https://www.facebook.com/profile.php?id=61581543035997',
   domain: 'https://ducksnpuddles.com',

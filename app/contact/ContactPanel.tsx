@@ -1,8 +1,10 @@
 'use client'
 import { useRef, useState } from 'react'
-import { ArrowRight, At, InstagramLogo } from '@phosphor-icons/react/dist/ssr'
+import {
+  ArrowRight, At, ChatCircleDots, HandHeart, Handshake, InstagramLogo,
+  Question, Sparkle, Storefront, UsersThree,
+} from '@phosphor-icons/react/dist/ssr'
 import { Duck } from '@/components/ui/Duck'
-import { Motif } from '@/components/Motif'
 import { contactTopics } from '@/content/brand'
 import { ContactForm } from './ContactForm'
 import styles from './contact.module.css'
@@ -16,9 +18,23 @@ const TINTS = [
   'var(--vincey-field)',
 ]
 
-/* The motif each subject carries. The three printed on the bottles, used as the
-   brand's own bullet points. */
-const MARKS = ['droplets', 'footprint', 'flower', 'waves', 'splash', 'footprints', 'duck'] as const
+/* An icon per subject, keyed to the subject rather than to the brand.
+ *
+ * These were the bottle motifs — droplets, a flower, a footprint. On a MENU
+ * that was the wrong job for them: a flower beside "Feedback & Suggestions"
+ * tells you nothing, and the whole point of this grid is that somebody scanning
+ * for "wholesale" finds it by shape before they read a word. The brand marks
+ * still carry the decoration elsewhere (BrandDetail); here the icon has to say
+ * what the card is. */
+const ICONS: Record<string, typeof Question> = {
+  product: Question,
+  squad: UsersThree,
+  feedback: ChatCircleDots,
+  partnerships: Handshake,
+  foundation: HandHeart,
+  wholesale: Storefront,
+  other: Sparkle,
+}
 
 /**
  * THE CONTACT PANEL — the welcome beside the form, and the seven subjects
@@ -91,17 +107,18 @@ export function ContactPanel({ email, instagram, children }: {
         </div>
 
         <div className={styles.formWrap}>
-          {/* Goosey, waving over the top of the card. Decorative, desktop only. */}
-          <Duck who="goosey" pose="wave" className={styles.peeker} sizes="170px" float />
+          {/* THE THREE OF THEM, over the top of the card — the same device the
+              FAQ ends on and that Join the Family carries, so a character beat
+              on this page reads as the house idiom rather than as a one-off.
+              Behind the card, so only their heads and shoulders clear its top
+              edge: that is what makes it peeking rather than a picture sat on
+              top of a form. Decorative, desktop only. */}
+          <Duck who="trio" pose="walk" className={styles.peeker} sizes="260px" float />
 
           <div className={styles.card} ref={cardRef}>
             <div className={styles.cardHead}>
               <h2 className={styles.cardTitle} id="get-in-touch">Get in Touch</h2>
-              <p className={styles.cardBlurb}>
-                Whether you have a question, an idea to share, some feedback, or simply
-                want to say hello, our inbox is always open. Send us a message, and
-                we&rsquo;ll get back to you as soon as we can!
-              </p>
+              <p className={styles.cardBlurb}>Tell us anything &mdash; we read all of it.</p>
             </div>
             <div className={styles.cardBody}>
               <ContactForm email={email} topic={topic} onTopic={setTopic} />
@@ -119,7 +136,9 @@ export function ContactPanel({ email, instagram, children }: {
         </header>
 
         <ul className={styles.grid}>
-          {contactTopics.map((t, i) => (
+          {contactTopics.map((t, i) => {
+            const Icon = ICONS[t.key] ?? Sparkle
+            return (
             <li key={t.key}>
               <button
                 type="button"
@@ -129,7 +148,9 @@ export function ContactPanel({ email, instagram, children }: {
                 onClick={() => choose(t.key)}
               >
                 <span className={styles.topicTop}>
-                  <Motif name={MARKS[i % MARKS.length]} size={22} />
+                  <span className={styles.topicIcon} aria-hidden="true">
+                    <Icon size={20} weight="bold" />
+                  </span>
                   <span className={styles.topicTitle}>{t.label}</span>
                 </span>
                 <p>{t.body}</p>
@@ -139,7 +160,8 @@ export function ContactPanel({ email, instagram, children }: {
                 </span>
               </button>
             </li>
-          ))}
+            )
+          })}
         </ul>
       </section>
     </>

@@ -88,13 +88,18 @@ export function LegalToc({ sections, onPick }: {
     }
   }, [here])
 
+  /* Everything above the current clause is marked read, which is what makes the
+     track show progress rather than just position. */
+  const at = Math.max(0, sections.findIndex((s) => s.n === here))
+
   return (
     <ol className={styles.toc} ref={list}>
-      {sections.map((s) => (
+      {sections.map((s, i) => (
         <li key={s.n}>
           <a
             href={`#s-${s.n}`}
             aria-current={here === s.n ? 'true' : undefined}
+            data-done={i < at ? '' : undefined}
             onClick={onPick}
           >
             <span className={styles.tocNum}>{s.n}</span>

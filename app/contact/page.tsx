@@ -51,6 +51,15 @@ export default function ContactPage() {
               &mdash; we&rsquo;re growing a community, and we&rsquo;re so happy
               you&rsquo;re part of it.
             </p>
+            {/* The client's invitation. It sat in the form's own head until the
+                card had to fit a screen without scrolling — three lines of
+                welcome were the most expensive thing in the only column with a
+                height budget, and it belongs with the welcome anyway. */}
+            <p className={styles.sub}>
+              Whether you have a question, an idea to share, some feedback, or simply
+              want to say hello, our inbox is always open. Send us a message, and
+              we&rsquo;ll get back to you as soon as we can!
+            </p>
           </ContactPanel>
         </div>
       </div>

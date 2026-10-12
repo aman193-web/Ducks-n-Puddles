@@ -106,11 +106,12 @@ export function ContactForm({ email, topic, onTopic }: {
           <ArrowRight size={18} weight="bold" aria-hidden="true" />
         </button>
         {/* Said plainly, because it is not what a form usually does and a
-            surprise at this point is how a message gets abandoned. */}
+            surprise at this point is how a message gets abandoned. The offer to
+            write it yourself used to live here too; the address is the first of
+            the two direct lines beside this form, at twice the size. */}
         <p className={styles.formNote}>
-          This opens your email app with the message ready, so you can see it
-          before it goes. Prefer to write it yourself?{' '}
-          <a href={`mailto:${email}`}>{email}</a>
+          Opens your email app with the message ready, so you can see it before
+          it goes.
         </p>
       </div>
     </form>
