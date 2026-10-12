@@ -21,8 +21,15 @@
   .head > :nth-child(3) { grid-column: 2; grid-row: 2; margin-block-start: 0; padding-block-start: .5em; }
 }
 
-.grid { display: grid; gap: var(--card-gap); list-style: none; padding: 0; margin: 0; }
+/* The cards themselves are <PostCard>, shared with /blog, so this is only the
+   row they sit in. `align-items: stretch` plus a grid on each <li> is what lets
+   three cards of different copy lengths still line their bylines up. */
+.grid {
+  display: grid; gap: var(--card-gap); align-items: stretch;
+  list-style: none; padding: 0; margin: 0;
+}
 @media (min-width: 780px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.grid > li { display: grid; }
 
 .card { display: grid; gap: var(--s-3); align-content: start; min-inline-size: 0; }
 

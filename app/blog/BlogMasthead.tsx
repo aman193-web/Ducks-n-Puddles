@@ -1,3 +1,4 @@
+import { Sticker } from '@/components/ui/Sticker'
 import styles from './blog.module.css'
 
 /**
@@ -10,7 +11,10 @@ import styles from './blog.module.css'
 export function BlogMasthead() {
   return (
     <header className={styles.masthead}>
-      <p className="mono">The duck pond</p>
+      {/* The same cloud every section on the home page wears, rather than the
+          plain mono line this had — the client asked for one label treatment
+          across the site. sky-soft, the default: /blog's ground is cream. */}
+      <Sticker data-pop="">The duck pond</Sticker>
       <h1 className="d d-xl">Notes from the kitchen table.</h1>
       {/* NO `measure` ON THIS ONE. The class caps a paragraph at a reading
           width, which is right for prose and wrong for a standfirst: it broke

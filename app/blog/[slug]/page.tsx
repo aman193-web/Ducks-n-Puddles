@@ -104,10 +104,13 @@ export default async function JournalPost(
         <div className={styles.hero}>
           <Picture id={post.image} sizes="(min-width: 900px) 76vw, 94vw" alt="" priority />
         </div>
+        </div>
 
-        {/* THE BODY, with the contents rail beside it on a wide screen. One
-            column below 1100px, where a 250px rail would take a third of the
-            measure from the prose it is meant to serve. */}
+        {/* THE BODY SITS OUTSIDE THE CENTRED MEASURE, so the contents rail can
+            stand in the right-hand margin instead of eating the column it is
+            meant to serve. The prose keeps its own measure, centred in the
+            middle track; the rail takes the track beside it. One column below
+            1240px, where there is no margin to stand in. */}
         <div className={styles.postCols}>
           {toc.length > 1 && (
             <aside className={styles.postRail} aria-label="On this page">
@@ -131,6 +134,7 @@ export default async function JournalPost(
           </div>
         </div>
 
+        <div className={styles.article}>
         {more.length > 0 && (
           <nav className={styles.more} aria-label="More notes">
             <h2 className={styles.moreTitle}>More from the pond</h2>

@@ -1,10 +1,8 @@
-import Link from 'next/link'
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
-import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { BrandDetail } from '@/components/ui/BrandDetail'
-import { posts, formatDate } from '@/content/journal'
+import { posts } from '@/content/journal'
+import { PostCard } from '@/app/blog/PostCard'
 import styles from './Journal.module.css'
 
 /**
@@ -18,13 +16,6 @@ import styles from './Journal.module.css'
  * the visible name to change, and renaming the component, its stylesheet and
  * content/journal.ts would be a large diff that changes nothing anyone sees.
  */
-/** The first sentence only, for the card previews. Falls back to the whole
- *  string when there is no sentence break to find. */
-const firstSentence = (t: string) => {
-  const m = t.match(/^[\s\S]*?[.!?](?=\s|$)/)
-  return m ? m[0] : t
-}
-
 export function Journal() {
   const latest = [...posts]
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -43,39 +34,21 @@ export function Journal() {
           </p>
         </div>
 
+        {/* THE SAME CARD /blog USES, not a second design of one. The home
+            page had its own — tag, title, one sentence, a "Read more" link —
+            and the two drifted the moment the blog's gained a byline and tags.
+            One component means they cannot drift again.
+
+            ⚠️ This supersedes three earlier notes about THIS card specifically:
+            the one-sentence preview, the "Read more" affordance, and taking the
+            reading time off. The shared card carries the full summary, makes
+            the whole card the link, and prints the date and reading time —
+            because that is what the blog's card does and parity was the ask.
+            Each is a prop away if any of them should come back. */}
         <ul className={styles.grid}>
           {latest.map((p) => (
-            <li key={p.slug} className={styles.card} data-anim="" data-anim-y="30">
-              <Link href={`/blog/${p.slug}`} className={styles.link}>
-                <span className={styles.figure}>
-                  <Picture id={p.image} sizes="(min-width: 900px) 30vw, 88vw" alt="" />
-                </span>
-                <span className={styles.meta}>
-                  <span className={styles.tag}>{p.tag}</span>
-                  {/* The reading time is gone from the card at the client's
-                      request — "make '3 min read' smaller/lighter or remove it
-                      entirely". It is still on the post itself, where someone
-                      deciding whether to start actually wants it. */}
-                </span>
-                <h3 className={styles.title}>{p.title}</h3>
-                {/* ONE SENTENCE. "Limit article previews to one sentence
-                    maximum" — the excerpts in content run to two, so the card
-                    takes the first and the post page still gets the whole
-                    thing. */}
-                <p className={styles.excerpt}>{firstSentence(p.excerpt)}</p>
-                {/* ONE of these, not two. The client's "potentially add a
-                    simple 'Read More ->' under each" was added beside the
-                    card's existing "Read it" instead of replacing it, so every
-                    card has been carrying both. The client's wording wins; the
-                    arrow stays the icon component rather than a &rarr; glyph,
-                    which renders at a different weight to the label. */}
-                <span className={styles.more}>
-                  Read more <ArrowRight size={18} weight="bold" aria-hidden="true" />
-                </span>
-              </Link>
-              <p className={styles.published}>
-                <time dateTime={p.date}>{formatDate(p.date)}</time>
-              </p>
+            <li key={p.slug} data-anim="" data-anim-y="30">
+              <PostCard post={p} />
             </li>
           ))}
         </ul>

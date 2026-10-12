@@ -147,11 +147,17 @@
    reference's own proportion. `.card` is the stacked one the grids are built
    from. They share every inner part, because they are the same component —
    only the frame differs. */
+/* FULL HEIGHT, all the way down to the byline. Three cards in a row carry
+   summaries of different lengths, and without this the bylines sat at three
+   different heights — the auto margin on .byline has nothing to push against
+   unless every box in the chain stretches. */
 .cardLink {
-  display: grid; gap: var(--s-4);
+  display: grid; grid-template-rows: auto 1fr; gap: var(--s-4);
+  block-size: 100%;
   text-decoration: none; color: var(--ink);
   transition: transform var(--t) var(--spring);
 }
+.card, .compactCard { block-size: 100%; }
 .cardLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 6px; border-radius: var(--r-lg); }
 @media (hover: hover) {
   .cardLink:hover { transform: translateY(-3px); }
@@ -175,7 +181,10 @@
   transition: transform .6s cubic-bezier(.16, 1, .3, 1);
 }
 
-.cardBody { display: grid; justify-items: start; gap: var(--s-3); align-content: start; }
+ /* Flex, not grid: `margin-block-start: auto` on the byline is what pins it to
+    the bottom of the card, and a grid with `align-content: start` gives that
+    margin nothing to absorb. */
+.cardBody { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-3); }
 .cardMetaTop { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
 
 .cardTitle, .featuredTitle {
@@ -191,9 +200,10 @@
 
 .excerpt { max-width: 52ch; text-wrap: pretty; }
 
-/* THE BADGE on the featured card. "Latest", not "Featured": there is no
-   editorial pick behind it — it is simply the newest post, and a label that
-   claims otherwise is a claim. */
+/* THE BADGE. Its words come from the ROW, not the post — "Featured" on the
+   lead card, "Trending" on the Top Articles row.
+   ⚠️ "Trending" is the client's wording and nothing measures it; see the note
+   in BlogBrowser. */
 .badge {
   padding: 5px 12px;
   background: var(--ink); color: var(--paper);
@@ -234,6 +244,9 @@
 @media (min-width: 780px) {
   .featured .cardLink {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* One row here, not the stacked card's two: side by side there is nothing
+       below the pair for a 1fr row to fill. */
+    grid-template-rows: auto;
     gap: clamp(24px, 3vw, 48px);
     align-items: center;
   }
@@ -450,22 +463,33 @@
   max-inline-size: 42ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
-.standfirst { max-width: 56ch; color: var(--ink-soft); }
-.postHead .byline { margin-block-start: var(--s-2); }
+/* THE ARTICLE HEAD, CENTRED — the client's note, and it matches the listing
+   head above it, so a reader moving from one to the other stays on one axis. */
+.postHead { justify-items: center; text-align: center; }
+.postHead h1 { max-width: 20ch; }
+.standfirst { max-width: 56ch; margin-inline: auto; color: var(--ink-soft); }
+.postHead .byline { margin-block-start: var(--s-2); justify-content: center; }
 .postHead .byline .meta { margin-inline-start: 0; }
+.crumbs ol { justify-content: center; }
 
 /* ---- the body, with the contents rail beside it -------------------------- */
-.postCols { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-8)); align-items: start; }
-@media (min-width: 1100px) {
-  /* Rail SECOND in the source and first on screen: the prose is the page, so
-     it comes first for a screen reader and for a phone, where the rail is not
-     rendered at all. */
-  .postCols { grid-template-columns: minmax(0, 1fr) 236px; }
-  .postRail { order: 1; }
-  .postCols > .prose { order: 0; }
+/* THREE TRACKS: an empty left margin, the prose at its own measure in the
+   middle, and the rail in the right margin. That keeps the body centred on the
+   page — the same axis as the header above it — while the rail sits out to the
+   right rather than stealing width from the column it indexes. */
+.postCols { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-7)); align-items: start; }
+@media (min-width: 1240px) {
+  .postCols {
+    grid-template-columns:
+      minmax(0, 1fr) minmax(0, clamp(620px, 52vw, 760px)) minmax(0, 1fr);
+  }
+  /* Rail FIRST in the source and second on screen: the prose is the page, so a
+     screen reader and a phone both get it first. */
+  .postCols > .prose { grid-column: 2; grid-row: 1; }
+  .postRail { grid-column: 3; grid-row: 1; justify-self: start; inline-size: 236px; }
 }
 .postRail { display: none; }
-@media (min-width: 1100px) {
+@media (min-width: 1240px) {
   .postRail {
     display: block;
     position: sticky;

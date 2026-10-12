@@ -161,10 +161,12 @@ export function BlogBrowser({
       )}
 
       {/* TOP ARTICLES.
-          ⚠️ The reference calls this row "most popular reads" and sorts it on
-          traffic. There is no analytics on this site, so there is no popularity
-          to sort by — these three are hand-picked in content/journal.ts and the
-          sub-line says so rather than implying a number nobody has. */}
+          ⚠️ The badge says "Trending" at the client's request, and there is
+          nothing behind it: this site has no analytics, so nothing is measured
+          as trending. These three are hand-picked in content/journal.ts. The
+          sub-line is the honest part — "where we would start" rather than "most
+          popular reads" — but the badge is now a claim the data does not make.
+          Point a real measure at `top` and it becomes true. */}
       {top.length > 0 && !searching && (
         <section className={styles.band} aria-labelledby="top-articles">
           <header className={styles.bandHead}>
@@ -173,7 +175,7 @@ export function BlogBrowser({
           </header>
           <ul className={styles.topGrid}>
             {top.map((p) => (
-              <li key={p.slug}><PostCard post={p} compact badge="Pick" /></li>
+              <li key={p.slug}><PostCard post={p} compact badge="Trending" /></li>
             ))}
           </ul>
         </section>
