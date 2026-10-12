@@ -57,7 +57,6 @@ export default async function CategoryPage(
   return (
     <>
       <div className={styles.page}>
-        <div className="wrap">
           <BlogBrowser
             posts={posts}
             active={category.slug}
@@ -65,8 +64,7 @@ export default async function CategoryPage(
             blurb={category.blurb}
           >
             <BlogMasthead />
-          </BlogBrowser>
-        </div>
+        </BlogBrowser>
       </div>
 
       {/* THE SIGNUP BAND, on its own paper ground exactly as the home page

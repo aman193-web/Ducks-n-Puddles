@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { CaretLeft, CaretRight, MagnifyingGlass, X } from '@phosphor-icons/react/dist/ssr'
+import { WaveEdge } from '@/components/ui/WaveEdge'
 import { categories, type Post } from '@/content/journal'
 import { PostCard } from './PostCard'
 import styles from './blog.module.css'
@@ -100,8 +101,15 @@ export function BlogBrowser({
       {/* THE HEAD, CENTRED, in the reference's order: label, title, standfirst,
           search, categories. The search and the chips used to sit in a row of
           their own below a left-aligned masthead; the client's reference stacks
-          all five on one axis, so they moved inside it. */}
+          all five on one axis, so they moved inside it.
+
+          It is a FULL-BLEED BAND now, on paper, closed with the brand's own
+          wave — which is the pattern the client attached, in white rather than
+          the blue the footer uses it in. It had to come out of the page's .wrap
+          to do that: a breakout on 50vw would have counted the scrollbar and
+          put a horizontal scroll on the page. */}
       <header className={styles.head}>
+        <div className="wrap">
         {children}
       <div className={styles.tools}>
         <div className={styles.search}>
@@ -145,7 +153,11 @@ export function BlogBrowser({
           ))}
         </nav>
       </div>
+        </div>
+        <WaveEdge fill="var(--cream)" above="var(--paper)" />
       </header>
+
+      <div className="wrap">
 
       {/* FEATURED ARTICLES — the newest post, laid out wide. Hidden while
           searching: it is the newest post, not a result, and leaving it above a
@@ -255,6 +267,7 @@ export function BlogBrowser({
           </p>
         )}
       </section>
+    </div>
     </>
   )
 }

@@ -1,4 +1,4 @@
-.page { background: var(--cream); padding-block: clamp(var(--s-7), 6vw, var(--s-9)) clamp(var(--s-6), 4vw, var(--s-8)); }
+.page { background: var(--cream); padding-block: 0 clamp(var(--s-6), 4vw, var(--s-8)); }
 
 /* ---- the closing band ----------------------------------------------------
    Full bleed and --vincey-soft ON PURPOSE. The footer's wave paints the colour
@@ -41,10 +41,24 @@
    one before the controls — which is the point where the head stops describing
    the page and starts operating it. */
 .head {
-  display: grid; justify-items: center; text-align: center;
-  margin-block-end: clamp(var(--s-7), 5vw, var(--s-9));
+  /* The band, not just the type: paper ground edge to edge, the page's own top
+     padding taken over, and the brand's wave closing it. --paper rather than
+     pure #fff — the client asked for white and this is the site's white, which
+     sits with the cream instead of flashing against it. */
+  background: var(--paper);
+  padding-block-start: clamp(var(--s-7), 6vw, var(--s-9));
+  margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
   inline-size: 100%;
 }
+.head > .wrap {
+  display: grid; justify-items: center; text-align: center;
+  padding-block-end: clamp(var(--s-6), 4vw, var(--s-7));
+}
+/* WaveEdge pulls itself up by a fifth of the section rhythm, which is right
+   between two sections — it stops the wave adding its own height to a seam. Here
+   there is no section above it, only the chips, and the pull cut the crest
+   straight through them. Keep the 1px overlap, drop the pull. */
+.head > :last-child { margin-block-start: -1px; }
 
 .masthead {
   display: grid; justify-items: center; text-align: center;
@@ -328,7 +342,10 @@
      column hit its maximum around 1000px wide while the prose was still pinned
      at its 18px floor — 93 characters to a line, measured. Keyed to vw the two
      rise together and the line stays in the 70s at every width. */
-  inline-size: min(100%, clamp(640px, 60vw, 860px));
+  /* 916 at the client's request, and the number is not arbitrary: 916 minus the
+     220px rail minus the 48px gutter is 648, which is exactly the column their
+     reference sets its article in. Measured on it, not guessed. */
+  inline-size: min(100%, clamp(640px, 64vw, 916px));
   margin-inline: auto;
 }
 
@@ -352,26 +369,66 @@
 
 /* A single measured column. Long-form is the one place on this site where the
    line length matters more than filling the width. */
-.prose { display: grid; gap: var(--s-5); }
-/* Structure for posts that have it. None of the three drafts use sub-headings
-   yet; these exist so the first one that does is not unstyled. */
-.prose h2, .prose h3 {
-  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  letter-spacing: .01em; line-height: 1.16;
-  margin-block-start: var(--s-4);
-}
-.prose h2 { font-size: clamp(1.5rem, 2.5vw, 2.125rem); }
-.prose h3 { font-size: clamp(1.25rem, 1.9vw, 1.5rem); }
-/* Set ABOVE --fs-lead. This is the one place on the site that is read rather
-   than scanned, so it gets its own step (18 -> 23px) instead of borrowing the
-   size used for section intros. Leading comes down a little as the size goes
-   up, which is what keeps the block from opening into stripes. */
+/* =============================================================================
+   THE ARTICLE BODY.
+
+   Measured off the client's reference at 1440 rather than eyeballed: 16px type
+   on 28px leading, 20px between paragraphs, headings at 28px with 48 above and
+   16 below. This follows that rhythm and keeps the house face — their headings
+   are a bold sans, ours stay the display face every heading on this site uses.
+
+   WHAT ACTUALLY FIXED THE HIERARCHY was the body size. It was running at up to
+   23px against headings at up to 34, a ratio of 1.5 — too close for the heading
+   to register as a level. At 17 against 30 it is 1.75 and the structure reads.
+
+   FLOW, NOT GRID. The old version used `display: grid` with one gap, which
+   meant every element was the same distance from its neighbour and a heading
+   could not take more room above it than below. Margins collapse; a gap does
+   not.
+   ========================================================================== */
+.prose { display: block; }
+.prose > * { margin-block: 20px; }
+.prose > :first-child { margin-block-start: 0; }
+.prose > :last-child { margin-block-end: 0; }
+
 .prose p {
-  font-size: clamp(1.125rem, 1.55vw, 1.4375rem);
-  line-height: 1.6;
+  font-size: clamp(1rem, .42vw + .88rem, 1.0625rem);
+  line-height: 1.72;
   text-wrap: pretty;
 }
-.prose p:first-child { font-weight: 600; }
+
+.prose h2, .prose h3 {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .01em; color: var(--ink);
+}
+.prose h2 {
+  font-size: clamp(1.5rem, 1.1vw + 1.17rem, 1.875rem);
+  line-height: 1.2;
+  margin-block: 48px 16px;
+}
+.prose h3 {
+  font-size: clamp(1.1875rem, .6vw + 1.01rem, 1.375rem);
+  line-height: 1.25;
+  margin-block: 32px 10px;
+}
+
+/* Lists. There are none in the copy yet; these exist so the first one that
+   arrives is not unstyled, and they follow the reference — same size and
+   leading as the body, 8px between items. */
+.prose ul, .prose ol { padding-inline-start: 1.35em; }
+.prose li {
+  font-size: clamp(1rem, .42vw + .88rem, 1.0625rem);
+  line-height: 1.72;
+  margin-block: 8px;
+}
+.prose li::marker { color: var(--vincey); }
+
+.prose strong { font-weight: 700; }
+.prose a { color: var(--ink); font-weight: 600; text-underline-offset: .22em; }
+
+/* The old rule bolded the first paragraph as a stand-in standfirst. The real
+   standfirst is in the header now, so this was bolding an ordinary paragraph
+   for no reason. */
 
 .more { display: grid; gap: var(--s-5); margin-block-start: clamp(var(--s-7), 5vw, var(--s-8)); }
 .moreTitle {
@@ -474,14 +531,17 @@
 /* The article's own title is the last crumb and must not run the row onto
    three lines on a phone. */
 .crumbs li[aria-current] {
-  max-inline-size: 42ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  max-inline-size: 54ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
 /* THE ARTICLE HEAD, CENTRED — the client's note, and it matches the listing
    head above it, so a reader moving from one to the other stays on one axis. */
+/* THE HEAD RUNS THE FULL CONTAINER, at the client's request. Both of these were
+   capped — 20ch and 56ch — which on a 916px column broke a long title into four
+   short lines with the column half empty either side. */
 .postHead { justify-items: center; text-align: center; }
-.postHead h1 { max-width: 20ch; }
-.standfirst { max-width: 56ch; margin-inline: auto; color: var(--ink-soft); }
+.postHead h1 { max-width: none; }
+.standfirst { max-width: none; margin-inline: auto; color: var(--ink-soft); }
 .postHead .byline { margin-block-start: var(--s-2); justify-content: center; }
 .postHead .byline .meta { margin-inline-start: 0; }
 .crumbs ol { justify-content: center; }
@@ -490,8 +550,9 @@
 /* TWO TRACKS inside the article's own measure: the rail on the left, the prose
    beside it. 220px rather than the 236 it had in the margin — inside the
    measure every pixel it takes comes off the prose. */
-.postCols { display: grid; gap: clamp(var(--s-6), 3.4vw, var(--s-7)); align-items: start; }
+.postCols { display: grid; gap: clamp(var(--s-6), 3.4vw, 48px); align-items: start; }
 @media (min-width: 1100px) {
+  /* 220 + 48 + 648. See the note on .article. */
   .postCols { grid-template-columns: 220px minmax(0, 1fr); }
 }
 .postRail { display: none; }
@@ -554,7 +615,10 @@
 .proseEm {
   padding-inline-start: var(--s-5);
   border-inline-start: 3px solid var(--sun);
-  font-weight: 600;
+  font-weight: 700;
+  /* A touch more air than an ordinary paragraph, since the rule beside it is
+     doing the separating. */
+  margin-block: 28px;
 }
 
 /* ---- the rail's standing offer, above the contents ---------------------- */

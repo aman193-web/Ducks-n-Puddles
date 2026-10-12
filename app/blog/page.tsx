@@ -43,7 +43,6 @@ export default function JournalIndex() {
   return (
     <>
       <div className={styles.page}>
-        <div className="wrap">
           <BlogBrowser
             posts={all}
             /* Minus whatever is already the featured card. The reference does
@@ -55,8 +54,7 @@ export default function JournalIndex() {
             featureFirst
           >
             <BlogMasthead />
-          </BlogBrowser>
-        </div>
+        </BlogBrowser>
       </div>
 
       {/* The page used to stop dead on the last row, straight into the footer's
