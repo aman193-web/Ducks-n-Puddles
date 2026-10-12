@@ -25,11 +25,10 @@ type StickerProps = {
  *   any blue               ->  cream
  */
 export function Sticker({ children, colour = 'var(--sky-soft)', className, style, ...rest }: StickerProps) {
-  const text = flatten(children)
   /* The viewBox is the label's own predicted PIXEL box, so the SVG's horizontal
-     scale lands within a few percent of its vertical one and the puffs stay
+     scale lands within a few percent of its vertical one and the circles stay
      round. See width(). */
-  const vw = width(text)
+  const vw = width(flatten(children))
   const puffs = Math.min(16, Math.max(3, Math.round((vw - H) / PITCH) + 1))
   const step = (vw - H) / (puffs - 1)
 
@@ -39,17 +38,21 @@ export function Sticker({ children, colour = 'var(--sky-soft)', className, style
       className={`${styles.sticker} ${className ?? ''}`}
       style={{ ['--bg' as string]: colour, ...style } as React.CSSProperties}
     >
-      {/* THE CLOUD, as overlapping circles rather than an outlined path. With
-          one flat fill and no stroke they union by themselves: no arc maths,
-          correct at any puff count, and both ends round by construction. An
-          outlined version would need the union computed, because every internal
-          arc would show. */}
+      {/* THE CLOUD, as a row of EQUAL overlapping circles rather than an
+          outlined path. With one flat fill and no stroke they union by
+          themselves: no arc maths, correct at any count, and both ends round by
+          construction. An outlined version would need the union computed,
+          because every internal arc would show.
+
+          Equal on purpose. Varying the radii and nudging them off the centre
+          line was tried, to make the shape read as a lumpier cloud, and it read
+          as uneven instead — the regular scallop is what makes this look drawn
+          rather than wobbly. */}
       <svg className={styles.shape} viewBox={`0 0 ${vw} ${H}`}
            preserveAspectRatio="none" aria-hidden="true" focusable="false">
-        {Array.from({ length: puffs }, (_, i) => {
-          const { r, cy } = puff(text, i, puffs)
-          return <circle key={i} cx={R + i * step} cy={cy} r={r} />
-        })}
+        {Array.from({ length: puffs }, (_, i) => (
+          <circle key={i} cx={R + i * step} cy={R} r={R} />
+        ))}
       </svg>
 
       <span className={styles.label}>{children}</span>
@@ -71,52 +74,13 @@ const R = H / 2
 /**
  * Centre-to-centre spacing, as a fraction of the diameter.
  *
- * 0.56, down from 0.75: at the wider spacing the dips between puffs cut to
- * about two thirds of the height and the shape read as a row of separate
- * circles. Closer together they overlap by nearly half, the dips become the
- * gentle notches a cloud has, and the silhouette reads as one object.
+ * 0.66. Two other values were put in front of the client: 0.75, where the dips
+ * cut to about two thirds of the height and the shape read as a row of separate
+ * circles, and 0.56, which closed them up but was paired with varied puff sizes
+ * and lost the clean scallop. This sits between them — the bumps still read as
+ * bumps, with a shallower notch between each.
  */
-const PITCH = H * 0.56
-
-/**
- * ONE PUFF — its radius and its centre height.
- *
- * A row of identical circles is a machine part, not a cloud. Real ones are
- * lumpy, so each puff is sized between 86% and 100% of the full radius and
- * nudged a little off the centre line.
- *
- * The variation is HASHED FROM THE LABEL'S OWN TEXT, not random: this component
- * renders on the server and again in the browser, and Math.random would hand
- * those two different clouds and trip hydration. Seeding from the text also
- * means every eyebrow on the site gets its own lumps rather than the same
- * silhouette thirteen times.
- *
- * The two end puffs are exempt. They are what makes the ends read as round and
- * what sets the shape's full height, so they stay at the full radius on the
- * centre line; shrinking either one pinched the end into a nose.
- */
-function puff(seed: string, i: number, total: number) {
-  if (i === 0 || i === total - 1) return { r: R, cy: R }
-  const a = hash(seed, i * 2)
-  const b = hash(seed, i * 2 + 1)
-  return {
-    r: R * (0.86 + 0.14 * a),
-    /* Up to 5% of the height, and the SIGN ALTERNATES rather than being hashed
-       too. Left free, a seed whose offsets happened to trend one way gave the
-       cloud a slope — and a label that looks slightly tilted is the exact
-       complaint this whole redesign came from. Alternating cannot trend. */
-    cy: R + b * 0.05 * H * (i % 2 ? 1 : -1),
-  }
-}
-
-/** FNV-1a over the text plus the index. Deterministic, so SSR and the browser
- *  agree, and cheap enough to run per puff. */
-function hash(seed: string, salt: number) {
-  let h = 2166136261
-  for (let i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619) }
-  h ^= salt; h = Math.imul(h, 16777619)
-  return ((h >>> 0) % 1024) / 1024
-}
+const PITCH = H * 0.66
 
 /**
  * The label's width in pixels, from its text.
