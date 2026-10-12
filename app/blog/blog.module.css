@@ -29,8 +29,17 @@
    --flow-eyebrow pairs the eyebrow with the headline, --flow-head separates
    the standfirst from it as the different thought it is, and the controls sit
    a measured step below: about 15 / 22 / 33 at 1280. */
+/* THE WHOLE HEAD — label, title, standfirst, search, categories — on one
+   centred axis, which is what the client's reference does. It used to be a
+   left-aligned masthead with the two controls on a row beneath it. */
+.head {
+  display: grid; justify-items: center; text-align: center;
+  margin-block-end: clamp(var(--s-7), 5vw, var(--s-9));
+}
+.head .lede { margin-inline: auto; max-width: 62ch; }
+
 .masthead {
-  display: grid; justify-items: start;
+  display: grid; justify-items: center; text-align: center;
   gap: var(--flow-eyebrow);
   /* Less than --flow-block. The search field and the chips are not the next
      section — they belong to the head above them, and the real break is the
@@ -44,12 +53,15 @@
    they govern. They stack on a phone, where a field beside four chips leaves
    the field too narrow to type into. */
 .tools {
-  display: grid; gap: var(--s-4);
-  margin-block-end: clamp(var(--s-6), 4vw, var(--s-7));
+  display: grid; gap: var(--s-5); justify-items: center;
+  inline-size: 100%;
+  margin-block-end: 0;
 }
-@media (min-width: 900px) {
-  .tools { grid-template-columns: minmax(0, 320px) minmax(0, 1fr); align-items: center; }
-}
+/* Stacked, not side by side: the reference puts the field on its own line above
+   the categories, and centring a 320px field beside a wrapping row of chips
+   gives neither of them an axis. */
+.tools .search { inline-size: min(100%, 460px); }
+.filters { justify-content: center; }
 
 .search { position: relative; display: flex; align-items: center; }
 .searchIcon {
@@ -116,8 +128,7 @@
 @media (prefers-reduced-motion: reduce) { .chip { transition: none; } .chip:hover { transform: none; } }
 
 /* ---- bands --------------------------------------------------------------- */
-.featuredBand { margin-block-end: clamp(var(--s-7), 5vw, var(--s-9)); }
-.band { margin-block-end: clamp(var(--s-6), 4vw, var(--s-8)); }
+.band { margin-block-end: clamp(var(--s-7), 5vw, var(--s-9)); }
 .bandHead {
   display: grid; justify-items: start; gap: var(--s-2);
   margin-block-end: var(--s-5);
@@ -371,4 +382,142 @@
   text-decoration: underline; text-decoration-thickness: 2px;
   text-decoration-color: transparent; text-underline-offset: .28em;
   transition: text-decoration-color var(--t-fast) ease;
+}
+
+
+/* =============================================================================
+   THE PARTS THE CLIENT'S REFERENCE ADDED — a byline, free tags, the Top row,
+   and the article page's breadcrumb and contents rail.
+   ========================================================================== */
+
+/* ---- tags on a card. Flat text, not links: the reference points its tags at
+   tag archives and this site has none. ----------------------------------- */
+.tagRow { display: flex; flex-wrap: wrap; gap: 6px; }
+.tagChip {
+  display: inline-flex; align-items: center;
+  padding: 4px 10px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-micro); font-weight: 600; color: var(--ink-soft);
+}
+
+/* ---- the byline: who wrote it, and when ---------------------------------- */
+.byline {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2);
+  margin-block-start: auto;
+  padding-block-start: var(--s-2);
+  font-size: var(--fs-small);
+}
+.avatar {
+  display: block; flex: none;
+  inline-size: 30px; block-size: 30px;
+  border-radius: 50%; overflow: hidden;
+  background: var(--sun-soft);
+}
+.avatar img { inline-size: 100%; block-size: 100%; object-fit: contain; }
+.bylineName { font-weight: 700; color: var(--ink); }
+.byline .meta { margin-inline-start: auto; }
+
+/* ---- Top Articles: three compact cards ----------------------------------- */
+.topGrid {
+  display: grid; gap: var(--s-5); align-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  list-style: none; padding: 0; margin: 0;
+}
+@media (min-width: 620px)  { .topGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 980px)  { .topGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.topGrid > li { display: grid; }
+/* The same card as the grid, with the summary dropped — three of these sit
+   under a featured card that already carries one. */
+.compactCard { composes: card; }
+
+/* ---- the article page's breadcrumb --------------------------------------- */
+.crumbs { margin-block: var(--s-4) var(--s-5); }
+.crumbs ol {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2);
+  list-style: none; padding: 0; margin: 0;
+  font-size: var(--fs-small); color: var(--ink-soft);
+}
+.crumbs li { display: inline-flex; align-items: center; gap: var(--s-2); }
+.crumbs li + li::before { content: '/'; color: var(--ink-soft); opacity: .6; }
+.crumbs a {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--ink); font-weight: 600; text-underline-offset: .22em;
+}
+/* The article's own title is the last crumb and must not run the row onto
+   three lines on a phone. */
+.crumbs li[aria-current] {
+  max-inline-size: 42ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.standfirst { max-width: 56ch; color: var(--ink-soft); }
+.postHead .byline { margin-block-start: var(--s-2); }
+.postHead .byline .meta { margin-inline-start: 0; }
+
+/* ---- the body, with the contents rail beside it -------------------------- */
+.postCols { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-8)); align-items: start; }
+@media (min-width: 1100px) {
+  /* Rail SECOND in the source and first on screen: the prose is the page, so
+     it comes first for a screen reader and for a phone, where the rail is not
+     rendered at all. */
+  .postCols { grid-template-columns: minmax(0, 1fr) 236px; }
+  .postRail { order: 1; }
+  .postCols > .prose { order: 0; }
+}
+.postRail { display: none; }
+@media (min-width: 1100px) {
+  .postRail {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-5));
+    max-block-size: calc(100dvh - var(--header-h) - var(--s-8));
+    overflow-y: auto;
+    padding: var(--s-5);
+    background: var(--paper);
+    border: var(--border); border-radius: var(--r-lg);
+  }
+}
+.railTitle {
+  font-weight: 700; font-size: var(--fs-micro);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+  padding-block-end: var(--s-3); margin-block-end: var(--s-3);
+  border-block-end: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.toc { position: relative; display: grid; gap: 1px; list-style: none; padding: 0; margin: 0; }
+.toc::before {
+  content: ''; position: absolute; z-index: 0;
+  inset-block: 14px; inset-inline-start: 13px;
+  inline-size: 2px; border-radius: 2px;
+  background: color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.toc a {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: var(--s-3);
+  align-items: center;
+  padding: 6px 10px 6px 8px; border-radius: var(--r-sm);
+  font-size: var(--fs-small); line-height: 1.3;
+  color: var(--ink-soft); text-decoration: none;
+  transition: background var(--t) ease, color var(--t) ease;
+}
+@media (hover: hover) { .toc a:hover { background: var(--sun-soft); color: var(--ink); } }
+.toc a:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 1px; }
+.tocDot {
+  justify-self: center;
+  inline-size: 11px; block-size: 11px; border-radius: 50%;
+  background: var(--paper); border: var(--border);
+  transition: background var(--t) ease, scale var(--t) var(--spring);
+}
+.toc a[data-done] .tocDot { background: var(--sun-soft); }
+.toc a[aria-current] { color: var(--ink); font-weight: 700; }
+.toc a[aria-current] .tocDot { background: var(--sun); border-width: var(--bw-lg); scale: 1.3; }
+@media (prefers-reduced-motion: reduce) { .toc a, .tocDot { transition: none; } }
+
+/* A body heading has to clear the fixed header when the rail jumps to it. */
+.proseHead { scroll-margin-top: calc(var(--header-h) + var(--s-5)); }
+
+.postTags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-block-start: var(--s-5);
+  padding-block-start: var(--s-5);
+  border-block-start: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
 }

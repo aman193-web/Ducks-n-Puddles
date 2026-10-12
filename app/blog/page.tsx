@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Btn } from '@/components/ui/Btn'
 import { Newsletter } from '@/components/sections/Newsletter'
-import { postsNewestFirst } from '@/content/journal'
+import { posts as allPosts, postsNewestFirst } from '@/content/journal'
 import { brand } from '@/content/brand'
 import { BlogMasthead } from './BlogMasthead'
 import { BlogBrowser } from './BlogBrowser'
@@ -44,8 +44,14 @@ export default function JournalIndex() {
     <>
       <div className={styles.page}>
         <div className="wrap">
-          <BlogMasthead />
-          <BlogBrowser posts={all} heading="More from the pond" featureFirst />
+          <BlogBrowser
+            posts={all}
+            top={allPosts.filter((p) => p.top)}
+            heading="Latest Articles"
+            featureFirst
+          >
+            <BlogMasthead />
+          </BlogBrowser>
         </div>
       </div>
 

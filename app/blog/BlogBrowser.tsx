@@ -27,12 +27,16 @@ import styles from './blog.module.css'
  */
 export function BlogBrowser({
   posts,
+  top = [],
   active,
   heading,
   blurb,
   featureFirst = false,
+  children,
 }: {
   posts: Post[]
+  /** The hand-picked Top Articles row. Empty on a category page. */
+  top?: Post[]
   /** Slug of the category being shown, or undefined on /blog. */
   active?: string
   /** The heading over the default (unsearched) listing. */
@@ -40,6 +44,10 @@ export function BlogBrowser({
   blurb?: string
   /** /blog leads with the newest post laid out wide; a category page does not. */
   featureFirst?: boolean
+  /** The masthead copy — label, title, standfirst. Server-rendered and passed
+   *  in, because the search field and the chips below it are state and this is
+   *  not, but the client's reference stacks all five in one centred column. */
+  children: React.ReactNode
 }) {
   /* Six, not the reference's nine. Twelve posts over nine is a full page and
      then a page of three; over six it is two pages that both look like pages.
@@ -89,6 +97,12 @@ export function BlogBrowser({
 
   return (
     <>
+      {/* THE HEAD, CENTRED, in the reference's order: label, title, standfirst,
+          search, categories. The search and the chips used to sit in a row of
+          their own below a left-aligned masthead; the client's reference stacks
+          all five on one axis, so they moved inside it. */}
+      <header className={styles.head}>
+        {children}
       <div className={styles.tools}>
         <div className={styles.search}>
           <MagnifyingGlass size={18} weight="bold" aria-hidden="true" className={styles.searchIcon} />
@@ -131,12 +145,37 @@ export function BlogBrowser({
           ))}
         </nav>
       </div>
+      </header>
 
-      {/* The count is the live region, not the grid: a screen reader should
-          hear "4 articles" once, rather than every card as it is filtered. */}
+      {/* FEATURED ARTICLES — the newest post, laid out wide. Hidden while
+          searching: it is the newest post, not a result, and leaving it above a
+          filtered list puts a card there that does not match what was typed. */}
       {featureFirst && !searching && first && (
-        <section className={styles.featuredBand} aria-label="Latest article">
-          <PostCard post={first} featured />
+        <section className={styles.band} aria-labelledby="featured-articles">
+          <header className={styles.bandHead}>
+            <h2 id="featured-articles" className={styles.bandTitle}>Featured Articles</h2>
+            <p className={styles.bandCount}>The latest from the pond</p>
+          </header>
+          <PostCard post={first} featured badge="Featured" />
+        </section>
+      )}
+
+      {/* TOP ARTICLES.
+          ⚠️ The reference calls this row "most popular reads" and sorts it on
+          traffic. There is no analytics on this site, so there is no popularity
+          to sort by — these three are hand-picked in content/journal.ts and the
+          sub-line says so rather than implying a number nobody has. */}
+      {top.length > 0 && !searching && (
+        <section className={styles.band} aria-labelledby="top-articles">
+          <header className={styles.bandHead}>
+            <h2 id="top-articles" className={styles.bandTitle}>Top Articles</h2>
+            <p className={styles.bandCount}>Where we would start</p>
+          </header>
+          <ul className={styles.topGrid}>
+            {top.map((p) => (
+              <li key={p.slug}><PostCard post={p} compact badge="Pick" /></li>
+            ))}
+          </ul>
         </section>
       )}
 

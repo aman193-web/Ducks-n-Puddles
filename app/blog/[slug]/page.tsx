@@ -4,8 +4,9 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
-import { posts, postBySlug, formatDate, categoryOf } from '@/content/journal'
+import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor } from '@/content/journal'
 import { brand } from '@/content/brand'
+import { PostToc } from './PostToc'
 import styles from '../blog.module.css'
 
 /* Three known posts, so every one is prerendered at build time rather than
@@ -36,6 +37,11 @@ export async function generateMetadata(
   }
 }
 
+/** A heading's anchor id. Lowercase, words joined by hyphens — the ids the
+ *  contents rail links to and the ones that end up in a shared URL. */
+const slugify = (h: string) =>
+  h.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
 export default async function JournalPost(
   { params }: { params: Promise<{ slug: string }> },
 ) {
@@ -44,6 +50,13 @@ export default async function JournalPost(
   if (!post) notFound()
 
   const more = posts.filter((p) => p.slug !== post.slug).slice(0, 2)
+  const cat = categoryOf(post)
+
+  /* The contents rail is built from the headings in the body, so an article
+     without them simply does not get one — no placeholder, no empty rail. */
+  const toc = post.body
+    .filter((b): b is { h: string } => typeof b !== 'string')
+    .map((b) => ({ id: slugify(b.h), title: b.h }))
 
   return (
     <>
@@ -54,26 +67,37 @@ export default async function JournalPost(
             column of text against ~700px of empty cream — the page read as
             broken rather than as an article. */}
         <div className={styles.article}>
-        <Link href="/blog" className={styles.back}>
-          <ArrowLeft size={18} weight="bold" aria-hidden="true" />
-          All notes
-        </Link>
+        {/* A BREADCRUMB, not a back link. The reference opens on the trail —
+            Blog, category, this article — which says where you are as well as
+            where you came from, and gives the category page a second door. */}
+        <nav className={styles.crumbs} aria-label="Breadcrumb">
+          <ol>
+            <li><Link href="/blog"><ArrowLeft size={14} weight="bold" aria-hidden="true" />Blog</Link></li>
+            {cat && <li><Link href={`/blog/category/${cat.slug}`}>{cat.label}</Link></li>}
+            <li aria-current="page">{post.title}</li>
+          </ol>
+        </nav>
 
         <header className={styles.postHead}>
-          {/* THE TAG IS A LINK NOW. It is the one place a reader who likes a
-              post can ask for more of the same, and it was inert — the
-              category pages exist, so the label that names one should open
-              it. */}
-          {categoryOf(post)
-            ? <Link href={`/blog/category/${categoryOf(post)!.slug}`} className={styles.tagLink}>
-                {post.tag}
-              </Link>
+          {cat
+            ? <Link href={`/blog/category/${cat.slug}`} className={styles.tagLink}>{post.tag}</Link>
             : <span className={styles.tag}>{post.tag}</span>}
           <h1 className="d d-lg">{post.title}</h1>
-          <p className={styles.meta}>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span aria-hidden="true">&middot;</span>
-            <span>{post.readingMinutes} min read</span>
+          {/* The summary, as a standfirst. It was only ever on the cards and in
+              the page metadata; the reference prints it under the title, which
+              is the one place a reader decides whether to carry on. */}
+          <p className={`lead ${styles.standfirst}`}>{post.excerpt}</p>
+
+          <p className={styles.byline}>
+            <span className={styles.avatar} aria-hidden="true">
+              <Picture id={defaultAuthor.avatar} sizes="32px" alt="" />
+            </span>
+            <span className={styles.bylineName}>{authorOf(post)}</span>
+            <span className={styles.meta}>
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>{post.readingMinutes} min read</span>
+            </span>
           </p>
         </header>
 
@@ -81,8 +105,30 @@ export default async function JournalPost(
           <Picture id={post.image} sizes="(min-width: 900px) 76vw, 94vw" alt="" priority />
         </div>
 
-        <div className={styles.prose}>
-          {post.body.map((para, i) => <p key={i}>{para}</p>)}
+        {/* THE BODY, with the contents rail beside it on a wide screen. One
+            column below 1100px, where a 250px rail would take a third of the
+            measure from the prose it is meant to serve. */}
+        <div className={styles.postCols}>
+          {toc.length > 1 && (
+            <aside className={styles.postRail} aria-label="On this page">
+              <p className={styles.railTitle}>On this page</p>
+              <PostToc items={toc} />
+            </aside>
+          )}
+
+          <div className={styles.prose}>
+            {post.body.map((b, i) =>
+              typeof b === 'string'
+                ? <p key={i}>{b}</p>
+                : <h2 key={i} id={slugify(b.h)} className={styles.proseHead}>{b.h}</h2>,
+            )}
+
+            {post.tags && post.tags.length > 0 && (
+              <p className={styles.postTags}>
+                {post.tags.map((t) => <span key={t} className={styles.tagChip}>{t}</span>)}
+              </p>
+            )}
+          </div>
         </div>
 
         {more.length > 0 && (

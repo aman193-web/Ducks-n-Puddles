@@ -58,13 +58,14 @@ export default async function CategoryPage(
     <>
       <div className={styles.page}>
         <div className="wrap">
-          <BlogMasthead />
           <BlogBrowser
             posts={posts}
             active={category.slug}
             heading={category.label}
             blurb={category.blurb}
-          />
+          >
+            <BlogMasthead />
+          </BlogBrowser>
         </div>
       </div>
 
