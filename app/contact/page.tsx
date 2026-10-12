@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { BrandDetail } from '@/components/ui/BrandDetail'
 import { brand } from '@/content/brand'
 import { ContactPanel } from './ContactPanel'
 import styles from './contact.module.css'
@@ -35,11 +34,11 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <div className={styles.page}>
-        <BrandDetail preset="splashdown" opacity={0.1} />
-
-        <div className="wrap">
-          <ContactPanel email={brand.supportEmail} instagram={brand.instagram}>
+      {/* ContactPanel owns the two grounds — paper for the welcome and the
+          form, blue for the subjects — because the subjects band is full width
+          and cannot live inside the .wrap the welcome needs. The copy below is
+          still server-rendered: it arrives as children. */}
+      <ContactPanel email={brand.supportEmail} instagram={brand.instagram}>
             <p className="mono">Say hello</p>
             <h1 className="d d-xl">We&rsquo;d Love to Hear From You!</h1>
             <p className={`lead ${styles.lede}`}>
@@ -61,9 +60,7 @@ export default function ContactPage() {
               want to say hello, our inbox is always open. Send us a message, and
               we&rsquo;ll get back to you as soon as we can!
             </p>
-          </ContactPanel>
-        </div>
-      </div>
+      </ContactPanel>
 
       {/* THE SIGN-OFF, on the blue the footer's wave expects above it. The
           client's closing lines, which say the thing a "contact us" page

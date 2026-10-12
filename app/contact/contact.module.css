@@ -13,7 +13,9 @@
 .page {
   position: relative; overflow: clip;
   background: var(--cream);
-  padding-block: clamp(var(--s-7), 6vw, var(--s-9)) clamp(var(--s-7), 5vw, var(--s-9));
+  /* Bottom padding is the section rhythm now, because the blue band below
+     pulls up into it rather than beginning after it. */
+  padding-block: clamp(var(--s-7), 6vw, var(--s-9)) var(--section-y);
 }
 
 /* ---- the split: welcome left, form right -------------------------------- */
@@ -194,15 +196,40 @@
 .formNote { max-width: 46ch; font-size: 0.8125rem; line-height: 1.45; color: var(--ink-soft); }
 .formNote a { color: var(--ink); font-weight: 600; }
 
-/* ---- the seven subjects -------------------------------------------------- */
-.topics { margin-block-start: clamp(var(--s-8), 6vw, var(--s-10)); }
-.topicsHead { display: grid; justify-items: start; gap: var(--s-3); margin-block-end: var(--s-6); }
-.topicsTitle {
-  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  letter-spacing: .008em; line-height: 1.12;
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
+/* ---- the seven subjects, built as The Details is built -------------------
+   Its own full-width ground, rising onto the paper above by a third of the
+   section rhythm with the top corners rounded — the exact device the features
+   section uses to sit on the one before it. */
+.topics {
+  position: relative; z-index: 2;
+  background: var(--vincey-soft);
+  padding-block: var(--section-y);
+  margin-block-start: calc(var(--section-y) * -0.36);
+  border-start-start-radius: var(--r-lg);
+  border-start-end-radius: var(--r-lg);
 }
-.topicsBlurb { max-width: 58ch; font-size: var(--fs-small); line-height: 1.6; color: var(--ink-soft); }
+
+/* The same two-column head: the display line on the left, the lead beside it.
+   One column until 900px, where the lead would otherwise measure about 25
+   characters. */
+.topicsHead {
+  display: grid; justify-items: start;
+  gap: var(--flow-eyebrow);
+  margin-block-end: var(--flow-block);
+}
+.topicsHead > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
+@media (min-width: 900px) {
+  .topicsHead {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    column-gap: clamp(var(--s-7), 4.5vw, var(--s-9));
+    align-items: start;
+  }
+  .topicsHead > :nth-child(1) { grid-column: 1; }
+  .topicsHead > :nth-child(2) { grid-column: 1; }
+  .topicsHead > :nth-child(3) { grid-column: 2; grid-row: 2; margin-block-start: 0; }
+}
+.topicsTitle { max-width: 18ch; text-wrap: balance; }
+.topicsBlurb { max-width: 46ch; line-height: 1.55; }
 
 .grid {
   display: grid; gap: var(--s-4); align-items: start;
@@ -237,8 +264,8 @@
   inline-size: 100%; block-size: 100%;
   padding: clamp(16px, 1.5vw, 20px) clamp(17px, 1.6vw, 22px);
   text-align: start;
-  background: var(--paper);
-  border: var(--border); border-radius: var(--r-lg);
+  background: var(--cream);
+  border: 0; border-radius: var(--r-lg);
   color: var(--ink); font: inherit; cursor: pointer;
   transition: background var(--t) ease, translate var(--t) var(--spring);
 }
@@ -248,7 +275,7 @@
   .topic { transition: none; } .topic:hover { translate: none; }
 }
 /* The one you have chosen. */
-.topic[aria-pressed='true'] { background: var(--sun-soft); border-width: var(--bw-lg); }
+.topic[aria-pressed='true'] { background: var(--sun-soft); }
 
 /* The glyph's well: ink at 6%, a rounded square not a disc — the same neutral
    the spec cards use, so it stays quiet on any ground. */
@@ -287,7 +314,11 @@
 }
 .topic[aria-pressed='true'] .topicGo { color: var(--ink); }
 
-/* ---- the closing band ---------------------------------------------------- */
+/* ---- the closing band ----------------------------------------------------
+   The same --vincey-soft as the subjects above it, deliberately: the two are
+   one blue region running down to the footer's wave, and its top padding is
+   the only thing separating them. A second blue here would put a seam across
+   the page for no reason. */
 .close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
 .closeInner { display: grid; justify-items: start; gap: var(--s-4); }
 .closeTitle {

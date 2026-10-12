@@ -5,6 +5,8 @@ import {
   Question, Sparkle, Storefront, UsersThree,
 } from '@phosphor-icons/react/dist/ssr'
 import { Duck } from '@/components/ui/Duck'
+import { Sticker } from '@/components/ui/Sticker'
+import { BrandDetail } from '@/components/ui/BrandDetail'
 import { contactTopics } from '@/content/brand'
 import { ContactForm } from './ContactForm'
 import styles from './contact.module.css'
@@ -67,7 +69,11 @@ export function ContactPanel({ email, instagram, children }: {
 
   return (
     <>
-      <div className={styles.split}>
+      {/* THE WELCOME AND THE FORM, on paper. */}
+      <div className={styles.page}>
+        <BrandDetail preset="splashdown" opacity={0.1} />
+        <div className="wrap">
+          <div className={styles.split}>
         <div className={styles.copy}>
           {children}
 
@@ -114,14 +120,30 @@ export function ContactPanel({ email, instagram, children }: {
             <div className={styles.cardBody}>
               <ContactForm email={email} topic={topic} onTopic={setTopic} />
             </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* THE SEVEN SUBJECTS, on blue — built as The Details is built, at the
+          client's request: its own full-width ground rising onto the paper
+          above, a two-column head, and cream cards carrying the content.
+
+          The blue is --vincey-soft rather than The Details' --sky-soft, and
+          that is forced rather than chosen: the sign-off band below this one
+          has to be --vincey-soft, because the footer's wave paints
+          --footer-above into its own box and a different blue here would leave
+          a stripe across the seam. Two near-identical blues touching would read
+          as a mistake; one colour reads as one region. */}
       <section className={styles.topics} aria-labelledby="specific">
+        <div className="wrap">
         <header className={styles.topicsHead}>
-          <h2 id="specific" className={styles.topicsTitle}>Looking for Something Specific?</h2>
-          <p className={styles.topicsBlurb}>
+          <Sticker colour="var(--cream)" data-pop="">Ways we can help</Sticker>
+          <h2 id="specific" className={`d d-xl ${styles.topicsTitle}`}>
+            Looking for Something Specific?
+          </h2>
+          <p className={`lead ${styles.topicsBlurb}`}>
             Pick the one that fits and we&rsquo;ll pop it straight into the form above.
           </p>
         </header>
@@ -151,6 +173,7 @@ export function ContactPanel({ email, instagram, children }: {
             )
           })}
         </ul>
+        </div>
       </section>
     </>
   )
