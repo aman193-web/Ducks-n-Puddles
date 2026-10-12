@@ -132,7 +132,11 @@ export default async function JournalPost(
               <span className={styles.railCtaMark} aria-hidden="true">
                 <Picture id="goosey-wave" sizes="56px" alt="" />
               </span>
-              <p className={styles.railCtaTitle}>Notes from the pond</p>
+              {/* NOT "Notes from the pond" any more — that is the blog's own
+                  title now, and the same phrase doing two different jobs reads
+                  as a mistake. This card is an offer, so it says what it
+                  offers. */}
+              <p className={styles.railCtaTitle}>Get the next one</p>
               <p className={styles.railCtaBody}>
                 One short email every couple of weeks.
               </p>

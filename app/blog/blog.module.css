@@ -50,11 +50,16 @@
   margin-block-end: clamp(var(--s-6), 4vw, var(--s-8));
   inline-size: 100%;
 }
-.head > .wrap {
+/* ⚠️ A CLASS, NOT `.head > .wrap`. That selector was written first and never
+   matched a thing: CSS Modules hashes every class in the file, `.wrap` included,
+   so it compiled to a hash that is on no element. The padding it was supposed to
+   put under the chips simply was not there — measured at -1px between the chips
+   and the wave box. Anything that needs to reach a globally-classed element from
+   a module has to be given its own class, or wrapped in :global(). */
+.headInner {
   display: grid; justify-items: center; text-align: center;
-  /* Air above the crest, at the client's request. The chips were sitting close
-     enough to the wave that the two read as one band of clutter. */
-  padding-block-end: clamp(var(--s-7), 6vw, var(--s-9));
+  /* Air above the crest, at the client's request. */
+  padding-block-end: clamp(var(--s-7), 5.5vw, 88px);
 }
 /* THE WAVE ITSELF.
 
@@ -78,15 +83,28 @@
   gap: var(--s-3);
   margin-block-end: clamp(var(--s-6), 3.2vw, var(--s-7));
 }
-/* The eyebrow is a cloud with its own air inside it, so it needs less under it
-   than a line of type would. */
-.masthead > :first-child { margin-block-end: calc(var(--s-2) * -1); }
+/* The eyebrow is a cloud with air of its own inside it, so it needs less under
+   it than a line of type would — and the display face adds its own leading above
+   the title's cap height on top of that. Pulled tighter again at the client's
+   request: this is a negative margin against the grid's 12px gap, so the boxes
+   now just touch and the optical gap is the title's leading alone. */
+.masthead > :first-child { margin-block-end: -14px; }
 /* NO WIDTH CAP ON EITHER. Both of these fit on one line at this size, and a cap
    is how they stop doing that: 20ch broke the title in half, and the display
    face's leading makes a two-line title a bigger gap than the one this change
    was meant to close. The standfirst has the same problem at 48ch. They still
    wrap on a phone, where they have to. */
-.masthead h1 { max-width: none; text-wrap: balance; }
+.masthead h1 {
+  max-width: none; text-wrap: balance;
+  /* Up from --fs-xl's 82px cap. Only the blog's own title, not the site step. */
+  font-size: clamp(2.25rem, 8vw, 5.75rem);
+  /* "A little bolder" — and there is no bolder to ask for: Bangbang ships one
+     weight, and font-synthesis is off site-wide because the browser's fake bold
+     smears a rounded face into a blob. A hairline stroke in the text's own
+     colour thickens the strokes evenly instead, which is what a heavier cut of
+     this face would actually do. */
+  -webkit-text-stroke: 0.7px currentColor;
+}
 .lede { max-width: none; }
 .head .lede { margin-inline: auto; }
 

@@ -109,7 +109,7 @@ export function BlogBrowser({
           to do that: a breakout on 50vw would have counted the scrollbar and
           put a horizontal scroll on the page. */}
       <header className={styles.head}>
-        <div className="wrap">
+        <div className={`wrap ${styles.headInner}`}>
         {children}
       <div className={styles.tools}>
         <div className={styles.search}>

@@ -10,7 +10,7 @@ import styles from './blog.module.css'
 export const metadata: Metadata = {
   title: 'The Duck Pond',
   description:
-    'Notes from the kitchen table — what we are learning, what we are changing, and what is worth knowing before you buy any kid’s water bottle.',
+    'Notes from the pond — what we are learning, what we are changing, and what is worth knowing before you buy any kid’s water bottle.',
   alternates: { canonical: '/blog' },
   openGraph: {
     type: 'website',

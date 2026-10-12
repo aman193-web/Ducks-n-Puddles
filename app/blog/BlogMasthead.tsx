@@ -15,7 +15,7 @@ export function BlogMasthead() {
           plain mono line this had — the client asked for one label treatment
           across the site. sky-soft, the default: /blog's ground is cream. */}
       <Sticker data-pop="">The duck pond</Sticker>
-      <h1 className="d d-xl">Notes from the kitchen table.</h1>
+      <h1 className="d d-xl">Notes from the pond</h1>
       {/* NO `measure` ON THIS ONE. The class caps a paragraph at a reading
           width, which is right for prose and wrong for a standfirst: it broke
           a single sentence over two lines with half the page empty beside it.
