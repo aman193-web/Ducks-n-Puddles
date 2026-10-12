@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight, Heart, UsersThree, HandHeart } from '@phosphor-icons/react/dist/ssr'
 import { Motif } from '@/components/Motif'
+import { Sticker } from '@/components/ui/Sticker'
 import { Picture } from '@/components/Picture'
 import { foundation } from '@/content/brand'
 import styles from './Foundation.module.css'
@@ -43,9 +44,14 @@ export function Foundation() {
 
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
-          {/* The mark beside the name is gone at the client's request — "erase
-              the little yellow circle next to the wording". */}
-          <p className={styles.chip}>{foundation.name}</p>
+          {/* The Foundation's name, on the same cloud every other section
+              eyebrow uses. It was the one label on the site still wearing the
+              old treatment — a pill, tilted 1.5 degrees — because it had its own
+              .chip rather than going through Sticker. That tilt is exactly what
+              the client asked to be rid of.
+              sky-soft, the default: this section's ground is a pale yellow, and
+              the brief puts light blue or cream on yellow. */}
+          <Sticker data-pop="">{foundation.name}</Sticker>
 
           <h2 id="foundation-title" className={`d ${styles.title}`} data-anim="">
             {foundation.title.map((line) => (

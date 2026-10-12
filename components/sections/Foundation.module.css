@@ -78,27 +78,11 @@
 
 .copy { display: grid; justify-items: start; gap: var(--flow-head); }
 
-/* ---- the chip: what this section is, said plainly --------------------- */
-.chip {
-  display: inline-flex; align-items: center; gap: var(--s-2);
-  min-block-size: 44px;
-  padding-inline: var(--s-4) var(--s-5);
-  background: var(--paper);
-  border: var(--border-lg);
-  border-radius: var(--r-pill);
-  font-family: var(--font-mono); font-weight: 500;
-  font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
-  color: var(--ink);
-  rotate: -1.5deg;
-}
-.chipMark {
-  display: grid; place-items: center;
-  inline-size: 26px; block-size: 26px;
-  border-radius: 50%;
-  background: var(--sun);
-  color: var(--ink);
-}
-.chipMark svg { inline-size: 15px; block-size: 15px; }
+/* ---- the eyebrow: what this section is, said plainly ----------------- */
+/* .chip and .chipMark lived here: a tilted pill, and the yellow disc the
+   client had already asked to be erased from beside the wording. The name now
+   goes through <Sticker> like every other section eyebrow, so the shape, the
+   size and the type are decided in one place. */
 
 /* ---- the headline -----------------------------------------------------
    Two lines, both in ink. The accent-coloured word is gone: the reference sets
