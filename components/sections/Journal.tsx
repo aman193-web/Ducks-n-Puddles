@@ -35,7 +35,7 @@ export function Journal() {
       <BrandDetail preset="droplets" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--cream)" ray="var(--sun)" data-pop="">The duck pond</Sticker>
+          <Sticker colour="var(--cream)" data-pop="">The duck pond</Sticker>
           <h2 id="journal-title" className="d d-xl" data-anim="">From Our Pond to Yours.</h2>
           <p className="lead" data-anim="">
             Stories, parenting thoughts, behind-the-scenes moments, and things we&rsquo;re

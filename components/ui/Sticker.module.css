@@ -1,4 +1,4 @@
-/* THE SECTION EYEBROW — a scalloped cloud with sun rays off the top-right.
+/* THE SECTION EYEBROW — a soft cloud of overlapping circles.
    See Sticker.tsx for the geometry and for why this one carries no outline. */
 .sticker {
   position: relative;
@@ -14,24 +14,11 @@
   color: var(--ink);
   font-weight: 700; font-size: var(--fs-micro);
   letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
-  /* Room for the rays, which sit outside the shape. Margin rather than padding:
-     padding would push the scallop out with them. */
-  margin-inline-end: 22px;
 }
 .shape {
   position: absolute; inset: 0; z-index: 0;
   inline-size: 100%; block-size: 100%;
   fill: var(--bg, var(--sky-soft));
-  pointer-events: none;
-}
-.rays {
-  position: absolute; z-index: 1;
-  inline-size: 30px; block-size: 30px;
-  /* Off the top-right corner of the scallop, clear of the last bump. */
-  inset-block-start: -13px;
-  inset-inline-end: -19px;
-  stroke: var(--ray, var(--sun));
-  stroke-width: 5; stroke-linecap: round;
   pointer-events: none;
 }
 .label { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: var(--s-2); }

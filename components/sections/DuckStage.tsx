@@ -90,7 +90,7 @@ export function DuckStage() {
           >
             <div className={`wrap ${styles.inner}`}>
               <div className={styles.text}>
-                <Sticker colour="var(--cream)" ray="var(--vincey)">{d.role}</Sticker>
+                <Sticker colour="var(--cream)">{d.role}</Sticker>
                 <h3 id={`duck-${d.slug}`} className={`d d-mega ${styles.name}`}>{d.name}</h3>
                 <p className={styles.personality}>{d.personality}</p>
 

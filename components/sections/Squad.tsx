@@ -91,7 +91,7 @@ export function Squad() {
       <BrandDetail preset="splashdown" />
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
-          <Sticker colour="var(--cream)" ray="var(--sun)" data-pop="">Join the family</Sticker>
+          <Sticker colour="var(--cream)" data-pop="">Join the family</Sticker>
           <h2 id="squad-title" className="d d-xl" data-anim="">
             Come Into the Pond.
           </h2>

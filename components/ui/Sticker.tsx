@@ -5,72 +5,51 @@ type StickerProps = {
   children: React.ReactNode
   /** The label's fill. Light grounds get the default; see the table below. */
   colour?: string
-  /** The sun-ray accent. */
-  ray?: string
 } & React.HTMLAttributes<HTMLSpanElement>
 
 /**
- * THE SECTION EYEBROW — a scalloped cloud with sun rays, on the client's
- * approved reference.
+ * THE SECTION EYEBROW — a soft cloud, on the client's approved reference.
  *
- * Two treatments preceded it: a chip rotated two degrees, which readers took
- * for a box that had slipped rather than a deliberate tilt, and a puddle
- * outline that fixed the tilt but was not what the client had in mind. This is
- * their own artwork: a soft horizontal scallop, flat fill, no outline, with
- * three yellow rays off the top-right corner.
+ * Third treatment and the right one. A chip rotated two degrees read as a box
+ * that had slipped; a puddle outline fixed the tilt but was not what they had
+ * in mind. This is a row of overlapping circles with a flat fill and no
+ * outline, which is their own artwork.
  *
- * NO BORDER AND NO SHADOW, which is a deliberate break from the rest of the
- * site — every other panel here is outlined ink on flat colour. The reference
- * has neither and the shape carries itself without one, so this follows the
- * reference rather than the house rule.
+ * NO BORDER AND NO SHADOW, which breaks the house rule that every panel here is
+ * outlined ink on flat colour. The reference has neither and the shape holds
+ * without one.
  *
- * COLOUR, by the ground the eyebrow sits on. Both keep the reference's own
- * relationship — a PALE label with yellow rays — rather than inverting it:
- *   cream / paper / field  ->  sky-soft label, sun rays   (the default)
- *   any blue               ->  cream label, sun rays
- * A sun-soft label with cream rays was tried first for the blue grounds and the
- * rays disappeared into them; cream carries further on blue than soft yellow
- * does, and full sun is the only accent that reads on all three of this site's
- * blues (--sky-soft, --sky and --vincey-soft).
- * Passed per call site rather than sniffed, because a section's ground is not
- * something an element can ask about.
+ * COLOUR, by the ground the eyebrow sits on, passed per call site because a
+ * section's ground is not something an element can ask about:
+ *   cream / paper / field  ->  sky-soft   (the default)
+ *   any blue               ->  cream
  */
-export function Sticker({
-  children, colour = 'var(--sky-soft)', ray = 'var(--sun)', className, style, ...rest
-}: StickerProps) {
-  /* The viewBox is built to the label's own predicted PIXEL width, and the
-     bumps are spread evenly across it — so the SVG's horizontal scale lands
-     within a few percent of its vertical one and the circles stay circles.
-     See width(). */
-  const vw = width(flatten(children))
-  const bumps = Math.min(10, Math.max(3, Math.round((vw - H) / PITCH) + 1))
-  const step = (vw - H) / (bumps - 1)
+export function Sticker({ children, colour = 'var(--sky-soft)', className, style, ...rest }: StickerProps) {
+  const text = flatten(children)
+  /* The viewBox is the label's own predicted PIXEL box, so the SVG's horizontal
+     scale lands within a few percent of its vertical one and the puffs stay
+     round. See width(). */
+  const vw = width(text)
+  const puffs = Math.min(16, Math.max(3, Math.round((vw - H) / PITCH) + 1))
+  const step = (vw - H) / (puffs - 1)
 
   return (
     <span
       {...rest}
       className={`${styles.sticker} ${className ?? ''}`}
-      style={{ ['--bg' as string]: colour, ['--ray' as string]: ray, ...style } as React.CSSProperties}
+      style={{ ['--bg' as string]: colour, ...style } as React.CSSProperties}
     >
-      {/* THE SCALLOP, as a row of overlapping circles rather than one outlined
-          path. With a single flat fill and no stroke they union into the shape
-          by themselves — no arc maths, correct at any bump count, and both ends
-          round by construction. An outlined version would need the union
-          computed, because the internal arcs would show. */}
+      {/* THE CLOUD, as overlapping circles rather than an outlined path. With
+          one flat fill and no stroke they union by themselves: no arc maths,
+          correct at any puff count, and both ends round by construction. An
+          outlined version would need the union computed, because every internal
+          arc would show. */}
       <svg className={styles.shape} viewBox={`0 0 ${vw} ${H}`}
            preserveAspectRatio="none" aria-hidden="true" focusable="false">
-        {Array.from({ length: bumps }, (_, i) => (
-          <circle key={i} cx={R + i * step} cy={R} r={R} />
-        ))}
-      </svg>
-
-      {/* THE RAYS, in their own SVG because this one must NOT stretch — they
-          are the one part of the mark with a fixed size, and sharing the
-          scallop's viewBox would shear them by the label's width. */}
-      <svg className={styles.rays} viewBox="0 0 34 34" aria-hidden="true" focusable="false">
-        <line x1="6.5" y1="23.5" x2="11.5" y2="9.5" />
-        <line x1="11.5" y1="26.5" x2="20.5" y2="17.5" />
-        <line x1="15" y1="30" x2="28" y2="26" />
+        {Array.from({ length: puffs }, (_, i) => {
+          const { r, cy } = puff(text, i, puffs)
+          return <circle key={i} cx={R + i * step} cy={cy} r={r} />
+        })}
       </svg>
 
       <span className={styles.label}>{children}</span>
@@ -81,41 +60,80 @@ export function Sticker({
 /* ---- the geometry -------------------------------------------------------- */
 
 /**
- * The label's height in CSS pixels, PINNED in the stylesheet rather than left to
- * the font. That is what makes the viewBox below a pixel box: one user unit is
- * one pixel vertically, always, so matching the viewBox width to the label's
+ * The label's height in CSS pixels, PINNED in the stylesheet rather than left
+ * to the font. That is what makes the viewBox a pixel box — one user unit is
+ * one pixel vertically, always — so matching the viewBox width to the label's
  * width in pixels is enough to keep the scale square.
  */
 const H = 46
 const R = H / 2
 
 /**
- * Centre-to-centre spacing, as 0.75 of the diameter — measured off the client's
- * reference, where five bumps span about 3.8 diameters. It sets how deep the
- * dips are: at this pitch the waist between two bumps is about two thirds of
- * the full height, which is the reference's scallop. It is a target rather than
- * a constant, because the bumps are spread evenly across the real width.
+ * Centre-to-centre spacing, as a fraction of the diameter.
+ *
+ * 0.56, down from 0.75: at the wider spacing the dips between puffs cut to
+ * about two thirds of the height and the shape read as a row of separate
+ * circles. Closer together they overlap by nearly half, the dips become the
+ * gentle notches a cloud has, and the silhouette reads as one object.
  */
-const PITCH = H * 0.75
+const PITCH = H * 0.56
+
+/**
+ * ONE PUFF — its radius and its centre height.
+ *
+ * A row of identical circles is a machine part, not a cloud. Real ones are
+ * lumpy, so each puff is sized between 86% and 100% of the full radius and
+ * nudged a little off the centre line.
+ *
+ * The variation is HASHED FROM THE LABEL'S OWN TEXT, not random: this component
+ * renders on the server and again in the browser, and Math.random would hand
+ * those two different clouds and trip hydration. Seeding from the text also
+ * means every eyebrow on the site gets its own lumps rather than the same
+ * silhouette thirteen times.
+ *
+ * The two end puffs are exempt. They are what makes the ends read as round and
+ * what sets the shape's full height, so they stay at the full radius on the
+ * centre line; shrinking either one pinched the end into a nose.
+ */
+function puff(seed: string, i: number, total: number) {
+  if (i === 0 || i === total - 1) return { r: R, cy: R }
+  const a = hash(seed, i * 2)
+  const b = hash(seed, i * 2 + 1)
+  return {
+    r: R * (0.86 + 0.14 * a),
+    /* Up to 5% of the height, and the SIGN ALTERNATES rather than being hashed
+       too. Left free, a seed whose offsets happened to trend one way gave the
+       cloud a slope — and a label that looks slightly tilted is the exact
+       complaint this whole redesign came from. Alternating cannot trend. */
+    cy: R + b * 0.05 * H * (i % 2 ? 1 : -1),
+  }
+}
+
+/** FNV-1a over the text plus the index. Deterministic, so SSR and the browser
+ *  agree, and cheap enough to run per puff. */
+function hash(seed: string, salt: number) {
+  let h = 2166136261
+  for (let i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619) }
+  h ^= salt; h = Math.imul(h, 16777619)
+  return ((h >>> 0) % 1024) / 1024
+}
 
 /**
  * The label's width in pixels, from its text.
  *
  * The shape has to stretch: a label's width comes from its words, and nothing
  * can know that before layout. What it must not do is stretch by an unknown
- * amount, because that turns the circles into ellipses and the scallop stops
- * reading. So the viewBox is built to a PREDICTION of the width and the
- * horizontal scale lands near 1.
+ * amount, because that turns the circles into ellipses. So the viewBox is built
+ * to a PREDICTION of the width and the horizontal scale lands near 1.
  *
  * 8.0 is the average advance of an uppercase character at --fs-micro with this
- * tracking, measured off the thirteen labels on the site rather than guessed —
- * an earlier 9.4 was reading 0.75-0.94, which squashed every bump. 54 is the two
- * side paddings. Across those thirteen the prediction now lands between -6% and
- * +4%, which is not visible on a circle.
+ * tracking, measured across the site's labels rather than guessed — an earlier
+ * 9.4 was reading 0.75-0.94, which squashed every puff. 54 is the two side
+ * paddings. Measured again after: -6% to +4%, invisible on a circle.
  *
- * Bumps are then spread evenly between the two ends rather than laid at a fixed
- * pitch, so the prediction error shows up as a dip a shade deeper or shallower
- * instead of as a flat or overshot right-hand end.
+ * Puffs are then spread evenly between the two ends rather than laid at a fixed
+ * pitch, so the prediction error shows up as a notch a shade deeper or
+ * shallower instead of as a flat or overshot right-hand end.
  */
 function width(text: string) {
   return Math.round(text.trim().length * 8.0 + 54)
@@ -137,8 +155,7 @@ function flatten(node: React.ReactNode): string {
  * and the sentence still reads cleanly to a screen reader.
  *
  * Untouched by the eyebrow redesign: a glyph wedged between two words is read as
- * a deliberate interruption whichever way it sits, and the client's note was
- * about the section labels.
+ * a deliberate interruption whichever way it sits.
  */
 export function Glyph({ motif, colour = 'var(--sun-soft)', rot = -6 }: {
   motif: MotifName; colour?: string; rot?: number
