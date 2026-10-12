@@ -581,12 +581,15 @@
   .postRail {
     display: block;
     position: sticky;
-    top: calc(var(--header-h) + var(--s-5));
-    max-block-size: calc(100dvh - var(--header-h) - var(--s-8));
-    overflow-y: auto;
-    padding: var(--s-5);
-    background: var(--paper);
-    border: var(--border); border-radius: var(--r-lg);
+    /* Lower than the header by more than the usual step: Goosey leans ~30px
+       above the card she sits on, and at the old offset her head went under the
+       bar. */
+    top: calc(var(--header-h) + 52px);
+    /* NO PANEL. The paper box with its own border was a second frame around a
+       card that already has one — two outlines, one inside the other, for one
+       small column. The card keeps its border; the contents list below sits on
+       the page like the prose beside it. */
+    background: none; border: 0; padding: 0;
     /* Goosey leans over the card's top corner and must not be clipped. */
     overflow: visible;
   }
@@ -595,7 +598,7 @@
   font-weight: 700; font-size: var(--fs-micro);
   letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
   padding-block-end: var(--s-3); margin-block-end: var(--s-3);
-  border-block-end: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border-block-end: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
 }
 .toc { position: relative; display: grid; gap: 1px; list-style: none; padding: 0; margin: 0; }
 .toc::before {
@@ -658,7 +661,7 @@
   background: var(--sun-soft);
   border: var(--border); border-radius: var(--r);
 }
-.railCta:not(:last-child) { margin-block-end: var(--s-5); }
+.railCta:not(:last-child) { margin-block-end: var(--s-6); }
 .railCtaMark {
   position: absolute;
   inline-size: 54px;
@@ -668,7 +671,9 @@
 .railCtaMark img { inline-size: 100%; block-size: auto; }
 .railCtaTitle {
   font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: 1.0625rem; line-height: 1.15; letter-spacing: .008em;
+  /* Up from 17px. With the paper panel gone this is the first thing in the
+     rail rather than the second, so it carries the column. */
+  font-size: 1.375rem; line-height: 1.12; letter-spacing: .008em;
 }
 .railCtaBody {
   font-size: var(--fs-micro); line-height: 1.45; color: var(--ink);
