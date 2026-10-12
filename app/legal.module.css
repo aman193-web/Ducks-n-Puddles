@@ -55,37 +55,89 @@
   margin-block-start: var(--s-6);
 }
 
-/* ---- contact: the ways in ------------------------------------------------ */
-/* THREE ACROSS, which auto-fit was not giving: capped at 68ch the row only
-   ever fitted two and dropped the third onto a line of its own. One column on
-   a phone, three from 760 up, and the prose cap does not apply — three cards
-   need the width a paragraph should not have. */
-.ways {
+/* ---- contact ------------------------------------------------------------- */
+.lede { max-width: none; }
+.sub { max-width: 62ch; line-height: 1.62; }
+
+.band { margin-block-end: clamp(var(--s-7), 5vw, var(--s-9)); }
+.bandTitle {
+  font-family: var(--font-display); font-synthesis: none;
+  font-weight: 400; letter-spacing: .008em; line-height: 1.12;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  margin-block-end: var(--s-3);
+}
+.bandBlurb { max-width: 62ch; line-height: 1.62; margin-block-end: var(--s-6); }
+
+/* THE SEVEN SUBJECTS. A grid rather than a list, because they are a menu —
+   somebody scanning for "wholesale" should find it by shape, not by reading
+   six paragraphs first. One of the seven ("Anything Else") is four times the
+   length of the others, so the cards are top-aligned and left to differ
+   instead of being stretched to the tallest. */
+.topics {
   display: grid; gap: var(--s-4);
+  align-items: start;
   grid-template-columns: minmax(0, 1fr);
-  max-width: 68ch;
   list-style: none; padding: 0; margin: 0;
 }
-@media (min-width: 760px) {
-  .ways { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1000px; }
-}
-.way {
-  /* The last row is the address or the link, pushed to the bottom by the 1fr
-     above it, so the three cards agree on where their links sit however long
-     the sentence over them runs. */
-  display: grid; gap: var(--s-2);
-  grid-template-rows: auto minmax(0, 1fr) auto;
+@media (min-width: 680px) { .topics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1040px) { .topics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.topic {
+  display: grid; gap: var(--s-2); align-content: start;
   padding: var(--s-5);
   background: var(--paper);
-  border: var(--border-lg);
-  border-radius: var(--r-lg);
+  border: var(--border-lg); border-radius: var(--r-lg);
 }
-.wayTitle {
+.topicTitle {
   font-weight: 700; font-size: var(--fs-small);
-  letter-spacing: .06em; text-transform: uppercase;
+  letter-spacing: .04em; text-transform: uppercase;
 }
-.way p { font-size: var(--fs-small); line-height: 1.55; margin: 0; }
-.way a { font-weight: 600; color: var(--ink); }
+.topic p { font-size: var(--fs-small); line-height: 1.55; }
+
+/* ---- the form ------------------------------------------------------------
+   Two columns for the pair of short fields and one for everything else, which
+   is the only split this form needs: a name and an email are half a line each,
+   a message is not. */
+.form { display: grid; gap: var(--s-5); max-width: 680px; }
+.row { display: grid; gap: var(--s-5); }
+@media (min-width: 620px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.field { display: grid; gap: var(--s-2); }
+.field label { font-weight: 700; font-size: var(--fs-small); }
+
+.input, .select, .textarea {
+  inline-size: 100%;
+  min-block-size: 52px;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-lg);
+  font: inherit; font-size: var(--fs-small); color: var(--ink);
+}
+.textarea { min-block-size: 150px; resize: vertical; line-height: 1.55; }
+.input::placeholder, .textarea::placeholder { color: var(--ink-soft); }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible {
+  outline: var(--bw-lg) solid var(--ink); outline-offset: 2px;
+}
+/* The native arrow is the one part of a select worth keeping — it is how a
+   select announces itself — so this only takes the chrome off around it. */
+.select { appearance: none; background-image: none; cursor: pointer; }
+.select::-ms-expand { display: none; }
+
+.formFoot { display: grid; gap: var(--s-3); justify-items: start; }
+.send {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-block-size: 52px;
+  padding-inline: var(--s-6);
+  background: var(--sun); color: var(--ink);
+  border: var(--border); border-radius: var(--r-pill);
+  font-weight: 700; font-size: var(--fs-small);
+  cursor: pointer;
+  transition: transform var(--t) var(--spring);
+}
+@media (hover: hover) { .send:hover { transform: translateY(-2px); } }
+.send:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .send { transition: none; } .send:hover { transform: none; } }
+.formNote { max-width: 56ch; font-size: var(--fs-small); line-height: 1.55; color: var(--ink-soft); }
+.formNote a { color: var(--ink); font-weight: 600; }
 
 /* ---- the closing band, as the blog index has ---------------------------- */
 .close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
@@ -96,4 +148,11 @@
   font-size: clamp(1.5rem, 3.4vw, 2.75rem);
   max-width: 24ch; text-wrap: balance;
 }
-.closeBlurb { max-width: 46ch; line-height: 1.6; }
+.closeBlurb { max-width: 54ch; line-height: 1.6; }
+/* The tagline signs the page off; it is not a third heading, so it sits below
+   the body size the band's own heading sets rather than competing with it. */
+.closeTagline {
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  letter-spacing: .008em;
+  margin-block-start: var(--s-2);
+}

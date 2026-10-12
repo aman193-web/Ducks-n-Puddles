@@ -217,6 +217,38 @@ export const confirmedSpecs = specs.filter((s) => s.status === 'confirmed')
 export const specsFootnote = 'Bottle and cap are dishwasher safe. Hand-wash silicone sleeve.'
 export const pendingSpecCount = specs.filter((s) => s.status === 'pending').length
 
+/* ---------------------------------------------------------------------------
+   CONTACT.
+
+   The client's own copy, supplied Oct 2026, verbatim. The seven topics below
+   are one list used twice — as the cards on the page and as the options in the
+   form's subject — so the two can never drift apart. `label` is also what goes
+   into the subject line of the message that gets sent.
+   --------------------------------------------------------------------------- */
+export interface ContactTopic {
+  /** Stable id, used as the <option> value and the anchor. */
+  key: string
+  label: string
+  body: string
+}
+
+export const contactTopics: ContactTopic[] = [
+  { key: 'product', label: 'Product Questions',
+    body: 'Have questions about our water bottles, product features, care instructions, or what\u2019s coming next? We\u2019re happy to help!' },
+  { key: 'squad', label: 'The Duck Squad',
+    body: 'Curious about joining the Duck Squad or have questions about your membership, subscriptions, or exclusive perks? We\u2019d love to help you out.' },
+  { key: 'feedback', label: 'Feedback & Suggestions',
+    body: 'Your thoughts matter to us! Tell us what you love, what we can improve, or what you\u2019d like to see from Ducks \u2019n Puddles in the future.' },
+  { key: 'partnerships', label: 'Partnerships & Collaborations',
+    body: 'Interested in working together? Whether you\u2019re a retailer, creator, fellow brand, or organization, we\u2019d love to explore ways to connect.' },
+  { key: 'foundation', label: 'The Ducks \u2019n Puddles Foundation',
+    body: 'Want to learn more about our mission, community initiatives, or opportunities to get involved? We\u2019d love to share our vision with you.' },
+  { key: 'wholesale', label: 'Wholesale & Retail Inquiries',
+    body: 'Interested in bringing Ducks \u2019n Puddles products to your store? Reach out to learn more about potential retail opportunities.' },
+  { key: 'other', label: 'Anything Else',
+    body: 'Have something on your mind? We\u2019d love to hear it all! Whether it\u2019s a kind word, a story to share, a new idea, or even some constructive criticism, we\u2019re open to it all. We believe that every perspective matters and that honest feedback helps us learn, grow, and continue making Ducks \u2019n Puddles the best it can be for you and your little ones. So don\u2019t be shy \u2014 we\u2019re always happy to hear from you!' },
+]
+
 /* --------------------------------------------------------------------------- */
 
 /**
