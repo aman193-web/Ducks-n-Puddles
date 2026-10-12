@@ -1,0 +1,198 @@
+/* =============================================================================
+   THE LEGAL TEMPLATE — Terms of Service and Privacy Policy.
+
+   One stylesheet for both, because they are one page with different words in
+   it. Contact is NOT here: it is a different kind of page (an invitation, not
+   a document) and shares only the closing band.
+   ========================================================================== */
+.page {
+  position: relative; overflow: clip;
+  background: var(--cream);
+  padding-block: clamp(var(--s-7), 6vw, var(--s-9)) clamp(var(--s-7), 5vw, var(--s-9));
+}
+
+/* ---- masthead ------------------------------------------------------------ */
+.masthead {
+  display: grid; justify-items: start; gap: var(--s-4);
+  margin-block-end: clamp(var(--s-7), 5vw, var(--s-8));
+}
+.masthead h1 { max-width: 18ch; text-wrap: balance; }
+.lede { max-width: 56ch; }
+
+/* The date, as a pill rather than a line of small print at the bottom. On a
+   document this long it is the first thing a reader checks and the last thing
+   they should have to scroll for. */
+.updated {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  margin-block-start: var(--s-2);
+  padding: 8px 18px 8px 14px;
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-pill);
+  font-size: var(--fs-small); font-weight: 600;
+}
+.dot {
+  inline-size: 9px; block-size: 9px; border-radius: 50%;
+  background: var(--chichi); flex: none;
+}
+
+/* ---- the two columns ----------------------------------------------------- */
+.cols { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-8)); align-items: start; }
+@media (min-width: 1040px) {
+  .cols { grid-template-columns: 250px minmax(0, 1fr); }
+}
+
+/* ---- the sticky index ---------------------------------------------------- */
+.rail { display: none; }
+@media (min-width: 1040px) {
+  .rail {
+    display: block;
+    position: sticky;
+    /* Below the header, which is fixed; --header-h is the single source the
+       header, the hero and the duck panels all measure from. */
+    top: calc(var(--header-h) + var(--s-5));
+    max-block-size: calc(100dvh - var(--header-h) - var(--s-8));
+    overflow-y: auto;
+    padding: var(--s-5);
+    background: var(--paper);
+    border: var(--border-lg); border-radius: var(--r-lg);
+    scrollbar-width: thin;
+  }
+}
+.railTitle {
+  font-weight: 700; font-size: var(--fs-micro);
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-block-end: var(--s-3);
+}
+
+.toc { display: grid; gap: 2px; list-style: none; padding: 0; margin: 0; counter-reset: none; }
+.toc a {
+  display: grid; grid-template-columns: 1.6em minmax(0, 1fr); gap: var(--s-2);
+  padding: 7px 10px;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-small); line-height: 1.35;
+  color: var(--ink); text-decoration: none;
+  transition: background var(--t) ease;
+}
+@media (hover: hover) { .toc a:hover { background: var(--sun-soft); } }
+.toc a:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 1px; }
+/* Where you are. Full sun rather than a tint, so it is findable at a glance in
+   a list of seventeen. */
+.toc a[aria-current] { background: var(--sun); font-weight: 700; }
+.toc a[aria-current] .tocNum { color: var(--ink); }
+.tocNum { font-weight: 700; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .toc a { transition: none; } }
+
+/* ---- the same index, folded, on narrow screens --------------------------- */
+.fold {
+  margin-block: var(--s-6) var(--s-7);
+  padding: var(--s-4) var(--s-5);
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-lg);
+}
+.fold summary {
+  font-weight: 700; font-size: var(--fs-small);
+  cursor: pointer; list-style-position: outside;
+}
+.fold summary:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+.fold .toc { margin-block-start: var(--s-3); }
+.fold .toc a { padding-inline: 0; }
+@media (min-width: 1040px) { .fold { display: none; } }
+
+/* ---- the document itself ------------------------------------------------- */
+.doc { max-width: 70ch; }
+.doc p { font-size: var(--fs-body); line-height: 1.68; color: var(--ink); }
+
+.intro { display: grid; gap: var(--s-4); }
+.intro p { color: var(--ink-soft); }
+
+.sec {
+  display: grid; gap: var(--s-4);
+  /* Clears the fixed header when a contents link jumps here. */
+  scroll-margin-top: calc(var(--header-h) + var(--s-5));
+  padding-block-start: clamp(var(--s-6), 4vw, var(--s-7));
+}
+/* A hairline between clauses, so seventeen sections read as seventeen rather
+   than as one long pour. Not on the first — the intro already separates it. */
+.sec + .sec { border-block-start: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+
+.secHead {
+  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline; gap: var(--s-3);
+}
+/* The client's own numbering, set large. It is what makes the sticky index and
+   the page visibly the same list. */
+.secNum {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1;
+  color: var(--chichi);
+  font-variant-numeric: tabular-nums;
+}
+.secHead h2 {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.375rem, 2.6vw, 2rem); line-height: 1.12;
+  letter-spacing: .008em; color: var(--ink);
+  text-wrap: balance;
+}
+
+.sub {
+  font-weight: 700; font-size: var(--fs-body);
+  letter-spacing: .01em; color: var(--ink);
+  margin-block-start: var(--s-3);
+}
+
+/* Lists get a droplet rather than a disc — the brand mark the bottles carry,
+   drawn in CSS so it costs nothing and inherits the text colour. */
+.list { display: grid; gap: var(--s-3); list-style: none; padding: 0; margin: 0; }
+.list li {
+  position: relative; padding-inline-start: 1.7em;
+  font-size: var(--fs-body); line-height: 1.6;
+}
+.list li::before {
+  content: ''; position: absolute;
+  inset-inline-start: .25em; inset-block-start: .52em;
+  inline-size: 9px; block-size: 9px;
+  background: var(--vincey);
+  /* a teardrop: round on three corners, pointed at the top-left */
+  border-radius: 50% 50% 50% 0;
+  rotate: -45deg;
+}
+
+/* ---- the address card ---------------------------------------------------- */
+.card {
+  display: grid; gap: var(--s-1);
+  margin-block-start: clamp(var(--s-7), 5vw, var(--s-8));
+  padding: clamp(var(--s-5), 3vw, var(--s-6));
+  background: var(--sun-soft);
+  border: var(--border-lg); border-radius: var(--r-lg);
+}
+.cardName {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.25rem, 2.2vw, 1.625rem); line-height: 1.1;
+  letter-spacing: .008em;
+}
+.cardPlace { font-size: var(--fs-small); color: var(--ink-soft); }
+.cardMail { margin-block-start: var(--s-2); font-weight: 700; }
+.cardMail a { color: var(--ink); text-underline-offset: .22em; }
+.cardMore { font-size: var(--fs-small); color: var(--ink-soft); margin-block-start: var(--s-2); }
+.cardMore a { color: var(--ink); font-weight: 600; }
+
+/* .doc p is 0,1,1 and this is a <p> inside .doc, so it needs the parent to win
+   its own font-size back. */
+.doc .tagline {
+  margin-block-start: var(--s-6);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  letter-spacing: .008em;
+}
+
+/* ---- the closing band ---------------------------------------------------- */
+.close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
+.closeInner { display: grid; justify-items: start; gap: var(--s-4); }
+.closeTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.1;
+  font-size: clamp(1.5rem, 3.4vw, 2.75rem);
+  max-width: 24ch; text-wrap: balance;
+}
+.closeBlurb { max-width: 56ch; line-height: 1.6; }
+.closeLink { color: var(--ink); font-weight: 700; text-underline-offset: .22em; }

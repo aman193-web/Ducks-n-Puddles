@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { contactTopics } from '@/content/brand'
-import styles from '../legal.module.css'
+import styles from './contact.module.css'
 
 /**
  * THE CONTACT FORM — and it opens the visitor's own mail client rather than
@@ -22,17 +22,23 @@ import styles from '../legal.module.css'
  * TODO(client): give me a destination — a support inbox, a Formspree form id,
  * a webhook — and this becomes a POST. Everything above `href` stays; only
  * `onSubmit` changes.
+ *
+ * The SUBJECT is controlled from above (ContactPanel) rather than held here,
+ * because the seven subject cards further down the page set it too.
  */
-export function ContactForm({ email }: { email: string }) {
-  const [topic, setTopic] = useState(contactTopics[0].key)
+export function ContactForm({ email, topic, onTopic }: {
+  email: string
+  topic: string
+  onTopic: (key: string) => void
+}) {
   const [name, setName] = useState('')
   const [from, setFrom] = useState('')
   const [message, setMessage] = useState('')
 
-  const label = contactTopics.find((t) => t.key === topic)?.label ?? 'Hello'
+  const chosen = contactTopics.find((t) => t.key === topic) ?? contactTopics[0]
 
   const href = `mailto:${email}`
-    + `?subject=${encodeURIComponent(label)}`
+    + `?subject=${encodeURIComponent(chosen.label)}`
     + `&body=${encodeURIComponent(
         `${message}\n\n— ${name || 'A visitor'}${from ? `\n${from}` : ''}`,
       )}`
@@ -49,13 +55,22 @@ export function ContactForm({ email }: { email: string }) {
         <label htmlFor="c-topic">What is it about?</label>
         <select
           id="c-topic" name="topic" className={styles.select}
-          value={topic} onChange={(e) => setTopic(e.target.value)}
+          value={topic} onChange={(e) => onTopic(e.target.value)}
         >
           {contactTopics.map((t) => (
             <option key={t.key} value={t.key}>{t.label}</option>
           ))}
         </select>
       </div>
+
+      {/* The chosen subject's own sentence. It is the same string the card
+          below carries, so the page never says two things about one choice.
+          aria-live, because choosing from a card down the page changes it
+          while the focus is somewhere else entirely. */}
+      <p className={styles.hint} aria-live="polite">
+        <span className={styles.hintMark} aria-hidden="true">&#9679;</span>
+        <span>{chosen.body}</span>
+      </p>
 
       <div className={styles.row}>
         <div className={styles.field}>

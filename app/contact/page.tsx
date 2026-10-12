@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { brand, contactTopics } from '@/content/brand'
-import { ContactForm } from './ContactForm'
-import styles from '../legal.module.css'
+import { BrandDetail } from '@/components/ui/BrandDetail'
+import { brand } from '@/content/brand'
+import { ContactPanel } from './ContactPanel'
+import styles from './contact.module.css'
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -12,15 +13,18 @@ export const metadata: Metadata = {
 }
 
 /**
- * CONTACT, on the client's own copy (supplied Oct 2026) and laid out to suit
- * it rather than the other way round.
+ * CONTACT, on the client's own copy and rebuilt to put the form beside the
+ * welcome rather than under it.
  *
- * That copy is the reason this page changed shape. The placeholder it replaces
- * was three small cards; this is a welcome, an invitation, SEVEN subjects they
- * want to hear about, and a sign-off. So: a warm head, the form first because
- * the whole page is an invitation to write, and the seven subjects underneath
- * as a grid that doubles as the form's own topic list — one array in
- * content/brand.ts feeds both, so a card and an option can never disagree.
+ * The previous version stacked: a welcome, then the form, then seven subject
+ * cards, then a sign-off. Everything arrived in turn and nothing arrived
+ * together — you had to scroll past a page of prose about writing to us before
+ * reaching the thing you write in. Now the welcome holds the left column and
+ * the form holds the right, so on any desktop screen the first view of this
+ * page contains both the invitation and somewhere to accept it.
+ *
+ * The seven subjects stay, below, but they are buttons now: pressing one sets
+ * the form's subject and sends you back to it. See ContactPanel.
  *
  * ⚠️ TODO(client): the document gives the email address as
  * "[Add official support email]". Until that arrives this page shows
@@ -31,8 +35,10 @@ export default function ContactPage() {
   return (
     <>
       <div className={styles.page}>
+        <BrandDetail preset="splashdown" opacity={0.1} />
+
         <div className="wrap">
-          <header className={styles.masthead}>
+          <ContactPanel email={brand.email} instagram={brand.instagram}>
             <p className="mono">Say hello</p>
             <h1 className="d d-xl">We&rsquo;d Love to Hear From You!</h1>
             <p className={`lead ${styles.lede}`}>
@@ -45,32 +51,7 @@ export default function ContactPage() {
               &mdash; we&rsquo;re growing a community, and we&rsquo;re so happy
               you&rsquo;re part of it.
             </p>
-          </header>
-
-          {/* THE FORM FIRST. The whole page is an invitation to write, so the
-              thing you write in should not be below seven paragraphs about
-              what you might write about. */}
-          <section className={styles.band} aria-labelledby="get-in-touch">
-            <h2 id="get-in-touch" className={styles.bandTitle}>Get in Touch</h2>
-            <p className={styles.bandBlurb}>
-              Whether you have a question, an idea to share, some feedback, or simply
-              want to say hello, our inbox is always open. Send us a message, and
-              we&rsquo;ll get back to you as soon as we can!
-            </p>
-            <ContactForm email={brand.email} />
-          </section>
-
-          <section className={styles.band} aria-labelledby="specific">
-            <h2 id="specific" className={styles.bandTitle}>Looking for Something Specific?</h2>
-            <ul className={styles.topics}>
-              {contactTopics.map((t) => (
-                <li key={t.key} className={styles.topic}>
-                  <h3 className={styles.topicTitle}>{t.label}</h3>
-                  <p>{t.body}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
+          </ContactPanel>
         </div>
       </div>
 

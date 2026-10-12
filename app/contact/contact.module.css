@@ -1,0 +1,258 @@
+/* =============================================================================
+   CONTACT.
+
+   The client's brief for this page was "move the form to the right" and "be
+   creative", so the shape changed rather than the margins: the form is no
+   longer a block partway down a column, it sits BESIDE the welcome, visible
+   without scrolling, and the seven subjects below it are wired INTO it.
+
+   Depth here is outlines on flat colour, never shadows — tokens.css:73 measures
+   the reference and sets --shadow: none for exactly this reason. Everything
+   that looks raised below is a 2px border and a flat fill.
+   ========================================================================== */
+.page {
+  position: relative; overflow: clip;
+  background: var(--cream);
+  padding-block: clamp(var(--s-7), 6vw, var(--s-9)) clamp(var(--s-7), 5vw, var(--s-9));
+}
+
+/* ---- the split: welcome left, form right -------------------------------- */
+.split { display: grid; gap: clamp(var(--s-7), 5vw, var(--s-8)); align-items: start; }
+@media (min-width: 980px) {
+  .split {
+    /* The form column is the wider of the two. A form narrower than the prose
+       beside it reads as an afterthought bolted to the page. */
+    grid-template-columns: minmax(0, .88fr) minmax(0, 1fr);
+    gap: clamp(var(--s-7), 5vw, var(--s-10));
+  }
+}
+
+.copy { display: grid; justify-items: start; gap: var(--s-4); }
+.copy h1 { max-width: 15ch; text-wrap: balance; }
+.lede { max-width: 46ch; }
+.sub { max-width: 46ch; line-height: 1.62; color: var(--ink-soft); }
+
+/* ---- the two direct lines ------------------------------------------------
+   Under the welcome, because some people have no intention of filling in a
+   form and should not have to scroll past one to find an email address. */
+.direct {
+  display: grid; gap: var(--s-3);
+  inline-size: 100%; max-width: 420px;
+  margin-block-start: var(--s-4);
+  list-style: none; padding: 0;
+}
+.line {
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-lg);
+  color: var(--ink); text-decoration: none;
+  transition: background var(--t) ease, translate var(--t) var(--spring);
+}
+@media (hover: hover) {
+  .line:hover { background: var(--sun-soft); translate: 3px 0; }
+}
+.line:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .line { transition: none; } .line:hover { translate: none; }
+}
+.lineIcon {
+  display: grid; place-items: center;
+  inline-size: 44px; block-size: 44px;
+  border-radius: 50%;
+  background: var(--sun-soft);
+  border: var(--border);
+}
+.lineLabel {
+  display: block;
+  font-size: var(--fs-micro); font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.lineValue { display: block; font-size: var(--fs-small); font-weight: 700; word-break: break-word; }
+
+/* ---- the form card ------------------------------------------------------- */
+.formWrap { position: relative; }
+/* The right column starts lower than the left, which gives Goosey somewhere to
+   stand that is not the header — and reads correctly anyway: the headline
+   leads, the form answers it. */
+@media (min-width: 980px) { .formWrap { margin-block-start: clamp(var(--s-6), 3.4vw, var(--s-7)); } }
+
+/* Goosey waving over the top edge. A sibling BEFORE the card rather than a
+   child of it, so the card's own fill covers her feet and she reads as standing
+   behind it — a child with a negative z-index would fall behind the card's
+   background and disappear. */
+.peeker {
+  position: absolute; z-index: 0;
+  inline-size: clamp(110px, 13vw, 168px);
+  inset-inline-end: clamp(var(--s-5), 3vw, var(--s-7));
+  /* 55% of her own height above the card: enough that the waving wing is clear
+     of it, little enough that she stays below the fixed header at 980px, which
+     is where this column is narrowest and she is closest to it. */
+  inset-block-start: calc(clamp(110px, 13vw, 168px) * -.55);
+}
+@media (max-width: 899px) { .peeker { display: none; } }
+
+.card {
+  position: relative; z-index: 1;
+  background: var(--paper);
+  border: var(--border-lg); border-radius: var(--r-lg);
+}
+
+/* A coloured head on the card, divided by the same 2px rule as its outside
+   edge. This is the "form on a pad" device — it gives the card a top without
+   a shadow and gives the heading somewhere to sit. */
+.cardHead {
+  padding: clamp(var(--s-5), 2.6vw, var(--s-6)) clamp(var(--s-5), 3vw, var(--s-6));
+  background: var(--sun-soft);
+  border-block-end: var(--border-lg);
+  border-start-start-radius: calc(var(--r-lg) - var(--bw-lg));
+  border-start-end-radius: calc(var(--r-lg) - var(--bw-lg));
+}
+.cardTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.1;
+  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+}
+.cardBlurb {
+  max-width: 48ch; margin-block-start: var(--s-3);
+  font-size: var(--fs-small); line-height: 1.6;
+}
+.cardBody { padding: clamp(var(--s-5), 3vw, var(--s-6)); }
+
+/* ---- the form ------------------------------------------------------------ */
+.form { display: grid; gap: var(--s-5); }
+.row { display: grid; gap: var(--s-5); }
+@media (min-width: 560px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.field { display: grid; gap: var(--s-2); }
+.field label { font-weight: 700; font-size: var(--fs-small); }
+
+.input, .select, .textarea {
+  inline-size: 100%;
+  min-block-size: 52px;
+  padding: 14px 18px;
+  background: var(--cream);
+  border: var(--border); border-radius: var(--r-lg);
+  font: inherit; font-size: var(--fs-small); color: var(--ink);
+}
+.textarea { min-block-size: 150px; resize: vertical; line-height: 1.55; }
+.input::placeholder, .textarea::placeholder { color: var(--ink-soft); }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible {
+  outline: var(--bw-lg) solid var(--ink); outline-offset: 2px;
+}
+/* The native arrow is the one part of a select worth keeping — it is how a
+   select announces itself — so this only takes the chrome off around it. */
+.select { appearance: none; background-image: none; cursor: pointer; }
+.select::-ms-expand { display: none; }
+
+/* The chosen subject's own sentence, shown under the picker. It is the same
+   string the card below the form carries, so choosing a subject in either place
+   tells you the same thing. */
+.hint {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-3);
+  margin-block-start: calc(var(--s-2) * -1);
+  padding: var(--s-3) var(--s-4);
+  background: var(--vincey-field);
+  border-radius: var(--r);
+  font-size: var(--fs-small); line-height: 1.5; color: var(--ink);
+}
+.hintMark { color: var(--vincey-ink); margin-block-start: 1px; }
+
+.formFoot { display: grid; gap: var(--s-3); justify-items: start; }
+.send {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-block-size: 52px;
+  padding-inline: var(--s-6);
+  background: var(--sun); color: var(--ink);
+  border: var(--border); border-radius: var(--r-pill);
+  font-weight: 700; font-size: var(--fs-small);
+  cursor: pointer;
+  transition: translate var(--t) var(--spring);
+}
+@media (hover: hover) { .send:hover { translate: 0 -2px; } }
+.send:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .send { transition: none; } .send:hover { translate: none; } }
+.formNote { max-width: 52ch; font-size: var(--fs-small); line-height: 1.55; color: var(--ink-soft); }
+.formNote a { color: var(--ink); font-weight: 600; }
+
+/* ---- the seven subjects -------------------------------------------------- */
+.topics { margin-block-start: clamp(var(--s-8), 6vw, var(--s-10)); }
+.topicsHead { display: grid; justify-items: start; gap: var(--s-3); margin-block-end: var(--s-6); }
+.topicsTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.12;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+.topicsBlurb { max-width: 58ch; font-size: var(--fs-small); line-height: 1.6; color: var(--ink-soft); }
+
+.grid {
+  display: grid; gap: var(--s-4); align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  list-style: none; padding: 0; margin: 0;
+}
+@media (min-width: 680px)  { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1040px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* "Anything Else" is four times the length of the other six and is the odd one
+   out of seven, so it takes the width rather than standing alone as a tall
+   column with a gap beside it. */
+@media (min-width: 1040px) { .grid > li:last-child { grid-column: span 2; } }
+
+/* Each subject is a BUTTON, not a paragraph: pressing one sets the form's
+   subject and sends you back up to it with the message box focused. That is the
+   whole reason this list is on the page — it was a menu that did nothing. */
+.topic {
+  display: grid; gap: var(--s-2); align-content: start;
+  inline-size: 100%; block-size: 100%;
+  padding: var(--s-5);
+  text-align: start;
+  background: var(--paper);
+  border: var(--border-lg); border-radius: var(--r-lg);
+  color: var(--ink); font: inherit; cursor: pointer;
+  transition: background var(--t) ease, translate var(--t) var(--spring);
+}
+/* The tint rotates through the brand's three soft fields so seven cards are not
+   seven identical rectangles. `--tint` is set per card from the component. */
+.topic { background: var(--tint, var(--paper)); }
+@media (hover: hover) { .topic:hover { translate: 0 -3px; } }
+.topic:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .topic { transition: none; } .topic:hover { translate: none; }
+}
+/* The one you have chosen. Full sun, and the arrow turns solid. */
+.topic[aria-pressed='true'] { background: var(--sun); }
+
+.topicTop {
+  display: flex; align-items: center; gap: var(--s-3);
+  color: var(--ink);
+}
+.topicTitle {
+  font-weight: 700; font-size: var(--fs-small);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.topic p { font-size: var(--fs-small); line-height: 1.55; }
+.topicGo {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-block-start: var(--s-2);
+  font-size: var(--fs-micro); font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.topic[aria-pressed='true'] .topicGo { color: var(--ink); }
+
+/* ---- the closing band ---------------------------------------------------- */
+.close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
+.closeInner { display: grid; justify-items: start; gap: var(--s-4); }
+.closeTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.1;
+  font-size: clamp(1.5rem, 3.4vw, 2.75rem);
+  max-width: 24ch; text-wrap: balance;
+}
+.closeBlurb { max-width: 56ch; line-height: 1.6; }
+.closeTagline {
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  letter-spacing: .008em;
+  margin-block-start: var(--s-2);
+}
