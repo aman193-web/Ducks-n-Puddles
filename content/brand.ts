@@ -196,7 +196,7 @@ export const specs: Spec[] = [
   { key: 'bpa', label: 'BPA-free', value: 'Your kids matter. We give a duck.', status: 'confirmed' },
   { key: 'grip', label: 'Little-hand friendly', value: 'Lightweight + easy to grip', status: 'confirmed' },
   { key: 'age', label: 'Made for little ones', value: 'Designed for toddlers & preschoolers', status: 'confirmed' },
-  /* The FAQ now says "ideal for ages 2\u20136". Kept broader on the card because that
+  /* The FAQ now says "ideal for ages 2\u20138". Kept broader on the card because that
      is the wording the client specified for this grid. */
 
   /* Supplied at last, in the Sep 2026 FAQ copy. Left as `pending` rather than
@@ -493,7 +493,8 @@ export const reels: Reel[] = [
  *             exist. The new wording is careful and plausible, but it is still
  *             a safety claim about a children's product and it is the single
  *             most consequential sentence on this page.
- *   ages      "ideal for ages 2–6" — narrower than the old "toddlers and
+ *   ages      "ideal for ages 2–8" (2–6 until Oct 2026) — the client widened
+ *             it for consistency. Narrower than the old "toddlers and
  *             preschoolers".
  *
  * TODO(client): confirm all three with the manufacturer in writing.
@@ -525,7 +526,7 @@ export const faqs = [
   },
   {
     q: 'What ages is it for?',
-    a: 'Our bottles are designed with little ones in mind and are ideal for ages 2\u20136 \u2014 lightweight, easy to hold, and made for little hands.',
+    a: 'Our bottles are designed with little ones in mind and are ideal for ages 2\u20138 \u2014 lightweight, easy to hold, and made for little hands.',
   },
   {
     q: 'How can I get one?',

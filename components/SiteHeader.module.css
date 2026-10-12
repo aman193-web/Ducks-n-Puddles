@@ -22,13 +22,26 @@
   align-items: center;
   gap: var(--s-4);
   min-block-size: var(--header-h);
-  padding-block: var(--s-3);
+  /* 8, not 12. The mark is capped by what the bar can hold, and --header-h is
+     fixed at 92 — the duck panels pin to it, so the bar growing would move
+     them. Taking 4px off each side is what buys the logo its extra 8. */
+  padding-block: var(--s-2);
 }
 
-/* The lockup ships as artwork; it gets a size and nothing else. */
+/* The lockup ships as artwork; it gets a size and nothing else.
+
+   UP FROM 50/13vw/68 at the client's request — they wanted it to carry more
+   presence in the corner.
+
+   The ceiling is whatever the bar can hold, and the bar cannot grow:
+   --header-h is 92px and the duck panels pin to that number, so a taller
+   header would move them. 92 less the bar's own padding is the budget, which
+   is why that padding came down from 12 to 8 — the four pixels a side are
+   what the mark gains. The floor rises with it so a phone gets the same step
+   up rather than only desktop. */
 .brand { display: flex; align-items: center; flex: none; text-decoration: none; }
 .brand img {
-  block-size: clamp(50px, 13vw, 68px);
+  block-size: clamp(58px, 15vw, 76px);
   inline-size: auto; width: auto;
   transition: transform .5s var(--spring);
 }

@@ -111,8 +111,11 @@ export function Hero() {
                   two places it belongs: the header's Store chip and the Duck
                   Squad signup. */}
               <h1 id="hero-title" className={`d ${styles.title}`}>
-                <span><span>A friend for </span></span>
-                <span><span>every adventure</span></span>
+                {/* Title case at the client's request, and set to match
+                    brand.tagline exactly — "for" stays lowercase, as it is
+                    there and in every other place this line appears. */}
+                <span><span>A Friend for </span></span>
+                <span><span>Every Adventure</span></span>
               </h1>
 
               <div className={styles.ctas}>
@@ -126,7 +129,7 @@ export function Hero() {
             {/* the headline, thrown back off the water — decorative, so it is
                 mirrored and faded rather than repeated for a screen reader */}
             <p className={`d ${styles.echo}`} aria-hidden="true" data-depth="0.05">
-              <span>A friend for</span><span>every adventure</span>
+              <span>A Friend for</span><span>Every Adventure</span>
             </p>
 
             {/* -- the waterline itself -- */}
