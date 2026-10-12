@@ -30,37 +30,51 @@
    the standfirst from it as the different thought it is, and the controls sit
    a measured step below: about 15 / 22 / 33 at 1280. */
 /* THE WHOLE HEAD — label, title, standfirst, search, categories — on one
-   centred axis, which is what the client's reference does. It used to be a
-   left-aligned masthead with the two controls on a row beneath it. */
+   centred axis, which is what the client's reference does.
+
+   THE RHYTHM IS WRITTEN OUT HERE rather than taken from the --flow-* tokens.
+   Those are tuned for a left-aligned section head where the standfirst is a
+   separate thought set beside a heading; stacked and centred they left 80px
+   between every pair, so the five parts read as five things rather than as one
+   block. These are tighter and deliberately uneven: the label sits close to
+   the title it names, the standfirst closer still, and the only real gap is the
+   one before the controls — which is the point where the head stops describing
+   the page and starts operating it. */
 .head {
   display: grid; justify-items: center; text-align: center;
   margin-block-end: clamp(var(--s-7), 5vw, var(--s-9));
+  inline-size: 100%;
 }
-.head .lede { margin-inline: auto; max-width: 62ch; }
 
 .masthead {
   display: grid; justify-items: center; text-align: center;
-  gap: var(--flow-eyebrow);
-  /* Less than --flow-block. The search field and the chips are not the next
-     section — they belong to the head above them, and the real break is the
-     one under THEM, before the results they govern. */
-  margin-block-end: clamp(24px, 2.6vw, 40px);
+  gap: var(--s-3);
+  margin-block-end: clamp(var(--s-6), 3.2vw, var(--s-7));
 }
-.masthead > :last-child { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
+/* The eyebrow is a cloud with its own air inside it, so it needs less under it
+   than a line of type would. */
+.masthead > :first-child { margin-block-end: calc(var(--s-2) * -1); }
+/* NO WIDTH CAP ON EITHER. Both of these fit on one line at this size, and a cap
+   is how they stop doing that: 20ch broke the title in half, and the display
+   face's leading makes a two-line title a bigger gap than the one this change
+   was meant to close. The standfirst has the same problem at 48ch. They still
+   wrap on a phone, where they have to. */
+.masthead h1 { max-width: none; text-wrap: balance; }
+.lede { max-width: none; }
+.head .lede { margin-inline: auto; }
 
 /* ---- search + filters ----------------------------------------------------
-   The two controls that decide what is listed, on one row above the results
-   they govern. They stack on a phone, where a field beside four chips leaves
-   the field too narrow to type into. */
+   The two controls that decide what is listed. Stacked, not side by side: the
+   reference puts the field on its own line above the categories, and centring a
+   320px field beside a wrapping row of chips gives neither of them an axis.
+   They sit close together on purpose — a field and the filters under it are one
+   control, and the gap that matters is the one above them both. */
 .tools {
-  display: grid; gap: var(--s-5); justify-items: center;
+  display: grid; gap: var(--s-4); justify-items: center;
   inline-size: 100%;
   margin-block-end: 0;
 }
-/* Stacked, not side by side: the reference puts the field on its own line above
-   the categories, and centring a 320px field beside a wrapping row of chips
-   gives neither of them an axis. */
-.tools .search { inline-size: min(100%, 460px); }
+.tools .search { inline-size: min(100%, 520px); }
 .filters { justify-content: center; }
 
 .search { position: relative; display: flex; align-items: center; }
@@ -473,23 +487,15 @@
 .crumbs ol { justify-content: center; }
 
 /* ---- the body, with the contents rail beside it -------------------------- */
-/* THREE TRACKS: an empty left margin, the prose at its own measure in the
-   middle, and the rail in the right margin. That keeps the body centred on the
-   page — the same axis as the header above it — while the rail sits out to the
-   right rather than stealing width from the column it indexes. */
-.postCols { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-7)); align-items: start; }
-@media (min-width: 1240px) {
-  .postCols {
-    grid-template-columns:
-      minmax(0, 1fr) minmax(0, clamp(620px, 52vw, 760px)) minmax(0, 1fr);
-  }
-  /* Rail FIRST in the source and second on screen: the prose is the page, so a
-     screen reader and a phone both get it first. */
-  .postCols > .prose { grid-column: 2; grid-row: 1; }
-  .postRail { grid-column: 3; grid-row: 1; justify-self: start; inline-size: 236px; }
+/* TWO TRACKS inside the article's own measure: the rail on the left, the prose
+   beside it. 220px rather than the 236 it had in the margin — inside the
+   measure every pixel it takes comes off the prose. */
+.postCols { display: grid; gap: clamp(var(--s-6), 3.4vw, var(--s-7)); align-items: start; }
+@media (min-width: 1100px) {
+  .postCols { grid-template-columns: 220px minmax(0, 1fr); }
 }
 .postRail { display: none; }
-@media (min-width: 1240px) {
+@media (min-width: 1100px) {
   .postRail {
     display: block;
     position: sticky;

@@ -104,13 +104,14 @@ export default async function JournalPost(
         <div className={styles.hero}>
           <Picture id={post.image} sizes="(min-width: 900px) 76vw, 94vw" alt="" priority />
         </div>
-        </div>
 
-        {/* THE BODY SITS OUTSIDE THE CENTRED MEASURE, so the contents rail can
-            stand in the right-hand margin instead of eating the column it is
-            meant to serve. The prose keeps its own measure, centred in the
-            middle track; the rail takes the track beside it. One column below
-            1240px, where there is no margin to stand in. */}
+        {/* THE BODY, with the contents rail beside it on the LEFT and inside
+            the article's own measure — the client's call, after a version that
+            pushed it out into the right-hand margin. Rail first in the source
+            as well as on screen: it is navigation for the article, and
+            navigation before the thing it navigates is the order a screen
+            reader wants anyway. One column below 1100px, where a 220px rail
+            would take a third of the measure from the prose it serves. */}
         <div className={styles.postCols}>
           {toc.length > 1 && (
             <aside className={styles.postRail} aria-label="On this page">
@@ -134,7 +135,6 @@ export default async function JournalPost(
           </div>
         </div>
 
-        <div className={styles.article}>
         {more.length > 0 && (
           <nav className={styles.more} aria-label="More notes">
             <h2 className={styles.moreTitle}>More from the pond</h2>
