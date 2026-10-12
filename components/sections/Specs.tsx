@@ -41,7 +41,7 @@ export function Specs() {
       <Duck who="goosey" pose="rest" className={styles.cameo} float />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--cream)" rot={2} data-pop="" data-pop-rot="2">
+          <Sticker colour="var(--cream)" data-pop="">
             The details
           </Sticker>
           <h2 id="specs-title" className="d d-xl" data-anim="">

@@ -9,15 +9,6 @@ import { contactTopics } from '@/content/brand'
 import { ContactForm } from './ContactForm'
 import styles from './contact.module.css'
 
-/* One tint per subject, rotating through the three soft brand fields, so seven
-   cards are not seven identical rectangles. Fields, not the full-strength
-   colours: these carry body copy. */
-const TINTS = [
-  'var(--vincey-field)', 'var(--chichi-field)', 'var(--goosey-field)',
-  'var(--vincey-field)', 'var(--chichi-field)', 'var(--goosey-field)',
-  'var(--vincey-field)',
-]
-
 /* An icon per subject, keyed to the subject rather than to the brand.
  *
  * These were the bottle motifs — droplets, a flower, a footprint. On a MENU
@@ -136,30 +127,27 @@ export function ContactPanel({ email, instagram, children }: {
         </header>
 
         <ul className={styles.grid}>
-          {contactTopics.map((t, i) => {
+          {contactTopics.map((t) => {
             const Icon = ICONS[t.key] ?? Sparkle
             return (
-            <li key={t.key}>
-              <button
-                type="button"
-                className={styles.topic}
-                style={{ ['--tint' as string]: TINTS[i % TINTS.length] } as React.CSSProperties}
-                aria-pressed={topic === t.key}
-                onClick={() => choose(t.key)}
-              >
-                <span className={styles.topicTop}>
+              <li key={t.key}>
+                <button
+                  type="button"
+                  className={styles.topic}
+                  aria-pressed={topic === t.key}
+                  onClick={() => choose(t.key)}
+                >
                   <span className={styles.topicIcon} aria-hidden="true">
-                    <Icon size={20} weight="bold" />
+                    <Icon size={20} weight="regular" />
                   </span>
                   <span className={styles.topicTitle}>{t.label}</span>
-                </span>
-                <p>{t.body}</p>
-                <span className={styles.topicGo}>
-                  {topic === t.key ? 'Chosen' : 'Write about this'}
-                  <ArrowRight size={13} weight="bold" aria-hidden="true" />
-                </span>
-              </button>
-            </li>
+                  <p>{t.body}</p>
+                  <span className={styles.topicGo}>
+                    {topic === t.key ? 'Chosen' : 'Write about this'}
+                    <ArrowRight size={13} weight="bold" aria-hidden="true" />
+                  </span>
+                </button>
+              </li>
             )
           })}
         </ul>

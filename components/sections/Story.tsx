@@ -54,7 +54,7 @@ export function Story() {
               height, so that alignment holds at every width without a single
               hard-coded number. */}
           <header className={styles.head}>
-            <Sticker colour="var(--chichi-soft)" rot={-2} data-pop="" data-pop-rot="-2">Our story</Sticker>
+            <Sticker colour="var(--chichi-soft)" data-pop="">Our story</Sticker>
             <h2 id="story-title" className={`d ${styles.title}`} data-anim="">
               We All Need a Friend.
             </h2>

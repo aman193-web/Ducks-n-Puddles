@@ -41,7 +41,7 @@
 /* ---- the two columns ----------------------------------------------------- */
 .cols { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-8)); align-items: start; }
 @media (min-width: 1040px) {
-  .cols { grid-template-columns: 250px minmax(0, 1fr); }
+  .cols { grid-template-columns: 290px minmax(0, 1fr); }
 }
 
 /* ---- the sticky index ---------------------------------------------------- */
@@ -81,9 +81,13 @@
   font-size: 11px; letter-spacing: 0; color: var(--ink);
 }
 
-/* THE LIST ITSELF reads as a route rather than as links: a track down the
-   number column, a numbered stop on it for each clause, and the stops you have
-   passed filled in. That is what turns an index into a position. */
+/* THE LIST ITSELF reads as a route rather than as links: a track down the left,
+   a stop on it for each clause, and the stops you have passed filled in. That is
+   what turns an index into a position.
+
+   The stops were numbered until the client asked for the numbers to come off:
+   each clause is already numbered where it is written, and repeating it beside
+   a title that wraps to three lines was two numbering systems for one list. */
 .toc {
   position: relative;
   display: grid; gap: 1px;
@@ -91,15 +95,15 @@
 }
 .toc::before {
   content: ''; position: absolute; z-index: 0;
-  inset-block: 15px; inset-inline-start: 19px;
+  inset-block: 14px; inset-inline-start: 13px;
   inline-size: 2px; border-radius: 2px;
   background: color-mix(in srgb, var(--ink) 14%, transparent);
 }
 .toc a {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: var(--s-3);
+  display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: var(--s-3);
   align-items: center;
-  padding: 5px 10px 5px 7px;
+  padding: 6px 10px 6px 8px;
   border-radius: var(--r-sm);
   font-size: var(--fs-small); line-height: 1.3;
   color: var(--ink-soft); text-decoration: none;
@@ -109,21 +113,21 @@
 .toc a:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 1px; }
 
 /* The stop. Opaque, so it sits ON the track rather than beside it. */
-.tocNum {
-  display: grid; place-items: center;
-  inline-size: 24px; block-size: 24px; border-radius: 50%;
+.tocDot {
+  justify-self: center;
+  inline-size: 11px; block-size: 11px; border-radius: 50%;
   background: var(--paper); border: var(--border);
-  font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums;
-  color: var(--ink);
-  transition: background var(--t) ease;
+  transition: background var(--t) ease, scale var(--t) var(--spring);
 }
 /* Behind you. */
-.toc a[data-done] .tocNum { background: var(--sun-soft); }
+.toc a[data-done] .tocDot { background: var(--sun-soft); }
 /* Where you are. */
 .toc a[aria-current] { color: var(--ink); font-weight: 700; }
-.toc a[aria-current] .tocNum { background: var(--sun); border-width: var(--bw-lg); }
+.toc a[aria-current] .tocDot {
+  background: var(--sun); border-width: var(--bw-lg); scale: 1.3;
+}
 @media (prefers-reduced-motion: reduce) {
-  .toc a, .tocNum { transition: none; }
+  .toc a, .tocDot { transition: none; }
 }
 
 /* ---- the same index, folded, on narrow screens --------------------------- */
@@ -217,18 +221,6 @@
 .cardPlace { font-size: var(--fs-small); color: var(--ink-soft); }
 .cardMail { margin-block-start: var(--s-2); font-weight: 700; }
 .cardMail a { color: var(--ink); text-underline-offset: .22em; }
-/* THE ADDRESS THAT DOES NOT EXIST YET. Dashed and unlinked, so it reads as a
-   gap left open rather than as a line somebody forgot to finish — this is the
-   contact point for data requests, and looking like an address while being
-   none is the one thing it must not do. See brand.supportEmail. */
-.cardGap {
-  display: inline-block;
-  padding: 5px 14px;
-  background: color-mix(in srgb, var(--paper) 70%, transparent);
-  border: var(--bw-lg) dashed color-mix(in srgb, var(--ink) 40%, transparent);
-  border-radius: var(--r-pill);
-  font-size: var(--fs-small); font-weight: 700; color: var(--ink-soft);
-}
 .cardMore { font-size: var(--fs-small); color: var(--ink-soft); margin-block-start: var(--s-2); }
 .cardMore a { color: var(--ink); font-weight: 600; }
 

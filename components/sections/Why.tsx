@@ -56,7 +56,7 @@ export function Why() {
       <BrandDetail preset="shallows" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--goosey-soft)" rot={-2} data-pop="" data-pop-rot="-2">
+          <Sticker colour="var(--goosey-soft)" data-pop="">
             Why we make these
           </Sticker>
           <h2 id="why-title" className="d d-xl measure" data-anim="">

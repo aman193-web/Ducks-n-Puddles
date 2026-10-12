@@ -77,7 +77,11 @@
 /* The right column starts lower than the left, which gives Goosey somewhere to
    stand that is not the header — and reads correctly anyway: the headline
    leads, the form answers it. */
-@media (min-width: 980px) { .formWrap { margin-block-start: clamp(var(--s-6), 3.4vw, var(--s-7)); } }
+/* The 48px here was headroom for one duck's head. It is the trio now and the
+   client wants more of them showing, so the column starts lower — and the card
+   gives the height back below (the head lost its second line, the textarea four
+   rows instead of five), so the form still ends above the fold. */
+@media (min-width: 980px) { .formWrap { margin-block-start: clamp(var(--s-7), 6vw, 92px); } }
 
 /* The three of them over the top edge. A sibling BEFORE the card rather than a
    child of it, so the card's own fill covers their legs and they read as
@@ -85,15 +89,16 @@
    card's background and disappear.
    trio-walk is square, so the box height equals --peek. */
 .peeker {
-  --peek: clamp(150px, 18vw, 240px);
+  --peek: clamp(170px, 20vw, 280px);
   position: absolute; z-index: 0;
   inline-size: var(--peek);
   inset-inline-end: clamp(var(--s-4), 2.4vw, var(--s-6));
-  /* 46% of the artwork's height above the card. The file has transparent air
-     over their heads, so the ink clears by less than that — enough that all
-     three faces show, little enough that they stay below the fixed header at
-     980px, where this column is narrowest and they sit closest to it. */
-  inset-block-start: calc(var(--peek) * -.46);
+  /* 58% of the artwork's height above the card, up from 46%: heads, wings and
+     a good part of their bodies rather than three faces on a shelf. The file
+     has transparent air over their heads, so the ink clears by less than that.
+     The ceiling is the fixed header at 980px, where this column is narrowest
+     and they sit closest to it — measured there, not guessed. */
+  inset-block-start: calc(var(--peek) * -.58);
 }
 @media (max-width: 899px) { .peeker { display: none; } }
 
@@ -107,7 +112,7 @@
    edge. This is the "form on a pad" device — it gives the card a top without
    a shadow and gives the heading somewhere to sit. */
 .cardHead {
-  padding: var(--s-5) clamp(var(--s-5), 3vw, var(--s-6));
+  padding: 20px clamp(var(--s-5), 3vw, var(--s-6));
   background: var(--sun-soft);
   border-block-end: var(--border-lg);
   border-start-start-radius: calc(var(--r-lg) - var(--bw-lg));
@@ -122,14 +127,14 @@
   max-width: 52ch; margin-block-start: var(--s-2);
   font-size: var(--fs-small); line-height: 1.55;
 }
-.cardBody { padding: var(--s-5) clamp(var(--s-5), 3vw, var(--s-6)); }
+.cardBody { padding: 20px clamp(var(--s-5), 3vw, var(--s-6)); }
 
 /* ---- the form ------------------------------------------------------------ */
 /* TIGHT ON PURPOSE. The brief was that the form should not need scrolling, and
    at 950px of viewport it has roughly 700px to live in once the header and the
    page's own top margin are out: that is the budget every number below is set
    against. The fields keep a 46px hit target, which is the floor worth holding. */
-.form { display: grid; gap: var(--s-4); }
+.form { display: grid; gap: 14px; }
 .row { display: grid; gap: var(--s-4); }
 @media (min-width: 560px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
@@ -144,7 +149,7 @@
   border: var(--border); border-radius: var(--r-lg);
   font: inherit; font-size: var(--fs-small); color: var(--ink);
 }
-.textarea { min-block-size: 104px; resize: vertical; line-height: 1.5; }
+.textarea { min-block-size: 76px; resize: vertical; line-height: 1.5; }
 .input::placeholder, .textarea::placeholder { color: var(--ink-soft); }
 .input:focus-visible, .select:focus-visible, .textarea:focus-visible {
   outline: var(--bw-lg) solid var(--ink); outline-offset: 2px;
@@ -215,46 +220,67 @@
 /* Each subject is a BUTTON, not a paragraph: pressing one sets the form's
    subject and sends you back up to it with the message box focused. That is the
    whole reason this list is on the page — it was a menu that did nothing. */
+/* Each subject is a BUTTON, not a paragraph: pressing one sets the form's
+   subject and sends you back up to it with the message box focused. That is the
+   whole reason this list is on the page — it was a menu that did nothing.
+
+   The card is built on The Details ("Made with parents in mind"), at the
+   client's request: glyph in a soft well BESIDE a mono label rather than above
+   it, the body spanning underneath, and one quiet ground for all seven. The
+   seven coloured tints are gone with it — three fields rotating through seven
+   cards was the thing stopping this grid from looking composed. */
 .topic {
-  display: grid; gap: var(--s-2); align-content: start;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 11px; row-gap: 4px;
+  align-content: start;
   inline-size: 100%; block-size: 100%;
-  padding: var(--s-5);
+  padding: clamp(16px, 1.5vw, 20px) clamp(17px, 1.6vw, 22px);
   text-align: start;
   background: var(--paper);
-  border: var(--border-lg); border-radius: var(--r-lg);
+  border: var(--border); border-radius: var(--r-lg);
   color: var(--ink); font: inherit; cursor: pointer;
   transition: background var(--t) ease, translate var(--t) var(--spring);
 }
-/* The tint rotates through the brand's three soft fields so seven cards are not
-   seven identical rectangles. `--tint` is set per card from the component. */
-.topic { background: var(--tint, var(--paper)); }
-@media (hover: hover) { .topic:hover { translate: 0 -3px; } }
+@media (hover: hover) { .topic:hover { translate: 0 -4px; } }
 .topic:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   .topic { transition: none; } .topic:hover { translate: none; }
 }
-/* The one you have chosen. Full sun, and the arrow turns solid. */
-.topic[aria-pressed='true'] { background: var(--sun); }
+/* The one you have chosen. */
+.topic[aria-pressed='true'] { background: var(--sun-soft); border-width: var(--bw-lg); }
 
-.topicTop {
-  display: flex; align-items: center; gap: var(--s-3);
-  color: var(--ink);
-}
+/* The glyph's well: ink at 6%, a rounded square not a disc — the same neutral
+   the spec cards use, so it stays quiet on any ground. */
 .topicIcon {
-  display: grid; place-items: center; flex: none;
-  inline-size: 36px; block-size: 36px;
-  border-radius: 50%;
-  background: var(--paper); border: var(--border);
+  grid-column: 1; grid-row: 1;
+  display: grid; place-items: center;
+  inline-size: clamp(34px, 2.5vw, 40px); block-size: clamp(34px, 2.5vw, 40px);
+  background: rgba(16, 38, 74, .06);
+  color: var(--ink);
+  border-radius: var(--r);
 }
-.topic[aria-pressed='true'] .topicIcon { background: var(--sun-soft); }
+.topic[aria-pressed='true'] .topicIcon { background: rgba(16, 38, 74, .09); }
+.topicIcon svg { display: block; }
+
 .topicTitle {
-  font-weight: 700; font-size: var(--fs-small);
-  letter-spacing: .04em; text-transform: uppercase;
+  grid-column: 2; grid-row: 1;
+  align-self: center;
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: var(--fs-micro); letter-spacing: .09em; text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--ink-soft);
 }
-.topic p { font-size: var(--fs-small); line-height: 1.55; }
+.topic p {
+  grid-column: 1 / -1;
+  margin-block-start: 7px;
+  font-size: clamp(.9375rem, 1vw, 1.0625rem);
+  line-height: 1.45; text-wrap: pretty;
+}
 .topicGo {
+  grid-column: 1 / -1;
   display: inline-flex; align-items: center; gap: 6px;
-  margin-block-start: var(--s-2);
+  margin-block-start: var(--s-3);
   font-size: var(--fs-micro); font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
   color: var(--ink-soft);

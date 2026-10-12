@@ -37,18 +37,22 @@ export const brand = {
    *  Gmail and not a support address. */
   email: 'ducksnpuddles7@gmail.com', // TODO(client): professional domain address
   /**
-   * THE OFFICIAL SUPPORT ADDRESS, and it does not exist yet.
+   * ⚠️ A PLACEHOLDER. THIS MAILBOX DOES NOT EXIST.
    *
-   * The client's own Terms and Privacy documents (October 2026) leave it blank
-   * in both places — "[Add official support email]" and "[Add official privacy
-   * or support email]" — so there is nothing to put here. The legal pages print
-   * a marked placeholder rather than quietly substituting the Gmail, because a
-   * privacy policy naming a personal mailbox as its contact point is a claim
-   * about where your data requests go.
+   * The client's own Terms and Privacy documents (October 2026) leave the field
+   * blank in both places — "[Add official support email]" and "[Add official
+   * privacy or support email]" — so there is no real address to print. This is
+   * the shape the real one will take, on the brand's own domain, so that
+   * swapping it changes one line and nothing shifts.
    *
-   * TODO(client): set this and the placeholder disappears on its own.
+   * It is shown on /terms, /privacy and /contact, and the contact form composes
+   * to it — so until this is replaced, MAIL SENT FROM THE FORM WILL BOUNCE.
+   * brand.email (the Gmail) is still what the footer links to, because that one
+   * is read.
+   *
+   * TODO(client): the real support address, and this comment goes with it.
    */
-  supportEmail: null as string | null,
+  supportEmail: 'hello@ducksnpuddles.com',
   instagram: 'https://www.instagram.com/ducksnpuddles/',
   facebook: 'https://www.facebook.com/profile.php?id=61581543035997',
   domain: 'https://ducksnpuddles.com',

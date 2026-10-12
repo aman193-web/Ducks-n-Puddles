@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
+import { PaperPlaneTilt } from '@phosphor-icons/react/dist/ssr'
 import { contactTopics } from '@/content/brand'
 import styles from './contact.module.css'
 
@@ -101,18 +101,17 @@ export function ContactForm({ email, topic, onTopic }: {
       </div>
 
       <div className={styles.formFoot}>
+        {/* "Send Message" rather than the old "Send it over", and the line that
+            explained what the button does is gone at the client's request.
+            ⚠️ What it does has not changed: the submit still opens the
+            visitor's own mail app with the message composed, because there is
+            no inbox to POST to yet. The label now promises a little more than
+            the implementation delivers — closing that gap is the TODO at the
+            top of this file, not a copy change. */}
         <button type="submit" className={styles.send}>
-          Send it over
-          <ArrowRight size={18} weight="bold" aria-hidden="true" />
+          Send Message
+          <PaperPlaneTilt size={18} weight="bold" aria-hidden="true" />
         </button>
-        {/* Said plainly, because it is not what a form usually does and a
-            surprise at this point is how a message gets abandoned. The offer to
-            write it yourself used to live here too; the address is the first of
-            the two direct lines beside this form, at twice the size. */}
-        <p className={styles.formNote}>
-          Opens your email app with the message ready, so you can see it before
-          it goes.
-        </p>
       </div>
     </form>
   )

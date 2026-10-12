@@ -60,11 +60,9 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
     ? { href: '/privacy', label: 'Privacy Policy' }
     : { href: '/terms', label: 'Terms of Service' }
 
-  /* The document gives the address as a placeholder, and brand.supportEmail is
-     still null, so there is genuinely no official address to print. Say that,
-     rather than quietly substituting the Gmail: a privacy policy naming a
-     personal mailbox as the contact point for data requests is a claim about
-     where those requests go, and it is not one anybody has made. */
+  /* Where the document left the address blank, brand.supportEmail stands in.
+     ⚠️ That address is a placeholder and does not receive mail yet — see the
+     note on it in content/brand.ts. */
   const email = doc.contact.email.startsWith('[') ? brand.supportEmail : doc.contact.email
 
   return (
@@ -119,23 +117,12 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
               <aside className={styles.card}>
                 <p className={styles.cardName}>{doc.contact.name}</p>
                 <p className={styles.cardPlace}>{doc.contact.place}</p>
-                {email ? (
-                  <p className={styles.cardMail}>
-                    <a href={`mailto:${email}`}>{email}</a>
-                  </p>
-                ) : (
-                  <p className={styles.cardMail}>
-                    <span className={styles.cardGap}>Email address to be confirmed</span>
-                  </p>
-                )}
+                <p className={styles.cardMail}>
+                  <a href={`mailto:${email}`}>{email}</a>
+                </p>
                 <p className={styles.cardMore}>
-                  {email ? (
-                    <>Or use the <Link href="/contact">contact form</Link> &mdash; it
-                    reaches the same inbox.</>
-                  ) : (
-                    <>Until then the <Link href="/contact">contact form</Link> reaches
-                    us, and so does the address in the footer.</>
-                  )}
+                  Or use the <Link href="/contact">contact form</Link> &mdash; it
+                  reaches the same inbox.
                 </p>
               </aside>
 

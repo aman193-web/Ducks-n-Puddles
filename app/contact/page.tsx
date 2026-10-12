@@ -26,10 +26,11 @@ export const metadata: Metadata = {
  * The seven subjects stay, below, but they are buttons now: pressing one sets
  * the form's subject and sends you back to it. See ContactPanel.
  *
- * ⚠️ TODO(client): the document gives the email address as
- * "[Add official support email]". Until that arrives this page shows
- * brand.email, which is still the personal Gmail that content/brand.ts has had
- * a TODO against since September.
+ * ⚠️ THE ADDRESS ON THIS PAGE IS A PLACEHOLDER. brand.supportEmail is
+ * hello@ducksnpuddles.com, a mailbox that does not exist — the client's own
+ * documents leave the field blank. The direct line shows it and the form
+ * composes to it, so mail sent from here BOUNCES until it is set. See the note
+ * on brand.supportEmail.
  */
 export default function ContactPage() {
   return (
@@ -38,7 +39,7 @@ export default function ContactPage() {
         <BrandDetail preset="splashdown" opacity={0.1} />
 
         <div className="wrap">
-          <ContactPanel email={brand.email} instagram={brand.instagram}>
+          <ContactPanel email={brand.supportEmail} instagram={brand.instagram}>
             <p className="mono">Say hello</p>
             <h1 className="d d-xl">We&rsquo;d Love to Hear From You!</h1>
             <p className={`lead ${styles.lede}`}>

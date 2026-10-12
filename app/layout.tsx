@@ -6,6 +6,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { HeaderChrome } from '@/components/HeaderChrome'
 import { SiteFooter } from '@/components/SiteFooter'
 import { MotionProvider } from '@/components/MotionProvider'
+import { RouteScrollReset } from '@/components/RouteScrollReset'
 import { ScrollScenes } from '@/components/ScrollScenes'
 import { ScrollDuck } from '@/components/ui/ScrollDuck'
 import { ScrollTop } from '@/components/ScrollTop'
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollTop />
         <CursorTrail />
         <MotionProvider />
+        <RouteScrollReset />
         <ScrollScenes />
       </body>
     </html>

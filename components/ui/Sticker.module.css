@@ -1,15 +1,33 @@
-/* Sticker: a rotated, bordered, hard-shadowed chip. Used as inline glyphs inside
-   headlines, as badges on frames, and as scattered doodles. */
+/* THE SECTION EYEBROW. A puddle outline with a label in it — see Sticker.tsx
+   for why it is an SVG and not a border-radius, and why nothing here rotates. */
 .sticker {
+  position: relative;
   display: inline-flex; align-items: center; gap: var(--s-2);
-  padding: var(--s-2) var(--s-4);
-  background: var(--bg, var(--sun-soft)); color: var(--ink);
-  border: var(--border); border-radius: var(--r-pill);
-  box-shadow: var(--shadow-sm);
+  /* Taller and wider than the old chip's 8px/16px. The puddle's ends curve away
+     from the text where a pill's did not, so the old inset left the first and
+     last letters close to the outline — and the shape needs the height to read
+     as a shape at all rather than as a slightly uneven pill. */
+  padding: 12px var(--s-5);
+  color: var(--ink);
   font-weight: 700; font-size: var(--fs-micro);
   letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
-  rotate: var(--rot, -3deg);
 }
+.blob {
+  position: absolute; inset: 0; z-index: 0;
+  inline-size: 100%; block-size: 100%;
+  fill: var(--bg, var(--sun-soft));
+  stroke: var(--ink);
+  stroke-width: var(--bw);
+  /* The path is drawn clockwise with round ends; a join of 'round' keeps the
+     swells from pinching where the curves meet. */
+  stroke-linejoin: round;
+  /* Decorative: the label beside it is the content. */
+  pointer-events: none;
+}
+.label { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: var(--s-2); }
+
+/* The inline headline glyph is untouched — it is a small disc interrupting a
+   word, not a section eyebrow, and the client's note was about the eyebrows. */
 .glyph {
   display: inline-grid; place-items: center; vertical-align: middle;
   inline-size: .66em; block-size: .66em; padding: .14em;

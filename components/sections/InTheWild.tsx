@@ -99,7 +99,7 @@ export function InTheWild() {
       <div className="wrap">
         <div className={styles.headRow}>
           <div className={styles.head}>
-            <Sticker colour="var(--sun-soft)" rot={-2} data-pop="" data-pop-rot="-2">Out in the world</Sticker>
+            <Sticker colour="var(--sun-soft)" data-pop="">Out in the world</Sticker>
             <h2 id="wild-title" className="d d-xl" data-anim="">Where Will Your Duck Go?</h2>
             <p className="lead measure" data-anim="">
               Big adventures, little moments, and every puddle in between &mdash;

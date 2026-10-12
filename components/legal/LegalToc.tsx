@@ -102,7 +102,7 @@ export function LegalToc({ sections, onPick }: {
             data-done={i < at ? '' : undefined}
             onClick={onPick}
           >
-            <span className={styles.tocNum}>{s.n}</span>
+            <span className={styles.tocDot} aria-hidden="true" />
             <span>{s.title}</span>
           </a>
         </li>
