@@ -545,6 +545,44 @@
 /* A body heading has to clear the fixed header when the rail jumps to it. */
 .proseHead { scroll-margin-top: calc(var(--header-h) + var(--s-5)); }
 
+/* THE CLIENT'S OWN EMPHASIS. Their posts bold whole paragraphs — the line that
+   states the mission, the one about the Foundation, the three words the third
+   post turns on. Weight alone at body size barely reads inside a column of
+   prose, so this gives them a rule and a little air as well: the paragraph is
+   set apart without being lifted out into a pull quote, which would break the
+   sentence-to-sentence flow the writing depends on. */
+.proseEm {
+  padding-inline-start: var(--s-5);
+  border-inline-start: 3px solid var(--sun);
+  font-weight: 600;
+}
+
+/* ---- the rail's standing offer, above the contents ---------------------- */
+/* NO DIVIDER UNDER IT. The "On this page" title below carries its own rule, and
+   on the client's three posts — which have no headings — there is nothing below
+   the card at all, so a border here left a line ruling off empty space. */
+.railCta { display: grid; justify-items: start; gap: var(--s-2); }
+.railCta:not(:last-child) { margin-block-end: var(--s-5); }
+.railCtaTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: 1.125rem; line-height: 1.15; letter-spacing: .008em;
+}
+.railCtaBody { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-soft); }
+.railCtaLink {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-block-start: var(--s-2);
+  padding: 8px 14px;
+  background: var(--sun); color: var(--ink);
+  border: var(--border); border-radius: var(--r-pill);
+  font-size: var(--fs-micro); font-weight: 700; text-decoration: none;
+  transition: translate var(--t) var(--spring);
+}
+@media (hover: hover) { .railCtaLink:hover { translate: 0 -2px; } }
+.railCtaLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .railCtaLink { transition: none; } .railCtaLink:hover { translate: none; }
+}
+
 .postTags {
   display: flex; flex-wrap: wrap; gap: 6px;
   margin-block-start: var(--s-5);

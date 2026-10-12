@@ -18,14 +18,24 @@
  * is about process, parenting or the family, and none of them says anything a
  * manufacturer would have to stand behind.
  */
-/** A paragraph, or a heading introducing one. */
-export type Block = string | { h: string }
+/**
+ * A paragraph, a heading introducing one, or an emphasised paragraph.
+ *
+ * `em` exists because the client's own posts bold whole paragraphs — the line
+ * that states the mission, the one about the Foundation, the three words the
+ * third post turns on. Those are emphasis, NOT section headings, so they must
+ * not become `h`: that would put them in the article's contents rail and
+ * promise a structure the writing does not have.
+ */
+export type Block = string | { h: string } | { em: string }
 
 export interface Post {
   slug: string
   title: string
-  /** The client's three categories, named in the Sep 2026 revisions. */
-  tag: 'Behind the Puddles' | 'Things Worth Sharing' | 'Life Lately'
+  /** The client's categories. 'The Parenting Perspective' joined them with the
+   *  October blog copy; 'Things Worth Sharing' is not in that document but the
+   *  placeholder posts still use it, so it stays until they go. */
+  tag: 'Behind the Puddles' | 'Things Worth Sharing' | 'Life Lately' | 'The Parenting Perspective'
   /** ISO date. Shown as "12 September 2026". */
   date: string
   excerpt: string
@@ -75,79 +85,161 @@ export const authorOf = (post: Post) => post.author ?? defaultAuthor.name
 
 export const posts: Post[] = [
   {
-    slug: 'why-were-still-on-sample-four',
-    title: 'Why we’re still on sample four',
+    slug: 'from-one-little-duck-to-a-really-big-dream',
+    title: 'From One Little Duck to a Really Big Dream: The Story Behind Ducks ’n Puddles',
     tag: 'Behind the Puddles',
-    date: '2026-08-21',
+    date: '2026-10-06',
     excerpt:
-      'Four rounds in, and the thing we keep changing is not the part you would expect. A short account of what each sample taught us.',
-    image: 'sample-beach',
-    readingMinutes: 4,
-    tags: ['Samples', 'Product design'],
+      'Before Ducks ’n Puddles was a company, it was simply an idea. And before it became this really big dream of ours, it started with one little duck.',
+    image: 'family-portrait',
+    readingMinutes: 6,
+    tags: ['Our story', 'Founders', 'The Foundation'],
     top: true,
     body: [
-      'The first three held water. That sounds like a low bar, and it is, but it is the bar every sample has to clear before anything else is worth discussing. On that round the duck printed on the sleeve was still green, which nobody liked, and the silhouette was right for the first time.',
-      { h: 'What each round taught us' },
-      'Sample two was the carry test. We added a handle and it carried beautifully — it also caught on everything: the lip of a bag, a car-seat buckle, the edge of a kitchen counter. A handle that catches is worse than no handle, so it went back.',
-      'The same round is where the straw and lid first left the desk. There is no way to know how a flip-top behaves until a four-year-old opens it one-handed while walking. It is not the same test as opening it on a table.',
-      { h: 'Why we have not shipped' },
-      'Sample three was the colour check, done against real water rather than a screen, because screens lie about blue. Sample four is the closest yet: the tuft is right, the proportions are right, the names are not on the bottles yet.',
-      'People ask why we do not just ship it. The honest answer is that we would rather be late than send out something we would not hand our own kids. There is no date yet. When there is one, the Duck Squad hears before the website does.',
+      'Hi! We’re Larisa and Vinny — husband and wife, mom and dad, and the founders of Ducks ’n Puddles.',
+      'Before Ducks ’n Puddles was a company, it was simply an idea. And before it became this really big dream of ours, it started with one little duck.',
+      'The earliest idea for Ducks ’n Puddles came while we were expecting our daughter, Lucy. We were on our “babymoon,” talking about ideas and dreaming about the future, when the idea of creating a children’s water bottle shaped like a duck came up. At the time, it was just that — an idea for a product. Then Lucy came along, and funny enough, one of her very first words was “duck.” Ducks somehow kept finding their way into our lives, and eventually that original idea found its way back to us too.',
+      'But by then, something had changed. We were parents.',
+      'We understood family life differently. We understood how many products you accumulate when you have children — the water bottles, wipes, bath products, mealtime products, travel products, and endless things stuffed into diaper bags, backpacks, strollers, and every cabinet in your house. We started asking ourselves: What if we could create products that bring a greater sense of comfort to both parents and children? What if the everyday essentials families already need could offer parents more ease, convenience, and peace of mind, while giving children a sense of comfort, confidence, and companionship?',
+      'That question really became the beginning of what Ducks ’n Puddles is today.',
+      'Ducks ’n Puddles began with a water bottle, but somewhere along the way we realized it was never really about a water bottle. We started creating characters... Chi Chi, our bold and brave little duck; Goosey, our optimist who always finds the good; and Vincey, our calm, gentle little guy with a really big heart. Suddenly, we weren’t just creating products anymore. We were creating friends.',
+      'We started imagining a child grabbing their favorite duck before school, taking them on vacation, bringing them to soccer practice, cuddling up with their stories at bedtime, or reaching for something familiar when they were somewhere new. We want children to associate Ducks ’n Puddles with feelings of love, comfort, safety, confidence, joy, and belonging. At the same time, we want parents to associate our brand with ease — thoughtful products that solve some of the little problems that come along with raising kids.',
+      { em: 'That became the heart of our mission: functionality for parents and positive direction for kids.' },
+      'Getting here, however, has definitely not been a straight line. If there’s one thing we’ve learned while building Ducks ’n Puddles, it’s that bringing an idea to life is very different from having one. There have been prototypes that weren’t right, materials we’ve changed, packaging we’ve redesigned, manufacturing issues we never anticipated, parts that broke, and details that seemed tiny but turned into months of problem-solving. There have been so many moments when we thought we were almost there, only to realize there was something else we needed to fix.',
+      { em: 'As eager as we are to finally get these products into your children’s hands, we continue to remind ourselves that if we’re going to create something for children, we want to create it with intention and integrity. So we keep asking questions. We make another change. We test again. And somewhere along the way, we’ve realized that the obstacles have actually helped shape the kind of company we want Ducks ’n Puddles to be. We don’t want to rush something into the world just to say we launched it. We want to be proud of what we’re putting into it.' },
+      'And through all of this, the dream has just continued to get bigger.',
+      'What started as three little duck water bottles has grown into a vision for a children’s lifestyle brand that grows alongside families. We imagine products that make bath time easier, mealtime less stressful, travel more fun, and messes easier to handle. We imagine stories that teach meaningful lessons, characters that become familiar friends, and products that children are excited to use and parents genuinely feel good about buying.',
+      'But our dream has also become much bigger than the products we hope to create.',
+      { em: 'One of the most meaningful parts of our vision is the Ducks ’n Puddles Foundation. Our hope is that as the company grows, its success will help fund a foundation dedicated to supporting children and families who need to feel held and supported the most — with a special focus on single mothers and children in the foster care system. We envision creating opportunities for mothers to work, earn an income, be present with their children, and have access to an environment where their families can thrive. We also dream of creating educational opportunities, mentorship, programs, and supportive environments for children in foster care — all rooted in the same feelings we want every Ducks ’n Puddles child to experience: love, safety, comfort, belonging, and knowing that they matter.' },
+      { em: 'There is still so much to build and so much we have to learn, but the Foundation represents something really important to us: we don’t want success to end with us. We want the growth of Ducks ’n Puddles to give us a greater ability to contribute, to help, and to create something meaningful for other families. The bigger the company grows, the more good we hope to be able to do.' },
+      { em: 'At the end of the day, we don’t just want to sell more things to families. We want to create things that matter to families — and build a company that can eventually make a meaningful difference far beyond the products we sell.' },
+      'Right now, though, we’re still at the beginning. We’re building this company while raising our own little family, learning as we go, dreaming really big, getting things wrong sometimes, fixing them, and continuing forward. Our kids are very much growing up alongside Ducks ’n Puddles. There are business meetings with Lucy sitting on our laps and Vincey eating in his highchair in the background. There are late-night conversations after bedtime, prototypes all over the house, endless ideas, moments of frustration, and those really exciting moments when something we’ve been working on finally works.',
+      'Someday, when Ducks ’n Puddles is much bigger than it is today, I think we’ll look back at this chapter and remember how special it was. We’ll remember when it was still just us, our little family, three ducks, a whole lot of ideas, and this feeling that maybe we could build something that puts a little more good into the world.',
+      'So if you’re finding us now, welcome. You’re here at the very beginning. We hope you’ll grow with us, adventure with us, and get to know these three little ducks who have already become such a big part of our family.',
+      'And hopefully, one day, they’ll become a little part of yours too.',
+      { em: 'A Friend for Every Adventure.' },
+      { em: 'With love, Larisa & Vinny' },
     ],
   },
   {
-    slug: 'what-to-look-for-in-a-kids-water-bottle',
-    title: 'What to actually look for in a kid’s water bottle',
-    tag: 'Things Worth Sharing',
-    date: '2026-07-30',
-    excerpt:
-      'Capacity, lid, cleaning, grip. Four things worth checking before you buy any bottle — ours included.',
-    image: 'sample-splashpad',
-    readingMinutes: 3,
-    tags: ['Buying guide', 'Materials', 'Safety'],
-    top: true,
-    body: [
-      'Most bottle listings tell you a colour and a capacity and leave you to guess at the rest. These are the four things that decide whether a bottle gets used or ends up at the bottom of a bag.',
-      { h: 'The things that matter' },
-      'Capacity. Bigger is not better for a small child — a full one-litre bottle is heavy enough that they stop carrying it themselves, which defeats the point. Ours holds 9 oz, which is a size a toddler or preschooler can pick up, tip and put down without help.',
-      'The lid. This is where most bottles fail. A flip-top straw with a snap closure means one motion to open, and a closure that stays shut in a backpack. Test it by shaking it upside down over a sink before you trust it over a car seat.',
-      { h: 'The things that do not' },
-      'Cleaning. Ask which parts are dishwasher safe, not whether the bottle is. Ours goes in the dishwasher; the cap and the silicone sleeve get a hand wash. If a brand cannot tell you which is which, that is worth noticing.',
-      'Grip. Narrow enough for small hands, light enough to lift full. A bottle a child can manage alone is a bottle a child will actually drink from, which is the only measure that counts.',
-      'One more, less measurable: whether they like it. A bottle with a face on it that your kid has named gets carried. That is not a feature you can put on a spec sheet, and it is the reason we started.',
-    ],
-  },
-  {
-    /* RENAMED. "Naming a duck after your kid" was written when the ducks were
-       the founders' children; Our Story now says they are characters with
-       personalities of their own, and a headline promising otherwise undoes
-       that on the way past. The new one is what the post is actually about —
-       the paragraph the whole piece turns on is the bottle that got carried
-       once it had a name. Slug moved with it: nothing links here yet. */
-    slug: 'why-a-bottle-with-a-name-gets-carried',
-    title: 'Why a bottle with a name gets carried',
+    slug: 'the-life-were-living-the-dream-were-building',
+    title: 'The Life We’re Living, The Dream We’re Building',
     tag: 'Life Lately',
-    date: '2026-06-18',
-    /* REWRITTEN. The old line said the three of them 'are real people',
-       which Our Story now contradicts in as many words: they are 'three
-       little ducks with personalities of their own'. The post's point
-       survives the correction intact, because the point was never that
-       they are portraits — it is that a bottle with a name on it gets
-       carried, and that the name people will eventually print is their
-       own child's. */
+    date: '2026-09-30',
     excerpt:
-      'Three ducks with personalities of their own — and the name we are most looking forward to printing is not one of theirs.',
-    image: 'dune-walk',
-    readingMinutes: 3,
-    tags: ['Characters', 'Kids'],
+      'A little space where we can invite you into our world — the behind-the-scenes moments, the everyday chaos, the little victories, and everything in between.',
+    image: 'sample-armful',
+    readingMinutes: 7,
+    tags: ['Family life', 'Behind the scenes', 'Gratitude'],
+    top: true,
     body: [
-      'We did not set out to start a brand. We set out to solve one evening, repeatedly: a child who would not drink water, and a cupboard of bottles that had all failed for a different reason.',
-      { h: 'What changes when it has a name' },
-      'What worked, in the end, was not a better lid. It was giving the bottle a face. Once it had a face it had a name, and once it had a name it got carried to the car, to the beach, to bed.',
-      'So the three of them got names and personalities of their own. Vincey is calm, collected and comforting — the one who goes in first so everyone else knows it is alright. Chi Chi is funny, bold and already in the puddle. Goosey is happy, optimistic and the perfect sidekick.',
-      { h: 'What we did about it' },
-      'They are not portraits of our kids, though our son did lend Vincey his name. They are three characters a child can pick between and recognise something of themselves in — which is a different thing, and the more useful one.',
-      'The plan, eventually, is that the sleeve comes off and you put your own kid’s name on it instead. That one is not ready either — but it is the one we are most excited about, which is exactly why we are not rushing it.',
+      'We’ve been dreaming, creating, and building Ducks ’n Puddles for quite some time now. And the beautiful thing is, as our family has grown, so has our dream.',
+      'When we first started Ducks ’n Puddles, we knew we wanted to create something meaningful. What we didn’t realize was just how much of our everyday lives, our family, and the people around us would become part of bringing that dream to life.',
+      'So, welcome to Life Lately!',
+      'We wanted to create a little space where we could invite you into our world — the behind-the-scenes moments, the everyday chaos, the little victories, and everything in between. Our hope is that, as you follow along, you’ll feel like you’re getting to know us, growing alongside us, and becoming part of the Ducks ’n Puddles family.',
+      { em: 'So, what does life actually look like while building a business and raising two little ones?' },
+      'Well, today is Friday, and I’m writing this from 1909, an entrepreneurship community and workspace in West Palm Beach, Florida. I recently joined, and it has already been such a blessing in my life. Between the mentorship, workshops, networking opportunities, and incredible people I’ve met, it’s given me even more inspiration and motivation to turn Ducks ’n Puddles into my full-time career.',
+      'Meanwhile, Vinny is home with our son, Vincey, while our daughter, Lucy, is at school. We’re incredibly grateful that Vinny currently has the flexibility to work from home, allowing us to make days like this possible.',
+      'And honestly, that pretty much sums up our lives right now. A whole lot of coordinating, communicating, switching roles, and figuring things out as we go.',
+      'Most mornings, I wake up around 4 a.m. I spend time on my spiritual practices, meditate, exercise, see a therapy client, and squeeze in some Ducks ’n Puddles work, all while Vinny takes care of getting the kids up and ready for the day. By 8:30 a.m., I’ve already had a pretty full morning.',
+      'From there, every day looks a little different. Some days I’m fully in mom mode, spending the day with Lucy and Vincey. Other days I’m seeing clients in my mental health counseling practice. And then there are days like today, when I get to dedicate my time to building Ducks ’n Puddles.',
+      'It’s busy. Sometimes really busy. But it’s also incredibly intentional.',
+      { em: 'And if there’s one thing this experience has taught me, it’s that you don’t build something meaningful alone.' },
+      'I am so, so proud of Vinny and me. Not just for what we’re creating, but for how we’re creating it together.',
+      'We truly are a team, and I genuinely don’t think we could be doing what we’re doing without the foundation we’ve built in our relationship. It takes communication, flexibility, understanding, and, most importantly, a willingness to show up for one another.',
+      'Sometimes that means one of us takes on more with the kids while the other focuses on work. Sometimes it means rearranging our entire day because something unexpected comes up. And sometimes it simply means recognizing what the other person needs and stepping in without hesitation.',
+      'We’ve learned that balance doesn’t necessarily mean everything gets equal time and attention every single day. It means being intentional with what matters, understanding that our roles may look different from day to day, and remembering that we’re always on the same team.',
+      'And then there are those little moments that remind us exactly why we’re doing all of this.',
+      'One of my absolute favorite parts of this journey has been watching Lucy fall in love with Ducks ’n Puddles.',
+      'She brings the ducks everywhere. She plays with them, puts them to sleep, takes care of them, and even wants to sleep with them herself. Watching her develop such a genuine connection with something we’ve spent so much time dreaming about and creating is one of the most rewarding feelings.',
+      'But there’s one little moment that gets me every time.',
+      'Part of our bedtime routine is reading a book together and then taking a moment to thank God for all the things we’re grateful for. And most nights, before we even have a chance to say anything, Lucy starts us off with:',
+      { em: '“Thank you, God, for Ducks ’n Puddles.”' },
+      'Every time she says it, Vinny and I look at each other and smile. It’s one of those moments where we don’t even need to say anything. We both feel it — that little reminder that we’re exactly where we’re supposed to be.',
+      'And in those moments, I realize that what we’ve been envisioning all along is already happening right in front of us.',
+      'A Friend for Every Adventure.',
+      'There she is, our own daughter, finding comfort, companionship, and so much joy in these little ducks.',
+      { em: 'It’s one thing to dream about what you want to create. It’s another thing entirely to watch your dream become something meaningful in your own child’s life.' },
+      'There’s also something a little deeper that I want to share.',
+      'I genuinely believe Ducks ’n Puddles is a God-given assignment. While Vinny and I may be the ones building the company, I don’t believe this vision is ours alone. I believe we’ve been given an opportunity to create something that brings people together, serves others, adds value to families, and ultimately becomes an expression of love.',
+      'And that’s what fuels us.',
+      'We don’t just want to create products. We want to create something that makes people feel good, something that brings comfort and connection into everyday life, and something that grows into a community where people feel supported, cared for, and part of something bigger.',
+      'And one of the most beautiful parts of this journey has been watching the right people come into our lives to help make that vision possible.',
+      'I especially want to take a moment to recognize Paul, Sahil, and their incredible team, who brought our Ducks ’n Puddles website to life.',
+      'I truly cannot express how grateful and proud I am of what they’ve created. They’ve taken our ideas, our vision, and everything this brand means to us and turned it into something real, something we can finally share with the world.',
+      'But what means even more to me is that they’ve become so much more than people we’re working with. They’ve become part of our Ducks ’n Puddles family.',
+      'And that’s exactly what we hope to continue creating. Not just a company, but a community of people who genuinely care about one another, believe in what we’re building, and want to be part of making a positive difference.',
+      'When I think about our lives right now, I feel an overwhelming sense of gratitude.',
+      'We’re raising our babies, working our jobs, nurturing our marriage, and building something we believe in with our whole hearts.',
+      'Is it always easy? Absolutely not. Do we have everything figured out? Not even close! But I wouldn’t trade this season for anything.',
+      { em: 'Because the more I reflect on this journey, the more I realize that the dream isn’t just about what we’re working toward. It’s also about the life we’re living, the people we’re loving, and who we’re becoming along the way.' },
+      'One day, I know we’ll look back on these early mornings, busy schedules, endless conversations, and little ducks scattered all around our house, and realize just how special this chapter really was.',
+      'And maybe that’s something worth remembering for all of us. Sometimes we’re so focused on getting to where we want to be that we forget to appreciate everything that’s happening right here, right now.',
+      'The life we’re living today is just as much a part of the dream as the future we’re working so hard to create.',
+      'So, we’re doing our best to embrace it all. The busy days, the beautiful moments, the challenges, the growth, and every little adventure in between.',
+      'And I’m so grateful we get to share a little piece of it with you.',
+      'Thank you for being here, for following along, and for becoming part of our Ducks ’n Puddles family. We’re so happy you’re here.',
+      { em: 'With love, Larisa ♡' },
+    ],
+  },
+  {
+    slug: 'what-if-this-is-the-good-part',
+    title: 'What If This Is the Good Part?',
+    tag: 'The Parenting Perspective',
+    date: '2026-09-24',
+    excerpt:
+      'A little reminder that we don’t have to wait for life to become less messy, busy, or chaotic to appreciate the beauty of the season we’re in.',
+    image: 'shell-hands',
+    readingMinutes: 5,
+    tags: ['Motherhood', 'Perspective', 'Everyday life'],
+    top: true,
+    body: [
+      'Lately, I’ve been reminding myself of three simple words:',
+      { em: '“I’m okay with it.”' },
+      'And as simple as they sound, they’ve completely shifted the way I experience my everyday life.',
+      'I’m a mom of two little ones, and if you’re in a similar season of life, you probably know exactly what I mean when I say that some days are just a lot.',
+      'The house is a mess. The car somehow looks like we’ve been living out of it for weeks. There are toys everywhere, dishes in the sink, snacks being requested every five minutes, someone crying because something didn’t go their way, and a never-ending list of things that need to get done.',
+      'Then there are the doctor appointments, the sleepless nights, the exhaustion, and the feeling that your entire day revolves around everyone else’s needs.',
+      'And yet, in the middle of all of that, there’s also so much joy.',
+      'The little voices calling for you. The hugs that come out of nowhere. The laughter over something completely silly. The tiny hands reaching for yours. The feeling of being someone’s entire world.',
+      'It’s beautiful, exhausting, overwhelming, fulfilling, and messy, sometimes all within the same five minutes.',
+      'And I’ve been realizing something that has changed the way I look at all of it.',
+      { em: 'This isn’t a stage of life I need to get through. This is a stage of life I get to experience.' },
+      'For so long, I think it’s easy to fall into the habit of believing that life will feel better when something changes.',
+      'When the kids are a little older. When the house stays clean. When we get more sleep. When we have more time for ourselves. When things finally slow down.',
+      'But then I started asking myself: What exactly am I waiting for?',
+      'Because one day, the house probably will be quieter. The toys won’t be scattered across the floor. The car won’t be filled with little shoes, snacks, and things I didn’t even know we owned.',
+      'My children will become more independent. They’ll need me differently. Our schedules will change, our routines will change, and we’ll enter an entirely new season of life.',
+      'And that season will bring its own beautiful experiences, challenges, and opportunities.',
+      'But it won’t be this one.',
+      'And suddenly, the things that once felt like inconveniences started to look a little different.',
+      'The toys on the floor mean there are little ones here playing. The constant requests mean there are children who look to me for comfort and connection. The busy schedules mean we’re living a full life together.',
+      'That doesn’t mean I have to love every single moment. I can still feel exhausted. I can still need a break. I can still want a clean house and a little peace and quiet!',
+      'But I don’t have to resist the reality of the season I’m in.',
+      'And that’s where those three words come in.',
+      { em: 'I’m okay with it.' },
+      'The house is messy today? I’m okay with it.',
+      'The day didn’t go as planned? I’m okay with it.',
+      'I’m tired, the kids need extra attention, and my to-do list is going to have to wait? I’m okay with it.',
+      'Not because everything is perfect, but because everything doesn’t have to be perfect for me to be okay.',
+      'I’ve come to love this reminder:',
+      { em: 'When you’re okay with everything, everything becomes okay.' },
+      'To me, that doesn’t mean every circumstance is good, or that we should accept things that are harmful or need to change. It means that I can stop fighting the things that are simply part of being human. I can respond to what needs my attention without believing that life has to look different before I can enjoy it.',
+      'And when I stop wishing the present moment were something else, I find myself actually experiencing it.',
+      'I can laugh at the chaos instead of getting frustrated by it. I can sit on the floor and play with my kids without thinking about everything I should be doing. I can appreciate the little moments without needing them to be any different.',
+      'And perhaps most importantly, I can remember that there’s nowhere else I need to be right now.',
+      'Not because I don’t have dreams or goals for the future. I absolutely do.',
+      'But because I don’t want to spend this season of my life wishing I were already in the next one.',
+      'One day, I’ll have the experience of being a mom to older children. And after that, another experience, and another. Each one will bring something different.',
+      'But right now, I get to experience this.',
+      'The messy house. The sticky hands. The early mornings. The bedtime snuggles. The exhaustion. The laughter. The love...All of it.',
+      'And what a gift it is to be here for it.',
+      'So, if you’re in a season of life that feels a little overwhelming, a little chaotic, or maybe just different from what you imagined, I hope this serves as a gentle reminder:',
+      { em: 'You don’t have to wait for life to become something else to appreciate the life you have right now.' },
+      'You can want things to change and still find peace in where you are. You can feel tired and grateful. You can love your children more than anything and still need a moment to yourself. You can have a messy home and a beautiful life.',
+      'Because maybe the goal isn’t to get everything in order so we can finally enjoy our lives. Maybe it’s learning to enjoy our lives while everything is unfolding, embracing the messy, beautiful, chaotic experience of it all.',
+      'And realizing that we don’t have to wait for life to be different to appreciate just how beautiful it already is.',
+      { em: 'With love, Larisa ♡' },
     ],
   },
 
@@ -322,7 +414,7 @@ export const posts: Post[] = [
     body: [
       'You can test a thing in your own house for a year and still not know anything. Your child is kind to it. Your child knows it matters.',
       { h: 'The moment it landed' },
-      'The first time one went out with somebody else\u2019s child was a different experiment entirely, and we were nervous in a way neither of us admitted at the time.',
+      'The first time one went out with somebody else’s child was a different experiment entirely, and we were nervous in a way neither of us admitted at the time.',
       'It came back fine. It also came back with a scuff we had not anticipated, in a place we had not thought about, which told us more in one afternoon than the previous month had.',
       { h: 'What it changed' },
       'We have been handing them out ever since. The notes we get back are the most useful thing we have.',
@@ -342,7 +434,9 @@ export const postBySlug = (slug: string) => posts.find((p) => p.slug === slug)
    is what this is today, would otherwise lose two thirds of its navigation the
    moment a draft moved.
    --------------------------------------------------------------------------- */
-export type CategorySlug = 'behind-the-puddles' | 'things-worth-sharing' | 'life-lately'
+export type CategorySlug =
+  | 'behind-the-puddles' | 'things-worth-sharing' | 'life-lately'
+  | 'the-parenting-perspective'
 
 export interface Category {
   slug: CategorySlug
@@ -352,13 +446,29 @@ export interface Category {
   blurb: string
 }
 
+/**
+ * THE CATEGORIES, with the client's own descriptions (Website Blog Posts,
+ * October 2026) replacing the ones written here.
+ *
+ * ⚠️ THE FOURTH ONE IS NAMED TWO WAYS IN THAT DOCUMENT. Its description list
+ * calls it "A Perspective Shift"; the heading over the post itself calls it
+ * "The Parenting Perspective". The brief said to add "The Parenting
+ * Perspective", so that is the name here and the description is the one the
+ * document gives "A Perspective Shift" — they are plainly the same category.
+ * Worth confirming which name they want.
+ *
+ * 'Things Worth Sharing' is not in the document at all. It stays because four
+ * of the placeholder posts are filed under it; it goes when they do.
+ */
 export const categories: Category[] = [
   { slug: 'behind-the-puddles', label: 'Behind the Puddles',
-    blurb: 'How the bottles get made, and what each round of samples taught us.' },
+    blurb: 'Our journey building Ducks ’n Puddles, product updates, exciting announcements, and what’s coming next.' },
+  { slug: 'life-lately', label: 'Life Lately',
+    blurb: 'Personal stories, family moments, and a glimpse into our everyday lives.' },
+  { slug: 'the-parenting-perspective', label: 'The Parenting Perspective',
+    blurb: 'Meaningful reflections and teachings that encourage us to see and experience life through greater awareness and love.' },
   { slug: 'things-worth-sharing', label: 'Things Worth Sharing',
     blurb: 'What we have learned that is worth passing on, whoever you end up buying from.' },
-  { slug: 'life-lately', label: 'Life Lately',
-    blurb: 'Where the ducks came from, and what the two of us are up to.' },
 ]
 
 export const categoryBySlug = (slug: string) =>

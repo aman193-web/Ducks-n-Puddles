@@ -46,7 +46,11 @@ export default function JournalIndex() {
         <div className="wrap">
           <BlogBrowser
             posts={all}
-            top={allPosts.filter((p) => p.top)}
+            /* Minus whatever is already the featured card. The reference does
+               let its featured article repeat as the first Top Article, but it
+               has sixty-eight posts to hide that in; with twelve the same card
+               appears twice within one screen and reads as a bug. */
+            top={allPosts.filter((p) => p.top && p.slug !== all[0]?.slug)}
             heading="Latest Articles"
             featureFirst
           >

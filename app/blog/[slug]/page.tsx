@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
+import { ArrowLeft, ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor } from '@/content/journal'
@@ -55,7 +55,7 @@ export default async function JournalPost(
   /* The contents rail is built from the headings in the body, so an article
      without them simply does not get one — no placeholder, no empty rail. */
   const toc = post.body
-    .filter((b): b is { h: string } => typeof b !== 'string')
+    .filter((b): b is { h: string } => typeof b !== 'string' && 'h' in b)
     .map((b) => ({ id: slugify(b.h), title: b.h }))
 
   return (
@@ -113,19 +113,41 @@ export default async function JournalPost(
             reader wants anyway. One column below 1100px, where a 220px rail
             would take a third of the measure from the prose it serves. */}
         <div className={styles.postCols}>
-          {toc.length > 1 && (
-            <aside className={styles.postRail} aria-label="On this page">
-              <p className={styles.railTitle}>On this page</p>
-              <PostToc items={toc} />
-            </aside>
-          )}
+          {/* THE RAIL carries what the client's reference puts there: a small
+              standing offer above the contents, not only the contents. It
+              renders whenever there is a wide enough screen — the contents half
+              only appears when the article has headings to index, which the
+              client's own posts do not (their bolded lines are emphasis, not
+              sections), so on those three this is the card alone. */}
+          <aside className={styles.postRail} aria-label="More from Ducks ’n Puddles">
+            <div className={styles.railCta}>
+              <p className={styles.railCtaTitle}>Notes from the pond</p>
+              <p className={styles.railCtaBody}>
+                One short email every couple of weeks. The Duck Squad hears about
+                the bottles before this site does.
+              </p>
+              <Link href="/#squad" className={styles.railCtaLink}>
+                Join the Duck Squad
+                <ArrowRight size={14} weight="bold" aria-hidden="true" />
+              </Link>
+            </div>
+
+            {toc.length > 1 && (
+              <>
+                <p className={styles.railTitle}>On this page</p>
+                <PostToc items={toc} />
+              </>
+            )}
+          </aside>
 
           <div className={styles.prose}>
-            {post.body.map((b, i) =>
-              typeof b === 'string'
-                ? <p key={i}>{b}</p>
-                : <h2 key={i} id={slugify(b.h)} className={styles.proseHead}>{b.h}</h2>,
-            )}
+            {post.body.map((b, i) => {
+              if (typeof b === 'string') return <p key={i}>{b}</p>
+              /* The client's own bolded paragraphs. Emphasis, not headings —
+                 see the note on Block in content/journal.ts. */
+              if ('em' in b) return <p key={i} className={styles.proseEm}>{b.em}</p>
+              return <h2 key={i} id={slugify(b.h)} className={styles.proseHead}>{b.h}</h2>
+            })}
 
             {post.tags && post.tags.length > 0 && (
               <p className={styles.postTags}>
