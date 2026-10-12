@@ -30,7 +30,7 @@ export function WhatsNext() {
       <BrandDetail preset="paddle" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--sky-soft)" data-pop="">The bigger picture</Sticker>
+          <Sticker data-pop="">The bigger picture</Sticker>
           <h2 id="next-title" className="d d-xl" data-anim="">
             We&rsquo;re Only Getting Started.
           </h2>

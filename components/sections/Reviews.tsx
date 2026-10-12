@@ -23,7 +23,7 @@ export function Reviews() {
     <section className={styles.section} id="reviews" aria-labelledby="reviews-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--sun-soft)" data-pop="">What parents say</Sticker>
+          <Sticker data-pop="">What parents say</Sticker>
           <h2 id="reviews-title" className="d d-xl" data-anim="">
             Don&rsquo;t take our word for it.
           </h2>

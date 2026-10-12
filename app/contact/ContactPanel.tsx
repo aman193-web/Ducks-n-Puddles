@@ -139,7 +139,7 @@ export function ContactPanel({ email, instagram, children }: {
       <section className={styles.topics} aria-labelledby="specific">
         <div className="wrap">
         <header className={styles.topicsHead}>
-          <Sticker colour="var(--cream)" data-pop="">Ways we can help</Sticker>
+          <Sticker colour="var(--cream)" ray="var(--sun)" data-pop="">Ways we can help</Sticker>
           <h2 id="specific" className={`d d-xl ${styles.topicsTitle}`}>
             Looking for Something Specific?
           </h2>

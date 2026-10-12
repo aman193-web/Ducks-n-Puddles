@@ -22,22 +22,6 @@
 .masthead h1 { max-width: none; text-wrap: balance; }
 .lede { max-width: none; }
 
-/* The date, as a pill rather than a line of small print at the bottom. On a
-   document this long it is the first thing a reader checks and the last thing
-   they should have to scroll for. */
-.updated {
-  display: inline-flex; align-items: center; gap: var(--s-2);
-  margin-block-start: var(--s-2);
-  padding: 8px 18px 8px 14px;
-  background: var(--paper);
-  border: var(--border); border-radius: var(--r-pill);
-  font-size: var(--fs-small); font-weight: 600;
-}
-.dot {
-  inline-size: 9px; block-size: 9px; border-radius: 50%;
-  background: var(--chichi); flex: none;
-}
-
 /* ---- the two columns ----------------------------------------------------- */
 .cols { display: grid; gap: clamp(var(--s-6), 4vw, var(--s-8)); align-items: start; }
 @media (min-width: 1040px) {

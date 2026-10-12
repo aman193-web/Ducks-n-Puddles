@@ -3,85 +3,142 @@ import styles from './Sticker.module.css'
 
 type StickerProps = {
   children: React.ReactNode
+  /** The label's fill. Light grounds get the default; see the table below. */
   colour?: string
+  /** The sun-ray accent. */
+  ray?: string
 } & React.HTMLAttributes<HTMLSpanElement>
 
 /**
- * THE SECTION EYEBROW — a puddle, not a tilted pill.
+ * THE SECTION EYEBROW — a scalloped cloud with sun rays, on the client's
+ * approved reference.
  *
- * This was a rounded chip rotated two or three degrees. The client came back
- * with the reason it had to change, and it is a good one: readers were not
- * seeing a deliberate tilt, they were seeing a box that had slipped. A device
- * nobody reads as intentional is doing damage rather than nothing, because it
- * makes the whole page look slightly off-register.
+ * Two treatments preceded it: a chip rotated two degrees, which readers took
+ * for a box that had slipped rather than a deliberate tilt, and a puddle
+ * outline that fixed the tilt but was not what the client had in mind. This is
+ * their own artwork: a soft horizontal scallop, flat fill, no outline, with
+ * three yellow rays off the top-right corner.
  *
- * So the rotation is gone entirely and the SHAPE carries the playfulness
- * instead — an irregular puddle outline, which is the brand's own motif and
- * reads as drawn rather than as misaligned. Being a shape and not a transform,
- * it also survives `prefers-reduced-motion`, which flattens transforms site-wide
- * (global.css:155); the old tilt did not, so the eyebrows quietly straightened
- * for anyone browsing with motion reduced. One appearance for everybody now.
+ * NO BORDER AND NO SHADOW, which is a deliberate break from the rest of the
+ * site — every other panel here is outlined ink on flat colour. The reference
+ * has neither and the shape carries itself without one, so this follows the
+ * reference rather than the house rule.
  *
- * The outline is an SVG laid under the text rather than a border-radius because
- * a border-radius cannot bulge — four corners can only ever be arcs, and the
- * difference between a puddle and a lozenge is the bulge between the corners.
- * `preserveAspectRatio="none"` lets one path serve labels from "FAQ" to "What
- * parents say"; `vector-effect="non-scaling-stroke"` keeps the outline an even
- * weight while it stretches, which is the part that would otherwise give it
- * away.
+ * COLOUR, by the ground the eyebrow sits on. Both keep the reference's own
+ * relationship — a PALE label with yellow rays — rather than inverting it:
+ *   cream / paper / field  ->  sky-soft label, sun rays   (the default)
+ *   any blue               ->  cream label, sun rays
+ * A sun-soft label with cream rays was tried first for the blue grounds and the
+ * rays disappeared into them; cream carries further on blue than soft yellow
+ * does, and full sun is the only accent that reads on all three of this site's
+ * blues (--sky-soft, --sky and --vincey-soft).
+ * Passed per call site rather than sniffed, because a section's ground is not
+ * something an element can ask about.
  */
-export function Sticker({ children, colour = 'var(--sun-soft)', className, style, ...rest }: StickerProps) {
+export function Sticker({
+  children, colour = 'var(--sky-soft)', ray = 'var(--sun)', className, style, ...rest
+}: StickerProps) {
+  /* The viewBox is built to the label's own predicted PIXEL width, and the
+     bumps are spread evenly across it — so the SVG's horizontal scale lands
+     within a few percent of its vertical one and the circles stay circles.
+     See width(). */
+  const vw = width(flatten(children))
+  const bumps = Math.min(10, Math.max(3, Math.round((vw - H) / PITCH) + 1))
+  const step = (vw - H) / (bumps - 1)
+
   return (
     <span
       {...rest}
       className={`${styles.sticker} ${className ?? ''}`}
-      style={{ ['--bg' as string]: colour, ...style } as React.CSSProperties}
+      style={{ ['--bg' as string]: colour, ['--ray' as string]: ray, ...style } as React.CSSProperties}
     >
-      <svg
-        className={styles.blob}
-        viewBox="0 0 160 52"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path vectorEffect="non-scaling-stroke" d={PUDDLE} />
+      {/* THE SCALLOP, as a row of overlapping circles rather than one outlined
+          path. With a single flat fill and no stroke they union into the shape
+          by themselves — no arc maths, correct at any bump count, and both ends
+          round by construction. An outlined version would need the union
+          computed, because the internal arcs would show. */}
+      <svg className={styles.shape} viewBox={`0 0 ${vw} ${H}`}
+           preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        {Array.from({ length: bumps }, (_, i) => (
+          <circle key={i} cx={R + i * step} cy={R} r={R} />
+        ))}
       </svg>
+
+      {/* THE RAYS, in their own SVG because this one must NOT stretch — they
+          are the one part of the mark with a fixed size, and sharing the
+          scallop's viewBox would shear them by the label's width. */}
+      <svg className={styles.rays} viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+        <line x1="6.5" y1="23.5" x2="11.5" y2="9.5" />
+        <line x1="11.5" y1="26.5" x2="20.5" y2="17.5" />
+        <line x1="15" y1="30" x2="28" y2="26" />
+      </svg>
+
       <span className={styles.label}>{children}</span>
     </span>
   )
 }
 
+/* ---- the geometry -------------------------------------------------------- */
+
 /**
- * The puddle. Drawn once, at 160x52, and stretched to whatever the label needs.
- *
- * ONE FEATURE PER EDGE, and the two ends deliberately unequal: a broad low lobe
- * on the left tapering to a smaller, higher one on the right. That asymmetry is
- * what the eye reads as drawn — on a box 40px tall, a symmetrical wobble is
- * invisible at a glance and a wobble with several bumps pinches into a peanut
- * the moment the label is short ("FAQ" is 90px wide; "Out in the world" is
- * 210px, and one path has to hold both). Four bumps were tried first and did
- * exactly that.
- *
- * Because preserveAspectRatio is "none", every x in here is a FRACTION of the
- * final width, not a distance. Features stay where they are in the shape as it
- * stretches; what changes is how gentle they look.
+ * The label's height in CSS pixels, PINNED in the stylesheet rather than left to
+ * the font. That is what makes the viewBox below a pixel box: one user unit is
+ * one pixel vertically, always, so matching the viewBox width to the label's
+ * width in pixels is enough to keep the scale square.
  */
-const PUDDLE = 'M 36 3.2'
-  + ' C 70 0.6, 104 3.0, 130 8.6'        // top edge, rising gently to the right
-  + ' C 150 12.9, 159.4 20, 156.8 29.4'  // the small right lobe, sitting high
-  + ' C 154.4 38.2, 138 44.0, 114 46.0'
-  + ' C 84 48.5, 50 48.6, 28 42.4'       // the bottom sags under the middle
-  + ' C 9 37.1, 0.6 26.2, 3.4 16.6'      // the broad left lobe, sitting low
-  + ' C 6.0 7.8, 18 4.6, 36 3.2 Z'
+const H = 46
+const R = H / 2
+
+/**
+ * Centre-to-centre spacing, as 0.75 of the diameter — measured off the client's
+ * reference, where five bumps span about 3.8 diameters. It sets how deep the
+ * dips are: at this pitch the waist between two bumps is about two thirds of
+ * the full height, which is the reference's scallop. It is a target rather than
+ * a constant, because the bumps are spread evenly across the real width.
+ */
+const PITCH = H * 0.75
+
+/**
+ * The label's width in pixels, from its text.
+ *
+ * The shape has to stretch: a label's width comes from its words, and nothing
+ * can know that before layout. What it must not do is stretch by an unknown
+ * amount, because that turns the circles into ellipses and the scallop stops
+ * reading. So the viewBox is built to a PREDICTION of the width and the
+ * horizontal scale lands near 1.
+ *
+ * 8.0 is the average advance of an uppercase character at --fs-micro with this
+ * tracking, measured off the thirteen labels on the site rather than guessed —
+ * an earlier 9.4 was reading 0.75-0.94, which squashed every bump. 54 is the two
+ * side paddings. Across those thirteen the prediction now lands between -6% and
+ * +4%, which is not visible on a circle.
+ *
+ * Bumps are then spread evenly between the two ends rather than laid at a fixed
+ * pitch, so the prediction error shows up as a dip a shade deeper or shallower
+ * instead of as a flat or overshot right-hand end.
+ */
+function width(text: string) {
+  return Math.round(text.trim().length * 8.0 + 54)
+}
+
+/** Children are plain strings at every call site; this is the safety net. */
+function flatten(node: React.ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(flatten).join('')
+  if (node && typeof node === 'object' && 'props' in node) {
+    return flatten((node as { props?: { children?: React.ReactNode } }).props?.children)
+  }
+  return ''
+}
 
 /**
  * A sticker that sits INSIDE a headline, interrupting the words — the Koa device
  * ("POWERFUL [trophy] NUTRITION"). Decorative, so it is hidden from assistive tech
  * and the sentence still reads cleanly to a screen reader.
  *
- * Still a rotated disc: the client's note was about the section eyebrows, and a
- * glyph wedged between two words is read as a deliberate interruption whichever
- * way it sits.
+ * Untouched by the eyebrow redesign: a glyph wedged between two words is read as
+ * a deliberate interruption whichever way it sits, and the client's note was
+ * about the section labels.
  */
 export function Glyph({ motif, colour = 'var(--sun-soft)', rot = -6 }: {
   motif: MotifName; colour?: string; rot?: number

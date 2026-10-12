@@ -29,7 +29,7 @@ export function Store() {
       <BrandDetail preset="trail" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--chichi-soft)" data-pop="">The bottles</Sticker>
+          <Sticker data-pop="">The bottles</Sticker>
           <h2 id="store-title" className="d d-xl" data-anim="">
             A Friend for Every Adventure.
           </h2>

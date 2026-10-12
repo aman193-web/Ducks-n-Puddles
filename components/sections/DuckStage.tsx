@@ -68,7 +68,7 @@ export function DuckStage() {
     <section className={styles.section} id="ducks" aria-labelledby="ducks-title">
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--chichi-soft)" data-pop="">The Quack Pack</Sticker>
+          <Sticker data-pop="">The Quack Pack</Sticker>
           <h2 id="ducks-title" className="d d-xl" data-anim="">
             Meet the ducks.
           </h2>
@@ -90,7 +90,7 @@ export function DuckStage() {
           >
             <div className={`wrap ${styles.inner}`}>
               <div className={styles.text}>
-                <Sticker colour="var(--cream)">{d.role}</Sticker>
+                <Sticker colour="var(--cream)" ray="var(--vincey)">{d.role}</Sticker>
                 <h3 id={`duck-${d.slug}`} className={`d d-mega ${styles.name}`}>{d.name}</h3>
                 <p className={styles.personality}>{d.personality}</p>
 

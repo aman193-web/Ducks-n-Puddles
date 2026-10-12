@@ -22,7 +22,7 @@ export function Faq() {
       <BrandDetail preset="shallows" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--sun-soft)" data-pop="">Questions</Sticker>
+          <Sticker data-pop="">Questions</Sticker>
           <h2 id="faq-title" className="d d-xl" data-anim="">Things parents ask us.</h2>
           <p className="lead" data-anim="">
             Still wondering something? Send us an email &mdash; we&rsquo;re always happy

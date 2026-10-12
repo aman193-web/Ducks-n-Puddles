@@ -1,33 +1,43 @@
-/* THE SECTION EYEBROW. A puddle outline with a label in it — see Sticker.tsx
-   for why it is an SVG and not a border-radius, and why nothing here rotates. */
+/* THE SECTION EYEBROW — a scalloped cloud with sun rays off the top-right.
+   See Sticker.tsx for the geometry and for why this one carries no outline. */
 .sticker {
   position: relative;
   display: inline-flex; align-items: center; gap: var(--s-2);
-  /* Taller and wider than the old chip's 8px/16px. The puddle's ends curve away
-     from the text where a pill's did not, so the old inset left the first and
-     last letters close to the outline — and the shape needs the height to read
-     as a shape at all rather than as a slightly uneven pill. */
-  padding: 12px var(--s-5);
+  /* FIXED HEIGHT, and it is load-bearing: it is what lets Sticker.tsx treat the
+     viewBox as a pixel box (one user unit = one pixel vertically), which is the
+     whole reason the circles stay circular when the shape stretches. 46px also
+     keeps every eyebrow on the site identical, which the brief asked for.
+     26px inline keeps the first and last letters off the end bumps, whose curve
+     falls away faster than a pill's did. */
+  block-size: 46px;
+  padding-inline: 26px;
   color: var(--ink);
   font-weight: 700; font-size: var(--fs-micro);
   letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  /* Room for the rays, which sit outside the shape. Margin rather than padding:
+     padding would push the scallop out with them. */
+  margin-inline-end: 22px;
 }
-.blob {
+.shape {
   position: absolute; inset: 0; z-index: 0;
   inline-size: 100%; block-size: 100%;
-  fill: var(--bg, var(--sun-soft));
-  stroke: var(--ink);
-  stroke-width: var(--bw);
-  /* The path is drawn clockwise with round ends; a join of 'round' keeps the
-     swells from pinching where the curves meet. */
-  stroke-linejoin: round;
-  /* Decorative: the label beside it is the content. */
+  fill: var(--bg, var(--sky-soft));
+  pointer-events: none;
+}
+.rays {
+  position: absolute; z-index: 1;
+  inline-size: 30px; block-size: 30px;
+  /* Off the top-right corner of the scallop, clear of the last bump. */
+  inset-block-start: -13px;
+  inset-inline-end: -19px;
+  stroke: var(--ray, var(--sun));
+  stroke-width: 5; stroke-linecap: round;
   pointer-events: none;
 }
 .label { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: var(--s-2); }
 
-/* The inline headline glyph is untouched — it is a small disc interrupting a
-   word, not a section eyebrow, and the client's note was about the eyebrows. */
+/* The inline headline glyph is untouched — a small disc interrupting a word,
+   not a section eyebrow. */
 .glyph {
   display: inline-grid; place-items: center; vertical-align: middle;
   inline-size: .66em; block-size: .66em; padding: .14em;

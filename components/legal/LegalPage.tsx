@@ -75,10 +75,6 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
             <p className="mono">{doc.eyebrow}</p>
             <h1 className="d d-xl">{doc.title}</h1>
             <p className={`lead ${styles.lede}`}>{doc.lede}</p>
-            <p className={styles.updated}>
-              <span className={styles.dot} aria-hidden="true" />
-              Last updated {doc.updated}
-            </p>
           </header>
 
           <div className={styles.cols}>
