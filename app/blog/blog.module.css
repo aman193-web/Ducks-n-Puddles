@@ -52,13 +52,26 @@
 }
 .head > .wrap {
   display: grid; justify-items: center; text-align: center;
-  padding-block-end: clamp(var(--s-6), 4vw, var(--s-7));
+  /* Air above the crest, at the client's request. The chips were sitting close
+     enough to the wave that the two read as one band of clutter. */
+  padding-block-end: clamp(var(--s-7), 6vw, var(--s-9));
 }
-/* WaveEdge pulls itself up by a fifth of the section rhythm, which is right
-   between two sections — it stops the wave adding its own height to a seam. Here
-   there is no section above it, only the chips, and the pull cut the crest
-   straight through them. Keep the 1px overlap, drop the pull. */
-.head > :last-child { margin-block-start: -1px; }
+/* THE WAVE ITSELF.
+
+   WaveEdge pulls itself up by a fifth of the section rhythm, which is right
+   between two sections — it stops the wave adding its own height to a seam.
+   Here there is no section above it, only the chips, and the pull cut the crest
+   straight through them. Keep the 1px overlap, drop the pull.
+
+   And taller than its default 38-76px. That default is sized for a seam between
+   two sections, where the wave is a transition and nothing more. Here it is the
+   page's own edge and the one piece of pattern on it, so the humps get the
+   height to actually read as the brand's profile — the wide-tall, narrow-short
+   alternation — rather than as a gentle ripple. */
+.head > :last-child {
+  margin-block-start: -1px;
+  block-size: clamp(52px, 7vw, 104px);
+}
 
 .masthead {
   display: grid; justify-items: center; text-align: center;
@@ -526,6 +539,9 @@
 .crumbs li + li::before { content: '/'; color: var(--ink-soft); opacity: .6; }
 .crumbs a {
   display: inline-flex; align-items: center; gap: 6px;
+  /* 24px tall as plain inline text; the padding takes the hit area to a size a
+     thumb can actually find. */
+  padding-block: 6px;
   color: var(--ink); font-weight: 600; text-underline-offset: .22em;
 }
 /* The article's own title is the last crumb and must not run the row onto
@@ -536,6 +552,11 @@
 
 /* THE ARTICLE HEAD, CENTRED — the client's note, and it matches the listing
    head above it, so a reader moving from one to the other stays on one axis. */
+/* The category cloud at the top of an article is a link; the <Sticker> inside
+   carries the look, so this only has to not get in its way. */
+.catLink { display: inline-block; text-decoration: none; }
+.catLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 4px; border-radius: var(--r-pill); }
+
 /* THE HEAD RUNS THE FULL CONTAINER, at the client's request. Both of these were
    capped — 20ch and 56ch — which on a 916px column broke a long title into four
    short lines with the column half empty either side. */
@@ -566,6 +587,8 @@
     padding: var(--s-5);
     background: var(--paper);
     border: var(--border); border-radius: var(--r-lg);
+    /* Goosey leans over the card's top corner and must not be clipped. */
+    overflow: visible;
   }
 }
 .railTitle {
@@ -621,24 +644,44 @@
   margin-block: 28px;
 }
 
-/* ---- the rail's standing offer, above the contents ---------------------- */
-/* NO DIVIDER UNDER IT. The "On this page" title below carries its own rule, and
-   on the client's three posts — which have no headings — there is nothing below
-   the card at all, so a border here left a line ruling off empty space. */
-.railCta { display: grid; justify-items: start; gap: var(--s-2); }
+/* ---- the rail's standing offer, above the contents ----------------------
+   Rebuilt after seeing it in place. In a 220px rail it had body-size copy over
+   four lines and a two-word button that wrapped onto two — it read as a card
+   that had been designed at full width and dropped into a column. Everything
+   here is sized FOR the column: the type a step down, the copy cut to one
+   sentence, and the button full-width so it cannot wrap. Goosey sits on top of
+   the corner, which is what stops a small grey box looking like a leftover. */
+.railCta {
+  position: relative;
+  display: grid; justify-items: start; gap: 6px;
+  padding: var(--s-5) var(--s-4) var(--s-4);
+  background: var(--sun-soft);
+  border: var(--border); border-radius: var(--r);
+}
 .railCta:not(:last-child) { margin-block-end: var(--s-5); }
+.railCtaMark {
+  position: absolute;
+  inline-size: 54px;
+  inset-block-start: -30px; inset-inline-end: -8px;
+  pointer-events: none;
+}
+.railCtaMark img { inline-size: 100%; block-size: auto; }
 .railCtaTitle {
   font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: 1.125rem; line-height: 1.15; letter-spacing: .008em;
+  font-size: 1.0625rem; line-height: 1.15; letter-spacing: .008em;
 }
-.railCtaBody { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-soft); }
+.railCtaBody {
+  font-size: var(--fs-micro); line-height: 1.45; color: var(--ink);
+}
 .railCtaLink {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  inline-size: 100%;
   margin-block-start: var(--s-2);
-  padding: 8px 14px;
+  min-block-size: 38px;
   background: var(--sun); color: var(--ink);
   border: var(--border); border-radius: var(--r-pill);
   font-size: var(--fs-micro); font-weight: 700; text-decoration: none;
+  white-space: nowrap;
   transition: translate var(--t) var(--spring);
 }
 @media (hover: hover) { .railCtaLink:hover { translate: 0 -2px; } }

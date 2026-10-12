@@ -42,7 +42,7 @@ export default function JournalIndex() {
 
   return (
     <>
-      <div className={styles.page}>
+      <div className={styles.page} data-blog-page="">
           <BlogBrowser
             posts={all}
             /* Minus whatever is already the featured card. The reference does

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
+import { Sticker } from '@/components/ui/Sticker'
 import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor } from '@/content/journal'
 import { brand } from '@/content/brand'
 import { PostToc } from './PostToc'
@@ -79,9 +80,16 @@ export default async function JournalPost(
         </nav>
 
         <header className={styles.postHead}>
+          {/* THE CLOUD, not the pill. A pill is the card's device — it labels an
+              article inside a listing, at card scale, next to others. At the top
+              of the article itself this is the page's own label, which is what
+              every section eyebrow on the site is, so it wears what they wear.
+              The cards keep their pills. */}
           {cat
-            ? <Link href={`/blog/category/${cat.slug}`} className={styles.tagLink}>{post.tag}</Link>
-            : <span className={styles.tag}>{post.tag}</span>}
+            ? <Link href={`/blog/category/${cat.slug}`} className={styles.catLink}>
+                <Sticker>{post.tag}</Sticker>
+              </Link>
+            : <Sticker>{post.tag}</Sticker>}
           <h1 className="d d-lg">{post.title}</h1>
           {/* The summary, as a standfirst. It was only ever on the cards and in
               the page metadata; the reference prints it under the title, which
@@ -121,14 +129,16 @@ export default async function JournalPost(
               sections), so on those three this is the card alone. */}
           <aside className={styles.postRail} aria-label="More from Ducks ’n Puddles">
             <div className={styles.railCta}>
+              <span className={styles.railCtaMark} aria-hidden="true">
+                <Picture id="goosey-wave" sizes="56px" alt="" />
+              </span>
               <p className={styles.railCtaTitle}>Notes from the pond</p>
               <p className={styles.railCtaBody}>
-                One short email every couple of weeks. The Duck Squad hears about
-                the bottles before this site does.
+                One short email every couple of weeks.
               </p>
               <Link href="/#squad" className={styles.railCtaLink}>
-                Join the Duck Squad
-                <ArrowRight size={14} weight="bold" aria-hidden="true" />
+                Join the Squad
+                <ArrowRight size={13} weight="bold" aria-hidden="true" />
               </Link>
             </div>
 

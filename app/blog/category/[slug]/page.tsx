@@ -56,7 +56,7 @@ export default async function CategoryPage(
 
   return (
     <>
-      <div className={styles.page}>
+      <div className={styles.page} data-blog-page="">
           <BlogBrowser
             posts={posts}
             active={category.slug}

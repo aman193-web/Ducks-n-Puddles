@@ -185,3 +185,22 @@
     transition-duration: .001ms !important;
   }
 }
+
+
+/* =============================================================================
+   THE BLOG'S WHITE NAVIGATION BAR.
+
+   The header is transparent at rest and --cream once stuck, which is right
+   everywhere else: it sits over the hero's sky, then over cream sections. The
+   blog opens on a PAPER band, so a cream bar put a seam across the top of the
+   page and a white band under it.
+
+   Done from the body with :has() rather than from the header, because the
+   header is a sibling of the page, not an ancestor — nothing inside /blog can
+   reach up to it. The page marks itself with data-blog-page and the bar reads
+   that. Both states, so there is no flash of cream when it sticks.
+   ========================================================================== */
+body:has([data-blog-page]) > header,
+body:has([data-blog-page]) > header[data-stuck='true'] {
+  background: var(--paper);
+}
