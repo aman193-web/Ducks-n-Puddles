@@ -38,6 +38,18 @@ export const photos = [
   { id: 'shore-horizon',   src: 'Photo Sep 19 2025, 6 55 28 PM.jpg', tier: 'B', grade: 'overcast',
     role: 'texture', crop: { top: 0, heightPct: 0.42 },
     alt: 'A wide beach horizon at dusk with layered cloud.' },
+  /* THE FAMILY. The professional shoot the Story section has been waiting for
+     since September — Larisa, Vinny and their two children. Tier B rather than
+     A because tiers are about the PRODUCT, and there is no bottle in this
+     frame at all.
+     ⚠️ The client supplied this one as a 1122px web export, where the rest of
+     the shoot is 1333px. It caps the responsive set at 960, which is enough for
+     the Story figure at 1x but not at 2x on a large screen. Ask for the master
+     and this entry picks up 1280 and 1536 on its own. */
+  { id: 'family-portrait', src: 'family-portrait.webp', tier: 'B', grade: 'chlorine',
+    role: 'band', focal: { x: 0.5, y: 0.35 },
+    alt: 'Larisa and Vinny outdoors at golden hour, each holding one of their two children.' },
+
   { id: 'shell-hands',     src: 'Photo Sep 19 2025, 6 57 26 PM.jpg', tier: 'B', grade: 'overcast',
     role: 'portrait', focal: { x: 0.42, y: 0.24 },
     alt: 'A smiling child sitting in the sand among dune grass.' },
@@ -66,6 +78,23 @@ export const photos = [
     alt: 'Three early sample bottles on stone coping in front of a blue mosaic fountain.' },
   { id: 'sample-caddy',    src: '165A6970.JPG', tier: 'C', grade: 'chlorine', role: 'sample',
     alt: 'Three early sample bottles tucked into a yellow beach caddy with a striped towel.' },
+  /* THE OCTOBER SHOOT. Tier C, and the reason is visible rather than assumed:
+     in sample-playground the left-hand bottle still carries the GREEN duck
+     mark while the one beside it carries the corrected yellow one, and no unit
+     in the set has a character name sticker. That is two of the three tells
+     this file lists for a prototype, in the same frame. Until a production run
+     is photographed these stay out of any product context — which is why they
+     live in the reels row with the rest of the family's camera roll and
+     nowhere else. */
+  { id: 'sample-armful',   src: 'sample-armful.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    alt: 'A child carrying three sample bottles in both arms across a sunlit lawn.' },
+  { id: 'sample-sunup',    src: 'sample-sunup.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    alt: 'Two parents holding sample bottles up towards the afternoon light.' },
+  { id: 'sample-swing',    src: 'sample-swing.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    alt: 'A sample bottle tucked beside a toddler in a playground swing.' },
+  { id: 'sample-playground', src: 'sample-playground.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    alt: 'A child drinking from a sample bottle at a playground table, two more standing beside her.' },
+
   { id: 'sample-beach',    src: 'Photo Sep 19 2025, 6 55 23 PM.jpg', tier: 'C', grade: 'overcast',
     role: 'sample',
     alt: 'Three later sample bottles standing on wet sand at dusk.' },

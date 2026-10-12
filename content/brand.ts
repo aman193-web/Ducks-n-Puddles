@@ -502,20 +502,32 @@ export type Reel =
  *  badge rather than as a photograph. */
 export type Under = { id: string; caption: string }
 
+/* The four from the October shoot lead and punctuate rather than queue at the
+   end: the row is read left to right and anything after about the eighth card
+   is seen by whoever keeps scrolling. The strongest new frame opens it, and the
+   other three sit at roughly even intervals so the new work is visible wherever
+   somebody stops.
+   All four are PORTRAIT at 2:3, the same shape as the clips and as the two
+   existing portrait prints, so none of them needs an `under` companion — that
+   is only there to fill the hole a LANDSCAPE print leaves beneath it. */
 export const reels: Reel[] = [
+  { kind: 'photo', id: 'sample-playground', caption: 'A child drinking at a playground table, two more bottles beside her.' },
   { kind: 'video', id: 'duck-5',   poster: 'poster-duck-5',   caption: 'She picked hers before we did.' },
   { kind: 'photo', id: 'sample-turf',     caption: 'Three bottles standing on sunlit grass.',
     under: { id: 'sample-splashpad',
              caption: 'A bottle on the painted surface of a splash pad.' } },
+  { kind: 'photo', id: 'sample-armful',   caption: 'A child carrying three bottles in both arms across a lawn.' },
   { kind: 'video', id: 'duck-2',   poster: 'poster-duck-2',   caption: 'Two ducks, one afternoon.' },
   { kind: 'video', id: 'duck-end', poster: 'poster-duck-end', caption: 'The last sip is always the loudest.' },
   { kind: 'photo', id: 'sample-carry',    caption: 'A child carrying a bottle by its handle.' },
+  { kind: 'photo', id: 'sample-sunup',    caption: 'Two parents holding bottles up towards the afternoon light.' },
   { kind: 'video', id: 'duck-3',   poster: 'poster-duck-3',   caption: 'Three of them, out in the world.' },
   { kind: 'video', id: 'duck-4',   poster: 'poster-duck-4',   caption: 'A bottle going everywhere the day goes.' },
   { kind: 'photo', id: 'sample-beach',    caption: 'Three bottles on wet sand at dusk.',
     under: { id: 'cart-path',
              caption: 'Two children walking hand in hand down a sunlit path.' } },
   { kind: 'video', id: 'duck-1',   poster: 'poster-duck-1',   caption: 'Straight from the pool to the towel.' },
+  { kind: 'photo', id: 'sample-swing',    caption: 'A bottle tucked beside a toddler in a playground swing.' },
   { kind: 'video', id: 'duck-6',   poster: 'poster-duck-6',   caption: 'Another afternoon, another puddle.' },
   { kind: 'photo', id: 'sample-mosaic',   caption: 'Three bottles on stone beside a blue fountain.' },
 ]

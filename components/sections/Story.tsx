@@ -34,11 +34,13 @@ export function Story() {
       <BrandDetail preset="crests" />
       <div className="wrap">
         <div className={styles.grid}>
-          {/* TODO(client): the professional family photographs are being taken on
-              5 Oct 2026 and replace this one. Swap the asset id; nothing else
-              in this section depends on which picture it is. */}
+          {/* THE FAMILY, from the October shoot — the picture this section was
+              built around and waited on since September. It replaces a beach
+              snapshot that stood in for it. The swap really was one asset id:
+              nothing here depends on which picture it is, which was the point
+              of writing it that way. */}
           <figure className={styles.figure} data-anim="" data-anim-rot="-2">
-            <Picture id="shell-hands" sizes="(min-width: 900px) 46vw, 92vw"
+            <Picture id="family-portrait" sizes="(min-width: 900px) 46vw, 92vw"
                      className={styles.photo} />
             {/* All three, beside the real family — it is a story about the three
                 of them, so one of them standing in for the set undersold it. */}

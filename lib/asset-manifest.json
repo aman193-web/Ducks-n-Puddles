@@ -110,6 +110,26 @@
       "jpg"
     ]
   },
+  "family-portrait": {
+    "id": "family-portrait",
+    "tier": "B",
+    "alt": "Larisa and Vinny outdoors at golden hour, each holding one of their two children.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960
+    ],
+    "colour": "#d8e8f8",
+    "v": "d1937ec7",
+    "aspect": 0.8003,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
   "shell-hands": {
     "id": "shell-hands",
     "tier": "B",
@@ -257,6 +277,90 @@
     ],
     "colour": "#b8c8d8",
     "v": "c653f6fd",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-armful": {
+    "id": "sample-armful",
+    "tier": "C",
+    "alt": "A child carrying three sample bottles in both arms across a sunlit lawn.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#586848",
+    "v": "6aa9e41f",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-sunup": {
+    "id": "sample-sunup",
+    "tier": "C",
+    "alt": "Two parents holding sample bottles up towards the afternoon light.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#c8c8d8",
+    "v": "fcee13e1",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-swing": {
+    "id": "sample-swing",
+    "tier": "C",
+    "alt": "A sample bottle tucked beside a toddler in a playground swing.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#789858",
+    "v": "8ea6b4d9",
+    "aspect": 0.6665,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
+  "sample-playground": {
+    "id": "sample-playground",
+    "tier": "C",
+    "alt": "A child drinking from a sample bottle at a playground table, two more standing beside her.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#080808",
+    "v": "299991ab",
     "aspect": 0.6665,
     "formats": [
       "avif",
