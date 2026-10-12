@@ -188,7 +188,13 @@
   /* 26 at 360 · 28 at 390 · 55 at 768 · 72 at 1024+ */
   --gutter: clamp(24px, 7vw, 72px);
   --max: 1280px;
-  --header-h: 92px;
+  /* 108, up from 92. The mark in the corner grew twice at the client's
+     request and the bar had no room left to give it — so the bar grew. This
+     is the ONE number to change for that: the header's own min-height, the
+     hero's negative top margin that slides it under the bar, the hero's muted
+     control, and the duck panels' sticky offset on a phone are all written
+     against it. */
+  --header-h: 108px;
 
   /* Half of the gap between two sections, so the rhythm is 160-260 end to end.
      72 at phone · 72 at 1024 · 100 at 1440. */

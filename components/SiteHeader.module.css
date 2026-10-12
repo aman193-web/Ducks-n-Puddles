@@ -22,26 +22,28 @@
   align-items: center;
   gap: var(--s-4);
   min-block-size: var(--header-h);
-  /* 8, not 12. The mark is capped by what the bar can hold, and --header-h is
-     fixed at 92 — the duck panels pin to it, so the bar growing would move
-     them. Taking 4px off each side is what buys the logo its extra 8. */
-  padding-block: var(--s-2);
+  /* TOP-WEIGHTED, at the client's request for a little air above the mark.
+     16 over 10 rather than an even 13: the logo is the tallest thing in the
+     bar and sits at its optical centre, so splitting the difference evenly
+     left it reading as hard against the top edge of the page. */
+  padding-block: 16px 10px;
 }
 
 /* The lockup ships as artwork; it gets a size and nothing else.
 
-   UP FROM 50/13vw/68 at the client's request — they wanted it to carry more
-   presence in the corner.
+   UP FROM 50/13vw/68, then again, at the client's request — they wanted it to
+   carry more presence in the corner.
 
-   The ceiling is whatever the bar can hold, and the bar cannot grow:
-   --header-h is 92px and the duck panels pin to that number, so a taller
-   header would move them. 92 less the bar's own padding is the budget, which
-   is why that padding came down from 12 to 8 — the four pixels a side are
-   what the mark gains. The floor rises with it so a phone gets the same step
-   up rather than only desktop. */
+   The ceiling is whatever the bar can hold: --header-h less the bar's own
+   padding. The first increase came out of that padding (12 to 8); this one
+   had nowhere left to come from, so --header-h itself went 92 to 108. That
+   is a safe thing to move only because everything positioned against the bar
+   — the hero's negative top margin, its muted control, the duck panels'
+   sticky offset — is written against the same variable. 108 less 26 of
+   padding is 82, which is the cap below. */
 .brand { display: flex; align-items: center; flex: none; text-decoration: none; }
 .brand img {
-  block-size: clamp(58px, 15vw, 76px);
+  block-size: clamp(64px, 16vw, 82px);
   inline-size: auto; width: auto;
   transition: transform .5s var(--spring);
 }
