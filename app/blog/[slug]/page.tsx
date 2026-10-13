@@ -7,6 +7,7 @@ import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
 import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor, tagSlug } from '@/content/journal'
 import { brand } from '@/content/brand'
+import { PostCard } from '@/app/blog/PostCard'
 import { PostToc } from './PostToc'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { KeyTakeaways } from '@/components/blog/KeyTakeaways'
@@ -207,22 +208,14 @@ export default async function JournalPost(
         {more.length > 0 && (
           <nav className={styles.more} aria-label="More notes">
             <h2 className={styles.moreTitle}>More from the pond</h2>
-            {/* Cards, not a bare list of underlined titles. The picture and the
-                tag are what make someone read a second post. */}
+            {/* THE SAME CARD AS EVERY OTHER LISTING. This row had a shape of
+                its own — picture, tag, title, reading time, and nothing else —
+                so it was missing the summary, the topic chips and the byline
+                that the cards on /blog, the category and tag pages and the home
+                page all carry. One component, no second design to keep in step. */}
             <ul className={styles.moreList}>
               {more.map((p) => (
-                <li key={p.slug}>
-                  <Link href={`/blog/${p.slug}`} className={styles.moreCard}>
-                    <span className={styles.moreFigure}>
-                      <Picture id={p.image} sizes="(min-width: 700px) 22vw, 44vw" alt="" />
-                    </span>
-                    <span className={styles.moreBody}>
-                      <span className={styles.moreTag}>{p.tag}</span>
-                      <span className={styles.moreName}>{p.title}</span>
-                      <span className={styles.meta}>{p.readingMinutes} min read</span>
-                    </span>
-                  </Link>
-                </li>
+                <li key={p.slug}><PostCard post={p} /></li>
               ))}
             </ul>
           </nav>
