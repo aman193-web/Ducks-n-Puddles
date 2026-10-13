@@ -39,8 +39,10 @@
   position: fixed;
   z-index: 45;
   inset-block-end: clamp(18px, 2.4vw, 32px);
-  /* The button's own inset, plus its width, plus a gap. */
-  inset-inline-end: calc(clamp(18px, 2.4vw, 32px) + var(--btn-h-sm) + 12px);
+  /* Alone it takes the corner; when the back-to-top button arrives it slides
+     left by the button's width plus a gap. The transition is on `inset`, so the
+     move reads as the pill making room rather than as a jump. */
+  inset-inline-end: clamp(18px, 2.4vw, 32px);
   display: flex; align-items: center; gap: 7px;
   block-size: var(--btn-h-sm);
   /* Even now there is nothing overlapping the right end. */
@@ -54,9 +56,13 @@
   /* Hidden rather than unmounted, so the transition has something to run on —
      the same reasoning ScrollTop uses. */
   opacity: 0; translate: 12px 0; pointer-events: none;
-  transition: opacity .3s ease-in-out, translate .4s var(--spring);
+  transition: opacity .3s ease-in-out, translate .4s var(--spring),
+              inset-inline-end .35s var(--spring);
 }
 .timeLeft[data-show] { opacity: 1; translate: 0 0; }
+.timeLeft[data-paired=''] {
+  inset-inline-end: calc(clamp(18px, 2.4vw, 32px) + var(--btn-h-sm) + 12px);
+}
 /* It is decorative detail, not a control. Below the breakpoint where the
    contents rail disappears there is no room beside the button either. */
 @media (max-width: 719px) { .timeLeft { display: none; } }
@@ -106,20 +112,18 @@
   display: flex; flex-wrap: wrap; gap: var(--s-2);
   margin-inline-start: auto; list-style: none; padding: 0;
 }
+ /* NO CHIP AND NO OUTLINE. The client's badges are already discs with their
+    marks in white, so a cream circle with an ink border around one of them puts
+    a second circle around a circle — the fault that started this. The button is
+    the artwork. */
 .shareBtn {
   display: grid; place-items: center;
-  /* 46, not 42. At 42 a 21px mark left so much ground around it that the row
-     read as five empty circles with something small in each. */
-  inline-size: 46px; block-size: 46px;
-  background: var(--cream); color: var(--s-ink, var(--ink));
-  border: var(--border); border-radius: 50%;
+  padding: 0; background: none; border: 0;
+  border-radius: 50%;
   cursor: pointer;
-  transition: background-color var(--t-fast) ease, translate var(--t) var(--spring);
+  transition: translate var(--t) var(--spring);
 }
-@media (hover: hover) { .shareBtn:hover { background: var(--paper); } }
-/* The copy button is not a network, so it wears the brand's own colour. */
-.shareCopy { background: var(--sun); color: var(--ink); }
-@media (hover: hover) { .shareCopy:hover { background: var(--sun); } }
+.shareBtn svg { display: block; }
 @media (hover: hover) { .shareBtn:hover { translate: 0 -3px; } }
 .shareBtn:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {

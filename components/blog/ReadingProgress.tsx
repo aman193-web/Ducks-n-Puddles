@@ -30,6 +30,11 @@ export function ReadingProgress({ target, minutes }: { target: string; minutes: 
   const bar = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
   const [left, setLeft] = useState<number | null>(null)
+  /* Whether the back-to-top button is on screen beside it. State, not a dataset
+     write — the pill has no ref, and the first version of this set the attribute
+     on the PROGRESS BAR's ref by mistake, so the pill never moved. It flips once
+     per article, so a re-render costs nothing. */
+  const [paired, setPaired] = useState(false)
 
   useEffect(() => {
     const el = document.querySelector<HTMLElement>(target)
@@ -52,15 +57,16 @@ export function ReadingProgress({ target, minutes }: { target: string; minutes: 
       el2.dataset.track = ''
       const p = Math.min(1, Math.max(0, -r.top / total))
       el2.style.setProperty('--p', String(p))
-      /* The pill appears on ScrollTop's terms, not its own: that button shows
-         after 150vh, and a pill tucked behind a button that is not there yet is
-         a lozenge floating in the corner on its own. It goes again once the
-         article is all but finished — "0 min" is not worth a pill, and a reader
-         at the last paragraph does not need telling.
-         ⚠️ The 1.5 is ScrollTop's sentinel height. The two have to agree; there
-         is no shared token for it. */
-      const withButton = window.scrollY > window.innerHeight * 1.5
-      setLeft(!withButton || p >= 0.97 ? null : Math.max(1, Math.ceil(minutes * (1 - p))))
+      /* VISIBLE FROM THE START OF THE ARTICLE, at the client's call. It was
+         gated on ScrollTop appearing, so it only turned up after 150vh.
+         It still goes once the article is all but finished — "0 min" is not
+         worth a pill, and a reader at the last paragraph does not need telling.
+         ⚠️ The 1.5 below is ScrollTop's own sentinel height, and it is used only
+         to decide WHERE the pill sits: alone it takes the corner, and it slides
+         left to make room when the button arrives. The two numbers have to
+         agree and there is no shared token for it. */
+      setPaired(window.scrollY > window.innerHeight * 1.5)
+      setLeft(p >= 0.97 ? null : Math.max(1, Math.ceil(minutes * (1 - p))))
     }
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(read) }
     read()
@@ -84,7 +90,12 @@ export function ReadingProgress({ target, minutes }: { target: string; minutes: 
       {/* aria-hidden: the reading time is already stated in the byline at the
           top of the article, where it is useful for deciding whether to start.
           This is a glance, not a second announcement. */}
-      <div className={styles.timeLeft} data-show={left !== null || undefined} aria-hidden="true">
+      <div
+        className={styles.timeLeft}
+        data-show={left !== null || undefined}
+        data-paired={paired ? '' : undefined}
+        aria-hidden="true"
+      >
         <Clock size={16} weight="bold" />
         <span>{left ?? 1} min</span>
       </div>

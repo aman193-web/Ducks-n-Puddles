@@ -1,8 +1,6 @@
 'use client'
 import { useState } from 'react'
-import {
-  Check, Copy, Envelope, FacebookLogo, WhatsappLogo, XLogo,
-} from '@phosphor-icons/react/dist/ssr'
+import { ShareIcon, type ShareIconName } from './ShareIcons'
 import styles from './blog-extras.module.css'
 
 /**
@@ -26,19 +24,17 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
   const u = encodeURIComponent(url)
   const t = encodeURIComponent(title)
 
-  /* FROM PHOSPHOR, which the site already depends on — the Nucleo set is out at
-     the client's request, and pulling a third-party icon library into a public
-     repo for three glyphs was never worth the licence question anyway.
-     All at weight="fill": solid marks, each in its own colour, on the site's
-     own outlined chip. */
-  const links = [
-    { key: 'facebook', label: 'Share on Facebook', Icon: FacebookLogo, colour: '#1877F2',
+  /* THE CLIENT'S OWN BADGES, used whole — see ShareIcons. Each is already a
+     coloured disc with its mark in white, so the button carries no chip and no
+     outline of its own. */
+  const links: { key: string; label: string; icon: ShareIconName; href: string }[] = [
+    { key: 'facebook', label: 'Share on Facebook', icon: 'facebook',
       href: `https://www.facebook.com/sharer/sharer.php?u=${u}` },
-    { key: 'x', label: 'Share on X', Icon: XLogo, colour: '#0F1419',
+    { key: 'x', label: 'Share on X', icon: 'x',
       href: `https://twitter.com/intent/tweet?url=${u}&text=${t}` },
-    { key: 'whatsapp', label: 'Share on WhatsApp', Icon: WhatsappLogo, colour: '#25D366',
+    { key: 'whatsapp', label: 'Share on WhatsApp', icon: 'whatsapp',
       href: `https://wa.me/?text=${t}%20${u}` },
-    { key: 'email', label: 'Share by email', Icon: Envelope, colour: 'var(--duck-blue)',
+    { key: 'email', label: 'Share by email', icon: 'email',
       href: `mailto:?subject=${t}&body=${u}` },
   ]
 
@@ -56,37 +52,24 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
 
   return (
     <div className={styles.share}>
-      <p className={styles.shareLabel}>Share this</p>
+      {/* The copy confirmation lands HERE rather than on the button. The fifth
+          badge is the client's artwork and swapping it for a tick would mean
+          drawing a sixth icon that does not exist; the label has room and is
+          where the eye already is. */}
+      <p className={styles.shareLabel}>{copied ? 'Link copied' : 'Share this'}</p>
       <ul className={styles.shareList}>
-        {links.map(({ key, label, href, colour, Icon }) => (
+        {links.map(({ key, label, href, icon }) => (
           <li key={key}>
-            <a
-              className={styles.shareBtn} href={href}
-              target="_blank" rel="noopener noreferrer"
-              style={{ ['--s-ink' as string]: colour } as React.CSSProperties}
-            >
+            <a className={styles.shareBtn} href={href} target="_blank" rel="noopener noreferrer">
               <span className="vh">{label}</span>
-              <Icon size={24} weight="fill" aria-hidden="true" />
+              <ShareIcon name={icon} />
             </a>
           </li>
         ))}
         <li>
-          <button
-            type="button"
-            className={`${styles.shareBtn} ${styles.shareCopy}`}
-            onClick={copy}
-          >
-            {/* The label changes rather than a toast appearing: the button is
-                where the attention already is. */}
+          <button type="button" className={styles.shareBtn} onClick={copy}>
             <span className="vh">{copied ? 'Link copied' : 'Copy link'}</span>
-            {/* Fill, like the rest of the row — this was the one glyph still
-                drawn as a stroke. `Copy` rather than `LinkSimple`: Phosphor's
-                filled link is a solid SQUARE with a chain knocked out of it,
-                which inside a yellow circle reads as a rendering fault. It also
-                says what the button does more plainly. */}
-            {copied
-              ? <Check size={22} weight="fill" aria-hidden="true" />
-              : <Copy size={22} weight="fill" aria-hidden="true" />}
+            <ShareIcon name="share" />
           </button>
         </li>
       </ul>
