@@ -67,7 +67,7 @@ export default async function JournalPost(
   return (
     <>
     {/* Measured against the article, not the document — see the component. */}
-    <ReadingProgress target="[data-article-body]" />
+    <ReadingProgress target="[data-article-body]" minutes={post.readingMinutes} />
 
     <article className={styles.page}>
       <div className="wrap">

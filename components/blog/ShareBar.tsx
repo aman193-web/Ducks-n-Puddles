@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import {
-  Check, Envelope, FacebookLogo, LinkSimple, WhatsappLogo, XLogo,
+  Check, Copy, Envelope, FacebookLogo, WhatsappLogo, XLogo,
 } from '@phosphor-icons/react/dist/ssr'
 import styles from './blog-extras.module.css'
 
@@ -66,7 +66,7 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
               style={{ ['--s-ink' as string]: colour } as React.CSSProperties}
             >
               <span className="vh">{label}</span>
-              <Icon size={21} weight="fill" aria-hidden="true" />
+              <Icon size={24} weight="fill" aria-hidden="true" />
             </a>
           </li>
         ))}
@@ -79,9 +79,14 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
             {/* The label changes rather than a toast appearing: the button is
                 where the attention already is. */}
             <span className="vh">{copied ? 'Link copied' : 'Copy link'}</span>
+            {/* Fill, like the rest of the row — this was the one glyph still
+                drawn as a stroke. `Copy` rather than `LinkSimple`: Phosphor's
+                filled link is a solid SQUARE with a chain knocked out of it,
+                which inside a yellow circle reads as a rendering fault. It also
+                says what the button does more plainly. */}
             {copied
-              ? <Check size={19} weight="bold" aria-hidden="true" />
-              : <LinkSimple size={19} weight="bold" aria-hidden="true" />}
+              ? <Check size={22} weight="fill" aria-hidden="true" />
+              : <Copy size={22} weight="fill" aria-hidden="true" />}
           </button>
         </li>
       </ul>

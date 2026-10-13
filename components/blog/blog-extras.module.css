@@ -24,6 +24,44 @@
 }
 @media (prefers-reduced-motion: reduce) { .progress::after { transition: none; } }
 
+/* ---- "X min" left, beside the back-to-top button ------------------------
+   It tucked BEHIND the button at first, as the client's reference does. They
+   asked for them apart, which is the better call here anyway: the reference's
+   pill and button are the same dark colour so they overlap as one object,
+   while these two are ink and sun — overlapped, the yellow circle looked like
+   it had been dropped on the pill rather than set beside it.
+
+   Still pinned to ScrollTop's own numbers: the same inset, the same height, so
+   they sit on one baseline. Change one and the other has to follow — there is
+   no shared token for a floating control's position, which is worth knowing
+   before either moves. */
+.timeLeft {
+  position: fixed;
+  z-index: 45;
+  inset-block-end: clamp(18px, 2.4vw, 32px);
+  /* The button's own inset, plus its width, plus a gap. */
+  inset-inline-end: calc(clamp(18px, 2.4vw, 32px) + var(--btn-h-sm) + 12px);
+  display: flex; align-items: center; gap: 7px;
+  block-size: var(--btn-h-sm);
+  /* Even now there is nothing overlapping the right end. */
+  padding-inline: 18px;
+  background: var(--ink); color: var(--paper);
+  border: var(--border-lg); border-color: var(--ink);
+  border-radius: 999px;
+  font-size: var(--fs-micro); font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -10px rgba(16, 38, 74, .45);
+  /* Hidden rather than unmounted, so the transition has something to run on —
+     the same reasoning ScrollTop uses. */
+  opacity: 0; translate: 12px 0; pointer-events: none;
+  transition: opacity .3s ease-in-out, translate .4s var(--spring);
+}
+.timeLeft[data-show] { opacity: 1; translate: 0 0; }
+/* It is decorative detail, not a control. Below the breakpoint where the
+   contents rail disappears there is no room beside the button either. */
+@media (max-width: 719px) { .timeLeft { display: none; } }
+@media (prefers-reduced-motion: reduce) { .timeLeft { transition: opacity .2s linear; } }
+
 /* ---- key takeaways ------------------------------------------------------- */
 .takeaways {
   display: grid; gap: var(--s-4);
@@ -70,7 +108,9 @@
 }
 .shareBtn {
   display: grid; place-items: center;
-  inline-size: 42px; block-size: 42px;
+  /* 46, not 42. At 42 a 21px mark left so much ground around it that the row
+     read as five empty circles with something small in each. */
+  inline-size: 46px; block-size: 46px;
   background: var(--cream); color: var(--s-ink, var(--ink));
   border: var(--border); border-radius: 50%;
   cursor: pointer;
