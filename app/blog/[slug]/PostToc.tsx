@@ -11,8 +11,10 @@ import styles from '../blog.module.css'
  * does not care how tall a section is — the current one is the last whose top
  * has passed it.
  *
- * rAF-throttled and passive. It does nothing at all if the article has fewer
- * than two headings, which the page checks before rendering this.
+ * rAF-throttled and passive, and it survives an EMPTY list: the client asked
+ * for the contents section to appear on their own three posts too, and those
+ * have no headings, so `items` is []. The effect bails on an empty list, the
+ * track has no height to draw, and the <ol> renders with nothing in it.
  */
 export function PostToc({ items }: { items: { id: string; title: string }[] }) {
   const [here, setHere] = useState(items[0]?.id)

@@ -146,12 +146,15 @@ export default async function JournalPost(
               </Link>
             </div>
 
-            {toc.length > 1 && (
-              <>
-                <p className={styles.railTitle}>On this page</p>
-                <PostToc items={toc} />
-              </>
-            )}
+            {/* THE CONTENTS SECTION IS ALWAYS HERE, at the client's request —
+                including on the three posts they wrote, where it is EMPTY.
+                Those posts are continuous prose with no headings in it and I am
+                not to add any, so there is nothing for it to list.
+                ⚠️ An "On this page" with nothing under it reads as unfinished
+                to a visitor. It is here as a marker of where their own headings
+                would appear; it fills itself the moment the copy has any. */}
+            <p className={styles.railTitle}>On this page</p>
+            <PostToc items={toc} />
           </aside>
 
           <div className={styles.prose}>

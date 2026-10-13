@@ -619,6 +619,9 @@
   border-block-end: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
 }
 .toc { position: relative; display: grid; gap: 1px; list-style: none; padding: 0; margin: 0; }
+/* With no headings the list is empty; the track has nothing to run down, so it
+   is not drawn at all rather than collapsing to a stub. */
+.toc:empty::before { content: none; }
 .toc::before {
   content: ''; position: absolute; z-index: 0;
   inset-block: 14px; inset-inline-start: 13px;
