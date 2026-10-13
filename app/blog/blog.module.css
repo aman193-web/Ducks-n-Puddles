@@ -544,13 +544,18 @@
   padding-block-start: var(--s-2);
   font-size: var(--fs-small);
 }
+/* A photograph now, not the duck mark — so it needs a few more pixels to be
+   two faces rather than a smudge, `cover` rather than `contain`, and an outline
+   so it reads as a portrait rather than as a hole in the card. */
 .avatar {
   display: block; flex: none;
-  inline-size: 30px; block-size: 30px;
+  inline-size: 34px; block-size: 34px;
+  border: var(--bw) solid var(--ink);
   border-radius: 50%; overflow: hidden;
   background: var(--sun-soft);
 }
-.avatar img { inline-size: 100%; block-size: 100%; object-fit: contain; }
+.avatar picture { display: block; inline-size: 100%; block-size: 100%; }
+.avatar img { inline-size: 100%; block-size: 100%; object-fit: cover; }
 .bylineName { font-weight: 700; color: var(--ink); }
 .byline .meta { margin-inline-start: auto; }
 

@@ -90,12 +90,16 @@ export interface Post {
  */
 export const defaultAuthor = {
   name: 'Larisa & Vinny',
-  /** The small round mark beside a byline, at 28-32px. The duck, not a
-   *  photograph: two faces at that size are mush. */
-  avatar: 'logo-mark',
-  /** The author card at the foot of an article, where there is room for the
-   *  two of them. Cropped to their faces — see the note in manifest.mjs. */
-  portrait: 'founders',
+  /**
+   * ONE IMAGE EVERYWHERE, at the client's call: the byline on every card —
+   * /blog, the category and tag pages, and the home page's blog row — and the
+   * author card at the foot of an article. The duck mark it replaces is still
+   * registered; nothing else used it.
+   *
+   * It is the founders cropped to their faces, which is also what keeps it out
+   * of tier C — see the note beside the entry in manifest.mjs.
+   */
+  avatar: 'founders',
   /**
    * The line under the name, and the bio under that.
    *

@@ -13,10 +13,10 @@ import styles from './blog-extras.module.css'
 export function AuthorBox() {
   return (
     <aside className={styles.author} aria-label="About the author">
-      {/* A rounded rectangle, not a circle. The photograph is the two of them
-          side by side; a circle crops it to whichever face lands in the middle. */}
+      {/* A circle, at the client's call. The crop is 1.6:1, so `object-fit:
+          cover` shows its middle — which is where both faces are. */}
       <span className={styles.authorAvatar}>
-        <Picture id={defaultAuthor.portrait} sizes="(min-width: 560px) 132px, 112px" alt="" />
+        <Picture id={defaultAuthor.avatar} sizes="(min-width: 560px) 116px, 96px" alt="" />
       </span>
       <div className={styles.authorBody}>
         <p className={styles.authorKicker}>Written by</p>
