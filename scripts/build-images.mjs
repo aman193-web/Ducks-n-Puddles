@@ -107,6 +107,12 @@ for (const p of photos) {
   entries[p.id] = {
     id: p.id, tier: p.tier, alt: p.alt, widths: done, colour, v: await contentHash(src),
     aspect: +(final.width / final.height).toFixed(4), formats: ['avif', 'webp', 'jpg'],
+    /* The subject's position in the frame, 0-1. Declared in manifest.mjs since
+       the first build and NEVER WRITTEN OUT until now, which is why every
+       `focal` in that file had no effect: <Picture> had nothing to read. It
+       becomes object-position, so a portrait photograph cropped into a landscape
+       card keeps the faces instead of centring on a torso. */
+    ...(p.focal ? { focal: p.focal } : {}),
   }
   console.log(`photo  ${p.id.padEnd(18)} ${widths.length} widths  src ${srcW}x${srcH}  ${colour}`)
 }

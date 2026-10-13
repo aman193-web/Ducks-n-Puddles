@@ -18,6 +18,18 @@ export const PHOTO_DIR = 'assets-source/photos'
 export const VIDEO_DIR = 'assets-source/videos'
 export const BRAND_DIR = 'media/brand'
 
+/**
+ * `focal` — where the subject sits in the frame, 0-1, used as object-position
+ * when `cover` has to discard part of it. Every photograph below that shows a
+ * person and gets cropped into a landscape card carries one, because the card
+ * figures are 16/10 and most of these are 2:3: centred, the crop takes the
+ * heads off.
+ *
+ * It was declared here from the first build and never written into
+ * lib/asset-manifest.json, so it did nothing for months. build-images.mjs
+ * carries it through now.
+ */
+
 /** Responsive widths. Clamped per-source at build time — we never upscale. */
 export const WIDTHS = [320, 480, 640, 768, 960, 1280, 1536, 1920, 2560]
 
@@ -30,13 +42,14 @@ export const photos = [
     role: 'texture', crop: { top: 0, heightPct: 0.5 },
     alt: 'Clear turquoise pool water in soft daylight.' },
   { id: 'cart-path',       src: '165A6877.JPG', tier: 'B', grade: 'chlorine',
-    role: 'band', focal: { x: 0.5, y: 0.42 },
+    role: 'band', focal: { x: 0.5, y: 0.34 },
     alt: 'Two children walking hand in hand down a sunlit path under a wide cloudy sky.' },
   { id: 'dune-walk',       src: 'Photo Sep 19 2025, 6 57 07 PM.jpg', tier: 'B', grade: 'overcast',
-    role: 'band', focal: { x: 0.5, y: 0.45 },
+    role: 'band', focal: { x: 0.5, y: 0.32 },
     alt: 'A child walking away through tall dune grass towards the sea.' },
   { id: 'shore-horizon',   src: 'Photo Sep 19 2025, 6 55 28 PM.jpg', tier: 'B', grade: 'overcast',
     role: 'texture', crop: { top: 0, heightPct: 0.42 },
+    focal: { x: 0.5, y: 0.4 },
     alt: 'A wide beach horizon at dusk with layered cloud.' },
   /* THE FAMILY. The professional shoot the Story section has been waiting for
      since September — Larisa, Vinny and their two children. Tier B rather than
@@ -61,7 +74,7 @@ export const photos = [
     alt: 'Larisa and Vinny, the founders of Ducks ’n Puddles.' },
 
   { id: 'shell-hands',     src: 'Photo Sep 19 2025, 6 57 26 PM.jpg', tier: 'B', grade: 'overcast',
-    role: 'portrait', focal: { x: 0.42, y: 0.24 },
+    role: 'portrait', focal: { x: 0.5, y: 0.24 },
     alt: 'A smiling child sitting in the sand among dune grass.' },
 
   /* The Foundation section's photograph.
@@ -83,6 +96,7 @@ export const photos = [
   { id: 'sample-splashpad',src: '165A6643.JPG', tier: 'C', grade: 'chlorine', role: 'sample',
     alt: 'An early sample bottle standing on a painted splash-pad surface.' },
   { id: 'sample-carry',    src: '165A6709.JPG', tier: 'C', grade: 'chlorine', role: 'sample',
+    focal: { x: 0.5, y: 0.26 },
     alt: 'A child carrying an early sample bottle by its handle across a tennis court.' },
   { id: 'sample-mosaic',   src: '165A6854.JPG', tier: 'C', grade: 'chlorine', role: 'sample',
     alt: 'Three early sample bottles on stone coping in front of a blue mosaic fountain.' },
@@ -97,12 +111,16 @@ export const photos = [
      live in the reels row with the rest of the family's camera roll and
      nowhere else. */
   { id: 'sample-armful',   src: 'sample-armful.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    focal: { x: 0.5, y: 0.24 },
     alt: 'A child carrying three sample bottles in both arms across a sunlit lawn.' },
   { id: 'sample-sunup',    src: 'sample-sunup.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    focal: { x: 0.5, y: 0.58 },
     alt: 'Two parents holding sample bottles up towards the afternoon light.' },
   { id: 'sample-swing',    src: 'sample-swing.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    focal: { x: 0.5, y: 0.36 },
     alt: 'A sample bottle tucked beside a toddler in a playground swing.' },
   { id: 'sample-playground', src: 'sample-playground.jpg', tier: 'C', grade: 'chlorine', role: 'sample',
+    focal: { x: 0.5, y: 0.46 },
     alt: 'A child drinking from a sample bottle at a playground table, two more standing beside her.' },
 
   { id: 'sample-beach',    src: 'Photo Sep 19 2025, 6 55 23 PM.jpg', tier: 'C', grade: 'overcast',

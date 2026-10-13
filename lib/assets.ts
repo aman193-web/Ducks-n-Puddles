@@ -9,6 +9,8 @@ export interface AssetEntry {
   widths: number[]
   colour?: string
   aspect: number
+  /** Subject position 0-1, for object-position under `cover`. Optional. */
+  focal?: { x: number; y: number }
   formats: string[]
   alpha?: boolean
   nativeWidth?: number

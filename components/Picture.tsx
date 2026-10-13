@@ -45,6 +45,13 @@ export function Picture({ id, sizes, alt, className, priority, tint = true, styl
         decoding={priority ? 'sync' : 'async'}
         style={{
           backgroundColor: tint && !a.alpha ? a.colour : undefined,
+          /* Where to hold the crop when `object-fit: cover` has to throw some
+             of the frame away. Without it the browser centres, which on a
+             portrait photograph in a landscape card cuts the heads off — the
+             card figures are 16/10 and most of these photographs are 2:3. */
+          objectPosition: a.focal
+            ? `${a.focal.x * 100}% ${a.focal.y * 100}%`
+            : undefined,
           ...style,
         }}
       />

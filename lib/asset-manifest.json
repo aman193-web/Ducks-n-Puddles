@@ -60,7 +60,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.34
+    }
   },
   "dune-walk": {
     "id": "dune-walk",
@@ -84,7 +88,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.32
+    }
   },
   "shore-horizon": {
     "id": "shore-horizon",
@@ -108,7 +116,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.4
+    }
   },
   "family-portrait": {
     "id": "family-portrait",
@@ -128,7 +140,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.35
+    }
   },
   "founders": {
     "id": "founders",
@@ -149,7 +165,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.5
+    }
   },
   "shell-hands": {
     "id": "shell-hands",
@@ -173,7 +193,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.24
+    }
   },
   "foundation-children": {
     "id": "foundation-children",
@@ -196,7 +220,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.45
+    }
   },
   "sample-turf": {
     "id": "sample-turf",
@@ -261,7 +289,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.26
+    }
   },
   "sample-mosaic": {
     "id": "sample-mosaic",
@@ -324,7 +356,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.24
+    }
   },
   "sample-sunup": {
     "id": "sample-sunup",
@@ -345,7 +381,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.58
+    }
   },
   "sample-swing": {
     "id": "sample-swing",
@@ -366,7 +406,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.36
+    }
   },
   "sample-playground": {
     "id": "sample-playground",
@@ -387,7 +431,11 @@
       "avif",
       "webp",
       "jpg"
-    ]
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.46
+    }
   },
   "sample-beach": {
     "id": "sample-beach",

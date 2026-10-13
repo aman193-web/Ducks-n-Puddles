@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
-import { Check, LinkSimple, Envelope } from '@phosphor-icons/react/dist/ssr'
-import { SocialMark } from './SocialMark'
+import {
+  Check, Envelope, FacebookLogo, LinkSimple, WhatsappLogo, XLogo,
+} from '@phosphor-icons/react/dist/ssr'
 import styles from './blog-extras.module.css'
 
 /**
@@ -25,19 +26,19 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
   const u = encodeURIComponent(url)
   const t = encodeURIComponent(title)
 
-  /* The real marks, each in its own colour, on the site's outlined chip. See
-     SocialMark for why they are no longer white on a coloured disc. */
-  const links: {
-    key: string; label: string; href: string; colour: string
-    mark?: 'facebook' | 'x' | 'whatsapp'
-  }[] = [
-    { key: 'facebook', label: 'Share on Facebook', mark: 'facebook', colour: '#1877F2',
+  /* FROM PHOSPHOR, which the site already depends on — the Nucleo set is out at
+     the client's request, and pulling a third-party icon library into a public
+     repo for three glyphs was never worth the licence question anyway.
+     All at weight="fill": solid marks, each in its own colour, on the site's
+     own outlined chip. */
+  const links = [
+    { key: 'facebook', label: 'Share on Facebook', Icon: FacebookLogo, colour: '#1877F2',
       href: `https://www.facebook.com/sharer/sharer.php?u=${u}` },
-    { key: 'x', label: 'Share on X', mark: 'x', colour: '#0F1419',
+    { key: 'x', label: 'Share on X', Icon: XLogo, colour: '#0F1419',
       href: `https://twitter.com/intent/tweet?url=${u}&text=${t}` },
-    { key: 'whatsapp', label: 'Share on WhatsApp', mark: 'whatsapp', colour: '#25D366',
+    { key: 'whatsapp', label: 'Share on WhatsApp', Icon: WhatsappLogo, colour: '#25D366',
       href: `https://wa.me/?text=${t}%20${u}` },
-    { key: 'email', label: 'Share by email', colour: 'var(--duck-blue)',
+    { key: 'email', label: 'Share by email', Icon: Envelope, colour: 'var(--duck-blue)',
       href: `mailto:?subject=${t}&body=${u}` },
   ]
 
@@ -57,7 +58,7 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
     <div className={styles.share}>
       <p className={styles.shareLabel}>Share this</p>
       <ul className={styles.shareList}>
-        {links.map(({ key, label, href, colour, mark }) => (
+        {links.map(({ key, label, href, colour, Icon }) => (
           <li key={key}>
             <a
               className={styles.shareBtn} href={href}
@@ -65,9 +66,7 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
               style={{ ['--s-ink' as string]: colour } as React.CSSProperties}
             >
               <span className="vh">{label}</span>
-              {mark
-                ? <SocialMark name={mark} />
-                : <Envelope size={20} weight="fill" aria-hidden="true" />}
+              <Icon size={21} weight="fill" aria-hidden="true" />
             </a>
           </li>
         ))}
@@ -81,8 +80,8 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
                 where the attention already is. */}
             <span className="vh">{copied ? 'Link copied' : 'Copy link'}</span>
             {copied
-              ? <Check size={18} weight="bold" aria-hidden="true" />
-              : <LinkSimple size={18} weight="bold" aria-hidden="true" />}
+              ? <Check size={19} weight="bold" aria-hidden="true" />
+              : <LinkSimple size={19} weight="bold" aria-hidden="true" />}
           </button>
         </li>
       </ul>
