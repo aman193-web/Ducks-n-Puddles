@@ -6,8 +6,26 @@
    it a blue band, and the blog handed it cream, which is why a stray light-blue
    stripe appeared across the seam with the swimmer half-sunk in it. This is the
    band the wave was always drawn against. */
-.close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
+.close {
+  background: var(--vincey-soft);
+  padding-block: clamp(var(--s-7), 5vw, var(--s-9));
+  /* A link target on the article page, where this band carries the signup. */
+  scroll-margin-block-start: calc(var(--header-h) + var(--s-5));
+}
 .closeInner { display: grid; justify-items: start; gap: var(--s-4); }
+
+/* THE SIGNUP VARIANT, on the article page only. Stacked, the form sits under a
+   heading three times its width and the right half of the band stays empty —
+   the same two-column split the Newsletter band uses, for the same reason. */
+.closeSay { display: grid; gap: var(--s-4); }
+@media (min-width: 880px) {
+  .closeCols {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+    column-gap: clamp(var(--s-7), 5vw, var(--s-10));
+    align-items: center;
+    justify-items: stretch;
+  }
+}
 .closeTitle {
   font-family: var(--font-display); font-synthesis: none; font-weight: 400;
   letter-spacing: .008em; line-height: 1.1;

@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
-import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
 import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor, tagSlug } from '@/content/journal'
 import { brand } from '@/content/brand'
@@ -14,6 +13,7 @@ import { KeyTakeaways } from '@/components/blog/KeyTakeaways'
 import { ShareBar } from '@/components/blog/ShareBar'
 import { Helpful } from '@/components/blog/Helpful'
 import { AuthorBox } from '@/components/blog/AuthorBox'
+import { FooterSignup } from '@/components/FooterSignup'
 import styles from '../blog.module.css'
 
 /* Three known posts, so every one is prerendered at build time rather than
@@ -149,7 +149,10 @@ export default async function JournalPost(
               <p className={styles.railCtaBody}>
                 One short email every couple of weeks.
               </p>
-              <Link href="/#squad" className={styles.railCtaLink}>
+              {/* The sign-off band at the foot of this page, NOT the Duck
+                  Squad waitlist on the home page — that form is the launch
+                  list for the bottles, and this card is offering the email. */}
+              <Link href="#newsletter" className={styles.railCtaLink}>
                 Join the Squad
                 <ArrowRight size={13} weight="bold" aria-hidden="true" />
               </Link>
@@ -227,14 +230,20 @@ export default async function JournalPost(
     {/* The one invitation on this page, and the colour the footer's wave needs
         above it. It used to be an inline box mid-article, which put a CTA
         between the reader and the further reading. */}
-    <section className={styles.close}>
-      <div className={`wrap ${styles.closeInner}`}>
-        <h2 className={styles.closeTitle}>Get the next one by email.</h2>
-        <p className={styles.closeBlurb}>
-          We send one short note every couple of weeks, and the Duck Squad hears
-          about the bottles before this site does.
-        </p>
-        <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+    <section id="newsletter" className={styles.close}>
+      {/* THE ONLY EMAIL FIELD ON AN ARTICLE PAGE. The listing pages carry the
+          Newsletter band above their sign-off and so keep a button here; this
+          page has no Newsletter band, so the band IS the signup — the same
+          form, the same endpoint, the same list. */}
+      <div className={`wrap ${styles.closeInner} ${styles.closeCols}`}>
+        <div className={styles.closeSay}>
+          <h2 className={styles.closeTitle}>Get the next one by email.</h2>
+          <p className={styles.closeBlurb}>
+            We send one short note every couple of weeks, and the Duck Squad hears
+            about the bottles before this site does.
+          </p>
+        </div>
+        <FooterSignup />
       </div>
     </section>
     </>

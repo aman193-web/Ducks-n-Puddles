@@ -4,7 +4,14 @@
 /* --paper, not --cream. The band sits between Journal and the FAQ, both of
    which are paper, so a cream ground here drew a stripe across the page behind
    the yellow panel rather than letting it sit on one continuous surface. */
-.section { background: var(--paper); padding-block: 0 calc(var(--section-y) * 0.45); }
+/* `#newsletter` is a link target now — the blog's sign-off band points here
+   instead of at the Duck Squad waitlist, which is a different list. The header
+   is fixed, so without this the panel lands underneath it. */
+.section {
+  background: var(--paper);
+  padding-block: 0 calc(var(--section-y) * 0.45);
+  scroll-margin-block-start: calc(var(--header-h) + var(--s-5));
+}
 
 .panel {
   display: grid;

@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import styles from './FooterSignup.module.css'
 
 /**
@@ -8,6 +8,13 @@ import styles from './FooterSignup.module.css'
  * only the presentation differs.
  */
 export function FooterSignup() {
+  /* The ids used to be the literals `footer-email` / `footer-company`, which was
+     safe only while this rendered once per page. The blog sign-off band now
+     carries a second instance, and two elements sharing an id silently break
+     the label association for both. */
+  const uid = useId()
+  const emailId = `signup-email-${uid}`
+  const companyId = `signup-company-${uid}`
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
   const [message, setMessage] = useState('')
   const mounted = useRef(Date.now())
@@ -45,10 +52,10 @@ export function FooterSignup() {
 
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
-      <label htmlFor="footer-email" className="vh">Your email address</label>
+      <label htmlFor={emailId} className="vh">Your email address</label>
       <div className={styles.pill}>
         <input
-          id="footer-email" name="email" type="email" required
+          id={emailId} name="email" type="email" required
           autoComplete="email" placeholder="Enter your email"
         />
         <button type="submit" className={styles.go} disabled={state === 'sending'}>
@@ -62,8 +69,8 @@ export function FooterSignup() {
 
       {/* Honeypot — off-screen rather than display:none, which some bots skip. */}
       <div className={styles.hp} aria-hidden="true">
-        <label htmlFor="footer-company">Company</label>
-        <input id="footer-company" name="company" tabIndex={-1} autoComplete="off" />
+        <label htmlFor={companyId}>Company</label>
+        <input id={companyId} name="company" tabIndex={-1} autoComplete="off" />
       </div>
 
       {state === 'error' && (

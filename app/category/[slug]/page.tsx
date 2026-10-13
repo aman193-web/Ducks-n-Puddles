@@ -91,7 +91,11 @@ export default async function CategoryPage(
             One short note every couple of weeks. The Duck Squad hears about the
             bottles before this site does.
           </p>
-          <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+          {/* The Newsletter band directly above, not the Duck Squad waitlist on
+              the home page — the waitlist is the launch list for the bottles
+              and this is the email. One capture per page, so this stays a
+              button rather than a second copy of the form. */}
+          <Btn href="#newsletter" colour="var(--sun-soft)">Join the Duck Squad</Btn>
         </div>
       </section>
     </>

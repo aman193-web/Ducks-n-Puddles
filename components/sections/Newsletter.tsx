@@ -12,7 +12,7 @@ import styles from './Newsletter.module.css'
  */
 export function Newsletter() {
   return (
-    <section className={styles.section} aria-labelledby="newsletter-title">
+    <section id="newsletter" className={styles.section} aria-labelledby="newsletter-title">
       <div className="wrap">
         <div className={styles.panel}>
           <h2 id="newsletter-title" className={`d ${styles.title}`}>
