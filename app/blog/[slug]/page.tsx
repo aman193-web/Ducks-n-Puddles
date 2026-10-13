@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { Btn } from '@/components/ui/Btn'
 import { Sticker } from '@/components/ui/Sticker'
-import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor } from '@/content/journal'
+import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor, tagSlug } from '@/content/journal'
 import { brand } from '@/content/brand'
 import { PostToc } from './PostToc'
 import styles from '../blog.module.css'
@@ -74,7 +74,7 @@ export default async function JournalPost(
         <nav className={styles.crumbs} aria-label="Breadcrumb">
           <ol>
             <li><Link href="/blog"><ArrowLeft size={14} weight="bold" aria-hidden="true" />Blog</Link></li>
-            {cat && <li><Link href={`/blog/category/${cat.slug}`}>{cat.label}</Link></li>}
+            {cat && <li><Link href={`/category/${cat.slug}`}>{cat.label}</Link></li>}
             <li aria-current="page">{post.title}</li>
           </ol>
         </nav>
@@ -86,7 +86,7 @@ export default async function JournalPost(
               every section eyebrow on the site is, so it wears what they wear.
               The cards keep their pills. */}
           {cat
-            ? <Link href={`/blog/category/${cat.slug}`} className={styles.catLink}>
+            ? <Link href={`/category/${cat.slug}`} className={styles.catLink}>
                 <Sticker>{post.tag}</Sticker>
               </Link>
             : <Sticker>{post.tag}</Sticker>}
@@ -168,7 +168,9 @@ export default async function JournalPost(
 
             {post.tags && post.tags.length > 0 && (
               <p className={styles.postTags}>
-                {post.tags.map((t) => <span key={t} className={styles.tagChip}>{t}</span>)}
+                {post.tags.map((t) => (
+                  <Link key={t} href={`/tag/${tagSlug(t)}`} className={styles.tagChip}>{t}</Link>
+                ))}
               </p>
             )}
           </div>

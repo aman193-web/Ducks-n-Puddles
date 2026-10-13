@@ -206,28 +206,41 @@
    reference's own proportion. `.card` is the stacked one the grids are built
    from. They share every inner part, because they are the same component —
    only the frame differs. */
-/* FULL HEIGHT, all the way down to the byline. Three cards in a row carry
+/* THE CARD IS THE GRID NOW, not the link inside it.
+   The card used to be one big <Link>. Its tags are links as well since the
+   client asked for /tag/<slug>, and an anchor inside an anchor is invalid — the
+   browser closes the outer one early and the card quietly stops working. So the
+   title carries the link and stretches over the card with an overlay, which is
+   the standard way to keep a whole card clickable with interactive parts in it.
+
+   FULL HEIGHT, all the way down to the byline. Three cards in a row carry
    summaries of different lengths, and without this the bylines sat at three
    different heights — the auto margin on .byline has nothing to push against
    unless every box in the chain stretches. */
-.cardLink {
+.card, .compactCard, .featured {
+  position: relative;
   display: grid; grid-template-rows: auto 1fr; gap: var(--s-4);
   block-size: 100%;
-  text-decoration: none; color: var(--ink);
   transition: transform var(--t) var(--spring);
 }
-.card, .compactCard { block-size: 100%; }
-.cardLink:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 6px; border-radius: var(--r-lg); }
+.cardLink { color: inherit; text-decoration: none; }
+/* The hit area: the whole card. */
+.cardLink::after {
+  content: ''; position: absolute; inset: 0;
+  border-radius: var(--r-lg);
+}
+.cardLink:focus-visible::after { outline: var(--bw-lg) solid var(--ink); outline-offset: 6px; }
 @media (hover: hover) {
-  .cardLink:hover { transform: translateY(-3px); }
-  .cardLink:hover .cardTitle,
-  .cardLink:hover .featuredTitle { text-decoration-color: var(--sun); }
-  .cardLink:hover .cardFigure img { transform: scale(1.04); }
+  .card:hover, .compactCard:hover, .featured:hover { transform: translateY(-3px); }
+  .card:hover .cardTitle,
+  .featured:hover .featuredTitle { text-decoration-color: var(--sun); }
+  .card:hover .cardFigure img,
+  .featured:hover .cardFigure img { transform: scale(1.04); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cardLink, .cardFigure img { transition: none; }
-  .cardLink:hover { transform: none; }
-  .cardLink:hover .cardFigure img { transform: none; }
+  .card, .compactCard, .featured, .cardFigure img { transition: none; }
+  .card:hover, .compactCard:hover, .featured:hover { transform: none; }
+  .card:hover .cardFigure img { transform: none; }
 }
 
 .cardFigure {
@@ -301,7 +314,7 @@
 /* Two equal columns from 780, which is the reference's featured proportion.
    Below that it stacks like every other card. */
 @media (min-width: 780px) {
-  .featured .cardLink {
+  .featured {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     /* One row here, not the stacked card's two: side by side there is nothing
        below the pair for a 1fr row to fill. */
@@ -507,14 +520,22 @@
 
 /* ---- tags on a card. Flat text, not links: the reference points its tags at
    tag archives and this site has none. ----------------------------------- */
-.tagRow { display: flex; flex-wrap: wrap; gap: 6px; }
+/* Above the title's stretched overlay, or they would not be clickable. */
+.tagRow { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 6px; }
 .tagChip {
   display: inline-flex; align-items: center;
   padding: 4px 10px;
   background: color-mix(in srgb, var(--ink) 6%, transparent);
   border-radius: var(--r-pill);
   font-size: var(--fs-micro); font-weight: 600; color: var(--ink-soft);
+  text-decoration: none;
+  transition: background-color var(--t-fast) ease, color var(--t-fast) ease;
 }
+@media (hover: hover) {
+  .tagChip:hover { background: var(--sun-soft); color: var(--ink); }
+}
+.tagChip:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .tagChip { transition: none; } }
 
 /* ---- the byline: who wrote it, and when ---------------------------------- */
 .byline {

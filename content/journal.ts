@@ -486,6 +486,40 @@ export const categories: Category[] = [
     blurb: 'What we have learned that is worth passing on, whoever you end up buying from.' },
 ]
 
+/* --------------------------------------------------------------------------
+   TAGS.
+
+   Not categories. A category is one of the client's four, it is navigation, and
+   every post has exactly one. A tag is a loose descriptive label and a post has
+   two or three. They were flat text until the client asked for /tag/<slug>
+   URLs; now they are links, and these are what resolve them.
+
+   There is no tag registry: the set is whatever the posts use, derived rather
+   than declared. That is the opposite of the decision made for categories — and
+   deliberately so. Categories are a fixed, client-owned list whose pages must
+   exist even when empty; a tag only means anything while something carries it,
+   so a tag nobody uses should stop having a page.
+   -------------------------------------------------------------------------- */
+
+export const tagSlug = (tag: string) =>
+  tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+/** Every tag in use, alphabetical, de-duplicated. */
+export const allTags = () =>
+  [...new Set(posts.flatMap((p) => p.tags ?? []))].sort((a, b) => a.localeCompare(b))
+
+/** The label behind a slug — tags are stored as prose, not as slugs. */
+export const tagBySlug = (slug: string) =>
+  allTags().find((t) => tagSlug(t) === slug)
+
+export const postsWithTag = (slug: string) => {
+  const tag = tagBySlug(slug)
+  if (!tag) return []
+  return posts
+    .filter((p) => p.tags?.includes(tag))
+    .sort((a, b) => b.date.localeCompare(a.date))
+}
+
 export const categoryBySlug = (slug: string) =>
   categories.find((c) => c.slug === slug)
 

@@ -8,12 +8,19 @@ const config: NextConfig = {
     // runtime optimiser is unused. This keeps the build host-agnostic.
     unoptimized: true,
   },
-  /* /journal was the blog's URL until it was renamed. Kept as a permanent
-     redirect so anything already pointing at it still lands. */
+  /* Old URLs that still have to land somewhere.
+     /journal was the blog's path until it was renamed, and the category pages
+     sat under /blog/ until the client asked for the top level. Permanent, so
+     anything already pointing at either follows. /blog/tag is in the list
+     because the client named it when asking for /tag — it never shipped, but a
+     redirect for a path that was never live costs nothing and covers the case
+     where it was linked from somewhere outside this repo. */
   async redirects() {
     return [
       { source: '/journal', destination: '/blog', permanent: true },
       { source: '/journal/:slug', destination: '/blog/:slug', permanent: true },
+      { source: '/blog/category/:slug', destination: '/category/:slug', permanent: true },
+      { source: '/blog/tag/:slug', destination: '/tag/:slug', permanent: true },
     ]
   },
   async headers() {

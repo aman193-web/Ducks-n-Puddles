@@ -4,12 +4,20 @@ import { Btn } from '@/components/ui/Btn'
 import { Newsletter } from '@/components/sections/Newsletter'
 import { categories, categoryBySlug, postsInCategory } from '@/content/journal'
 import { brand } from '@/content/brand'
-import { BlogMasthead } from '../../BlogMasthead'
-import { BlogBrowser } from '../../BlogBrowser'
-import styles from '../../blog.module.css'
+import { BlogMasthead } from '@/app/blog/BlogMasthead'
+import { BlogBrowser } from '@/app/blog/BlogBrowser'
+import styles from '@/app/blog/blog.module.css'
 
-/* Every category gets a page at build time, including one that happens to be
-   empty — the chip in the filter row has to lead somewhere. */
+/* TOP LEVEL, at /category/<slug>, not under /blog.
+ *
+ * It lived at /blog/category/<slug> on the reasoning that blog things belong
+ * inside the blog and a site-wide /category would be the wrong place to stand
+ * if the shop ever needs product categories. The client asked for the
+ * reference's shape instead, which is top level — and the old path redirects,
+ * so nothing already pointing at it breaks.
+ *
+ * Every category gets a page at build time, including one that happens to be
+ * empty — the chip in the filter row has to lead somewhere. */
 export function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }))
 }
@@ -23,11 +31,11 @@ export async function generateMetadata(
   return {
     title: `${c.label} | The Duck Pond`,
     description: c.blurb,
-    alternates: { canonical: `/blog/category/${c.slug}` },
+    alternates: { canonical: `/category/${c.slug}` },
     openGraph: {
       type: 'website',
       title: `${c.label} | The Duck Pond | ${brand.name}`,
-      url: `${brand.domain}/blog/category/${c.slug}`,
+      url: `${brand.domain}/category/${c.slug}`,
     },
   }
 }

@@ -144,7 +144,7 @@ export function BlogBrowser({
           {categories.map((c) => (
             <Link
               key={c.slug}
-              href={active === c.slug ? '/blog' : `/blog/category/${c.slug}`}
+              href={active === c.slug ? '/blog' : `/category/${c.slug}`}
               className={styles.chip}
               aria-current={active === c.slug ? 'page' : undefined}
             >
