@@ -50,6 +50,16 @@ export const photos = [
     role: 'band', focal: { x: 0.5, y: 0.35 },
     alt: 'Larisa and Vinny outdoors at golden hour, each holding one of their two children.' },
 
+  /* LARISA AND VINNY, for the author card at the foot of every article.
+     CROPPED TO THEIR FACES, and that crop is the reason this is tier B rather
+     than tier C: the full frame has them holding three sample bottles, two of
+     which still carry the GREEN duck mark. Cropped to the top 42% there is no
+     product in the frame at all, so there is no prototype being passed off as
+     anything. Re-crop this and the tier has to be re-decided. */
+  { id: 'founders',        src: 'founders.jpg', tier: 'B', grade: 'chlorine',
+    role: 'band', crop: { top: 0.10, heightPct: 0.42 }, focal: { x: 0.5, y: 0.5 },
+    alt: 'Larisa and Vinny, the founders of Ducks ’n Puddles.' },
+
   { id: 'shell-hands',     src: 'Photo Sep 19 2025, 6 57 26 PM.jpg', tier: 'B', grade: 'overcast',
     role: 'portrait', focal: { x: 0.42, y: 0.24 },
     alt: 'A smiling child sitting in the sand among dune grass.' },

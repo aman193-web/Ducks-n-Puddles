@@ -40,15 +40,16 @@ export function Helpful({ slug }: { slug: string }) {
 
   return (
     <aside className={styles.helpful} aria-live="polite">
-      {vote ? (
-        <p className={styles.helpfulThanks}>
-          {vote === 'yes'
-            ? 'Glad it helped — thank you.'
-            : 'Thank you for saying so.'}
-        </p>
-      ) : (
+      {/* Question on the left, answers on the right — the client's layout, and
+          the right one: a question and its options on one line read as a single
+          control rather than as a little centred poster. */}
+      <p className={styles.helpfulAsk}>
+        {vote
+          ? (vote === 'yes' ? 'Glad it helped — thank you.' : 'Thank you for saying so.')
+          : 'Was this helpful?'}
+      </p>
+      {!vote && (
         <>
-          <p className={styles.helpfulAsk}>Was this helpful?</p>
           <div className={styles.helpfulBtns}>
             <button type="button" className={styles.helpfulBtn} onClick={() => record('yes')}>
               <ThumbsUp size={17} weight="bold" aria-hidden="true" />

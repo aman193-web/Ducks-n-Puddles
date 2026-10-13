@@ -26,14 +26,18 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
   const u = encodeURIComponent(url)
   const t = encodeURIComponent(title)
 
+  /* Each in its own network's colour, which is what the footer's social row
+     already does — the site has a treatment for this and the share row should
+     not invent a second one. White icons on all of them; the copy button is the
+     odd one out and wears the brand's yellow with ink on it. */
   const links = [
-    { key: 'facebook', label: 'Share on Facebook', Icon: FacebookLogo,
+    { key: 'facebook', label: 'Share on Facebook', Icon: FacebookLogo, bg: '#1877F2',
       href: `https://www.facebook.com/sharer/sharer.php?u=${u}` },
-    { key: 'x', label: 'Share on X', Icon: XLogo,
+    { key: 'x', label: 'Share on X', Icon: XLogo, bg: '#0F1419',
       href: `https://twitter.com/intent/tweet?url=${u}&text=${t}` },
-    { key: 'whatsapp', label: 'Share on WhatsApp', Icon: WhatsappLogo,
+    { key: 'whatsapp', label: 'Share on WhatsApp', Icon: WhatsappLogo, bg: '#25D366',
       href: `https://wa.me/?text=${t}%20${u}` },
-    { key: 'email', label: 'Share by email', Icon: Envelope,
+    { key: 'email', label: 'Share by email', Icon: Envelope, bg: 'var(--duck-blue)',
       href: `mailto:?subject=${t}&body=${u}` },
   ]
 
@@ -53,16 +57,24 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
     <div className={styles.share}>
       <p className={styles.shareLabel}>Share this</p>
       <ul className={styles.shareList}>
-        {links.map(({ key, label, Icon, href }) => (
+        {links.map(({ key, label, Icon, href, bg }) => (
           <li key={key}>
-            <a className={styles.shareBtn} href={href} target="_blank" rel="noopener noreferrer">
+            <a
+              className={styles.shareBtn} href={href}
+              target="_blank" rel="noopener noreferrer"
+              style={{ ['--s-bg' as string]: bg } as React.CSSProperties}
+            >
               <span className="vh">{label}</span>
               <Icon size={18} weight="fill" aria-hidden="true" />
             </a>
           </li>
         ))}
         <li>
-          <button type="button" className={styles.shareBtn} onClick={copy}>
+          <button
+            type="button"
+            className={`${styles.shareBtn} ${styles.shareCopy}`}
+            onClick={copy}
+          >
             {/* The label changes rather than a toast appearing: the button is
                 where the attention already is. */}
             <span className="vh">{copied ? 'Link copied' : 'Copy link'}</span>

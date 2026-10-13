@@ -90,7 +90,12 @@ export interface Post {
  */
 export const defaultAuthor = {
   name: 'Larisa & Vinny',
+  /** The small round mark beside a byline, at 28-32px. The duck, not a
+   *  photograph: two faces at that size are mush. */
   avatar: 'logo-mark',
+  /** The author card at the foot of an article, where there is room for the
+   *  two of them. Cropped to their faces — see the note in manifest.mjs. */
+  portrait: 'founders',
   /**
    * The line under the name, and the bio under that.
    *

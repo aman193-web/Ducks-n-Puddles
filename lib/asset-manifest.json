@@ -130,6 +130,27 @@
       "jpg"
     ]
   },
+  "founders": {
+    "id": "founders",
+    "tier": "B",
+    "alt": "Larisa and Vinny, the founders of Ducks ’n Puddles.",
+    "widths": [
+      320,
+      480,
+      640,
+      768,
+      960,
+      1280
+    ],
+    "colour": "#d8d8e8",
+    "v": "f966f7d1",
+    "aspect": 1.5869,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ]
+  },
   "shell-hands": {
     "id": "shell-hands",
     "tier": "B",

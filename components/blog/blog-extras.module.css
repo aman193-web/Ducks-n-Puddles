@@ -70,33 +70,43 @@
 }
 .shareBtn {
   display: grid; place-items: center;
-  inline-size: 40px; block-size: 40px;
-  background: var(--cream); color: var(--ink);
-  border: var(--border); border-radius: var(--r);
+  inline-size: 42px; block-size: 42px;
+  background: var(--s-bg, var(--cream)); color: var(--paper);
+  border: var(--border); border-radius: 50%;
   cursor: pointer;
-  transition: background-color var(--t-fast) ease, translate var(--t) var(--spring);
+  transition: translate var(--t) var(--spring), scale var(--t) var(--spring);
 }
-@media (hover: hover) { .shareBtn:hover { background: var(--sun-soft); translate: 0 -2px; } }
+/* The copy button is not a network, so it wears the brand's own colour. */
+.shareCopy { background: var(--sun); color: var(--ink); }
+@media (hover: hover) { .shareBtn:hover { translate: 0 -3px; scale: 1.06; } }
 .shareBtn:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
-  .shareBtn { transition: none; } .shareBtn:hover { translate: none; }
+  .shareBtn { transition: none; } .shareBtn:hover { translate: none; scale: none; }
 }
 
 /* ---- was this helpful ---------------------------------------------------- */
+/* ONE ROW: the question on the left, the answers on the right. Centred and
+   stacked it read as a small poster dropped into the page; on a line it reads
+   as one control. */
 .helpful {
-  display: grid; justify-items: center; gap: var(--s-3);
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
   margin-block-start: var(--s-5);
-  padding: var(--s-5);
+  padding: var(--s-4) var(--s-5);
   background: var(--paper);
   border: var(--border); border-radius: var(--r-lg);
-  text-align: center;
 }
 .helpfulAsk {
   font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: 1.1875rem; line-height: 1.1; letter-spacing: .008em;
+  font-size: 1.25rem; line-height: 1.1; letter-spacing: .008em;
 }
-.helpfulThanks { font-size: var(--fs-small); font-weight: 600; }
-.helpfulBtns { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; }
+.helpfulBtns { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-inline-start: auto; }
+/* Below 560 the three of them wrap, and the auto margin would leave the buttons
+   right-aligned on their own line under a left-aligned question. On one axis
+   instead. */
+@media (max-width: 559px) {
+  .helpful { display: grid; justify-items: start; }
+  .helpfulBtns { margin-inline-start: 0; }
+}
 .helpfulBtn {
   display: inline-flex; align-items: center; gap: var(--s-2);
   min-block-size: 42px; padding-inline: var(--s-5);
@@ -113,6 +123,10 @@
 }
 
 /* ---- the author card ----------------------------------------------------- */
+/* THE ANCHOR OF THIS WHOLE TAIL. Topics is a line, share is a bar, helpful is
+   a row — this is the one block with a face and a paragraph in it, so it gets
+   the weight: a thicker border, the warmest ground of the four, and the only
+   photograph. */
 .author {
   display: grid; gap: var(--s-4);
   grid-template-columns: minmax(0, 1fr);
@@ -120,31 +134,38 @@
   margin-block-start: var(--s-5);
   padding: clamp(var(--s-5), 2.6vw, var(--s-6));
   background: var(--goosey-field);
-  border: var(--border); border-radius: var(--r-lg);
-  /* The reference marks this card with a rule down its leading edge. */
-  border-inline-start: 4px solid var(--sun);
+  border: var(--border-lg); border-radius: var(--r-lg);
+  border-inline-start: 6px solid var(--sun);
 }
 @media (min-width: 560px) {
-  .author { grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: var(--s-5); }
+  .author { grid-template-columns: 132px minmax(0, 1fr); align-items: start; gap: var(--s-5); }
 }
+/* A rounded rectangle: the photograph is two people side by side and a circle
+   crops it to whichever face lands in the middle. */
 .authorAvatar {
-  display: grid; place-items: center;
-  inline-size: 72px; block-size: 72px;
+  display: block; overflow: clip;
+  inline-size: 112px;
+  border: var(--border); border-radius: var(--r);
   background: var(--paper);
-  border: var(--border); border-radius: 50%;
-  overflow: hidden;
 }
-.authorAvatar img { inline-size: 78%; block-size: auto; }
+@media (min-width: 560px) { .authorAvatar { inline-size: 132px; } }
+.authorAvatar img { inline-size: 100%; block-size: auto; display: block; }
 .authorBody { display: grid; gap: 2px; }
+.authorKicker {
+  font-size: var(--fs-micro); font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+  margin-block-end: 2px;
+}
 .authorName {
   font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: 1.375rem; line-height: 1.1; letter-spacing: .008em;
+  font-size: clamp(1.5rem, 2.2vw, 1.75rem); line-height: 1.08; letter-spacing: .008em;
 }
 .authorRole {
   font-size: var(--fs-micro); font-weight: 700;
   letter-spacing: .06em; text-transform: uppercase; color: var(--vincey-ink);
 }
 .authorBio {
-  margin-block-start: var(--s-2);
+  margin-block-start: var(--s-3);
   font-size: var(--fs-small); line-height: 1.6; color: var(--ink);
+  max-width: 54ch;
 }
