@@ -737,9 +737,16 @@
   .railCtaLink { transition: none; } .railCtaLink:hover { translate: none; }
 }
 
-.postTags {
-  display: flex; flex-wrap: wrap; gap: 6px;
-  margin-block-start: var(--s-5);
-  padding-block-start: var(--s-5);
-  border-block-start: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+/* TOPICS — the tag row with a label over it, as the reference has. The rule
+   above it is the article's own full stop; everything below is furniture. */
+.topics {
+  display: grid; gap: var(--s-3);
+  margin-block-start: 40px;
+  padding-block-start: var(--s-6);
+  border-block-start: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
 }
+.topicsLabel {
+  font-weight: 700; font-size: var(--fs-micro);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+}
+.postTags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }

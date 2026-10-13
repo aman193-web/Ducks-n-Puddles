@@ -1,0 +1,150 @@
+/* =============================================================================
+   THE ARTICLE'S FURNITURE — reading progress, key takeaways, share, helpful,
+   topics and the author card. All from the client's reference, all built to
+   this site's idiom: flat colour, ink outlines, no shadows (tokens.css:73).
+   ========================================================================== */
+
+/* ---- reading progress ---------------------------------------------------- */
+.progress {
+  position: fixed; inset-block-start: 0; inset-inline: 0;
+  z-index: 60;                 /* over the header, which is 50 */
+  block-size: 3px;
+  background: transparent;
+  pointer-events: none;
+  /* Nothing until the script has measured, so there is no full-width bar
+     flashing across the top before the first scroll. */
+  opacity: 0;
+}
+.progress[data-ready][data-track] { opacity: 1; }
+.progress::after {
+  content: ''; display: block; block-size: 100%;
+  inline-size: calc(var(--p, 0) * 100%);
+  background: var(--sun);
+  transition: inline-size 80ms linear;
+}
+@media (prefers-reduced-motion: reduce) { .progress::after { transition: none; } }
+
+/* ---- key takeaways ------------------------------------------------------- */
+.takeaways {
+  display: grid; gap: var(--s-4);
+  margin-block-end: 32px;
+  padding: clamp(var(--s-5), 2.6vw, var(--s-6));
+  background: var(--sky-soft);
+  border: var(--border); border-radius: var(--r-lg);
+}
+.takeawaysHead { display: flex; align-items: center; gap: var(--s-3); }
+.takeawaysIcon {
+  display: grid; place-items: center; flex: none;
+  inline-size: 38px; block-size: 38px;
+  background: var(--sun); color: var(--ink);
+  border: var(--border); border-radius: var(--r);
+}
+.takeawaysTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: 1.25rem; line-height: 1.1; letter-spacing: .008em;
+}
+.takeawaysCount { font-size: var(--fs-micro); font-weight: 600; color: var(--ink-soft); }
+.takeawaysList { display: grid; gap: var(--s-3); list-style: none; padding: 0; margin: 0; }
+.takeawaysList li {
+  display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: var(--s-3);
+  align-items: start;
+  font-size: var(--fs-small); line-height: 1.55;
+}
+.takeawaysList svg { margin-block-start: 4px; color: var(--vincey-ink); }
+
+/* ---- share --------------------------------------------------------------- */
+.share {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4);
+  margin-block-start: 40px;
+  padding: var(--s-4) var(--s-5);
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-lg);
+}
+.shareLabel {
+  font-weight: 700; font-size: var(--fs-micro);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+}
+.shareList {
+  display: flex; flex-wrap: wrap; gap: var(--s-2);
+  margin-inline-start: auto; list-style: none; padding: 0;
+}
+.shareBtn {
+  display: grid; place-items: center;
+  inline-size: 40px; block-size: 40px;
+  background: var(--cream); color: var(--ink);
+  border: var(--border); border-radius: var(--r);
+  cursor: pointer;
+  transition: background-color var(--t-fast) ease, translate var(--t) var(--spring);
+}
+@media (hover: hover) { .shareBtn:hover { background: var(--sun-soft); translate: 0 -2px; } }
+.shareBtn:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .shareBtn { transition: none; } .shareBtn:hover { translate: none; }
+}
+
+/* ---- was this helpful ---------------------------------------------------- */
+.helpful {
+  display: grid; justify-items: center; gap: var(--s-3);
+  margin-block-start: var(--s-5);
+  padding: var(--s-5);
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-lg);
+  text-align: center;
+}
+.helpfulAsk {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: 1.1875rem; line-height: 1.1; letter-spacing: .008em;
+}
+.helpfulThanks { font-size: var(--fs-small); font-weight: 600; }
+.helpfulBtns { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; }
+.helpfulBtn {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-block-size: 42px; padding-inline: var(--s-5);
+  background: var(--cream); color: var(--ink);
+  border: var(--border); border-radius: var(--r-pill);
+  font: inherit; font-size: var(--fs-small); font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--t-fast) ease, translate var(--t) var(--spring);
+}
+@media (hover: hover) { .helpfulBtn:hover { background: var(--sun-soft); translate: 0 -2px; } }
+.helpfulBtn:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .helpfulBtn { transition: none; } .helpfulBtn:hover { translate: none; }
+}
+
+/* ---- the author card ----------------------------------------------------- */
+.author {
+  display: grid; gap: var(--s-4);
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  margin-block-start: var(--s-5);
+  padding: clamp(var(--s-5), 2.6vw, var(--s-6));
+  background: var(--goosey-field);
+  border: var(--border); border-radius: var(--r-lg);
+  /* The reference marks this card with a rule down its leading edge. */
+  border-inline-start: 4px solid var(--sun);
+}
+@media (min-width: 560px) {
+  .author { grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: var(--s-5); }
+}
+.authorAvatar {
+  display: grid; place-items: center;
+  inline-size: 72px; block-size: 72px;
+  background: var(--paper);
+  border: var(--border); border-radius: 50%;
+  overflow: hidden;
+}
+.authorAvatar img { inline-size: 78%; block-size: auto; }
+.authorBody { display: grid; gap: 2px; }
+.authorName {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: 1.375rem; line-height: 1.1; letter-spacing: .008em;
+}
+.authorRole {
+  font-size: var(--fs-micro); font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--vincey-ink);
+}
+.authorBio {
+  margin-block-start: var(--s-2);
+  font-size: var(--fs-small); line-height: 1.6; color: var(--ink);
+}

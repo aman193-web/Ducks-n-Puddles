@@ -8,6 +8,11 @@ import { Sticker } from '@/components/ui/Sticker'
 import { posts, postBySlug, formatDate, categoryOf, authorOf, defaultAuthor, tagSlug } from '@/content/journal'
 import { brand } from '@/content/brand'
 import { PostToc } from './PostToc'
+import { ReadingProgress } from '@/components/blog/ReadingProgress'
+import { KeyTakeaways } from '@/components/blog/KeyTakeaways'
+import { ShareBar } from '@/components/blog/ShareBar'
+import { Helpful } from '@/components/blog/Helpful'
+import { AuthorBox } from '@/components/blog/AuthorBox'
 import styles from '../blog.module.css'
 
 /* Three known posts, so every one is prerendered at build time rather than
@@ -61,6 +66,9 @@ export default async function JournalPost(
 
   return (
     <>
+    {/* Measured against the article, not the document — see the component. */}
+    <ReadingProgress target="[data-article-body]" />
+
     <article className={styles.page}>
       <div className="wrap">
         {/* One centred measure for the whole article. Everything used to be
@@ -157,7 +165,17 @@ export default async function JournalPost(
             <PostToc items={toc} />
           </aside>
 
-          <div className={styles.prose}>
+          {/* THE BODY COLUMN: the prose, and the furniture around it.
+              They are siblings rather than the furniture living INSIDE .prose,
+              which is where it started — and `.prose p` is a two-class selector
+              that beat every one-class rule in the furniture's own stylesheet,
+              so a card's title came out at body size while its sub-line came out
+              bigger than the title. Nothing in here is prose; nothing in here
+              should inherit prose. */}
+          <div className={styles.bodyCol}>
+            <KeyTakeaways items={post.takeaways} />
+
+            <div className={styles.prose} data-article-body="">
             {post.body.map((b, i) => {
               if (typeof b === 'string') return <p key={i}>{b}</p>
               /* The client's own bolded paragraphs. Emphasis, not headings —
@@ -165,14 +183,24 @@ export default async function JournalPost(
               if ('em' in b) return <p key={i} className={styles.proseEm}>{b.em}</p>
               return <h2 key={i} id={slugify(b.h)} className={styles.proseHead}>{b.h}</h2>
             })}
+            </div>
 
+            {/* TOPICS, labelled — the reference names the row rather than
+                leaving a bare line of chips at the foot of the article. */}
             {post.tags && post.tags.length > 0 && (
-              <p className={styles.postTags}>
-                {post.tags.map((t) => (
-                  <Link key={t} href={`/tag/${tagSlug(t)}`} className={styles.tagChip}>{t}</Link>
-                ))}
-              </p>
+              <div className={styles.topics}>
+                <p className={styles.topicsLabel}>Topics</p>
+                <p className={styles.postTags}>
+                  {post.tags.map((t) => (
+                    <Link key={t} href={`/tag/${tagSlug(t)}`} className={styles.tagChip}>{t}</Link>
+                  ))}
+                </p>
+              </div>
             )}
+
+            <ShareBar url={`${brand.domain}/blog/${post.slug}`} title={post.title} />
+            <Helpful slug={post.slug} />
+            <AuthorBox />
           </div>
         </div>
 

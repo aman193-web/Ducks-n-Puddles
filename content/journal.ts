@@ -61,6 +61,15 @@ export interface Post {
    * posts somebody chose, and the page says so — see the sub-line on the row.
    */
   top?: true
+  /**
+   * The "key takeaways" box at the head of the article.
+   *
+   * ⚠️ PLACEHOLDER POSTS ONLY. Four summary lines per article is editorial
+   * copy, and nothing of mine goes into the posts the client wrote. Theirs have
+   * none, so the box does not render on them; it appears the day they write
+   * four lines each.
+   */
+  takeaways?: string[]
   /** Paragraphs, and the headings between them. A plain string is a paragraph;
    *  `{ h }` is a section heading, which is also what the article page's "On
    *  this page" rail is built from. */
@@ -79,7 +88,25 @@ export interface Post {
  * than a photograph of either of them — the Story section is where the family
  * appears, and a 32px crop of a family portrait reads as neither.
  */
-export const defaultAuthor = { name: 'Larisa & Vinny', avatar: 'logo-mark' } as const
+export const defaultAuthor = {
+  name: 'Larisa & Vinny',
+  avatar: 'logo-mark',
+  /**
+   * The line under the name, and the bio under that.
+   *
+   * ⚠️ BOTH ARE THE CLIENT'S OWN SENTENCES, assembled rather than written. The
+   * first is how they introduce themselves in the opening line of their own
+   * first post; the second is brand.why, the sentence they gave for what the
+   * company is for. Nothing here is mine — an author box needs a bio and they
+   * have not supplied one as such, so this is built from what they have said
+   * about themselves elsewhere. Worth their sign-off all the same.
+   */
+  role: 'Founders of Ducks ’n Puddles',
+  bio:
+    'Husband and wife, mom and dad, and the founders of Ducks ’n Puddles. '
+    + 'We make thoughtful products that support parents and bring comfort and '
+    + 'positivity to kids.',
+} as const
 
 export const authorOf = (post: Post) => post.author ?? defaultAuthor.name
 
@@ -273,6 +300,11 @@ export const posts: Post[] = [
     readingMinutes: 3,
     tags: ['Samples', 'Testing'],
     placeholder: true,
+    takeaways: [
+      'A handle that catches on a bag is worse than no handle at all.',
+      'Carry tests only work over ordinary days, not on a desk.',
+      'The fix was shape, not strength.',
+    ],
     body: [
       'A carry test sounds like a procedure. In practice it is a week of ordinary days with something new in your bag, and a note on your phone every time it annoys you.',
       { h: 'What went wrong' },
@@ -292,6 +324,11 @@ export const posts: Post[] = [
     readingMinutes: 4,
     tags: ['Colour', 'Brand'],
     placeholder: true,
+    takeaways: [
+      'Screens lie about blue — check it against real water.',
+      'A colour that works in a render can fail in sunlight.',
+      'Two rounds of samples went on this one decision.',
+    ],
     body: [
       'Every blue looks right on a screen. Hold two of them up against real water and one of them is suddenly grey.',
       { h: 'Why blue was hard' },
@@ -311,6 +348,11 @@ export const posts: Post[] = [
     readingMinutes: 3,
     tags: ['Characters', 'Process'],
     placeholder: true,
+    takeaways: [
+      'The character comes before the product, every time.',
+      'A face changes what a child does with an object.',
+      'Design decisions get easier once the character is fixed.',
+    ],
     body: [
       'We draw the character before we design anything it goes on. It sounds backwards. It is the only order that has worked for us.',
       { h: 'Character before product' },
@@ -331,6 +373,11 @@ export const posts: Post[] = [
     tags: ['Hydration', 'Toddlers', 'Tips'],
     top: true,
     placeholder: true,
+    takeaways: [
+      'Letting them choose beats any amount of encouraging.',
+      'A bottle they can open themselves gets used more.',
+      'Nothing about this needs a chart or a reward sticker.',
+    ],
     body: [
       'We tried the obvious things. Asking. Reminding. Leaving it where she would see it. None of them moved the needle much.',
       { h: 'What actually works' },
@@ -350,6 +397,11 @@ export const posts: Post[] = [
     readingMinutes: 3,
     tags: ['Days out', 'Packing'],
     placeholder: true,
+    takeaways: [
+      'Pack for the walk back, not for the splash pad.',
+      'A spare top matters more than a spare towel.',
+      'Everything that goes in the bag has to survive being wet.',
+    ],
     body: [
       'A splash pad is the easiest outing there is and the one we most often get wrong. Here is the short list, learned by forgetting each of these at least once.',
       { h: 'The short list' },
@@ -369,6 +421,11 @@ export const posts: Post[] = [
     readingMinutes: 3,
     tags: ['Buying guide', 'Less stuff'],
     placeholder: true,
+    takeaways: [
+      'A cupboard of bottles means none of them is the one.',
+      'Children carry the bottle they recognise.',
+      'Buy once, properly, and skip the rest.',
+    ],
     body: [
       'Before any of this we had a cupboard full of bottles. Different sizes, different lids, all of them bought to solve the same problem and none of them solving it.',
       { h: 'The case against the cupboard' },
@@ -388,6 +445,11 @@ export const posts: Post[] = [
     readingMinutes: 4,
     tags: ['Characters', 'Naming'],
     placeholder: true,
+    takeaways: [
+      'Two of the names took an evening; the third took months.',
+      'A name has to survive being shouted across a car park.',
+      'The names came after the personalities, not before.',
+    ],
     body: [
       'Two of them arrived almost immediately. Chi Chi and Vincey turned up in the same evening, and neither of us can remember who said which.',
       { h: 'Where the names came from' },
@@ -407,6 +469,11 @@ export const posts: Post[] = [
     readingMinutes: 3,
     tags: ['Founders', 'Starting out'],
     placeholder: true,
+    takeaways: [
+      'There is no studio — there is a table that gets cleared for dinner.',
+      'Samples live in a box under it.',
+      'Most of the work happens after bedtime.',
+    ],
     body: [
       'There is no studio. There is a kitchen table, a laptop, and a box of samples that has to be cleared off it before dinner every evening.',
       { h: 'How it started' },
@@ -426,6 +493,11 @@ export const posts: Post[] = [
     readingMinutes: 3,
     tags: ['Founders', 'Community'],
     placeholder: true,
+    takeaways: [
+      'The first stranger carrying one is the real test.',
+      'It is the moment a product stops being yours.',
+      'Nothing in a spec sheet prepares you for it.',
+    ],
     body: [
       'You can test a thing in your own house for a year and still not know anything. Your child is kind to it. Your child knows it matters.',
       { h: 'The moment it landed' },
