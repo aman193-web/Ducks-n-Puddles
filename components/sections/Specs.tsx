@@ -1,4 +1,4 @@
-import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby }
+import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby, Swap }
   from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
@@ -30,6 +30,9 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; weight?: 'light
   bpa: Leaf,
   grip: Hand,
   age: Baby,
+  /* Two arrows trading places — the 2-in-1 Puddle is the one card here whose
+     point is that the part becomes something else. */
+  puddle: Swap,
 }
 
 export function Specs() {

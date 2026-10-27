@@ -7,6 +7,8 @@ import { Why } from '@/components/sections/Why'
 import { DuckStage } from '@/components/sections/DuckStage'
 import { Specs } from '@/components/sections/Specs'
 import { Store } from '@/components/sections/Store'
+import { MeetThePuddle } from '@/components/sections/MeetThePuddle'
+import { PersonalizePuddle } from '@/components/sections/PersonalizePuddle'
 import { Story } from '@/components/sections/Story'
 import { Foundation } from '@/components/sections/Foundation'
 import { WhatsNext } from '@/components/sections/WhatsNext'
@@ -29,6 +31,7 @@ import { WaveEdge } from '@/components/ui/WaveEdge'
  *                 to the parent and the child side by side.
  *   Meet the ducks  the three characters, so they are met before their bottles
  *   The range     our FIRST product — character and product together
+ *   The Puddle    the 2-in-1 sleeve, and the personalisation preview under it
  *   Features      why parents will love them, once they have seen one
  *   Our story     the family, and where this came from
  *   Foundation    more than a brand — a whole screen, because it is a statement
@@ -61,6 +64,15 @@ export default function HomePage() {
       <Why />
       <DuckStage />
       <Store />
+      {/* THE PUDDLE, on the client's Oct 2026 brief. Their placement note —
+          "directly below the section introducing our three water bottles, and
+          before 'Made with Parents in Mind'" — names the two sections either
+          side of this line exactly: Store is the bottles, and <Specs> below is
+          the one headed "Made with parents in mind."
+          Personalize is cream like Store was, which matters: Specs pulls itself
+          up over whatever precedes it. */}
+      <MeetThePuddle />
+      <PersonalizePuddle />
       <Specs />
       <WaveEdge above="var(--sky-soft)" fill="var(--cream)" />
       <Story />

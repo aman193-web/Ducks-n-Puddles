@@ -1,4 +1,5 @@
 import { FooterSignup } from '@/components/FooterSignup'
+import { personalization } from '@/content/brand'
 import styles from './Newsletter.module.css'
 
 /**
@@ -9,6 +10,12 @@ import styles from './Newsletter.module.css'
  * rather than adding to it. Three email captures on one page (the Duck Squad
  * form, this, and a footer field) is two too many — the same list, asked for
  * three times, reads as nagging rather than as an offer.
+ *
+ * THE COPY IS SECTION 7 OF THE CLIENT'S OCT 2026 BRIEF, verbatim: the coming
+ * personalisation is used as the reason to join. Their instruction was to put
+ * it on the EXISTING newsletter rather than a separate signup, so this band
+ * carries it and tags the subscriber `interest:personalization` (see
+ * INTERESTS); the Personalize section's button points here.
  */
 export function Newsletter() {
   return (
@@ -16,15 +23,16 @@ export function Newsletter() {
       <div className="wrap">
         <div className={styles.panel}>
           <h2 id="newsletter-title" className={`d ${styles.title}`}>
-            Join the Duck Squad!
+            {personalization.signup.title}
           </h2>
           <div className={styles.right}>
-            <p className={styles.blurb}>
-              Come be part of the Ducks &rsquo;n Puddles world as it grows &mdash; with
-              little notes from the pond, behind-the-scenes peeks, and first access to
-              what&rsquo;s coming next.
-            </p>
-            <FooterSignup />
+            <p className={styles.blurb}>{personalization.signup.body}</p>
+            <p className={styles.blurb}>{personalization.signup.invite}</p>
+            <FooterSignup
+              label={personalization.signup.button}
+              showLabel
+              interest="personalization"
+            />
           </div>
         </div>
       </div>

@@ -562,6 +562,12 @@
 }
 .tagChip:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .tagChip { transition: none; } }
+/* A THUMB, NOT A CURSOR. 27px tall measured on a phone — it clears WCAG 2.5.8's
+   24x24 and nothing more, and these sit in a wrapped row where the next chip is
+   8px away. Phone only, so the desktop design that was signed off is untouched. */
+@media (max-width: 600px) {
+  .tagChip { padding-block: 9px; }
+}
 
 /* ---- the byline: who wrote it, and when ---------------------------------- */
 /* A GRID, NOT A WRAPPING FLEX ROW. All four parts were on one line with the

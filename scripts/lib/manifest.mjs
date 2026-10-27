@@ -133,6 +133,21 @@ export const alphaAssets = [
   { id: 'vincey',  src: `${BRAND_DIR}/products/vincey-bottle.png`,  widths: [310, 621] },
   { id: 'chichi',  src: `${BRAND_DIR}/products/chi-chi-bottle.png`, widths: [310, 621] },
   { id: 'goosey',  src: `${BRAND_DIR}/products/goosey-bottle.png`,  widths: [310, 621] },
+  /* THE BACKS — in media/brand/products since the 28 Sep delivery and never
+     registered. Turned round, every Puddle carries all three ducks and "A Friend
+     for Every Adventure", which is a better detail than anything on the front;
+     the product pages show it behind a Front / Back toggle. Same 626 x 1404
+     canvas as the fronts, so the two swap in one box without a jump. */
+  { id: 'vincey-back', src: `${BRAND_DIR}/products/vincey-bottle-back.png`,  widths: [310, 621] },
+  { id: 'chichi-back', src: `${BRAND_DIR}/products/chi-chi-bottle-back.png`, widths: [310, 621] },
+  { id: 'goosey-back', src: `${BRAND_DIR}/products/goosey-bottle-back.png`,  widths: [310, 621] },
+  /* THE PUDDLE, PHOTOGRAPHED — the client's render of the sleeve off the
+     bottle and filled with snacks (Oct 2026). It replaces the drawn PuddleShape
+     in Meet the Puddle and on the product pages. Trimmed on import. */
+  { id: 'puddle-snacks', src: `${BRAND_DIR}/products/puddle-snacks.png`, widths: [320, 640, 1000] },
+  /* The same render with "Lucy" on it — the client's concept for the coming
+     name personalisation, used in Personalize Your Puddle. Trimmed on import. */
+  { id: 'puddle-lucy', src: `${BRAND_DIR}/products/puddle-lucy.png`, widths: [320, 640, 1000] },
   { id: 'trio',    src: `${BRAND_DIR}/products/three-bottles.png`,  widths: [640, 1046, 2093] },
   /* The same three bottles with the three characters already peeking around
      them — one composed render from the client, replacing the layered build

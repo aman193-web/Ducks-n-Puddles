@@ -1,0 +1,592 @@
+/* =============================================================================
+   /ducks/[slug] — one bottle, one page, in that duck's own colours.
+
+   The page wrapper sets four variables from content/brand.ts — --duck,
+   --duck-soft, --duck-field, --duck-ink — and the whole stylesheet is written
+   against them, so three pages are one design rather than three copies.
+
+   ⚠️ --duck (full saturation) IS NEVER A GROUND FOR TEXT. tokens.css: ink is
+   7.7-11.1 on the -soft grounds and 13+ on the -field tints, but only 4.5-5.0
+   on the saturated colours. Saturated is a fill and an accent; type sits on
+   -soft or -field. --duck-ink is for the pale -field only — on -soft it drops
+   under AA, so nothing on the hero uses it for text.
+   ========================================================================== */
+
+.h2 {
+  font-size: clamp(1.875rem, 4.2vw, 3.25rem);
+  line-height: var(--lh-lg);
+  letter-spacing: .008em;
+  font-weight: 400;
+  text-wrap: balance;
+}
+.lead { max-width: 52ch; font-size: var(--fs-lead); line-height: 1.55; text-wrap: pretty; }
+
+/* Standalone text links get a real hit area — they are navigation on a line of
+   their own, not links inside a sentence. Block padding only. */
+.textLink, .back {
+  display: inline-block;
+  padding-block: 9px;
+  font-size: var(--fs-small); font-weight: 700; color: var(--ink);
+  text-decoration: underline; text-underline-offset: .22em;
+}
+.textLink:focus-visible, .back:focus-visible {
+  outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; border-radius: var(--r-sm);
+}
+
+/* ==== THE ARRIVAL — the hero's first-frame entrance ========================
+   CSS, not GSAP, for the reason the homepage hero's entrance is CSS: this is on
+   screen at load. A JS entrance on already-painted content shows the server-
+   rendered page, hides it when hydration runs, then animates it back in. A CSS
+   animation starts with the first paint, needs no script, and plays again on
+   every client-side visit because the new page's elements are freshly mounted.
+
+   The sequence, by --i: the way back, the role, the NAME, the core and the
+   paragraph, the chips one by one, the buttons. Then the floor spreads, the
+   duck bounces up onto it, the bottle slides in beside it, and the decal marks
+   pop in around the edges last.
+
+   TRANSFORM CHANNELS (see Hero.module.css — break it and the last writer
+   silently wins): these keyframes own `transform`; DuckPageMotion's pointer
+   parallax writes `translate`; the marks' resting tilt is `rotate`. Three
+   properties, three owners, nothing overwritten.
+
+   Under reduced motion none of it runs and everything is simply there. */
+@keyframes arriveRise  { from { opacity: 0; transform: translateY(26px); } }
+@keyframes arrivePop   { from { opacity: 0; transform: translateY(12px) scale(.55) rotate(-10deg); } }
+@keyframes arriveDuck  { from { opacity: 0; transform: translateY(72px) scale(.84); } }
+@keyframes arriveSlide { from { opacity: 0; transform: translateX(64px) rotate(9deg); } }
+@keyframes arriveGrow  { from { opacity: 0; transform: scaleX(.25); } }
+@keyframes arriveMark  { from { opacity: 0; transform: scale(.1); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .intro, .introPop, .introRise, .introSlide, .introGrow, .introMark { animation-fill-mode: both; }
+  /* --bounce is the site's overshoot (tokens.css), the CSS twin of GSAP's
+     EASE.bounce — the same curve every [data-anim] entrance lands on. */
+  .intro      { animation: arriveRise .7s var(--bounce) both;  animation-delay: calc(var(--i, 0) * 70ms + 60ms); }
+  .introPop   { animation: arrivePop  .6s var(--bounce) both;  animation-delay: calc(var(--i, 0) * 70ms + 60ms); }
+  .introGrow  { animation: arriveGrow .7s cubic-bezier(.2, .8, .2, 1) both; animation-delay: 160ms; }
+  .introRise  { animation: arriveDuck .9s var(--bounce) both;  animation-delay: 280ms; }
+  .introSlide { animation: arriveSlide .85s var(--bounce) both; animation-delay: 440ms; }
+  .introMark  { animation: arriveMark .6s var(--bounce) both;  animation-delay: calc(var(--i, 0) * 90ms + 640ms); }
+}
+
+/* ==== 1. THE DUCK ======================================================== */
+/* The duck's SOFT colour — the ground its panel has in Meet the Ducks, so the
+   click from that panel lands somewhere that already looks like it.
+
+   ⚠️ THE BOTTOM PADDING PAYS FOR THE WAVE. <WaveEdge> pulls itself up into the
+   section above by 22% of --section-y (WaveEdge.module.css), so whatever this
+   padding is, the crest takes that much back. At 43px it took 23 and left the
+   waitlist button and the toggle ~20px from the crest — sitting on the water.
+   1.22 x --section-y gives back exactly the pull and leaves one full step of
+   the site's own rhythm clear above the crest.
+
+   EVERY SECTION ON THIS PAGE IS ON --section-y now, the token the rest of the
+   site spaces itself by. The first version used hand-picked clamps that came
+   out at 72px a side at 1440 against the site's 100. */
+.hero {
+  position: relative; overflow: clip;
+  background: var(--duck-soft);
+  padding-block: calc(var(--section-y) * 0.72) calc(var(--section-y) * 1.22);
+}
+
+/* The decal motif, scattered. Desktop only — the same rule BrandDetail keeps:
+   a phone gets fewer things, not the same things squeezed in. */
+.scatter { position: absolute; inset: 0; z-index: 0; pointer-events: none; display: none; }
+@media (min-width: 900px) { .scatter { display: block; } }
+.mark {
+  position: absolute;
+  display: block;
+  /* --ink, not --duck-ink: on a -soft ground the character ink is too close in
+     value to read as anything but a smudge. Ink at a sixth is a print. */
+  color: var(--ink);
+  opacity: .16;
+}
+.mark svg { display: block; }
+
+.heroInner {
+  position: relative; z-index: 1;
+  display: grid;
+  gap: clamp(var(--s-6), 3vw, var(--s-7));
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .heroInner { grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); }
+}
+
+.say,
+.sayMain,
+.sayMore { display: grid; justify-items: start; gap: var(--s-3); }
+.sayMain, .sayMore { justify-self: stretch; }
+.back { opacity: .8; padding-block: 6px; margin-block-end: var(--s-1); text-decoration: none; }
+.back:hover { opacity: 1; text-decoration: underline; }
+
+.name {
+  font-size: var(--fs-mega);
+  line-height: var(--lh-display);
+  letter-spacing: .008em;
+  margin-block-start: var(--s-1);
+}
+.core {
+  font-family: var(--font-hand), ui-rounded, cursive;
+  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+  line-height: 1.15;
+  margin-block-start: calc(var(--s-2) * -1);
+}
+.personality { max-width: 44ch; font-size: var(--fs-lead); line-height: 1.55; font-weight: 500; text-wrap: pretty; }
+
+.teaches {
+  display: flex; flex-wrap: wrap; gap: var(--s-2);
+  list-style: none; margin: var(--s-1) 0 0; padding: 0;
+}
+.teaches li {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px var(--s-4) 7px var(--s-3);
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-pill);
+  font-size: var(--fs-small); font-weight: 600; line-height: 1;
+}
+.teachMark { display: grid; color: var(--duck-ink); }
+
+.heroBtns {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--s-3) var(--s-5);
+  margin-block-start: var(--s-3);
+}
+.note { font-size: var(--fs-small); max-width: 26ch; line-height: 1.4; }
+
+/* ---- the figure: the duck and its bottle on one floor -------------------- */
+.figure {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: end;
+  gap: clamp(var(--s-2), 1.4vw, var(--s-5));
+  /* Room above the duck for its thought bubble. */
+  padding-block-start: clamp(84px, 9vw, 128px);
+}
+.floor {
+  position: absolute;
+  z-index: 0;
+  inset-inline: 2%;
+  /* Up off the bottom by the toggle's height, so the ellipse sits under the
+     duck's feet and the bottle's base rather than under the control. */
+  inset-block-end: calc(40px + var(--s-4) + 8px - 3.5%);
+  block-size: 9%;
+  background: color-mix(in srgb, var(--ink) 11%, transparent);
+  border-radius: 50%;
+}
+.character {
+  position: relative;
+  z-index: 1;
+  /* As tall as the bottle beside it, give or take: at 19vw the duck stood a
+     head shorter than its own bottle, and on a page that is about the
+     CHARACTER the product was the bigger thing in the picture. */
+  inline-size: clamp(160px, 22vw, 316px);
+  /* Its feet line up with the bottle's base, which sits on top of the toggle. */
+  margin-block-end: calc(40px + var(--s-4) + 8px);
+}
+.bubble {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: 84%;
+  inset-inline-start: -12%;
+  inline-size: clamp(124px, 13vw, 176px);
+}
+.bottle { position: relative; z-index: 1; --bottle-h: clamp(250px, 25vw, 368px); }
+
+/* ---- the song ----------------------------------------------------------- */
+/* IN THE CHARACTER'S CELL. The character already stands clear of the bottom
+   of the figure by the Front / Back switch's row (its margin above), so the
+   player drops into that strip: level with the switch, its right end beside
+   it, and nothing else moves. Placement is explicit because the player comes
+   before the bottle in source order — auto-placed, it took the bottle's cell. */
+.character { grid-column: 1; grid-row: 1; }
+.bottle { grid-column: 2; grid-row: 1; }
+.player {
+  grid-column: 1; grid-row: 1;
+  align-self: end; justify-self: end;
+  /* Never under 220px. Below ~1000 the character's column is narrower than
+     that, and the player hangs out to the left of it into the column gap —
+     end-aligned, so it always stays tight to the switch. */
+  inline-size: max(100%, 220px);
+  position: relative; z-index: 2;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Arrives with the bottle, a beat after it. Not one of the .intro classes,
+     so the 360° switch never has to retire it. */
+  /* On the pill inside, not on this slot: an animated transform on an
+     ancestor would become the containing block for the pill once it floats,
+     and pin it to the hero instead of to the screen. */
+  .player > * { animation: arriveRise .7s var(--bounce) both; animation-delay: 620ms; }
+}
+
+@media (max-width: 599px) {
+  /* A phone: the character's column is ~160px, too narrow for a usable
+     scrubber, so the player takes its own full-width row under the pair. The
+     floor ellipse is measured from the figure's bottom, so it is lifted by
+     that row. */
+  .figure { padding-block-start: clamp(70px, 20vw, 96px); row-gap: var(--s-4); }
+  .player { grid-column: 1 / -1; grid-row: 2; justify-self: center; max-inline-size: 340px; }
+  .floor { inset-block-end: calc(40px + var(--s-4) + 8px - 3.5% + 52px + var(--s-4)); }
+  .bubble { inline-size: 116px; inset-inline-start: -4%; }
+  .bottle { --bottle-h: 230px; }
+}
+
+/* ---- the 360° view ------------------------------------------------------
+   Only on a duck with a model (SPIN_MODELS in page.tsx); HeroSpin sets
+   data-hero-mode="spin" on the section. NOTHING IS DUPLICATED: the same name,
+   paragraph, chips, button and duck are re-placed around the bottle — the
+   words to its left, the duck and the chips to its right — by dissolving the
+   two wrapper columns (display: contents) into one three-column grid.
+
+   data-hero-touched is set the first time the view changes. It retires the
+   CSS arrival: a finished animation with fill `both` still owns `transform`
+   and `opacity`, and would silently override the GSAP swap. The arrival is
+   over by the time anyone reaches the switch, so nothing visible changes. */
+.hero[data-hero-touched] :is(.intro, .introPop, .introRise, .introSlide, .introGrow, .introMark) { animation: none; }
+
+/* A phone: words, the bottle, then the chips and the button. The duck and the
+   flat bottle stand down — the model is the picture now. */
+.hero[data-hero-mode='spin'] .say { display: contents; }
+/* The figure dissolves rather than hiding, so the song player — which lives
+   in it — stays on the page, under the bottle; a song that keeps playing with
+   its controls gone would be the worst outcome of the switch. */
+.hero[data-hero-mode='spin'] .figure { display: contents; }
+.hero[data-hero-mode='spin'] :is(.floor, .character, .bottle) { display: none; }
+.hero[data-hero-mode='spin'] .player { order: 2; justify-self: center; }
+.hero[data-hero-mode='spin'] .sayMore { order: 3; }
+
+@media (min-width: 960px) {
+  .hero[data-hero-mode='spin'] .heroInner {
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 1.15fr) minmax(0, .8fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    column-gap: clamp(var(--s-5), 2.6vw, var(--s-7));
+    row-gap: var(--s-5);
+    align-items: center;
+    /* A row of headroom for the Classic / 360° switch, which sits top right —
+       exactly where the duck's bubble rises to in this arrangement. */
+    padding-block-start: calc(44px + var(--s-5));
+  }
+  .hero[data-hero-mode='spin'] .sayMain { grid-column: 1; grid-row: 1 / span 2; }
+  /* The duck comes back, small, at the top of the right-hand column — the
+     character introducing its bottle, bubble and quack intact. */
+  .hero[data-hero-mode='spin'] .character { display: block; }
+  .hero[data-hero-mode='spin'] .player { grid-column: 2; grid-row: 3; justify-self: center; align-self: start; }
+  .hero[data-hero-mode='spin'] .character {
+    grid-column: 3; grid-row: 1;
+    align-self: end; justify-self: start;
+    inline-size: clamp(130px, 12vw, 176px);
+    margin: 0;
+  }
+  /* Up and to the left of the head, as in the classic hero — the cloud's tail
+     runs down to the right, so that is the only side it can sit on and still
+     point at the duck. */
+  .hero[data-hero-mode='spin'] .bubble { inset-inline-start: -14%; inline-size: clamp(112px, 9vw, 136px); }
+  .hero[data-hero-mode='spin'] .sayMore { grid-column: 3; grid-row: 2; align-self: start; }
+  .hero[data-hero-mode='spin'] .heroBtns { flex-direction: column; align-items: flex-start; }
+}
+/* The bubble rises clear of the duck's box, and below 1280 the right-hand
+   column is too short to hold it under the switch. The duck stays; the bubble
+   waits for a wider screen — fewer things, not the same things squeezed. */
+@media (min-width: 960px) and (max-width: 1279px) {
+  .hero[data-hero-mode='spin'] .bubble { display: none; }
+}
+
+/* ==== 2. THE PUDDLE ====================================================== */
+/* The top is lighter than a full step: the wave above already spends ~50px of
+   cream below its troughs before this box begins. */
+.puddle { background: var(--cream); padding-block: calc(var(--section-y) * 0.6) var(--section-y); }
+.puddleInner {
+  display: grid;
+  gap: clamp(var(--s-6), 4vw, var(--s-8));
+  align-items: center;
+}
+@media (min-width: 860px) {
+  .puddleInner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+.puddleSay { display: grid; justify-items: start; gap: var(--s-4); }
+
+/* The duck beside its own Puddle — the same composition as Goosey's on the
+   homepage, sized in fractions of one height so it scales as a unit. See
+   MeetThePuddle.module.css for the reasoning on each ratio. */
+.puddleArt {
+  --art-h: clamp(210px, 23vw, 310px);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: end;
+  block-size: var(--art-h);
+}
+.puddleFloor {
+  position: absolute; z-index: 0;
+  inset-inline: 14%;
+  inset-block-end: -2%;
+  block-size: 13%;
+  background: color-mix(in srgb, var(--vincey) 22%, transparent);
+  border-radius: 50%;
+}
+.puddleShape {
+  position: relative; z-index: 1;
+  block-size: calc(var(--art-h) * 0.82);
+  inline-size: calc(var(--art-h) * 0.656);
+}
+.puddlePhoto { position: relative; z-index: 1; display: block; }
+.puddlePhoto picture { display: block; }
+.puddlePhoto img { display: block; block-size: calc(var(--art-h) * 0.82); inline-size: auto; }
+/* Behind the drawing, so the duck shows through where it is transparent and is
+   hidden where the shape is: standing behind it, not pasted beside it. */
+.snacker {
+  display: block;
+  z-index: 0;
+  inline-size: calc(var(--art-h) * 0.62);
+  margin-inline-end: calc(var(--art-h) * -0.17);
+  margin-block-end: calc(var(--art-h) * -0.03);
+}
+
+/* ==== 3. THE DETAILS ===================================================== */
+.specs { background: var(--paper); padding-block: var(--section-y); }
+.specsHead {
+  display: grid; justify-items: start; gap: var(--s-3);
+  margin-block-end: clamp(var(--s-5), 3vw, var(--s-7));
+}
+
+/* COUNTED COLUMNS, not auto-fit — auto-fit put five across at 1440 and split
+   the eight specs five over three. 2 / 3 / 4 gives 4+4 at width.
+   ⚠️ Tied to the number of `confirmed` rows in content/brand.ts. */
+.specsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin: 0;
+}
+@media (min-width: 700px) { .specsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .specsGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-4); } }
+
+.spec {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 10px; row-gap: 3px;
+  align-content: start;
+  padding: clamp(12px, 1.1vw, 16px) clamp(13px, 1.2vw, 17px);
+  background: var(--cream);
+  border: var(--bw-lg) solid transparent;
+  border-radius: var(--r-lg);
+  /* CardTilt writes the four --tilt-* values on hover; with none set the card
+     is flat, so this degrades to a plain card on touch and under reduced
+     motion. The same rule as the homepage's Specs cards, so the two grids of
+     the same facts behave the same. */
+  transform: perspective(700px)
+             rotateX(var(--tilt-x, 0deg))
+             rotateY(var(--tilt-y, 0deg))
+             translateY(var(--card-lift, 0px));
+  transform-style: preserve-3d;
+  transition: transform .5s var(--spring);
+}
+.spec:hover { --card-lift: -6px; }
+/* THE KEY FEATURE gets the one outline in the grid. The client moved the 2-in-1
+   Puddle to the front of this list because it is the key feature; first place
+   says that, and an outline says it to someone who does not read in order. */
+.specKey1 { background: var(--duck-field); border-color: var(--ink); }
+.specIcon {
+  grid-column: 1; grid-row: 1;
+  display: grid; place-items: center;
+  inline-size: 34px; block-size: 34px;
+  /* The duck's own soft tint, not a neutral grey — on Goosey's page the wells
+     are yellow, on Chi Chi's pink. Ink on -soft is 7.7 or better. */
+  background: var(--duck-soft);
+  border-radius: var(--r);
+  /* The glyph travels further than its card — that difference is the parallax. */
+  translate: var(--tilt-px, 0) var(--tilt-py, 0);
+  transition: translate .45s var(--spring);
+}
+.specIcon svg { display: block; }
+.specLabel {
+  grid-column: 2; grid-row: 1; align-self: center;
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: var(--fs-micro); letter-spacing: .09em; text-transform: uppercase;
+  line-height: 1.2; color: var(--ink-soft);
+}
+.specValue {
+  grid-column: 1 / -1; margin: 5px 0 0;
+  font-size: clamp(.9375rem, 1vw, 1.0625rem); font-weight: 600;
+  line-height: 1.3; text-wrap: pretty;
+}
+.footnote { margin-block-start: var(--s-4); font-size: var(--fs-micro); line-height: 1.5; opacity: .75; }
+
+/* ==== 4. PERSONALISATION ================================================= */
+/* A note, not an offer — the brief: "Do not create a customization purchase
+   option yet". It carries the concept drawing, in the sleeve's real blue, so
+   it shows what is coming instead of describing it beside an empty half. */
+.personal {
+  --pic: clamp(150px, 15vw, 210px);
+  position: relative;
+  display: grid;
+  gap: var(--s-5);
+  justify-items: center;
+  text-align: center;
+  /* Room for the Puddle to rise out over the top edge. */
+  margin-block-start: calc(var(--pic) * 0.5 + var(--s-6));
+  padding: calc(var(--pic) * 0.55) clamp(var(--s-5), 2.6vw, var(--s-7)) clamp(var(--s-5), 2.6vw, var(--s-7));
+  background: var(--duck-field);
+  border: var(--border-lg); border-radius: var(--r-lg);
+}
+/* Art | words | button, so the panel is used edge to edge instead of the
+   words on the left, the Puddle on the right and nothing between them. */
+@media (min-width: 900px) {
+  .personal {
+    grid-template-columns: var(--pic) minmax(0, 1fr) auto;
+    column-gap: clamp(var(--s-6), 4vw, var(--s-9));
+    align-items: center;
+    justify-items: start;
+    text-align: start;
+    margin-block-start: calc(var(--pic) * 0.3 + var(--s-6));
+    padding: clamp(var(--s-6), 3vw, var(--s-7)) clamp(var(--s-6), 3.4vw, var(--s-8));
+  }
+}
+
+.personalArt {
+  position: absolute;
+  inset-block-start: calc(var(--pic) * -0.5);
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: var(--pic);
+  display: grid; place-items: center;
+}
+@media (min-width: 900px) {
+  /* In the first column, rising a third of its height out of the panel. */
+  .personalArt {
+    position: relative;
+    inset: auto; translate: none;
+    margin-block: calc(var(--pic) * -0.62) calc(var(--pic) * -0.1);
+  }
+}
+.personalPic {
+  position: relative;
+  display: block; inline-size: 88%;
+  rotate: -5deg;
+  --rest: -5deg;
+  filter: drop-shadow(0 12px 14px color-mix(in srgb, var(--ink) 18%, transparent));
+}
+.personalPic picture, .personalPic img { display: block; inline-size: 100%; block-size: auto; }
+
+.personalMark { position: absolute; color: var(--duck-ink); opacity: .55; pointer-events: none; }
+.personalMark1 { inset-block-start: var(--s-4); inset-inline-end: var(--s-5); rotate: 12deg; }
+.personalMark2 { inset-block-end: var(--s-4); inset-inline-start: var(--s-5); rotate: -10deg; }
+@media (min-width: 900px) {
+  .personalMark1 { inset-inline-end: 34%; }
+  .personalMark2 { inset-inline-start: auto; inset-inline-end: var(--s-5); }
+}
+
+.personalSay { display: grid; justify-items: inherit; gap: var(--s-2); }
+.chip {
+  padding: 5px var(--s-3);
+  background: var(--sun); border: var(--border); border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-size: var(--fs-micro);
+  letter-spacing: .09em; text-transform: uppercase; line-height: 1.4;
+}
+.personalTitle {
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+  line-height: var(--lh-md); letter-spacing: .008em;
+  text-wrap: balance;
+}
+.personalBody { max-width: 46ch; font-size: var(--fs-body); line-height: 1.55; text-wrap: pretty; }
+.personalCta { position: relative; z-index: 1; }
+
+/* ==== 5. THE OTHER TWO =================================================== */
+.more { background: var(--cream); padding-block: var(--section-y); }
+.moreTitle { margin-block-end: clamp(var(--s-7), 5vw, var(--s-8)); }
+.moreList {
+  display: grid; gap: var(--s-7);
+  list-style: none; margin: 0; padding: 0;
+}
+@media (min-width: 760px) { .moreList { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* MET AS CHARACTERS, NOT THUMBNAILS. The first version showed the other two as
+   62px bottle renders in a list row; the rest of the site introduces the ducks
+   as characters, so this does. Each card on that duck's own soft ground, the
+   duck rising out over its top edge — the frame-breaking device Chi Chi uses
+   on the Personalize panel. */
+.moreCard {
+  /* The duck's size, named once: the card reserves room for it and the duck
+     is positioned against it. */
+  --duck-w: clamp(150px, 17vw, 236px);
+  position: relative;
+  display: grid;
+  align-items: center;
+  block-size: 100%;
+  /* Shorter than the duck, on purpose — that difference IS the rise. */
+  min-block-size: clamp(170px, 14vw, 196px);
+  padding: var(--s-5) calc(var(--duck-w) * 0.8 + var(--s-4)) var(--s-5) clamp(var(--s-5), 2.4vw, var(--s-7));
+  background: var(--card);
+  border: var(--border-lg); border-radius: var(--r-lg);
+  color: var(--ink);
+  text-decoration: none;
+  transition: translate var(--t) var(--spring);
+}
+.moreCard:hover { translate: 0 -4px; }
+.moreCard:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .moreCard { transition: none; } .moreCard:hover { translate: none; } }
+
+.moreSay { position: relative; z-index: 1; display: grid; justify-items: start; gap: 2px; }
+
+/* ON A PHONE the duck cannot sit beside the words: the card is ~326px wide,
+   the text wraps tall, and a duck big enough to clear the top of it leaves no
+   room for them. So it moves to the TOP-RIGHT CORNER and peeks over it — the
+   same device Chi Chi uses on the Personalize panel — with the card's top
+   padding giving its lower half somewhere to stand, and the list gap opened
+   up so it does not land on the card above. */
+@media (max-width: 599px) {
+  .moreList { gap: calc(var(--s-7) + 28px); }
+  .moreCard {
+    --duck-w: 128px;
+    padding: calc(var(--duck-w) * 0.58) var(--s-5) var(--s-5);
+    min-block-size: 0;
+  }
+  .moreArt {
+    inset-block-end: auto;
+    inset-block-start: calc(var(--duck-w) * -0.44);
+    inset-inline-end: var(--s-4);
+  }
+}
+.moreRole {
+  font-family: var(--font-mono); font-size: var(--fs-micro);
+  letter-spacing: .09em; text-transform: uppercase;
+}
+.moreName { font-size: clamp(2rem, 4vw, 3rem); line-height: 1; letter-spacing: .008em; }
+.moreMessage {
+  font-family: var(--font-hand), ui-rounded, cursive;
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  margin-block-start: var(--s-1);
+}
+.moreGo {
+  margin-block-start: var(--s-3);
+  font-size: var(--fs-small); font-weight: 700;
+  text-decoration: underline; text-underline-offset: .22em;
+}
+/* THE CHARACTER RISES OUT OF THE CARD — positioned, not pulled. A negative
+   margin cannot do this: the card is a grid, the text column sets the row's
+   height, and an item with a negative top margin is still laid out inside that
+   row. Measured, it lifted the duck 2px at 1440 and not at all on a phone.
+   Pinned to the card's floor and taller than the card, the duck has nowhere to
+   go but up through the border. Feet stay 3px inside the bottom edge. */
+.moreArt {
+  position: absolute;
+  inset-block-end: 3px;
+  inset-inline-end: clamp(4px, 1.4vw, var(--s-4));
+  inline-size: var(--duck-w);
+  pointer-events: none;
+}
+
+/* ==== 6. THE SEND-OFF ==================================================== */
+.close { background: var(--vincey-soft); padding-block: var(--section-y); }
+.closeInner { display: grid; justify-items: start; gap: var(--s-4); }
+.closeTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.1;
+  font-size: clamp(1.75rem, 3.8vw, 3rem);
+  max-width: 22ch; text-wrap: balance;
+}
+.closeBlurb { max-width: 52ch; line-height: 1.6; }

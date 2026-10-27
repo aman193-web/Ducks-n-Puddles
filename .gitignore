@@ -29,3 +29,6 @@ coverage/
 *.tsbuildinfo
 .playwright-mcp/
 *.jpeg
+
+# Screenshots for client review — not part of the site.
+.review/

@@ -1,0 +1,120 @@
+/* =============================================================================
+   PERSONALIZE YOUR PUDDLE — COMING SOON
+
+   "A smaller feature preview", so it is a PANEL on cream rather than a band of
+   its own. Two coloured bands in a row — this and Meet the Puddle above —
+   would have made the Puddle look like two announcements instead of one with a
+   postscript.
+
+   Cream also matters structurally: <Specs> below carries
+   `margin-block-start: calc(var(--section-y) * -0.36)` and rounded top corners
+   so it sits ON the section above it. That used to be Store, which is cream.
+   This section is now what Specs lands on, and it is cream for the same reason.
+   ========================================================================== */
+/* ⚠️ THE TOP PADDING IS THE POINT. It was 0, so the panel's rounded top corner
+   started within about ten pixels of the yellow seam above it — the panel
+   looked like it had slid up out of its own section and Chi Chi, who hangs over
+   its corner, stood on the colour boundary. The gap between the two sections is
+   the same size it always was; it is now mostly CREAM, on this side of the
+   seam, where the panel can use it.
+   The bottom is trimmed to 0.8 of the rhythm as part of the compression pass. */
+.section {
+  background: var(--cream);
+  /* The site's full step on both sides. Top: Chi Chi stands 38-58px proud of
+     the panel, and at the old 48-64px she was all but touching the yellow
+     band above. Bottom: Specs pulls itself up by 0.36 of a step over this
+     section, so 1.36 here leaves one whole step of cream visible. */
+  padding-block: var(--section-y) calc(var(--section-y) * 1.36);
+  position: relative;
+  z-index: 1;
+}
+
+.panel {
+  position: relative;
+  display: grid;
+  gap: clamp(var(--s-6), 3.4vw, var(--s-8));
+  align-items: center;
+  padding: clamp(var(--s-5), 3vw, var(--s-7));
+  background: var(--chichi-field);
+  border: var(--border-lg);
+  border-radius: var(--r-lg);
+}
+@media (min-width: 900px) {
+  .panel { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+}
+
+/* --s-3, not --flow-eyebrow: five stacked blocks at 20px apiece was 80px of
+   gap in a panel the client asked to shorten. */
+.say { display: grid; justify-items: start; gap: var(--s-3); }
+
+/* A step below the section headings around it — this is a preview, and a
+   heading at --fs-xl would have given it the same weight as the product
+   sections it trails. --fs-lg's territory, with its own cap. */
+.title {
+  font-size: clamp(1.75rem, 4.2vw, 3rem);
+  line-height: var(--lh-lg);
+  font-weight: 400;
+  letter-spacing: .008em;
+  text-wrap: balance;
+}
+/* "Your Duck. Your Puddle. Your Way." — the campaign line, in the display face
+   but at lead size, so it reads as a refrain under the title rather than as a
+   second heading. */
+.sub {
+  margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow));
+  font-size: clamp(1.1875rem, 1.9vw, 1.5rem);
+  line-height: var(--lh-md);
+  letter-spacing: .008em;
+  color: var(--chichi-ink);
+}
+.body {
+  margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow));
+  max-width: 52ch;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.close {
+  max-width: 52ch;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-weight: 600;
+  text-wrap: pretty;
+}
+
+/* ---- the concept artwork -------------------------------------------------- */
+.art { display: grid; justify-items: center; gap: var(--s-3); }
+.stage { display: block; inline-size: min(100%, 200px); }
+@media (min-width: 900px) { .stage { inline-size: min(100%, 260px); } }
+.stage picture { display: block; }
+.stage img { display: block; inline-size: 100%; block-size: auto; }
+
+/* Says what the drawing is, in the same register the rest of the site uses for
+   a caveat. It is not decoration: a drawing of an unreleased feature next to a
+   signup form should say out loud that it is a drawing. */
+.concept {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  /* .75, not .62. Measured: ink at 62% over --chichi-field blends to #6A7189,
+     which is 4.24 against that ground — under AA for 12px text. .75 gives 6.25.
+     A caveat label is the last thing on a page that should be hard to read. */
+  opacity: .75;
+}
+
+/* Chi Chi, over the panel's top-left corner. Desktop-only by default — see
+   <Duck density> — because the client asked for mobile to feel intentional
+   rather than crowded. */
+.cameo {
+  position: absolute;
+  z-index: 2;
+  inline-size: clamp(80px, 8vw, 116px);
+  inset-block-start: clamp(-58px, -4.4vw, -38px);
+  /* Hard to the corner: at a larger inset she stood ON the concept artwork
+     rather than beside it, and a duck's foot over the product drawing is the
+     one overlap this section cannot have. */
+  inset-inline-end: clamp(6px, 1.4vw, 20px);
+}
+

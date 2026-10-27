@@ -88,13 +88,15 @@ export function Store() {
                   the revision opened with. The role is the only line that earns
                   its place, because it is what tells you which duck this is. */}
               <p className={styles.role}>{d.role}</p>
-              {/* query BEFORE the fragment. `/#squad?duck=x` makes the browser look for
-                  an element with id="squad?duck=x", so it matched nothing and the
-                  click scrolled nowhere. */}
+              {/* /ducks/<slug>, NOT the waitlist. This button has said
+                  "Explore Vincey" since the first build and went to a signup
+                  form — a reader who pressed a button labelled Explore got
+                  asked for their email. The product page is what it promised,
+                  and the waitlist is on it, carrying ?duck= as before. */}
               {/* d.soft, not d.colour: full saturation on a pale field card was
                   the last loud thing on the page. The character is still
                   identified by its own hue, one step lighter. */}
-              <Btn href={`/?duck=${d.slug}#squad`} colour={d.soft} block>
+              <Btn href={`/ducks/${d.slug}`} colour={d.soft} block>
                 Explore {d.name}
               </Btn>
             </article>

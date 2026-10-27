@@ -15,6 +15,7 @@ const consoleProvider: Provider = {
   async subscribe(input) {
     console.info('[subscribe:console]', {
       email: input.email, firstName: input.firstName, duck: input.duck,
+      interest: input.interest,
     })
     return { ok: true }
   },
@@ -40,7 +41,9 @@ const mailchimp: Provider = {
         // consent record and it protects deliverability for a new sending domain.
         status: 'pending',
         merge_fields: { FNAME: input.firstName || '' },
-        tags: [`duck:${input.duck}`],
+        /* `interest:personalization` is how the client picks the personalised-
+           Puddle waitlist out of one audience — see INTERESTS. */
+        tags: [`duck:${input.duck}`, ...(input.interest ? [`interest:${input.interest}`] : [])],
       }),
     })
     if (res.status === 400) {
@@ -61,6 +64,10 @@ const resend: Provider = {
     const res = await fetch(`https://api.resend.com/audiences/${audience}/contacts`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      /* ⚠️ `interest` IS DROPPED HERE. Resend's contacts endpoint takes no tags,
+         so the personalisation waitlist cannot be told apart under this
+         provider — it needs a separate audience id, or Mailchimp. Mailchimp and
+         the webhook both carry the tag. */
       body: JSON.stringify({
         email: input.email, first_name: input.firstName || undefined, unsubscribed: false,
       }),

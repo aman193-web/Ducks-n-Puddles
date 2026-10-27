@@ -2,10 +2,24 @@ import { z } from 'zod'
 
 export const DUCKS = ['vincey', 'chi-chi', 'goosey', 'undecided'] as const
 
+/**
+ * What brought someone to the form, where that is worth knowing separately.
+ *
+ * The client's brief (Oct 2026), section 7: connect the personalisation
+ * announcement to the existing list "rather than creating an entirely separate
+ * signup process, unless there is a simple way to identify subscribers
+ * interested specifically in personalization."
+ *
+ * There is: one list, one endpoint, one tag. An ENUM rather than a free string
+ * so a crafted request cannot write an arbitrary tag into their audience.
+ */
+export const INTERESTS = ['personalization'] as const
+
 export const subscribeSchema = z.object({
   email: z.string().trim().toLowerCase().email('That email doesn’t look right.').max(200),
   firstName: z.string().trim().max(80).optional().or(z.literal('')),
   duck: z.enum(DUCKS),
+  interest: z.enum(INTERESTS).optional(),
   consent: z.literal(true, { message: 'We need your okay before we can email you.' }),
   /**
    * Honeypot. Bots fill it; people never see it.

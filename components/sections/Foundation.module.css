@@ -183,6 +183,10 @@
   text-underline-offset: 5px;
 }
 .link:hover { text-decoration-thickness: 4px; }
+/* 26px tall on a phone, and the only control in this section. Phone only. */
+@media (max-width: 600px) {
+  .link { padding-block: 7px; }
+}
 
 
 /* ---- the art --------------------------------------------------------- */

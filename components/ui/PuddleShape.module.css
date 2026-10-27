@@ -1,0 +1,44 @@
+/* THE PUDDLE, flat. One ink outline on flat colour, which is the whole house
+   style — see tokens.css, "depth comes from OUTLINES ON FLAT COLOUR". */
+.puddle {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  overflow: visible;
+}
+
+/* The outline is on the shape rather than on the <svg>, so it scales with the
+   viewBox like every other stroke here. 3.4 user units against a 200-unit box
+   lands at about 2px wherever this is actually rendered — the same weight as
+   --bw-lg, which is what every other panel on the page is drawn with. */
+.body {
+  stroke: var(--ink);
+  stroke-width: 3.4;
+  stroke-linejoin: round;
+}
+
+/* Snacks get a lighter outline than the sleeve: the same weight on a 15-unit
+   berry as on a 200-unit sleeve reads as four heavy blobs rather than as things
+   sitting inside something. */
+.snacks * {
+  stroke: var(--ink);
+  stroke-width: 2.6;
+  stroke-linejoin: round;
+}
+
+/* The child's name, in the brand's handwriting face — the one the duck
+   sub-titles and the footer's "Come hang with us" are set in. A name written
+   by hand is the point of personalisation; the display face would read as
+   packaging. */
+.name {
+  font-family: var(--font-hand), ui-rounded, cursive;
+  font-size: 44px;
+  font-weight: 600;
+  fill: var(--paper);
+  /* Bangbang and Edu both ship one weight and font-synthesis is off site-wide,
+     so weight has to come from a stroke — the same trick the blog titles use. */
+  paint-order: stroke fill;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+}

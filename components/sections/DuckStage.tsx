@@ -94,6 +94,13 @@ export function DuckStage() {
                 <h3 id={`duck-${d.slug}`} className={`d d-mega ${styles.name}`}>{d.name}</h3>
                 <p className={styles.personality}>{d.personality}</p>
 
+                {/* THE WAY IN. Each panel introduced a duck and then offered no
+                    way to meet it — the only control in the section was one
+                    button at the very bottom, past all three. */}
+                <Btn href={`/ducks/${d.slug}`} colour="var(--cream)">
+                  Meet {d.name}
+                </Btn>
+
                 {/* ONE PARAGRAPH, ONE MESSAGE. The client removed the quote, the
                     "For parents" box and the "What X helps with" chips from this
                     section — four blocks of copy per duck where they wanted two.

@@ -1,0 +1,104 @@
+/* =============================================================================
+   The duck's song — one pill, the Front / Back switch's twin
+   (BottleViewer.module.css): 4px of padding, --border-lg, 40px controls
+   inside. Same box, same height, so beside it the two are one row.
+   ========================================================================== */
+
+/* The player's place in the page. It keeps the pill's height when the pill
+   floats away, so the layout around it never moves. */
+.slot { block-size: 52px; }
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  inline-size: 100%;
+  max-inline-size: 300px;
+  padding: 4px;
+  padding-inline-end: var(--s-4);
+  background: var(--paper);
+  border: var(--border-lg);
+  border-radius: var(--r-pill);
+  color: var(--ink);
+}
+
+/* ---- play / pause: the one filled control, in the switch's "on" yellow ---- */
+.play {
+  flex: none;
+  display: grid; place-items: center;
+  inline-size: 40px; block-size: 40px;
+  padding: 0;
+  background: var(--sun);
+  color: var(--ink);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--t) var(--spring), background-color var(--t-fast) linear;
+}
+.play svg { inline-size: 20px; block-size: 20px; fill: currentColor; }
+.play:active { transform: scale(.92); }
+@media (hover: hover) { .play:hover { background: var(--sun-soft); } }
+.play:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; }
+
+/* ---- the track and the time --------------------------------------------- */
+.time {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The scrubber. The played part is a gradient stop at --pct, so the fill
+   needs no second element and no script beyond the one variable. */
+.seek {
+  -webkit-appearance: none; appearance: none;
+  flex: 1; min-inline-size: 0;
+  block-size: 14px;          /* the hit area; the drawn track is 4px */
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.seek:disabled { cursor: default; }
+.seek::-webkit-slider-runnable-track {
+  block-size: 4px; border-radius: 2px;
+  background: linear-gradient(to right, var(--ink) var(--pct, 0%), color-mix(in srgb, var(--ink) 18%, transparent) var(--pct, 0%));
+}
+.seek::-moz-range-track {
+  block-size: 4px; border-radius: 2px;
+  background: linear-gradient(to right, var(--ink) var(--pct, 0%), color-mix(in srgb, var(--ink) 18%, transparent) var(--pct, 0%));
+}
+.seek::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  inline-size: 12px; block-size: 12px; margin-block-start: -4px;
+  background: var(--sun); border: 2px solid var(--ink); border-radius: 50%;
+}
+.seek::-moz-range-thumb {
+  inline-size: 8px; block-size: 8px;
+  background: var(--sun); border: 2px solid var(--ink); border-radius: 50%;
+}
+.seek:disabled::-webkit-slider-thumb { visibility: hidden; }
+.seek:disabled::-moz-range-thumb { visibility: hidden; }
+.seek:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; border-radius: 4px; }
+
+/* ---- floating, once the hero is passed ------------------------------------
+   Bottom right, on the back-to-top button's line (ScrollTop.module.css: the
+   same edge inset, the same lift shadow), just to its left. */
+.player[data-floating] {
+  --edge: clamp(18px, 2.4vw, 32px);
+  position: fixed;
+  z-index: 45;
+  inset-block-end: calc(var(--edge) + (var(--btn-h-sm) - 52px) / 2);
+  inset-inline-end: calc(var(--edge) + var(--btn-h-sm) + var(--s-3));
+  inline-size: min(210px, 100vw - 2 * var(--edge) - var(--btn-h-sm) - var(--s-3));
+  box-shadow: 0 10px 24px -10px rgba(16, 38, 74, .45);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .player[data-floating] { animation: floatIn .45s var(--spring) both; }
+}
+@keyframes floatIn { from { opacity: 0; translate: 0 16px; } }
+/* Back in the hero after floating: straight in, not after the page-load
+   arrival's 620ms delay, which reads as the player having gone missing. */
+@media (prefers-reduced-motion: no-preference) {
+  .player[data-returned] { animation: floatIn .45s var(--spring) both; }
+}

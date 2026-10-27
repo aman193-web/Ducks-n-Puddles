@@ -93,7 +93,11 @@
   background: var(--paper);
   border-radius: var(--r-pill);
   font-family: var(--font-mono); font-weight: 500;
-  font-size: .625rem; letter-spacing: .06em; text-transform: uppercase;
+  /* .6875rem (11px), not .625rem (10px). Measured at 10px it was the smallest
+     type anywhere on the site — uppercase mono at 10px is a badge you squint
+     at, and this one is the site's only statement that the store is not open.
+     One pixel; the pill does not change size, because its padding does. */
+  font-size: .6875rem; letter-spacing: .06em; text-transform: uppercase;
   white-space: nowrap;
 }
 

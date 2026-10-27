@@ -20,7 +20,9 @@ const EXPLORE = [
    mine and is out at their request; "Shipping & Returns (when live)" stays out
    until shipping is live, which is what the client's own note asks for. */
 const HELP = [
-  { href: '/#faq', label: 'FAQs' },
+  /* /faq, not /#faq. The homepage section carries six of the fourteen now, and
+     a nav item called "FAQs" that lands on an excerpt is a broken promise. */
+  { href: '/faq', label: 'FAQs' },
   { href: '/contact', label: 'Contact Us' },
   { href: '/privacy', label: 'Privacy Policy' },
   { href: '/terms', label: 'Terms of Service' },

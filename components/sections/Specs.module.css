@@ -49,11 +49,16 @@
    Fixed column counts rather than auto-fit, because auto-fit left a ragged
    final row that made the set look unfinished — which is the one thing this
    section must not imply. */
-/* SEVEN CARDS, and seven is the awkward number here. A four-column grid leaves
-   a hole in the second row now that the eighth (the dark card) is gone, and
-   seven columns — which I tried and measured — puts each card at 140px, where
-   "SPILL-RESISTANT" breaks across two lines and the set stops looking uniform,
-   which is the opposite of the note.
+/* EIGHT CARDS now — the seven specs plus the 2-in-1 Puddle the client added in
+   their Oct 2026 brief. Eight is the number this grid always wanted. At seven
+   every breakpoint ended on a short row that had to be hand-centred by naming
+   the card that opened it, and that hand-centring is what the warning at the
+   foot of this comment was about. Eight divides into 2 / 3 / 4 columns leaving
+   at most one short row, and only the three-column case needs any help.
+
+   Kept from the seven-card version, because it still governs: a seven-COLUMN
+   grid puts each card at 140px, where "SPILL-RESISTANT" breaks across two lines
+   and the set stops looking uniform.
 
    GRID, AND HALF-WIDTH COLUMNS. Flex got the centred remainder — four over
    three, with the three centred rather than left with a gap at the end — but
@@ -67,11 +72,11 @@
 
    The columns are HALVES of a card, so an odd last row can be centred by
    starting it one half-column in. That is the trick flex was here for, and it
-   survives.
+   survives — there is just one row left that needs it.
 
-   TIED TO SEVEN CARDS. The offsets below name which card opens the short row,
-   so adding an eighth spec — or promoting one of the `pending` rows in
-   content/brand.ts — means revisiting them. */
+   TIED TO THE CARD COUNT. Only the 680px breakpoint names a card by index, and
+   it names the SEVENTH of eight. Promoting one of the `pending` rows in
+   content/brand.ts to `confirmed` means revisiting it. */
 .grid {
   --gap: var(--card-gap);
   display: grid;
@@ -86,19 +91,18 @@
    auto and the card silently becomes ONE column wide — which is exactly what
    happened to cards 5 and 7 the first time this was written. */
 .card { grid-column: span 2; }
-/* 2 a row: 2 + 2 + 2 + 1, so the last one centres */
-.card:nth-child(7) { grid-column: 2 / span 2; }
+/* two a row: 2 + 2 + 2 + 2, square. Nothing to centre. */
 
 @media (min-width: 680px) {
-  /* three a row: 3 + 3 + 1 */
+  /* three a row: 3 + 3 + 2, and the last pair centres. This is the one short
+     row left in the set, and the only place a card is named by index. */
   .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .card:nth-child(7) { grid-column: 3 / span 2; }
+  .card:nth-child(7) { grid-column: 2 / span 2; }
 }
 @media (min-width: 1000px) {
-  /* four a row: 4 + 3, and the three centre */
+  /* four a row: 4 + 4. Nothing to centre here either. */
   .grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
   .card:nth-child(7) { grid-column: span 2; }
-  .card:nth-child(5) { grid-column: 2 / span 2; }
 }
 
 .card {

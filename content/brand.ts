@@ -7,6 +7,35 @@
  * not a copy placeholder.
  */
 
+/**
+ * ⚠️ DO NOT DEPLOY WITH THIS BUILT AND UNRESOLVED.
+ *
+ * The client's brief, section 8, verbatim: "The 2-in-1 snack-holder
+ * functionality is a new product development concept, so final food-contact
+ * safety, stability, cleaning, and compliance testing must be confirmed before
+ * we advertise it as an approved feature. Please prepare the website designs
+ * and content, but do not publish snack-holder claims until we approve them."
+ *
+ * Food contact with a children's product is a real-world safety claim, which is
+ * the same rule that keeps `specs` honest. So the snack-holder copy is BUILT
+ * and reviewable, and gated on one boolean:
+ *
+ *   false  →  the Puddle sections render as the protective sleeve only, the
+ *             snack-holder FAQ answers drop out, and the Specs tile says sleeve.
+ *   true   →  the full 2-in-1 story, exactly as the client wrote it.
+ *
+ * Flip it the day they confirm testing — in writing — and nothing else changes.
+ *
+ * IT IS `true` HERE ON PURPOSE, and that is not a contradiction: the client
+ * asked to SEE this content, and they cannot approve copy that does not render.
+ * Both states are built and both are finished — see .showcaseSolo in
+ * MeetThePuddle.module.css for the one-panel layout the closed gate uses.
+ * SET IT TO false BEFORE THE SITE GOES LIVE, unless approval has landed by then.
+ *
+ * TODO(client): written confirmation of food-contact safety and compliance.
+ */
+export const SNACK_CLAIMS_APPROVED = true
+
 export const brand = {
   /* The CURLY apostrophe, U+2019, which is the one every other string on the
      site and in the client's own document uses. It was a straight quote here
@@ -190,6 +219,10 @@ export interface Spec {
   benefit?: string
   status: 'confirmed' | 'pending'
   note?: string
+  /** Makes the unapproved snack-holder claim — see SNACK_CLAIMS_APPROVED. */
+  snackClaim?: true
+  /** What this card says instead while that claim is unapproved. */
+  whenPending?: { label: string; value?: string; benefit?: string }
 }
 
 /**
@@ -205,6 +238,19 @@ export interface Spec {
  * so it is flagged here rather than quietly swapped.
  */
 export const specs: Spec[] = [
+  /* THE KEY FEATURE, AND SO THE FIRST CARD. It arrived as the eighth, at the
+     bottom-right corner, which is where a grid puts an afterthought — and it is
+     the one thing on this product no competitor's bottle has.
+     Its copy is also the shortest it can be while staying the client's own: the
+     first draft ran "Protective sleeve + removable snack holder" over
+     "Thoughtfully designed for little hands and everyday adventures", five
+     lines in a box where every sibling takes two or three. */
+  { key: 'puddle', label: '2-in-1 silicone Puddle', value: 'Sleeve + snack holder',
+    benefit: 'Two purposes. One thoughtful design.', status: 'confirmed',
+    snackClaim: true,
+    /* The client's own first bullet, which makes no snack claim at all. */
+    whenPending: { label: 'Silicone Puddle', value: 'Removable protective sleeve',
+      benefit: 'A comfortable grip for little hands.' } },
   { key: 'capacity', label: 'Just the right size', value: '9 oz',
     benefit: 'Sized for little hands', status: 'confirmed' },
   { key: 'lid', label: 'Flip-top straw', value: 'Snaps securely closed',
@@ -216,6 +262,12 @@ export const specs: Spec[] = [
   { key: 'bpa', label: 'BPA-free', value: 'Your kids matter. We give a duck.', status: 'confirmed' },
   { key: 'grip', label: 'Little-hand friendly', value: 'Lightweight + easy to grip', status: 'confirmed' },
   { key: 'age', label: 'Made for little ones', value: 'Designed for toddlers & preschoolers', status: 'confirmed' },
+  /* THE EIGHTH CARD, added on the client's brief "Website Updates: Introducing
+     the 2-in-1 Puddle" (Oct 2026), item 3: "Add this as a feature tile alongside
+     the existing water bottle features." Their wording, unedited.
+     ⚠️ Carries a SNACK-HOLDER CLAIM — see PUDDLE_SNACK_CLAIMS_PENDING_APPROVAL
+     below. Eight also happens to be the number this grid always wanted: seven
+     left a short row that had to be hand-centred at every breakpoint. */
   /* The FAQ now says "ideal for ages 2\u20138". Kept broader on the card because that
      is the wording the client specified for this grid. */
 
@@ -232,10 +284,153 @@ export const specs: Spec[] = [
   { key: 'warranty',   label: 'Warranty',      status: 'pending' },
 ]
 
-export const confirmedSpecs = specs.filter((s) => s.status === 'confirmed')
+/* Rows the snack gate rewords rather than removes: the sleeve is real and
+   already described in the footnote below, so dropping the card entirely would
+   be hiding a feature rather than withholding an unapproved claim — and it
+   would take the grid back to the seven that never divided cleanly. */
+export const confirmedSpecs = specs
+  .filter((s) => s.status === 'confirmed')
+  .map((s) => (s.snackClaim && !SNACK_CLAIMS_APPROVED && s.whenPending ? { ...s, ...s.whenPending } : s))
 /** The asterisk on the `clean` row. */
 export const specsFootnote = 'Bottle and cap are dishwasher safe. Hand-wash silicone sleeve.'
 export const pendingSpecCount = specs.filter((s) => s.status === 'pending').length
+
+/* --------------------------------------------------------------------------- */
+
+
+/* ---------------------------------------------------------------------------
+   THE PUDDLE — the 2-in-1 silicone sleeve, and the personalisation preview.
+
+   Source: the client's brief "THE PUDDLE — Website Updates: Introducing the
+   2-in-1 Puddle & Personalized Puddles" (Oct 2026). Every headline, sentence
+   and bullet below is THEIR copy, unedited. Nothing here is written by us.
+
+   ⚠️ TWO THINGS IN THIS BLOCK ARE NOT YET APPROVED TO PUBLISH — the client
+   said so themselves, in their own brief, and both flags are below.
+   --------------------------------------------------------------------------- */
+
+/** Personalisation is a FUTURE offering. The brief: "should only be advertised
+ *  as 'Coming Soon'", and "Do not add a purchase or customization button yet."
+ *  Nothing in the Personalize section links to a configurator or a checkout —
+ *  the only control on it is the newsletter. */
+export const personalization = {
+  status: 'Coming Soon',
+  title: 'Personalize Your Puddle!',
+  sub: 'Your Duck. Your Puddle. Your Way.',
+  lede: 'We’re making adventures even more personal!',
+  body:
+    'Soon, you’ll be able to personalize your little one’s very own Puddle, '
+    + 'creating a one-of-a-kind companion for every adventure.',
+  close:
+    'Because it’s more than just a water bottle. It’s their Duck, their Puddle, '
+    + 'and their adventure.',
+  /* Section 7 of the brief, the newsletter tie-in. The form posts to the SAME
+     list as everywhere else — "Please connect this to our existing newsletter
+     or email waitlist system rather than creating an entirely separate signup
+     process" — and tags the subscriber `interest:personalization` so this
+     waitlist can still be told apart inside it. See INTERESTS.
+     `title`, `invite` and `button` render in the section's signup bar.
+     `body` DELIBERATELY DOES NOT: it says the same thing as `body` above it,
+     and the two would sit four inches apart. It is kept because section 7 calls
+     this a "Suggested Newsletter Message" — it is copy for the email they send,
+     and this is where their copy lives. */
+  signup: {
+    title: 'Something Personal Is Coming!',
+    body:
+      'We’re working on something special! Soon, you’ll be able to personalize '
+      + 'your child’s Puddle with their very own name.',
+    invite:
+      'Join the Ducks ’n Puddles family and be the first to know when Personalized '
+      + 'Puddles become available.',
+    button: 'Be the First to Know',
+  },
+  /* The brief's example name, used on the concept artwork: "Show a concept image
+     of the silicone Puddle with a child's name on it (for example, 'Lucy')." */
+  sampleName: 'Lucy',
+} as const
+
+export const puddle = {
+  eyebrow: 'Meet the Puddle',
+  title: 'Meet the Puddle!',
+  /** Section 6: "Primary Marketing Message". */
+  message: 'The Duck Holds the Drink. The Puddle Holds the Snack.',
+  lede: 'We believe the little details make a big difference.',
+  body:
+    'That’s why our silicone Puddle is designed to do more than protect your '
+    + 'child’s water bottle. It also doubles as a removable snack holder! Simply '
+    + 'slide off the Puddle, fill it with your little one’s favorite snacks, and '
+    + 'you’re ready for your next adventure.',
+  /** The dual-purpose callout. The brief: "Consider a simple visual with two
+   *  labels: '1. Protective Sleeve' and '2. Snack Holder.'" */
+  purpose: 'Two purposes. One thoughtful design.',
+  parts: [
+    { n: 1, label: 'Protective Sleeve',
+      body: 'Helps protect the bottle and provides a comfortable grip for little hands.' },
+    { n: 2, label: 'Snack Holder', snackClaim: true,
+      body: 'A removable silicone Puddle that doubles as a convenient holder for your child’s favorite snacks.' },
+    { n: 3, label: 'Made for Everyday Adventures',
+      body: 'Thoughtfully designed for picnics, playgrounds, road trips, and everyday outings.' },
+  ],
+  close: 'One less thing for parents to pack. One more thing for little ones to love.',
+  /** Section 6, "Visual 4: How It Works — Consider a simple three-step graphic".
+   *  Their three steps and their three sentences.
+   *  ⚠️ NOT RENDERED, and that is a judgement call worth stating. The two
+   *  panels above already read sip → slide → snack: bottle, arrow, Puddle with
+   *  snacks in it. Adding three more steps saying the same thing in words would
+   *  have put ~240px of restatement in a section that is already the third
+   *  tallest on the page, against the client's own section 8 — "visually
+   *  engaging without overcrowding the website". It is one <ol> away if they
+   *  disagree; the copy is here and ready. */
+  steps: [
+    { k: 'sip',   label: 'Sip',   body: 'Enjoy your drink with your favorite Duck.' },
+    { k: 'slide', label: 'Slide', body: 'Remove the silicone Puddle from the bottle.' },
+    { k: 'snack', label: 'Snack', body: 'Fill your Puddle with your favorite snacks and enjoy!', snackClaim: true },
+  ],
+  /** Section 6, "Supporting Marketing Phrases". Held, not rendered: the section
+   *  already carries their PRIMARY message as its headline, and stacking a
+   *  second slogan under it would dilute the one they asked to lead with. */
+  slogan: 'Sip. Snack. Splash. Repeat!',
+} as const
+
+/**
+ * THE PRODUCT PAGES — section 4 of the client's brief, "UPDATE: INDIVIDUAL
+ * PRODUCT PAGES". Their copy, verbatim, for all three bottles.
+ *
+ * It says UPDATE because they believed these pages existed. They did not: every
+ * "Explore <duck>" button on the site pointed at the waitlist. /ducks/[slug] is
+ * those pages, and this is the block their brief asked to be added to each one.
+ */
+export const productPuddle = {
+  title: 'Includes Our 2-in-1 Puddle!',
+  body:
+    'Every Duck comes with its very own removable silicone Puddle, designed to '
+    + 'protect the bottle and double as a convenient snack holder.',
+  /** "Additional Product Feature", their words. */
+  feature: 'Removable 2-in-1 silicone sleeve and snack holder.',
+  /** The gated wording: the first half of their own sentence, stopping before
+   *  the claim. Nothing invented. */
+  sleeveOnlyTitle: 'Includes Our Silicone Puddle!',
+  sleeveOnlyBody:
+    'Every Duck comes with its very own removable silicone Puddle, designed to '
+    + 'protect the bottle.',
+  sleeveOnlyFeature: 'Removable silicone sleeve.',
+  /** "Personalization Preview" — the small note the brief asks to sit below
+   *  the product description. No control beside it, per their instruction. */
+  personalTitle: 'Personalized Puddles Coming Soon!',
+  personalBody:
+    'Soon, you\u2019ll be able to make your child\u2019s Puddle uniquely theirs by adding '
+    + 'their name.',
+} as const
+
+/** The sleeve-only wording, for when SNACK_CLAIMS_APPROVED is false. The client
+ *  already describes the sleeve this way in their own FAQ ("our removable
+ *  silicone sleeve"), so nothing here is invented either. */
+export const puddleSleeveOnly = {
+  message: 'A Friend for Every Adventure.',
+  body:
+    'That’s why our silicone Puddle is designed to protect your child’s water '
+    + 'bottle and give little hands something comfortable to hold on to.',
+} as const
 
 /* ---------------------------------------------------------------------------
    CONTACT.
@@ -563,45 +758,113 @@ export const reels: Reel[] = [
  *
  * TODO(client): confirm all three with the manufacturer in writing.
  */
-export const faqs = [
+export interface Faq {
+  q: string
+  a: string
+  /** Which heading the question sits under on /faq. Navigation, not copy — the
+   *  questions and answers are the client's own words, untouched. */
+  group: 'The brand' | 'The bottles' | 'The Puddle' | 'Getting one'
+  /** Shown in the homepage section. The rest live on /faq behind "View all".
+   *  Fourteen rows was more than a homepage section should ask anyone to scroll
+   *  past on the way to the signup. */
+  home?: true
+  /** Depends on the unapproved snack-holder claim — see SNACK_CLAIMS_APPROVED. */
+  snackClaim?: true
+}
+
+export const faqs: Faq[] = [
   {
+    group: 'The brand', home: true,
     q: 'What is Ducks \u2019n Puddles?',
     a: 'Ducks \u2019n Puddles is a children\u2019s lifestyle brand built around one simple idea: A Friend for Every Adventure. We create thoughtful products that bring more ease to parents and comfort, confidence, and positive direction to kids. Through our characters, products, stories, experiences, and growing Foundation, our bigger vision is to create a world where children and families feel supported, connected, and cared for.',
   },
   {
+    group: 'The bottles', home: true,
     q: 'Tell me about the water bottle.',
     a: 'Our 9 oz bottles are thoughtfully designed for little hands and busy parents \u2014 lightweight, spill-resistant, BPA-free, and easy to clean, with a flip-top straw for sipping on the go. But it\u2019s more than a water bottle: each duck has a name and personality of its own, turning an everyday essential into a friend for every adventure.',
   },
   {
+    group: 'The bottles', home: true,
     q: 'How do I clean it?',
     a: 'The entire bottle is dishwasher safe! We just recommend hand-washing the silicone sleeve to help keep it looking its best.',
   },
   {
+    group: 'The bottles',
     q: 'What is it made of?',
     a: 'Our bottles are made from stainless steel with BPA-free materials, thoughtfully selected with little ones and everyday use in mind.',
   },
   {
+    group: 'The bottles',
     q: 'Is it spill-resistant?',
     a: 'Yes! Our bottles are designed to be spill-resistant, with a flip-top straw that snaps securely closed \u2014 because we know spills happen.',
   },
   {
+    group: 'The bottles', home: true,
     q: 'Is it safety tested?',
     a: 'Yes. Safety is something we take seriously, especially because we\u2019re parents too. Our bottles are independently tested to meet applicable U.S. children\u2019s product safety requirements before they reach little hands.',
   },
   {
+    group: 'The bottles',
     q: 'What ages is it for?',
     a: 'Our bottles are designed with little ones in mind and are ideal for ages 2\u20138 \u2014 lightweight, easy to hold, and made for little hands.',
   },
+
+  /* THE PUDDLE — four questions from the client's Oct 2026 brief, section 5,
+     verbatim. Two of them make the snack-holder claim and drop out when
+     SNACK_CLAIMS_APPROVED is false; the other two stand on their own. */
   {
+    group: 'The Puddle', home: true, snackClaim: true,
+    q: 'What is the Puddle?',
+    a: 'The Puddle is our removable silicone sleeve! It\u2019s designed to protect your Duck and can also double as a convenient snack holder. Simply remove it, wash it, and fill it with your child\u2019s favorite snacks.',
+  },
+  {
+    group: 'The Puddle', snackClaim: true,
+    q: 'Can I use the Puddle as a snack holder?',
+    a: 'Yes! Our 2-in-1 Puddle is designed to serve as both a protective silicone sleeve and a removable snack holder, making everyday adventures a little easier.',
+  },
+  {
+    group: 'The Puddle',
+    q: 'How do I clean my Puddle?',
+    a: 'Remove the silicone sleeve from the bottle and hand-wash it with warm water and mild dish soap. Allow it to dry completely before using it again.',
+  },
+  {
+    group: 'The Puddle',
+    q: 'Can I personalize my Puddle?',
+    a: 'Not just yet, but we\u2019re working on it! Personalized Puddles are coming soon, giving you the opportunity to add your little one\u2019s name to their very own Puddle. Sign up for our newsletter to be the first to know when personalization becomes available.',
+  },
+
+  {
+    group: 'Getting one', home: true,
     q: 'How can I get one?',
     a: 'We\u2019re putting the finishing touches on our first Ducks \u2019n Puddles collection now! Join the family to be among the first to hear about launch updates and when the ducks are officially ready to come home.',
   },
   {
+    /* With the brand group, not with getting one: this is a question about
+       where Ducks ’n Puddles is going, which is what "What is Ducks ’n
+       Puddles?" above it answers. It also stops the first group on /faq being
+       a heading with a single row under it, which reads as a mistake. */
+    group: 'The brand',
     q: 'Will there be more Ducks \u2019n Puddles products?',
     a: 'Absolutely! The bottles are just the beginning. We\u2019re creating more thoughtful products designed to make life a little easier for parents and bring more comfort, confidence, and positivity to kids. Stay close \u2014 there\u2019s lots more coming from the pond!',
   },
   {
+    group: 'Getting one',
     q: 'How can I get in touch?',
     a: 'We\u2019d love to hear from you! Send us a note through our contact page and it\u2019ll make its way to our team. Questions, ideas, feedback \u2014 we\u2019re all ears!',
   },
-] as const
+]
+
+/** Everything publishable right now. One filter, so a flipped approval flag
+ *  reaches the homepage section, the /faq page and the JSON-LD together. */
+export const publishedFaqs = () =>
+  faqs.filter((f) => SNACK_CLAIMS_APPROVED || !f.snackClaim)
+
+/** The homepage selection — six, spread across all four groups. */
+export const homeFaqs = () => publishedFaqs().filter((f) => f.home)
+
+/** The /faq page, in the order the groups are declared above. */
+export const FAQ_GROUPS = ['The brand', 'The bottles', 'The Puddle', 'Getting one'] as const
+export const groupedFaqs = () =>
+  FAQ_GROUPS
+    .map((g) => ({ group: g, items: publishedFaqs().filter((f) => f.group === g) }))
+    .filter((s) => s.items.length > 0)

@@ -1,8 +1,8 @@
-import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
+import { FaqList } from '@/components/ui/FaqList'
 import { Btn } from '@/components/ui/Btn'
 import { Duck } from '@/components/ui/Duck'
-import { faqs, brand } from '@/content/brand'
+import { homeFaqs, publishedFaqs, brand } from '@/content/brand'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import styles from './Faq.module.css'
 
@@ -15,6 +15,14 @@ import styles from './Faq.module.css'
  * operable and screen-reader correct for free, it works with JS off, and
  * ctrl/cmd-F finds text inside a closed row in Chrome. The first one ships open,
  * as theirs does, so the pattern explains itself.
+ *
+ * SIX ROWS, NOT ALL FOURTEEN. The client's Oct 2026 brief added four questions
+ * about the Puddle, which would have made this the tallest section on the page
+ * — 1577px before the additions — sitting between the newsletter band and the
+ * signup form. So the homepage carries a spread across all four groups and
+ * /faq carries the set. The six are chosen in content/brand.ts (`home: true`),
+ * beside the answers, rather than by slicing the array here: a reordered list
+ * would silently change which questions the homepage shows.
  */
 export function Faq() {
   return (
@@ -30,18 +38,16 @@ export function Faq() {
           </p>
         </div>
 
-        <div className={styles.list}>
-          {faqs.map((f, i) => (
-            <details key={f.q} className={styles.row} name="faq" open={i === 0}>
-              <summary className={styles.q}>
-                <span>{f.q}</span>
-                <span className={styles.mark} aria-hidden="true">
-                  <ArrowUpRight size={20} weight="bold" />
-                </span>
-              </summary>
-              <div className={styles.a}><p>{f.a}</p></div>
-            </details>
-          ))}
+        <FaqList items={homeFaqs()} name="faq" openFirst />
+
+        {/* THE WAY THROUGH TO THE REST. Directly under the last row and above
+            the sign-off, because that is where someone who did not find their
+            question is looking. It carries the count so the link says what is
+            behind it rather than just "more". */}
+        <div className={styles.viewAll} data-anim="">
+          <Btn href="/faq" colour="var(--sky-soft)">
+            View all {publishedFaqs().length} questions
+          </Btn>
         </div>
 
         {/* The FAQ was the last thing before the signup with no next step on it

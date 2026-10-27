@@ -21,6 +21,10 @@ const config: NextConfig = {
       { source: '/journal/:slug', destination: '/blog/:slug', permanent: true },
       { source: '/blog/category/:slug', destination: '/category/:slug', permanent: true },
       { source: '/blog/tag/:slug', destination: '/tag/:slug', permanent: true },
+      /* /ducks has no index of its own — the range section on the homepage is
+         that list. Without this a typed or truncated URL 404s on a path the
+         site links into three times. */
+      { source: '/ducks', destination: '/#store', permanent: false },
     ]
   },
   async headers() {

@@ -55,10 +55,21 @@ function entrance(el: HTMLElement) {
   }
 }
 
+/* ⚠️ `clearProps: 'transform'` ON ARRIVAL, and why it matters. GSAP writes the
+   whole transform inline while it animates, and leaves it there — even at rest,
+   as `perspective(699px)` or `translate(0px, 0px)`. An inline transform beats
+   any stylesheet transform, so every [data-anim] element that also had a
+   transform of its own in CSS lost it the moment it finished arriving.
+   Measured on the Specs cards: CardTilt kept writing --tilt-x on hover and the
+   card never leaned, because its `rotateX(var(--tilt-x))` rule was overridden
+   by a leftover inline perspective. Once the element has landed it is at
+   identity anyway, so clearing hands the transform back to the stylesheet with
+   no visible change for anything that did not have one. */
 const land = (targets: Element[], ease = EASE.bounce) =>
   gsap.to(targets, {
     opacity: 1, y: 0, rotate: 0, scale: 1,
     duration: 0.7, ease, stagger: 0.06, overwrite: 'auto',
+    clearProps: 'transform',
   })
 
 /** Reveals anything that slipped past its trigger. Shared by both entrances. */
@@ -72,6 +83,10 @@ function failsafe(els: HTMLElement[]) {
         io.unobserve(el)
         if (Number(gsap.getProperty(el, 'opacity')) < 0.9 && !gsap.isTweening(el)) {
           gsap.set(el, { opacity: 1, y: 0, rotate: 0, scale: 1 })
+          /* Same reason as land(): give an entrance's transform back to the
+             stylesheet. Not for stickers — they rest at their data-pop-rot
+             tilt, which IS the inline transform. */
+          if (el.hasAttribute('data-anim')) gsap.set(el, { clearProps: 'transform' })
         }
       }
     },

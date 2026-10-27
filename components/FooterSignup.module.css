@@ -23,6 +23,19 @@
   cursor: pointer;
   transition: transform var(--t) var(--spring), background var(--t-fast) linear;
 }
+.goText {
+  display: inline-flex; gap: var(--s-2);
+  inline-size: auto; padding-inline: var(--s-4);
+  font-weight: 800; font-size: var(--fs-small); white-space: nowrap;
+}
+.pill:has(.goText) { min-inline-size: 0; }
+/* A worded button does not fit beside the field on a phone: it drops below it,
+   full width, and the pill becomes a rounded card around both. */
+@media (max-width: 519px) {
+  .pill:has(.goText) { flex-wrap: wrap; border-radius: var(--r-lg); padding: 5px; }
+  .pill:has(.goText) input { flex-basis: 100%; padding-inline: var(--s-4); }
+  .goText { flex: 1 1 100%; justify-content: center; }
+}
 .go:hover { transform: translateX(3px); background: var(--sun); }
 .go:active { transform: translateX(0) scale(.94); }
 .go:disabled { opacity: .55; cursor: progress; }

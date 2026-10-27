@@ -1,0 +1,124 @@
+/* =============================================================================
+   /faq — every question, grouped.
+
+   Built on the legal template's page shape (cream ground, full-width masthead,
+   blue closing band) rather than on the homepage section's, because this is a
+   PAGE and that is a section: it opens under the header with no section above
+   it to break against, and it has to end on the colour the footer's wave
+   expects. The ROWS are the homepage's, exactly — components/ui/FaqList.
+   ========================================================================== */
+.page {
+  position: relative; overflow: clip;
+  background: var(--cream);
+  padding-block: clamp(var(--s-7), 6vw, var(--s-9)) clamp(var(--s-7), 5vw, var(--s-9));
+}
+
+/* ---- masthead ------------------------------------------------------------ */
+.masthead {
+  display: grid; justify-items: start; gap: var(--s-4);
+  margin-block-end: clamp(var(--s-7), 5vw, var(--s-8));
+}
+.say { display: grid; justify-items: start; gap: var(--s-4); }
+/* The ducks only get a column of their own where there is one to spare. Below
+   that they sit under the chips, centred, at a size that is a welcome rather
+   than an obstacle between the reader and the first question. */
+.crew { inline-size: min(100%, 260px); justify-self: center; }
+@media (min-width: 1000px) {
+  .masthead {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    column-gap: clamp(var(--s-7), 5vw, var(--s-9));
+    align-items: center;
+  }
+  .crew { inline-size: 100%; justify-self: end; }
+}
+/* Full width, as on /terms and /privacy at the client's request: a page that
+   opens on a heading and one sentence looks like it starts halfway across when
+   both are boxed into a reading column. */
+.masthead h1 { max-width: none; text-wrap: balance; }
+.lede { max-width: 62ch; }
+.lede a { font-weight: 700; text-decoration: underline; text-underline-offset: .22em; }
+
+/* ---- the group chips ----------------------------------------------------- */
+.jump {
+  display: flex; flex-wrap: wrap; gap: var(--s-3);
+  margin-block-start: var(--s-3);
+}
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: 9px var(--s-4);
+  background: var(--paper);
+  border: var(--border); border-radius: var(--r-pill);
+  font-size: var(--fs-small); font-weight: 600; line-height: 1;
+  color: var(--ink);
+  /* A chip, not a text link — the UA underline made the row read as four
+     hyperlinks in boxes. */
+  text-decoration: none;
+  transition: transform var(--t) var(--spring), background-color var(--t-fast) linear;
+}
+.chip:hover { transform: translateY(-2px); background: var(--sun-soft); }
+.chip:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+.chipCount {
+  display: grid; place-items: center;
+  min-inline-size: 22px; block-size: 22px; padding-inline: 5px;
+  background: var(--sun); border-radius: var(--r-pill);
+  font-family: var(--font-mono); font-size: var(--fs-micro); line-height: 1;
+}
+
+/* ---- the groups ---------------------------------------------------------- */
+.group {
+  /* A jump target under a fixed header. --header-h is the single source the
+     header, the hero and the legal rail all measure from. */
+  scroll-margin-block-start: calc(var(--header-h) + var(--s-5));
+}
+.group + .group { margin-block-start: clamp(var(--s-7), 4.5vw, var(--s-8)); }
+.groupTitle {
+  margin-block-end: var(--s-4);
+  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  line-height: var(--lh-md);
+  letter-spacing: .008em;
+  font-weight: 400;
+}
+
+/* ---- the way out --------------------------------------------------------- */
+.card {
+  position: relative;
+  display: grid;
+  gap: var(--s-5);
+  align-items: center;
+  margin-block-start: clamp(var(--s-7), 5vw, var(--s-9));
+  padding: clamp(var(--s-6), 3.4vw, var(--s-8));
+  background: var(--sun-soft);
+  border: var(--border-lg); border-radius: var(--r-lg);
+}
+@media (min-width: 820px) {
+  .card { grid-template-columns: minmax(0, 1fr) auto; }
+}
+.cardSay { display: grid; gap: var(--s-2); }
+.cardTitle {
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  line-height: var(--lh-md); letter-spacing: .008em;
+}
+.cardBody { font-size: var(--fs-body); line-height: 1.55; max-width: 44ch; text-wrap: pretty; }
+.cardBtns { display: flex; flex-wrap: wrap; gap: var(--s-3); position: relative; }
+.cardBtns > a { z-index: 1; }
+
+/* Goosey waving over the card's top-right corner. Desktop only — see
+   <Duck density>; a phone gets fewer characters, not the same ones squeezed in. */
+.cardDuck {
+  position: absolute;
+  z-index: 0;
+  inline-size: clamp(84px, 8vw, 120px);
+  inset-block-start: clamp(-56px, -4.5vw, -36px);
+  inset-inline-end: clamp(16px, 4vw, 48px);
+  pointer-events: none;
+}
+
+/* ---- the closing band ---------------------------------------------------- */
+.close { background: var(--vincey-soft); padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
+.closeInner { display: grid; justify-items: start; gap: var(--s-4); }
+.closeTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  letter-spacing: .008em; line-height: 1.1;
+  font-size: clamp(1.5rem, 3.4vw, 2.75rem);
+  max-width: 28ch; text-wrap: balance;
+}
