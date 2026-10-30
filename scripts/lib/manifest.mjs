@@ -136,8 +136,8 @@ export const alphaAssets = [
   /* THE BACKS — in media/brand/products since the 28 Sep delivery and never
      registered. Turned round, every Puddle carries all three ducks and "A Friend
      for Every Adventure", which is a better detail than anything on the front;
-     the product pages show it behind a Front / Back toggle. Same 626 x 1404
-     canvas as the fronts, so the two swap in one box without a jump. */
+     the product pages showed it behind a Front / Back toggle until the 360°
+     bottles replaced it. Same 626 x 1404 canvas as the fronts. */
   { id: 'vincey-back', src: `${BRAND_DIR}/products/vincey-bottle-back.png`,  widths: [310, 621] },
   { id: 'chichi-back', src: `${BRAND_DIR}/products/chi-chi-bottle-back.png`, widths: [310, 621] },
   { id: 'goosey-back', src: `${BRAND_DIR}/products/goosey-bottle-back.png`,  widths: [310, 621] },

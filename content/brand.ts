@@ -317,12 +317,12 @@ export const personalization = {
   status: 'Coming Soon',
   title: 'Personalize Your Puddle!',
   sub: 'Your Duck. Your Puddle. Your Way.',
-  lede: 'We’re making adventures even more personal!',
+  lede: 'We’re making Adventures even more personal!',
   body:
     'Soon, you’ll be able to personalize your little one’s very own Puddle, '
     + 'creating a one-of-a-kind companion for every adventure.',
   close:
-    'Because it’s more than just a water bottle. It’s their Duck, their Puddle, '
+    'Because it’s more than just a water bottle. It’s their duck, their puddle, '
     + 'and their adventure.',
   /* Section 7 of the brief, the newsletter tie-in. The form posts to the SAME
      list as everywhere else — "Please connect this to our existing newsletter

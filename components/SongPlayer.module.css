@@ -1,7 +1,6 @@
 /* =============================================================================
-   The duck's song — one pill, the Front / Back switch's twin
-   (BottleViewer.module.css): 4px of padding, --border-lg, 40px controls
-   inside. Same box, same height, so beside it the two are one row.
+   The duck's song — one pill in the site's control style: 4px of padding,
+   --border-lg, 40px controls inside.
    ========================================================================== */
 
 /* The player's place in the page. It keeps the pill's height when the pill

@@ -23,13 +23,13 @@
 
 /* Standalone text links get a real hit area — they are navigation on a line of
    their own, not links inside a sentence. Block padding only. */
-.textLink, .back {
+.textLink {
   display: inline-block;
   padding-block: 9px;
   font-size: var(--fs-small); font-weight: 700; color: var(--ink);
   text-decoration: underline; text-underline-offset: .22em;
 }
-.textLink:focus-visible, .back:focus-visible {
+.textLink:focus-visible {
   outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; border-radius: var(--r-sm);
 }
 
@@ -40,7 +40,7 @@
    animation starts with the first paint, needs no script, and plays again on
    every client-side visit because the new page's elements are freshly mounted.
 
-   The sequence, by --i: the way back, the role, the NAME, the core and the
+   The sequence, by --i: the role, the NAME, the core and the
    paragraph, the chips one by one, the buttons. Then the floor spreads, the
    duck bounces up onto it, the bottle slides in beside it, and the decal marks
    pop in around the edges last.
@@ -104,22 +104,49 @@
 }
 .mark svg { display: block; }
 
+/* THE 360° BOTTLE IN THE MIDDLE — the client's own 3D model as the hero's
+   centrepiece (the flat Front / Back renders and the Classic / 360° switch are
+   gone, on the client's instruction). Three columns, each centred on the
+   bottle: the words and the one button to its left, the duck and its chips to
+   its right, the song under it. ONE JOB PER COLUMN: with the button in the
+   right-hand column as well, that side was a bubble, a duck, five chips, a
+   button and a note, and the page read as cluttered.
+
+   On a phone the two side columns open up (display: contents) into one: the
+   words, the bottle, the song, the chips, then the button. */
 .heroInner {
   position: relative; z-index: 1;
   display: grid;
   gap: clamp(var(--s-6), 3vw, var(--s-7));
   align-items: center;
 }
-@media (min-width: 900px) {
-  .heroInner { grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); }
+@media (max-width: 959px) {
+  .lead, .aside { display: contents; }
+  .spin { order: 1; }
+  .player { order: 2; }
+  .teaches { order: 3; }
+  .heroBtns { order: 4; }
+}
+@media (min-width: 960px) {
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 1.15fr) minmax(0, .8fr);
+    column-gap: clamp(var(--s-5), 2.6vw, var(--s-7));
+    row-gap: var(--s-5);
+  }
+  .lead, .aside { display: grid; justify-items: start; grid-row: 1; }
+  .lead { grid-column: 1; gap: var(--s-6); }
+  .spin { grid-column: 2; grid-row: 1; }
+  /* The duck over its chips, both on the column's centre line. */
+  .aside { grid-column: 3; gap: var(--s-5); justify-items: center; }
+  .aside .teaches { justify-content: center; }
+  /* The bottle and its song sit a step higher than the centre line the side
+     columns hold to (the client's call): the model's puddle leaves its own
+     air under the bottle, and on the line it read as low. Relative, not a
+     margin, so the row and the columns either side stay where they are. */
+  .spin, .player { position: relative; inset-block-start: calc(var(--s-7) * -1); }
 }
 
-.say,
-.sayMain,
-.sayMore { display: grid; justify-items: start; gap: var(--s-3); }
-.sayMain, .sayMore { justify-self: stretch; }
-.back { opacity: .8; padding-block: 6px; margin-block-end: var(--s-1); text-decoration: none; }
-.back:hover { opacity: 1; text-decoration: underline; }
+.sayMain { display: grid; justify-items: start; gap: var(--s-3); justify-self: stretch; }
 
 .name {
   font-size: var(--fs-mega);
@@ -151,147 +178,57 @@
 .heroBtns {
   display: flex; flex-wrap: wrap; align-items: center;
   gap: var(--s-3) var(--s-5);
-  margin-block-start: var(--s-3);
 }
 .note { font-size: var(--fs-small); max-width: 26ch; line-height: 1.4; }
 
-/* ---- the figure: the duck and its bottle on one floor -------------------- */
-.figure {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: center;
-  align-items: end;
-  gap: clamp(var(--s-2), 1.4vw, var(--s-5));
-  /* Room above the duck for its thought bubble. */
-  padding-block-start: clamp(84px, 9vw, 128px);
-}
-.floor {
-  position: absolute;
-  z-index: 0;
-  inset-inline: 2%;
-  /* Up off the bottom by the toggle's height, so the ellipse sits under the
-     duck's feet and the bottle's base rather than under the control. */
-  inset-block-end: calc(40px + var(--s-4) + 8px - 3.5%);
-  block-size: 9%;
-  background: color-mix(in srgb, var(--ink) 11%, transparent);
-  border-radius: 50%;
-}
+/* ---- the duck, the song ------------------------------------------------- */
+/* The duck heads the right-hand column, small — the character introducing its
+   bottle, bubble and quack intact. Below 960 there is no right-hand column,
+   and the model is the picture: the duck stands down. */
 .character {
   position: relative;
   z-index: 1;
-  /* As tall as the bottle beside it, give or take: at 19vw the duck stood a
-     head shorter than its own bottle, and on a page that is about the
-     CHARACTER the product was the bigger thing in the picture. */
-  inline-size: clamp(160px, 22vw, 316px);
-  /* Its feet line up with the bottle's base, which sits on top of the toggle. */
-  margin-block-end: calc(40px + var(--s-4) + 8px);
+  display: none;
 }
+/* Up and to the left of the head — the cloud's tail runs down to the right,
+   so that is the only side it can sit on and still point at the duck. */
 .bubble {
   position: absolute;
   z-index: 2;
   inset-block-end: 84%;
-  inset-inline-start: -12%;
-  inline-size: clamp(124px, 13vw, 176px);
+  inset-inline-start: -14%;
+  inline-size: clamp(112px, 9vw, 136px);
 }
-.bottle { position: relative; z-index: 1; --bottle-h: clamp(250px, 25vw, 368px); }
 
-/* ---- the song ----------------------------------------------------------- */
-/* IN THE CHARACTER'S CELL. The character already stands clear of the bottom
-   of the figure by the Front / Back switch's row (its margin above), so the
-   player drops into that strip: level with the switch, its right end beside
-   it, and nothing else moves. Placement is explicit because the player comes
-   before the bottle in source order — auto-placed, it took the bottle's cell. */
-.character { grid-column: 1; grid-row: 1; }
-.bottle { grid-column: 2; grid-row: 1; }
+/* The song, centred under the bottle with the sleeve button above it. The
+   slot is the pill's own width so that centring the slot centres the pill. */
 .player {
-  grid-column: 1; grid-row: 1;
-  align-self: end; justify-self: end;
-  /* Never under 220px. Below ~1000 the character's column is narrower than
-     that, and the player hangs out to the left of it into the column gap —
-     end-aligned, so it always stays tight to the switch. */
-  inline-size: max(100%, 220px);
-  position: relative; z-index: 2;
+  justify-self: center; inline-size: min(100%, 300px);
+  /* Close under the sleeve button, a pair rather than two stray controls:
+     one --s-3 between them, not the full gap between the hero's blocks. */
+  margin-block-start: calc(var(--s-3) - clamp(var(--s-6), 3vw, var(--s-7)));
 }
 @media (prefers-reduced-motion: no-preference) {
-  /* Arrives with the bottle, a beat after it. Not one of the .intro classes,
-     so the 360° switch never has to retire it. */
-  /* On the pill inside, not on this slot: an animated transform on an
-     ancestor would become the containing block for the pill once it floats,
-     and pin it to the hero instead of to the screen. */
+  /* Arrives a beat after the bottle. On the pill inside, not on this slot: an
+     animated transform on an ancestor would become the containing block for
+     the pill once it floats, and pin it to the hero instead of to the screen. */
   .player > * { animation: arriveRise .7s var(--bounce) both; animation-delay: 620ms; }
 }
 
-@media (max-width: 599px) {
-  /* A phone: the character's column is ~160px, too narrow for a usable
-     scrubber, so the player takes its own full-width row under the pair. The
-     floor ellipse is measured from the figure's bottom, so it is lifted by
-     that row. */
-  .figure { padding-block-start: clamp(70px, 20vw, 96px); row-gap: var(--s-4); }
-  .player { grid-column: 1 / -1; grid-row: 2; justify-self: center; max-inline-size: 340px; }
-  .floor { inset-block-end: calc(40px + var(--s-4) + 8px - 3.5% + 52px + var(--s-4)); }
-  .bubble { inline-size: 116px; inset-inline-start: -4%; }
-  .bottle { --bottle-h: 230px; }
-}
-
-/* ---- the 360° view ------------------------------------------------------
-   Only on a duck with a model (SPIN_MODELS in page.tsx); HeroSpin sets
-   data-hero-mode="spin" on the section. NOTHING IS DUPLICATED: the same name,
-   paragraph, chips, button and duck are re-placed around the bottle — the
-   words to its left, the duck and the chips to its right — by dissolving the
-   two wrapper columns (display: contents) into one three-column grid.
-
-   data-hero-touched is set the first time the view changes. It retires the
-   CSS arrival: a finished animation with fill `both` still owns `transform`
-   and `opacity`, and would silently override the GSAP swap. The arrival is
-   over by the time anyone reaches the switch, so nothing visible changes. */
-.hero[data-hero-touched] :is(.intro, .introPop, .introRise, .introSlide, .introGrow, .introMark) { animation: none; }
-
-/* A phone: words, the bottle, then the chips and the button. The duck and the
-   flat bottle stand down — the model is the picture now. */
-.hero[data-hero-mode='spin'] .say { display: contents; }
-/* The figure dissolves rather than hiding, so the song player — which lives
-   in it — stays on the page, under the bottle; a song that keeps playing with
-   its controls gone would be the worst outcome of the switch. */
-.hero[data-hero-mode='spin'] .figure { display: contents; }
-.hero[data-hero-mode='spin'] :is(.floor, .character, .bottle) { display: none; }
-.hero[data-hero-mode='spin'] .player { order: 2; justify-self: center; }
-.hero[data-hero-mode='spin'] .sayMore { order: 3; }
-
 @media (min-width: 960px) {
-  .hero[data-hero-mode='spin'] .heroInner {
-    grid-template-columns: minmax(0, 1fr) minmax(340px, 1.15fr) minmax(0, .8fr);
-    grid-template-rows: minmax(0, 1fr) auto;
-    column-gap: clamp(var(--s-5), 2.6vw, var(--s-7));
-    row-gap: var(--s-5);
-    align-items: center;
-    /* A row of headroom for the Classic / 360° switch, which sits top right —
-       exactly where the duck's bubble rises to in this arrangement. */
-    padding-block-start: calc(44px + var(--s-5));
-  }
-  .hero[data-hero-mode='spin'] .sayMain { grid-column: 1; grid-row: 1 / span 2; }
-  /* The duck comes back, small, at the top of the right-hand column — the
-     character introducing its bottle, bubble and quack intact. */
-  .hero[data-hero-mode='spin'] .character { display: block; }
-  .hero[data-hero-mode='spin'] .player { grid-column: 2; grid-row: 3; justify-self: center; align-self: start; }
-  .hero[data-hero-mode='spin'] .character {
-    grid-column: 3; grid-row: 1;
-    align-self: end; justify-self: start;
-    inline-size: clamp(130px, 12vw, 176px);
-    margin: 0;
-  }
-  /* Up and to the left of the head, as in the classic hero — the cloud's tail
-     runs down to the right, so that is the only side it can sit on and still
-     point at the duck. */
-  .hero[data-hero-mode='spin'] .bubble { inset-inline-start: -14%; inline-size: clamp(112px, 9vw, 136px); }
-  .hero[data-hero-mode='spin'] .sayMore { grid-column: 3; grid-row: 2; align-self: start; }
-  .hero[data-hero-mode='spin'] .heroBtns { flex-direction: column; align-items: flex-start; }
+  .character { display: block; inline-size: clamp(130px, 12vw, 176px); }
+  .player { grid-column: 2; grid-row: 2; margin-block-start: calc(var(--s-3) - var(--s-5)); }
 }
-/* The bubble rises clear of the duck's box, and below 1280 the right-hand
-   column is too short to hold it under the switch. The duck stays; the bubble
-   waits for a wider screen — fewer things, not the same things squeezed. */
+/* The bubble rises clear of the duck's box, so the column keeps room for it
+   above the duck — it is absolutely placed, and nothing else would. Below
+   1280 the column is centred too close to the top of the hero to hold it: it
+   rose out of the hero, under the header. The duck stays; the bubble waits for
+   a wider screen. */
+@media (min-width: 1280px) {
+  .character { margin-block-start: clamp(88px, 7vw, 104px); }
+}
 @media (min-width: 960px) and (max-width: 1279px) {
-  .hero[data-hero-mode='spin'] .bubble { display: none; }
+  .bubble { display: none; }
 }
 
 /* ==== 2. THE PUDDLE ====================================================== */

@@ -18,10 +18,9 @@ const clock = (s: number) => {
 
 /**
  * THE DUCK'S SONG — a compact player: play / pause, the track and the time.
- * The same 52px pill as the Front / Back switch it sits beside, so the two
- * read as one row of controls. No title and no volume on screen (the client's
- * call); the title is still the player's accessible name, and the device's own
- * volume does the rest.
+ * One 52px pill, centred under the 360° bottle. No title and no volume on
+ * screen (the client's call); the title is still the player's accessible name,
+ * and the device's own volume does the rest.
  *
  * It starts on its own (see the autoplay effect below), so it preloads.
  *

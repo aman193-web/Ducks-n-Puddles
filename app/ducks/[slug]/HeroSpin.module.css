@@ -1,71 +1,25 @@
 /* =============================================================================
-   CLASSIC / 360° — the switch and the stage. The re-arrangement of the hero
-   around the stage is in duck.module.css ("the 360° view"); this file is the
-   two things HeroSpin itself draws.
+   THE 360° BOTTLE — the stage and its sleeve button. Where the stage sits in
+   the hero is duck.module.css ("the hero"); this file is the two things
+   HeroSpin itself draws.
    ========================================================================== */
 
-/* ---- the switch: the Front / Back pill's twin (BottleViewer.module.css) ---- */
-/* Out of the grid, top right of the hero, level with the way back. Absolute so
-   it never takes a cell in either arrangement. */
-.toggle {
-  position: absolute;
-  z-index: 3;
-  inset-block-start: 0;
-  /* The hero's .wrap is the containing block, and an absolute box is placed
-     against its padding edge — the gutter has to be put back by hand. */
-  inset-inline-end: var(--gutter);
-  display: inline-flex;
-  padding: 4px;
-  background: var(--paper);
-  border: var(--border-lg);
-  border-radius: var(--r-pill);
-}
-.btn {
-  min-block-size: 36px;
-  padding: 0 var(--s-4);
-  border: 0;
-  border-radius: var(--r-pill);
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: var(--fs-micro);
-  font-weight: 500;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color var(--t-fast) linear;
-}
-.btn[aria-pressed='true'] { background: var(--sun); }
-.btn:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; }
-@media (hover: hover) {
-  .btn[aria-pressed='false']:hover { background: var(--sun-soft); }
-}
-
-/* ---- the stage ----------------------------------------------------------- */
-/* order 1: between the words and the chips on a phone (see duck.module.css). */
 .stage {
   position: relative;
-  order: 1;
   inline-size: 100%;
   block-size: clamp(420px, 112vw, 500px);
-  /* Clear of the switch above it on a phone, where the column starts level
-     with it. */
-  margin-block-start: var(--s-2);
 }
 @media (min-width: 960px) {
   .stage {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    /* By width, and by the screen's height too: on a 768-tall laptop the
-       controls under the bottle were below the fold. 260px is the header, the
-       hero's top padding and the switch's row above the stage. */
+    /* By width, and by the screen's height too: on a 768-tall laptop the song
+       under the bottle was below the fold. 260px is the header, the hero's
+       top padding and the song player's row under the stage. */
     block-size: clamp(460px, min(42vw, 100svh - 260px), 620px);
-    margin-block-start: 0;
   }
 }
 
 /* The model renders on a transparent canvas, so the hero's own colour and the
-   name behind it show through. The bottom 64px is left to the controls. */
+   name behind it show through. The bottom 64px is left to the button. */
 .frame {
   position: absolute;
   z-index: 1;
@@ -98,24 +52,9 @@
   inset-inline: 0;
   inset-block-end: 0;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--s-2) var(--s-3);
 }
-.hint {
-  display: inline-flex; align-items: center; gap: var(--s-2);
-  padding: 8px var(--s-4);
-  background: color-mix(in srgb, var(--paper) 78%, transparent);
-  border-radius: var(--r-pill);
-  font-family: var(--font-mono);
-  font-size: var(--fs-micro);
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  transition: opacity .5s ease;
-}
-.hint svg { inline-size: 18px; block-size: 18px; flex: none; }
-.hint[data-gone] { opacity: 0; }
 
 .sleeve {
   min-block-size: 40px;

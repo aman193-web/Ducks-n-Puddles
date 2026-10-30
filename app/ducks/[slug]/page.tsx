@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby, Swap }
   from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
-import { BottleViewer } from '@/components/BottleViewer'
 import { SongPlayer } from '@/components/SongPlayer'
 import { Motif } from '@/components/Motif'
 import { Btn } from '@/components/ui/Btn'
@@ -18,13 +17,9 @@ import { DuckPageMotion } from './DuckPageMotion'
 import { HeroSpin } from './HeroSpin'
 import {
   ducks, duckBySlug, confirmedSpecs, specsFootnote, productPuddle, puddle,
-  personalization, brand, SNACK_CLAIMS_APPROVED,
+  personalization, brand, SNACK_CLAIMS_APPROVED, type DuckSlug,
 } from '@/content/brand'
 import styles from './duck.module.css'
-
-/* Content slug -> asset stem. The ducks are `chi-chi` in content and `chichi`
-   in the manifest; the same adapter Hero, Store and DuckStage already carry. */
-const assetFor = (slug: string) => (slug === 'chi-chi' ? 'chichi' : slug)
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; weight?: 'regular' }>> = {
   puddle: Swap, capacity: Drop, lid: SealCheck, spill: ShieldCheck,
@@ -51,12 +46,13 @@ const SCATTER = [
 ]
 
 /* THE 360° BOTTLES, by duck — the client's own three.js exports, served from
-   public/3d exactly as delivered. Only Chi Chi's exists so far (the model is
-   her pink body in the blue Puddle); a duck with an entry here gets the
-   Classic / 360° switch in its hero, and adding the other two is one line each
-   once their models arrive. */
-const SPIN_MODELS: Record<string, string> = {
+   public/3d exactly as delivered (Vincey's and Goosey's were sent as
+   duck-bottle-blue / -yellow). The centrepiece of every duck's hero, so every
+   duck must have one. */
+const SPIN_MODELS: Record<DuckSlug, string> = {
+  vincey: '/3d/vincey-bottle.html',
   'chi-chi': '/3d/chichi-bottle.html',
+  goosey: '/3d/goosey-bottle.html',
 }
 
 /* Each duck's song, from the client (Oct 2026). Content-hashed names, because
@@ -133,7 +129,6 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
   const d = duckBySlug(slug)
   if (!d) notFound()
 
-  const stem = assetFor(d.slug)
   const others = ducks.filter((o) => o.slug !== d.slug)
   const vars = {
     ['--duck' as string]: d.colour,
@@ -168,37 +163,23 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
         </span>
 
         <div className={`wrap ${styles.heroInner}`}>
-          {/* TWO GROUPS IN ONE COLUMN. In the normal hero they stack exactly as
-              the single column did — the gap between them is the gap inside
-              them. They exist for the 360° view, which sends the first to the
-              left of the bottle and the second to the right. */}
-          <div className={styles.say}>
-            <div className={styles.sayMain} data-hero-main="">
-            {/* THE ARRIVAL — CSS, in this order, by --i. See "the arrival" in
-                duck.module.css for why this one entrance is not GSAP. The role
-                sticker is NOT [data-pop] here: it is above the fold, and two
-                systems on one element is how things end up stuck half-in. */}
-            <Link href="/#store" className={`${styles.back} ${styles.intro}`} style={{ ['--i' as string]: 0 } as React.CSSProperties}>&larr; All three bottles</Link>
-            <Sticker colour="var(--cream)" className={styles.introPop} style={{ ['--i' as string]: 1 } as React.CSSProperties}>{d.role}</Sticker>
-            <h1 id="duck-title" className={`d ${styles.name} ${styles.intro}`} style={{ ['--i' as string]: 2 } as React.CSSProperties}>{d.name}</h1>
-            <p className={`${styles.core} ${styles.intro}`} style={{ ['--i' as string]: 3 } as React.CSSProperties}>{d.core}</p>
-            <p className={`${styles.personality} ${styles.intro}`} style={{ ['--i' as string]: 4 } as React.CSSProperties}>{d.personality}</p>
+          {/* THE 360° HERO — three columns, each centred on the bottle: the
+              words and the button to its left, the duck and its chips to its
+              right, the song under it. On a phone the columns open up into
+              one (duck.module.css, "the hero"). */}
+          <div className={styles.lead}>
+            <div className={styles.sayMain}>
+              {/* THE ARRIVAL — CSS, in this order, by --i. See "the arrival" in
+                  duck.module.css for why this one entrance is not GSAP. The role
+                  sticker is NOT [data-pop] here: it is above the fold, and two
+                  systems on one element is how things end up stuck half-in. */}
+              <Sticker colour="var(--cream)" className={styles.introPop} style={{ ['--i' as string]: 1 } as React.CSSProperties}>{d.role}</Sticker>
+              <h1 id="duck-title" className={`d ${styles.name} ${styles.intro}`} style={{ ['--i' as string]: 2 } as React.CSSProperties}>{d.name}</h1>
+              <p className={`${styles.core} ${styles.intro}`} style={{ ['--i' as string]: 3 } as React.CSSProperties}>{d.core}</p>
+              <p className={`${styles.personality} ${styles.intro}`} style={{ ['--i' as string]: 4 } as React.CSSProperties}>{d.personality}</p>
             </div>
 
-            <div className={styles.sayMore} data-hero-more="">
-            {/* What this duck teaches, off the character sheet — each with the
-                duck's own decal glyph in front of it, so the list is visibly
-                THIS duck's rather than generic tags. */}
-            <ul className={styles.teaches} aria-label={`What ${d.name} helps little ones with`}>
-              {d.teaches.map((t, i) => (
-                <li key={t} className={styles.introPop} style={{ ['--i' as string]: 5 + i * 0.6 } as React.CSSProperties}>
-                  <span className={styles.teachMark} aria-hidden="true"><Motif name={d.motif} size={14} /></span>
-                  {t}
-                </li>
-              ))}
-            </ul>
-
-            <div className={`${styles.heroBtns} ${styles.intro}`} style={{ ['--i' as string]: 8 } as React.CSSProperties}>
+            <div className={`${styles.heroBtns} ${styles.intro}`} style={{ ['--i' as string]: 5 } as React.CSSProperties}>
               {/* QUERY BEFORE THE FRAGMENT. `/#squad?duck=x` makes the browser
                   look for an element with id="squad?duck=x" — it matches
                   nothing and the click scrolls nowhere. */}
@@ -209,42 +190,42 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
                 The store isn&rsquo;t open yet &mdash; the Duck Squad hears first.
               </p>
             </div>
-            </div>
           </div>
 
-          {/* THE CHARACTER AND THE BOTTLE, on one floor. The bubble rises off
-              the duck, as it does in Meet the Ducks. */}
-          {/* data-depth: the pointer parallax, nearest first — the duck, then
-              the bottle, then the floor they stand on barely moving at all. */}
-          <div className={styles.figure} data-hero-figure="">
-            <span className={`${styles.floor} ${styles.introGrow}`} aria-hidden="true" data-depth="0.06" />
-            <div className={`${styles.character} ${styles.introRise}`} data-depth="0.22" data-hero-character="">
+          <div className={`${styles.spin} ${styles.intro}`} style={{ ['--i' as string]: 2 } as React.CSSProperties}>
+            <HeroSpin src={SPIN_MODELS[d.slug]} name={d.name} />
+          </div>
+
+          {/* The duck's song, centred under the bottle. */}
+          {SONGS[d.slug] && (
+            <SongPlayer src={SONGS[d.slug]} title={`${d.name} Song`} className={styles.player} />
+          )}
+
+          <div className={styles.aside}>
+            {/* The bubble rises off the duck, as it does in Meet the Ducks.
+                data-depth: the pointer parallax. */}
+            <div className={`${styles.character} ${styles.introRise}`} data-depth="0.22">
               <SpeechBubble message={d.message} className={styles.bubble} />
               {/* speak: click and it quacks — the same as in Meet the Ducks. */}
               <Duck
                 who={d.slug} pose="idle" density="always" float speak
-                sizes="(min-width: 900px) 20vw, 42vw"
+                sizes="176px"
                 alt={d.name}
               />
             </div>
-            {/* The duck's song, under the duck and level with Front / Back —
-                it shares the character's cell and fills the strip the
-                character already leaves clear for that row. */}
-            {SONGS[d.slug] && (
-              <SongPlayer src={SONGS[d.slug]} title={`${d.name} Song`} className={styles.player} />
-            )}
-            {/* A wrapper for the parallax, so `translate` here never touches
-                the stage the turn rotates. */}
-            <div className={`${styles.bottle} ${styles.introSlide}`} data-depth="0.12">
-            <BottleViewer
-              name={d.name}
-              front={<Picture id={stem} sizes="(min-width: 900px) 170px, 26vw" alt={`The ${d.name} bottle, front`} priority />}
-              back={<Picture id={`${stem}-back`} sizes="(min-width: 900px) 170px, 26vw" alt={`The ${d.name} bottle, back: all three ducks and “A Friend for Every Adventure” printed on the Puddle`} />}
-            />
-            </div>
-          </div>
 
-          {SPIN_MODELS[d.slug] && <HeroSpin src={SPIN_MODELS[d.slug]} name={d.name} />}
+            {/* What this duck teaches, off the character sheet — each with the
+                duck's own decal glyph in front of it, so the list is visibly
+                THIS duck's rather than generic tags. */}
+            <ul className={styles.teaches} aria-label={`What ${d.name} helps little ones with`}>
+              {d.teaches.map((t, i) => (
+                <li key={t} className={styles.introPop} style={{ ['--i' as string]: 6 + i * 0.6 } as React.CSSProperties}>
+                  <span className={styles.teachMark} aria-hidden="true"><Motif name={d.motif} size={14} /></span>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
