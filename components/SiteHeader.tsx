@@ -4,10 +4,12 @@ import { brand } from '@/content/brand'
 import { Btn } from './ui/Btn'
 import { SoundToggle } from './SoundToggle'
 import { MobileMenu } from './MobileMenu'
+import { NavDucks } from './NavDucks'
 import styles from './SiteHeader.module.css'
 
 const NAV = [
-  { href: '/#ducks', label: 'The Ducks' },
+  /* The three bottles' pages hang off this one — see NavDucks. */
+  { href: '/#ducks', label: 'The Ducks', menu: true },
   { href: '/#features', label: 'Features' },
   { href: '/#story', label: 'Our Story' },
   { href: '/blog', label: 'Blog' },
@@ -33,7 +35,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className={styles.nav} aria-label="Primary" data-menu-load="">
-          {NAV.map((n) => (
+          {NAV.map((n) => n.menu ? <NavDucks key={n.label} /> : (
             <Link key={n.label} href={n.href} className={n.cta ? styles.storeLink : undefined}>
               <span className={styles.roll}><span>{n.label}</span></span>
               {n.note && <span className={styles.note}>{n.note}</span>}

@@ -122,3 +122,53 @@
   .header [data-menu-load]:nth-child(2) { animation-delay: .08s; }
   .header [data-menu-load]:nth-child(3) { animation-delay: .16s; }
 }
+
+/* ---- the ducks' menu: the three bottles under "The Ducks" -------------- */
+.drop { position: relative; display: flex; }
+.caret { flex: none; transition: rotate var(--t) var(--spring); }
+.drop[data-open] .caret { rotate: 180deg; }
+
+/* Hung from the label's centre. The 10px of top padding is the bridge the
+   pointer crosses between the label and the card, so the menu does not close
+   on the way down to it. */
+.menu {
+  position: absolute; z-index: 1;
+  inset-block-start: 100%; inset-inline-start: 50%;
+  translate: -50% -6px;
+  display: grid; gap: var(--s-1);
+  min-inline-size: 236px;
+  margin: 0; padding: 10px 0 0;
+  list-style: none;
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--t) ease, translate var(--t) var(--spring), visibility 0s linear var(--t);
+}
+.menu::before {
+  content: ''; position: absolute; z-index: -1; inset: 10px 0 0;
+  background: var(--paper); border: var(--border); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-ui);
+}
+.drop[data-open] .menu {
+  opacity: 1; visibility: visible; translate: -50% 0;
+  transition: opacity var(--t) ease, translate var(--t) var(--spring), visibility 0s;
+}
+.menu li:first-child { padding-block-start: var(--s-2); }
+.menu li:last-child { padding-block-end: var(--s-2); }
+.nav .menu a {
+  display: flex; gap: var(--s-3);
+  margin-inline: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r);
+  overflow: visible;
+  transition: background-color var(--t-fast) linear;
+}
+.nav .menu a:hover, .nav .menu a:focus-visible { background: var(--sun-soft); }
+.dot {
+  flex: none; inline-size: 18px; block-size: 18px;
+  background: var(--duck); border: var(--border); border-radius: 50%;
+}
+.item { display: grid; line-height: 1.2; }
+.itemName { font-family: var(--font-display); font-synthesis: none; font-weight: 400; font-size: 1.125rem; letter-spacing: .01em; }
+.itemRole { font-size: var(--fs-micro); font-weight: 500; opacity: .72; }
+@media (prefers-reduced-motion: reduce) {
+  .menu, .drop[data-open] .menu { translate: -50% 0; }
+}

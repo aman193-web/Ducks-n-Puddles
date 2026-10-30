@@ -1,13 +1,15 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { Pill } from './ui/Pill'
 import { Btn } from './ui/Btn'
+import { ducks } from '@/content/brand'
 import styles from './MobileMenu.module.css'
 
 const NAV = [
-  { href: '/#ducks', label: 'The Ducks' },
+  /* The three bottles' pages follow this one, as a row of their own. */
+  { href: '/#ducks', label: 'The Ducks', menu: true },
   { href: '/#features', label: 'Features' },
   { href: '/#story', label: 'Our Story' },
   { href: '/blog', label: 'Blog' },
@@ -62,7 +64,8 @@ export function MobileMenu() {
 
         <nav className={styles.links} aria-label="Primary">
           {NAV.map((n) => (
-            <Link key={n.label} href={n.href} onClick={() => setOpen(false)}>
+            <Fragment key={n.label}>
+            <Link href={n.href} onClick={() => setOpen(false)}>
               <span>
                 {n.label}
                 {n.note && <em className={styles.note}>{n.note}</em>}
@@ -72,6 +75,17 @@ export function MobileMenu() {
                 <path d="M7 17 17 7M9 7h8v8" />
               </svg>
             </Link>
+            {n.menu && (
+              <div className={styles.ducks}>
+                {ducks.map((d) => (
+                  <Link key={d.slug} href={`/ducks/${d.slug}`} onClick={() => setOpen(false)}
+                        style={{ ['--duck' as string]: d.colour } as React.CSSProperties}>
+                    {d.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+            </Fragment>
           ))}
         </nav>
 

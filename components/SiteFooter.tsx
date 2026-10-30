@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { FooterDucks } from './ui/FooterDucks'
-import { brand } from '@/content/brand'
+import { brand, ducks } from '@/content/brand'
 import { WaveEdge } from './ui/WaveEdge'
 import styles from './SiteFooter.module.css'
 
@@ -148,6 +148,13 @@ export function SiteFooter() {
               <h2 className={styles.colH}>Explore</h2>
               <ul className={styles.links}>
                 {EXPLORE.map((l) => <li key={l.href}><Link href={l.href}>{l.label}</Link></li>)}
+              </ul>
+            </div>
+            {/* Each bottle's own page. */}
+            <div>
+              <h2 className={styles.colH}>The Ducks</h2>
+              <ul className={styles.links}>
+                {ducks.map((d) => <li key={d.slug}><Link href={`/ducks/${d.slug}`}>{d.name}</Link></li>)}
               </ul>
             </div>
             <div>
