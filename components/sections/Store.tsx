@@ -103,6 +103,13 @@ export function Store() {
             </div>
           ))}
         </div>
+
+        {/* "Emphasize Get Early Access … especially around the product
+            collection" — the client's note. Each card still goes to its own
+            bottle's page; this is the one ask for the range as a whole. */}
+        <div className={styles.cta}>
+          <Btn href="/#squad" colour="var(--sun-soft)">Get Early Access</Btn>
+        </div>
       </div>
       <StorePeek />
     </section>

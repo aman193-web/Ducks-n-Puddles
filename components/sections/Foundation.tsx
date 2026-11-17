@@ -9,6 +9,12 @@ import styles from './Foundation.module.css'
 /**
  * THE FOUNDATION — rebuilt to the client's reference.
  *
+ * SINCE NOV 2026 IT IS THE SECOND HALF OF "THE BIGGER PICTURE": the client
+ * asked for the Foundation and "We're Only Getting Started" to be one section
+ * about the long-term vision, so this renders as a panel inside <WhatsNext>
+ * rather than as a full-screen section of its own. Its heading is an h3 under
+ * that section's h2, and `#foundation` still lands on it.
+ *
  * What the reference sets, and what this now does: a labelled chip naming the
  * Foundation, a two-line headline, one paragraph of intent, a small
  * "Our future focus" heading over three tiles, a plain note that the details
@@ -34,7 +40,7 @@ const ICONS = { comfort: Heart, connection: UsersThree, support: HandHeart } as 
 
 export function Foundation() {
   return (
-    <section className={styles.section} id="foundation" aria-labelledby="foundation-title">
+    <div className={styles.section} id="foundation" role="region" aria-labelledby="foundation-title">
       {/* Scattered brand marks, a few small shapes in the margins rather than
           one flat decorative field. */}
       <span className={styles.scatter} aria-hidden="true">
@@ -42,7 +48,7 @@ export function Foundation() {
         <Motif name="footprints" /><Motif name="droplets" />
       </span>
 
-      <div className={`wrap ${styles.inner}`}>
+      <div className={styles.inner}>
         <div className={styles.copy}>
           {/* The Foundation's name, on the same cloud every other section
               eyebrow uses. It was the one label on the site still wearing the
@@ -53,11 +59,11 @@ export function Foundation() {
               the brief puts light blue or cream on yellow. */}
           <Sticker data-pop="">{foundation.name}</Sticker>
 
-          <h2 id="foundation-title" className={`d ${styles.title}`} data-anim="">
+          <h3 id="foundation-title" className={`d ${styles.title}`} data-anim="">
             {foundation.title.map((line) => (
               <span key={line}>{line}</span>
             ))}
-          </h2>
+          </h3>
 
           <p className={`lead ${styles.body}`} data-anim="">{foundation.body}</p>
 
@@ -112,6 +118,6 @@ export function Foundation() {
           })}
         </ul>
       </div>
-    </section>
+    </div>
   )
 }

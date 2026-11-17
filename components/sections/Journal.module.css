@@ -97,7 +97,10 @@
     scroll-padding-inline-start: var(--gutter);
     scrollbar-width: thin;
   }
-  .card { flex: 0 0 auto; inline-size: min(76vw, 290px); scroll-snap-align: start; }
+  /* On the <li>, not on .card: the cards are the blog's shared PostCard now,
+     which does not carry this module's .card class, so the rule matched
+     nothing and the three squeezed into one screen at about 100px each. */
+  .grid > li { flex: 0 0 auto; inline-size: min(76vw, 290px); scroll-snap-align: start; }
 }
 
 /* The link to the full journal. Centred under the three cards — the grid is the

@@ -1,15 +1,13 @@
-/* WHY — the first section after the hero.
+/* WHY — after Meet the Ducks and its photos (the client's Nov 2026 order).
 
-   Cream, because it follows the hero's ribbon and has to read as the page
-   settling rather than as another colour block. The two columns carry the only
-   colour, one per audience. */
+   Cream, so it reads as the page settling rather than as another colour
+   block. The two columns carry the only colour, one per audience. */
 .section {
   background: var(--cream);
-  /* Extra air on TOP. The marquee above bleeds downward — it is 118vw at -3.2deg
-     with negative block margins, so its low corner bites into whatever follows,
-     and the eyebrow was sitting right under it. The bottom keeps the normal
-     rhythm; only the ribbon side needs the clearance. */
-  padding-block: calc(var(--section-y) + clamp(32px, 4vw, 64px)) var(--section-y);
+  /* The normal rhythm at both ends. The extra air on top was for the tilted
+     benefits band, which this section followed until the Nov 2026 order — it
+     follows the community photos now. */
+  padding-block: var(--section-y);
   position: relative;
   overflow: clip;
 }

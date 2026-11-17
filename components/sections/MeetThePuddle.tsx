@@ -9,10 +9,10 @@ import styles from './MeetThePuddle.module.css'
 /**
  * MEET THE PUDDLE — the 2-in-1 silicone sleeve.
  *
- * The client's brief (Oct 2026), section 1. Their placement note says "directly
- * below the section introducing our three water bottles, and before 'Made with
- * Parents in Mind'", which lands it exactly here: after <Store> and before
- * <Specs>, whose heading is "Made with parents in mind."
+ * The client's brief (Oct 2026), section 1. Since the Nov 2026 reorganisation it
+ * opens section 02, "Product Features & Details", straight after the hero: the
+ * 2-in-1 reveal first, then <Specs> ("Made with parents in mind"), then the
+ * bottles themselves.
  *
  * THE VISUAL is the thing this section has to get right, and their instruction
  * is specific: one image of the bottle with the sleeve on, and beside it the

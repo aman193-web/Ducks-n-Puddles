@@ -91,7 +91,9 @@ export function Squad() {
       <BrandDetail preset="splashdown" />
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.copy}>
-          <Sticker colour="var(--cream)" data-pop="">Join the family</Sticker>
+          {/* The page's last ask, worded as the client now words it everywhere
+              (Nov 2026): Get Early Access. */}
+          <Sticker colour="var(--cream)" data-pop="">Get early access</Sticker>
           <h2 id="squad-title" className="d d-xl" data-anim="">
             Come Into the Pond.
           </h2>
@@ -214,7 +216,7 @@ export function Squad() {
             {state === 'error' && <p className={styles.error} role="alert">{message}</p>}
 
             <Btn type="submit" colour="var(--sun-soft)" block disabled={state === 'sending'}>
-              {state === 'sending' ? 'One moment…' : 'Let me into the pond'}
+              {state === 'sending' ? 'One moment…' : 'Get Early Access'}
             </Btn>
           </form>
         )}

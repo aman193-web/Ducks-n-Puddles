@@ -1,6 +1,9 @@
+/* Cream, and no top padding: this continues Meet the Ducks rather than
+   opening a section of its own, so it takes that section's ground and the air
+   above it is the duck stage's own button row. */
 .section {
-  background: var(--vincey-soft);
-  padding-block: var(--section-y);
+  background: var(--cream);
+  padding-block: 0 var(--section-y);
   position: relative;
   /* clip on one axis only: the peeking duck rises above the top edge, and a
      two-axis clip decapitated it. The rail still cannot cause a horizontal
@@ -30,12 +33,11 @@
   /* eyebrow -> heading; the lead gets its own, larger gap below */
   gap: var(--flow-eyebrow);
 }
-.head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
 /* ONE COLUMN. The client: "the photos are the star here, so I'd reduce the
    amount of header copy — I don't think you need the headline on the left and a
    paragraph floating on the right." One headline and one short sentence, left
    aligned, and the rail gets the attention. */
-.head > :nth-child(3) { max-width: 46ch; }
+.head > :nth-child(1) { max-width: 46ch; }
 
 
 /* ---- the hand on the page ------------------------------------------------

@@ -32,7 +32,9 @@
      The item ends with its icon, so the space after it is two half-paddings
      (this item's end + the next item's start) — which is why the padding is
      exactly half the gap. Change one and you must change the other. */
-  --sep: 0.4em;
+  /* 0.9em, up from 0.4: the client asked for more room between the marks and
+     the words, so each phrase reads on its own. */
+  --sep: 0.9em;
   gap: var(--sep);
   padding-inline: calc(var(--sep) / 2);
   font-family: var(--font-display); font-synthesis: none; font-weight: 400;

@@ -54,4 +54,5 @@
 }
 
 .foot { display: grid; gap: var(--s-3); justify-items: stretch; }
-@media (min-width: 940px) { .triggerWrap { display: none; } }
+/* Hands over to the header's own nav at the width it starts — see SiteHeader.module.css. */
+@media (min-width: 1100px) { .triggerWrap { display: none; } }

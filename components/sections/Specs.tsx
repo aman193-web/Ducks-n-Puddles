@@ -79,7 +79,10 @@ export function Specs() {
         <p className={styles.footnote}>{specsFootnote}</p>
 
         <div className={styles.cta}>
-          <Btn href="/#story" colour="var(--paper)">Read Our Story</Btn>
+          {/* The bottles are the next section down now (Nov 2026 order), so
+              this hands over to them — in the client's own hero wording —
+              rather than sending a reader six sections on to the story. */}
+          <Btn href="/#store" colour="var(--paper)">Explore the Bottles</Btn>
         </div>
       </div>
     </section>

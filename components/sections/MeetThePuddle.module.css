@@ -1,12 +1,11 @@
 /* =============================================================================
    MEET THE PUDDLE
 
-   Sits between Store (cream) and Specs (sky-soft). Sunshine yellow, because the
-   page runs cream from the hero all the way down to Specs and this is a product
-   REVEAL — it earns a band of its own, the way Foundation does further down.
-
-   --ink measures 12.6 on --sun-soft, the highest contrast of any ground on the
-   site, so every label, caption and number here is a single ink.
+   The first section after the hero now (the client's Nov 2026 reorganisation),
+   directly under the yellow benefits band and above Specs (sky-soft). It was
+   sunshine yellow when it sat between two cream sections; under a yellow band
+   the two read as one block and the band disappeared, so it is cream here and
+   the band keeps its edge.
 
    The two product panels do NOT sit on the yellow directly. They take the
    character fields — Chi Chi's for her bottle, Vincey's blue for the Puddle,
@@ -23,11 +22,11 @@
    new subject — and that section now carries the breathing room, on cream,
    where the panel it holds can use it. */
 .section {
-  background: var(--sun-soft);
+  background: var(--cream);
   padding-block: calc(var(--section-y) * 0.82) calc(var(--section-y) * 0.5);
   position: relative;
-  /* Store above carries z-index 2 and a negative top margin of its own; this
-     sits flat between the two so nothing has to be unstacked. */
+  /* Specs below carries z-index 2 and pulls itself up over this one; this
+     sits flat so nothing has to be unstacked. */
   z-index: 1;
 }
 

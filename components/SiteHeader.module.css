@@ -102,12 +102,24 @@
 }
 
 .actions { display: flex; align-items: center; gap: var(--s-3); margin-inline-start: auto; }
+/* Beside the nav where there is one; below 940 they sit beside the logo as
+   they always have. Between 940 and 1100 the nav is in the menu, so the
+   actions take the right-hand end of the bar instead of crowding the logo. */
 .nav + .actions { margin-inline-start: clamp(var(--s-4), 2vw, var(--s-6)); }
+@media (min-width: 940px) and (max-width: 1099px) {
+  .nav + .actions { margin-inline-start: auto; }
+}
 .ctaWrap { display: none; }
 
+/* THE NAV FROM 1100, the button from 940. "Get Early Access" is longer than
+   the "Join the Squad" it replaced, and with the ducks' menu caret the full row
+   measured 116px wider than the bar at 940 and 42px at 1024. Between the two
+   the menu button carries the links and the call to action stays in view. */
 @media (min-width: 940px) {
-  .nav { display: flex; }
   .ctaWrap { display: block; }
+}
+@media (min-width: 1100px) {
+  .nav { display: flex; }
 }
 
 /* ---- entrance: the reference's loadMenu, retimed to 1.8s ---------------- */

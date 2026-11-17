@@ -57,8 +57,11 @@ export function Story() {
               hard-coded number. */}
           <header className={styles.head}>
             <Sticker data-pop="">Our story</Sticker>
+            {/* Renamed at the client's request (Nov 2026), from "We All Need
+                a Friend." — Our Story and the founders' message are one
+                section. */}
             <h2 id="story-title" className={`d ${styles.title}`} data-anim="">
-              We All Need a Friend.
+              A Message from the Founders.
             </h2>
           </header>
 

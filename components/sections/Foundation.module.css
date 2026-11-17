@@ -1,9 +1,9 @@
 /* =============================================================================
    THE FOUNDATION
 
-   The only section besides the hero that claims a whole screen. Prominence on
-   this page is a matter of how much room a thing is given, not how loud it is
-   set — so: full bleed, its own colour world, a heading at hero scale.
+   The second half of The Bigger Picture (the client's Nov 2026 reorganisation):
+   a panel in its own colour world inside that section, where it used to claim
+   a whole screen of its own.
 
    Designed against the two banner references: an accent word in the headline, a
    labelled chip, the art seated on an organic blob, and small marks scattered in
@@ -24,23 +24,26 @@
      worth of saturated yellow behind small text. Mixed toward paper, the ground
      recedes and the tiles, photograph and headline all sit on it more calmly. */
   background: color-mix(in srgb, var(--goosey-soft) 42%, var(--paper));
-  /* `svh` so a phone with its toolbars showing still gets exactly one screen
-     and never an accidental scroll — the hero panel's reasoning. */
-  min-block-size: 100svh;
-  display: grid;
-  align-content: center;
-  /* Tighter than --section-y: min-block-size already guarantees the screen, so
-     this only decides how much air the content gets inside it.
-
-     BOTH ENDS NOW, and scaled to the viewport. On a tall display the content
-     is centred with room to spare and the gaps look after themselves; on a
-     768px-tall laptop the section is pinned at exactly 100svh with zero slack,
-     so whatever is written here IS the gap — and at --s-8 that was the chip
-     starting 64px under a hard change of colour and the tiles finishing 64px
-     above the next one. */
-  padding-block: clamp(96px, 12vh, 150px);
+  /* A PANEL inside The Bigger Picture now (Nov 2026), under the three
+     directions — no longer a full screen of its own. It keeps its own colour
+     world, so the Foundation still reads as the thing it is, and takes the
+     section's card radius and the panel padding the newsletter band uses. */
+  margin-block-start: var(--flow-block);
+  padding: clamp(var(--s-6), 4vw, var(--s-9));
+  border-radius: var(--r-lg);
   overflow: clip;
   isolation: isolate;
+}
+/* EDGE TO EDGE ON A PHONE, as the section was before it became a panel. Inset
+   by the page gutter and its own padding, the Foundation's name — one
+   unbreakable sticker — was wider than the column and pushed the photograph
+   off the right-hand side. */
+@media (max-width: 599px) {
+  .section {
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    border-radius: 0;
+  }
 }
 
 /* A soft pool of light, so the flat tint has a source. */

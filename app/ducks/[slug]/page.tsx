@@ -49,6 +49,10 @@ const SCATTER = [
    public/3d exactly as delivered (Vincey's and Goosey's were sent as
    duck-bottle-blue / -yellow). The centrepiece of every duck's hero, so every
    duck must have one. */
+/** The "Personalized Puddles Coming Soon" panel. Off while the client saves
+ *  personalisation for a later launch (Website Revisions, Nov 2026). */
+const SHOW_PERSONALIZATION = false
+
 const SPIN_MODELS: Record<DuckSlug, string> = {
   vincey: '/3d/vincey-bottle.html',
   'chi-chi': '/3d/chichi-bottle.html',
@@ -184,7 +188,7 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
                   look for an element with id="squad?duck=x" — it matches
                   nothing and the click scrolls nowhere. */}
               <Btn href={`/?duck=${d.slug}#squad`} colour="var(--sun-soft)">
-                Join the waitlist
+                Get Early Access
               </Btn>
               <p className={styles.note}>
                 The store isn&rsquo;t open yet &mdash; the Duck Squad hears first.
@@ -327,6 +331,10 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
               "Include a small 'Personalization Coming Soon' message below the
               product description." Small, and nothing in it but a link to the
               newsletter — no control, per their instruction. */}
+          {/* OFF FOR NOW — the client is saving personalisation for a later
+              launch (Nov 2026), on the homepage and here alike. Built and
+              kept: flip SHOW_PERSONALIZATION to bring it back. */}
+          {SHOW_PERSONALIZATION && (
           <aside className={styles.personal} aria-labelledby="personal-title" data-anim="">
             {/* The Puddle breaks out of the top of the panel — the same
                 frame-breaking device as the cards below, so the one picture in
@@ -357,6 +365,7 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
               <Btn href="/#newsletter" colour="var(--sun-soft)">Be the first to know</Btn>
             </div>
           </aside>
+          )}
         </div>
       </section>
 
@@ -402,7 +411,7 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
           </p>
           <div data-anim="">
             <Btn href={`/?duck=${d.slug}#squad`} colour="var(--sun-soft)">
-              Join the Duck Squad
+              Get Early Access
             </Btn>
           </div>
         </div>

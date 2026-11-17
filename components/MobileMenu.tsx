@@ -10,7 +10,7 @@ import styles from './MobileMenu.module.css'
 const NAV = [
   /* The three bottles' pages follow this one, as a row of their own. */
   { href: '/#ducks', label: 'The Ducks', menu: true },
-  { href: '/#features', label: 'Features' },
+  { href: '/#puddle', label: 'Features' },
   { href: '/#story', label: 'Our Story' },
   { href: '/blog', label: 'Blog' },
   /* Last, and set apart as a button. Points at the on-page section until the
@@ -90,7 +90,7 @@ export function MobileMenu() {
         </nav>
 
         <div className={styles.foot}>
-          <Btn href="/#squad" colour="var(--sun-soft)" block>Join the Duck Squad</Btn>
+          <Btn href="/#squad" colour="var(--sun-soft)" block>Get Early Access</Btn>
         </div>
     </div>
   ) : null

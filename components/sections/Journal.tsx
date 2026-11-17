@@ -6,7 +6,7 @@ import { PostCard } from '@/app/blog/PostCard'
 import styles from './Journal.module.css'
 
 /**
- * The Duck Pond — three most recent posts.
+ * The Blog (was "The Duck Pond" until the client's Nov 2026 rename) — three most recent posts.
  *
  * Every card links to a real page. A teaser whose "read more" goes nowhere is
  * worse than no blog at all, so the routes at /blog and /blog/[slug] ship with
@@ -26,7 +26,7 @@ export function Journal() {
       <BrandDetail preset="droplets" />
       <div className="wrap">
         <div className={styles.head}>
-          <Sticker colour="var(--cream)" data-pop="">The duck pond</Sticker>
+          <Sticker colour="var(--cream)" data-pop="">The blog</Sticker>
           <h2 id="journal-title" className="d d-xl" data-anim="">From Our Pond to Yours.</h2>
           <p className="lead" data-anim="">
             Stories, parenting thoughts, behind-the-scenes moments, and things we&rsquo;re

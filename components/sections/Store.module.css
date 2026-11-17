@@ -194,3 +194,6 @@
   margin: 0;
   align-self: start;
 }
+
+/* The range's one call to action, under the three cards. */
+.cta { display: flex; justify-content: center; margin-block-start: var(--flow-block); }

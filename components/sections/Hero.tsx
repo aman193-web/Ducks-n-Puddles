@@ -105,23 +105,23 @@ export function Hero() {
                 headline and the CTA can never collide with each other or with
                 the surface however short the panel gets. */}
             <div className={styles.copy}>
-              {/* The "Coming soon / Meet Chi Chi, Goosey & Vincey" line that used
-                  to sit here is gone at the client's request — the hero reads
-                  cleaner without it. The pre-launch state is still said, in the
-                  two places it belongs: the header's Store chip and the Duck
-                  Squad signup. */}
+              {/* THE CLIENT'S HERO, Nov 2026 — product first. The tagline steps
+                  up above the headline, and the headline now says what is for
+                  sale: "Their New Favorite Water Bottle." */}
+              <p className={`hand ${styles.tagline}`}>A Friend for Every Adventure.</p>
               <h1 id="hero-title" className={`d ${styles.title}`}>
-                {/* Title case at the client's request, and set to match
-                    brand.tagline exactly — "for" stays lowercase, as it is
-                    there and in every other place this line appears. */}
-                <span><span>A Friend for </span></span>
-                <span><span>Every Adventure</span></span>
+                <span><span>Their New Favorite </span></span>
+                <span><span>Water Bottle.</span></span>
               </h1>
+              <p className={styles.sub}>
+                Adorable duck water bottles made for little hands, big adventures, and everyday
+                hydration. Loved by little ones, thoughtfully made for parents.
+              </p>
 
               <div className={styles.ctas}>
-                <Btn href="/#squad" colour="var(--sun-soft)">Join the Duck Squad</Btn>
+                <Btn href="/#store" colour="var(--sun-soft)">Explore the Bottles</Btn>
                 <span className={styles.second}>
-                  <Btn href="/#ducks" colour="var(--paper)">Meet the ducks</Btn>
+                  <Btn href="/#squad" colour="var(--paper)">Get Early Access</Btn>
                 </span>
               </div>
             </div>
@@ -129,7 +129,7 @@ export function Hero() {
             {/* the headline, thrown back off the water — decorative, so it is
                 mirrored and faded rather than repeated for a screen reader */}
             <p className={`d ${styles.echo}`} aria-hidden="true" data-depth="0.05">
-              <span>A Friend for</span><span>Every Adventure</span>
+              <span>Their New Favorite</span><span>Water Bottle.</span>
             </p>
 
             {/* -- the waterline itself -- */}

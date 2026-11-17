@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Play, Pause, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
 import { Picture } from '@/components/Picture'
 import { asset } from '@/lib/assets'
-import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { brand } from '@/content/brand'
 import { BrandDetail } from '@/components/ui/BrandDetail'
@@ -94,13 +93,14 @@ export function InTheWild() {
   }
 
   return (
-    <section className={styles.section} id="wild" aria-labelledby="wild-title">
+    /* PART OF MEET THE DUCKS now, not a section of its own (the client's Nov
+       2026 note): directly under the duck panels, on the same cream, with no
+       heading — so it is named for assistive tech instead of titled. */
+    <section className={styles.section} id="wild" aria-label="The ducks out in the world">
       <BrandDetail preset="wake" />
       <div className="wrap">
         <div className={styles.headRow}>
           <div className={styles.head}>
-            <Sticker colour="var(--cream)" data-pop="">Out in the world</Sticker>
-            <h2 id="wild-title" className="d d-xl" data-anim="">Where Will Your Duck Go?</h2>
             <p className="lead measure" data-anim="">
               Big adventures, little moments, and every puddle in between &mdash;
               Chi&nbsp;Chi, Vincey, and Goosey are ready to come along!
@@ -252,7 +252,7 @@ export function InTheWild() {
         <div className={styles.cta}>
           {/* Social, not the signup: the client asked for this section to send
               people to where the pictures keep coming from. */}
-          <Btn href={brand.instagram} colour="var(--sun-soft)">Follow along on Instagram</Btn>
+          <Btn href={brand.instagram} colour="var(--sun-soft)">Follow Us on Instagram</Btn>
         </div>
       </div>
     </section>

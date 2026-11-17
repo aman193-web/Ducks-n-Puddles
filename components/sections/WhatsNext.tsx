@@ -3,10 +3,17 @@ import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { biggerPicture } from '@/content/brand'
+import { Foundation } from './Foundation'
 import styles from './WhatsNext.module.css'
 
 /**
  * THE BIGGER PICTURE — "the bottles are just the beginning".
+ *
+ * ONE SECTION WITH THE FOUNDATION since the client's Nov 2026 reorganisation:
+ * "Combine 'Ducks 'n Puddles Foundation' and 'We're Only Getting Started' into
+ * one section about our long-term vision and Foundation." The vision leads, the
+ * Foundation follows as a panel of its own colour, and one button closes both.
+ * Both texts are the client's, unchanged — combined, not rewritten.
  *
  * The client's brief for this section is to plant the idea that the ducks will
  * live through products, stories, books and experiences — a whole world rather
@@ -60,6 +67,8 @@ export function WhatsNext() {
             )
           })}
         </ul>
+
+        <Foundation />
 
         <div className={styles.cta}>
           <Btn href="/#squad" colour="var(--sun-soft)">Be The First To Know</Btn>
