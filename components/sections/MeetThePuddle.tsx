@@ -74,12 +74,14 @@ export function MeetThePuddle() {
 
           {SNACK_CLAIMS_APPROVED ? (
             <h2 id="puddle-title" className={`d ${styles.title}`} data-anim="">
-              {/* Two marks of light either side, and a drawn underline under
+              {/* Two marks of light either side — each fanning OUT from the
+                  headline, its strokes closest together on the side nearest
+                  the words — and a drawn underline under
                   "Everyday" — the reference's own flourishes, in the brand's
                   sunshine yellow. Decorative, so hidden from assistive tech. */}
               <span className={`${styles.spark} ${styles.sparkL}`} aria-hidden="true">
                 <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round">
-                  <path d="M30 8l-6 8M34 22l-10-1M27 34l-6-6" />
+                  <path d="M10 8l6 8M6 22l10-1M13 34l6-6" />
                 </svg>
               </span>
               <span className={styles.line}>{first}.</span>
@@ -96,7 +98,7 @@ export function MeetThePuddle() {
               </span>
               <span className={`${styles.spark} ${styles.sparkR}`} aria-hidden="true">
                 <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round">
-                  <path d="M10 8l6 8M6 22l10-1M13 34l6-6" />
+                  <path d="M30 8l-6 8M34 22l-10-1M27 34l-6-6" />
                 </svg>
               </span>
             </h2>
@@ -124,6 +126,11 @@ export function MeetThePuddle() {
                   <span className={styles.capBody}>{f.body}</span>
                 </figcaption>
                 <span className={styles.art}>
+                  {/* The first frame names what the bottle is, in the client's
+                      own banner wording. A snack claim, so gated with it. */}
+                  {f.n === 1 && SNACK_CLAIMS_APPROVED && (
+                    <span className={styles.twoInOne}>2-in-1 Bottle + Snack Cup</span>
+                  )}
                   <Picture id={ART[i].id} sizes={ART[i].sizes} alt={ART[i].alt} />
                 </span>
               </figure>
