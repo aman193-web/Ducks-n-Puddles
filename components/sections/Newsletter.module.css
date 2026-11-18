@@ -9,7 +9,10 @@
    is fixed, so without this the panel lands underneath it. */
 .section {
   background: var(--paper);
-  padding-block: 0 calc(var(--section-y) * 0.45);
+  /* Air above the panel too. It had none when it sat under the homepage's
+     Journal, which carried the gap; on the blog, category and tag pages the
+     panel butted straight against the cream section above it. */
+  padding-block: calc(var(--section-y) * 0.6) calc(var(--section-y) * 0.45);
   scroll-margin-block-start: calc(var(--header-h) + var(--s-5));
 }
 
