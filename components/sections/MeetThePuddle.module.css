@@ -17,13 +17,13 @@
    tallest section on the page for what is one product fact and three bullets.
    Every number below that was trimmed is named where it is; together they take
    roughly a fifth off without dropping a word of their copy.
-   The bottom padding is HALF the section rhythm rather than the usual full
-   step, because the section below it is this one's own postscript rather than a
-   new subject — and that section now carries the breathing room, on cream,
-   where the panel it holds can use it. */
+   The bottom padding is the full section rhythm again. It was half while
+   Personalize Your Puddle followed as this section's postscript; with Specs
+   below now pulling its panel up over this edge, half left the closing line
+   about 12px from the panel's top. */
 .section {
   background: var(--cream);
-  padding-block: calc(var(--section-y) * 0.82) calc(var(--section-y) * 0.5);
+  padding-block: calc(var(--section-y) * 0.82) var(--section-y);
   position: relative;
   /* Specs below carries z-index 2 and pulls itself up over this one; this
      sits flat so nothing has to be unstacked. */

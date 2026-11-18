@@ -215,8 +215,6 @@
   .inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-8); }
 }
 
-/* A way out of the sticky character stack: the last panel unpins into this. */
-.cta { padding-block: var(--section-y); display: flex; justify-content: center; }
 
 /* Denser on a phone: the chips wrapped to three rows and the panel ran past a
    screen. Same content, less air. */

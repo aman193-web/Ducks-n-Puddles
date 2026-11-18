@@ -152,11 +152,10 @@ export function DuckStage() {
         ))}
       </div>
 
-      <div className="wrap">
-        <div className={styles.cta}>
-          <Btn href="/#store">See them as bottles</Btn>
-        </div>
-      </div>
+      {/* "See them as bottles" is gone: the bottles come BEFORE the ducks
+          since the Nov 2026 order, so it pointed back up the page, and the
+          client asked for the community photos directly underneath — the
+          last panel now unpins straight into them (InTheWild). */}
     </section>
   )
 }
