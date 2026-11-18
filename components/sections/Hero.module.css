@@ -411,7 +411,8 @@
 
 /* SHORT WINDOWS. Everything in the copy column that can give, gives — the
    headline scales by height as well as width, and the gaps, the supporting
-   line and the buttons each take a step down — so the column fits between
+   line each take a step down (never the buttons: they hold 64px everywhere,
+   their arrow badge is sized for it) — so the column fits between
    the logo and the water at every height down to the panel's 600px floor.
    Without it the copy, which grows UP from the waterline and is ~150px taller
    since the client's hero added a tagline and a supporting line, climbed into
@@ -422,7 +423,6 @@
   .title, .echo { font-size: clamp(2.25rem, min(10.24vw, 11vh), 7.25rem); }
   .tagline { font-size: clamp(1.125rem, 3.2vh, 1.625rem); }
   .sub { font-size: var(--fs-body); }
-  .ctas { --btn-h: 56px; }
 }
 
 /* =============================================================================
@@ -439,7 +439,7 @@
      client's hero carries a supporting line and both buttons now, where it used
      to carry a headline and one. On a short phone the window runs a little past
      the fold rather than standing the bottles on the buttons. */
-  .panel { --water-base: 75%; min-block-size: 840px; }
+  .panel { --water-base: 75%; min-block-size: 880px; }
 
   /* Portrait frame: the column leaves the waterline and pins to the TOP, the
      pond takes the bottom half. A different composition, not a squashed one. */
@@ -469,7 +469,7 @@
 
   /* BOTH buttons on a phone now, stacked: the client wants Get Early Access
      near the top, and on a phone the header has no room for its own. */
-  .ctas { display: grid; justify-items: stretch; inline-size: 100%; gap: 10px; --btn-h: 56px; }
+  .ctas { display: grid; justify-items: stretch; inline-size: 100%; gap: 10px; }
   .second { display: grid; }
 
   /* portrait frame: the squad comes back to the centre and takes the lower half */
