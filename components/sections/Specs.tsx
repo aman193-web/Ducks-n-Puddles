@@ -2,6 +2,7 @@ import { Drop, SealCheck, ShieldCheck, Sparkle, Leaf, Hand, Baby, Swap }
   from '@phosphor-icons/react/dist/ssr'
 import { Sticker } from '@/components/ui/Sticker'
 import { Btn } from '@/components/ui/Btn'
+import { Picture } from '@/components/Picture'
 import { Duck } from '@/components/ui/Duck'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { confirmedSpecs, specsFootnote } from '@/content/brand'
@@ -35,6 +36,33 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; weight?: 'light
   puddle: Swap,
 }
 
+/**
+ * THE PICTURE BEHIND EACH CARD (Nov 2026). The client asked for the cards to
+ * reveal an image on hover, product shots and lifestyle photographs both.
+ *
+ *   with a mouse      the picture wipes up over the card on hover, and the
+ *                     card's label rides on it as a tag
+ *   touch / narrow    nothing can hover, so the picture is simply THERE, at
+ *                     the top of each card — and below 680 the cards become a
+ *                     swipe rail, so eight pictures do not make the section
+ *                     eight cards tall
+ *
+ * A product render (`product`) sits contained on a field; a photograph covers
+ * the card and holds its subject by the `focal` in the asset manifest. The
+ * photographs are the client's lifestyle set — see the note on them in
+ * scripts/lib/manifest.mjs about the sample bottles in frame.
+ */
+const SHOTS: Record<string, { id: string; product?: true }> = {
+  puddle:   { id: 'puddle-snacks', product: true },
+  capacity: { id: 'life-armful' },
+  lid:      { id: 'life-sip' },
+  spill:    { id: 'life-swing-bottle' },
+  clean:    { id: 'trio', product: true },
+  bpa:      { id: 'life-cuddle' },
+  grip:     { id: 'life-toddler-grip' },
+  age:      { id: 'life-toddler-swing' },
+}
+
 export function Specs() {
   return (
     <section className={styles.section} id="features" aria-labelledby="specs-title">
@@ -59,14 +87,27 @@ export function Specs() {
         <dl className={styles.grid} data-tilt-grid="">
           {confirmedSpecs.map((s) => {
             const Icon = ICONS[s.key] ?? Drop
+            const shot = SHOTS[s.key]
             return (
-              <div key={s.key} className={styles.card} data-tilt="" data-anim="" data-anim-y="24">
+              <div key={s.key} className={`${styles.card} ${shot ? styles.hasShot : ''}`}
+                   data-tilt="" data-anim="" data-anim-y="24">
+
                 <span className={styles.icon} aria-hidden="true">
                   <Icon size={21} weight="regular" />
                 </span>
                 <dt className={styles.key}>{s.label}</dt>
                 <dd className={styles.value}>{s.value}</dd>
                 {s.benefit && <dd className={styles.benefit}>{s.benefit}</dd>}
+                {/* LAST IN THE SOURCE, because a <dd> may not precede its
+                    <dt>; the stylesheet puts it on top of the card (hover) or
+                    at the head of it (touch). */}
+                {shot && (
+                  <dd className={`${styles.shot} ${shot.product ? styles.shotProduct : ''}`}>
+                    <Picture id={shot.id} tint={false}
+                             sizes="(min-width: 1000px) 280px, (min-width: 680px) 32vw, 290px" />
+                    <span className={styles.shotTag} aria-hidden="true">{s.label}</span>
+                  </dd>
+                )}
               </div>
             )
           })}

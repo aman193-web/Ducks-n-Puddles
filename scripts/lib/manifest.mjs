@@ -126,6 +126,32 @@ export const photos = [
   { id: 'sample-beach',    src: 'Photo Sep 19 2025, 6 55 23 PM.jpg', tier: 'C', grade: 'overcast',
     role: 'sample',
     alt: 'Three later sample bottles standing on wet sand at dusk.' },
+  /* THE FEATURE CARDS' PHOTOGRAPHS — the client's lifestyle set (Nov 2026),
+     supplied for the hover reveal on the Details cards. The same October shoot
+     as the four above, so TIER C on this file's own rule: the sleeves carry the
+     early GREEN duck mark and the short straight wordmark, not the production
+     splash duck. They are in a product context at the client's request, and
+     these six are the frames where that mark is smallest or out of shot —
+     re-check before swapping any of them for another from the set.
+     `widths` capped: the largest place they render is a ~380px card. */
+  { id: 'life-armful',       src: 'life-armful.jpg', tier: 'C', grade: 'chlorine', role: 'lifestyle',
+    widths: [320, 480, 640, 960], focal: { x: 0.5, y: 0.55 },
+    alt: 'A smiling girl hugging three Ducks ’n Puddles bottles to her chest.' },
+  { id: 'life-sip',          src: 'life-sip.jpg', tier: 'C', grade: 'chlorine', role: 'lifestyle',
+    widths: [320, 480, 640, 960], focal: { x: 0.72, y: 0.45 },
+    alt: 'A girl sipping through the straw of her duck bottle at a playground table.' },
+  { id: 'life-swing-bottle', src: 'life-swing-bottle.jpg', tier: 'C', grade: 'chlorine', role: 'lifestyle',
+    widths: [320, 480, 640, 960], focal: { x: 0.5, y: 0.25 },
+    alt: 'A duck bottle lying on its side in a playground swing.' },
+  { id: 'life-cuddle',       src: 'life-cuddle.jpg', tier: 'C', grade: 'chlorine', role: 'lifestyle',
+    widths: [320, 480, 640, 960], focal: { x: 0.5, y: 0.35 },
+    alt: 'A girl cuddling her duck bottle against her cheek.' },
+  { id: 'life-toddler-grip', src: 'life-toddler-grip.jpg', tier: 'C', grade: 'chlorine', role: 'lifestyle',
+    widths: [320, 480, 640, 960], focal: { x: 0.6, y: 0.55 },
+    alt: 'A toddler holding a duck bottle in both hands.' },
+  { id: 'life-toddler-swing', src: 'life-toddler-swing.jpg', tier: 'C', grade: 'chlorine', role: 'lifestyle',
+    widths: [320, 480, 640, 960], focal: { x: 0.5, y: 0.4 },
+    alt: 'A toddler on a playground swing with his duck bottle beside him.' },
 ]
 
 /** Tier A. Renders + logos + patterns: alpha preserved, never graded, never upscaled. */

@@ -461,6 +461,144 @@
       "jpg"
     ]
   },
+  "life-armful": {
+    "id": "life-armful",
+    "tier": "C",
+    "alt": "A smiling girl hugging three Ducks ’n Puddles bottles to her chest.",
+    "widths": [
+      320,
+      480,
+      640,
+      960
+    ],
+    "colour": "#586848",
+    "v": "4349617c",
+    "aspect": 0.6667,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.55
+    }
+  },
+  "life-sip": {
+    "id": "life-sip",
+    "tier": "C",
+    "alt": "A girl sipping through the straw of her duck bottle at a playground table.",
+    "widths": [
+      320,
+      480,
+      640,
+      960
+    ],
+    "colour": "#080808",
+    "v": "dbeefcf9",
+    "aspect": 0.6667,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "focal": {
+      "x": 0.72,
+      "y": 0.45
+    }
+  },
+  "life-swing-bottle": {
+    "id": "life-swing-bottle",
+    "tier": "C",
+    "alt": "A duck bottle lying on its side in a playground swing.",
+    "widths": [
+      320,
+      480,
+      640,
+      960
+    ],
+    "colour": "#282828",
+    "v": "9051e1b2",
+    "aspect": 0.6666,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.25
+    }
+  },
+  "life-cuddle": {
+    "id": "life-cuddle",
+    "tier": "C",
+    "alt": "A girl cuddling her duck bottle against her cheek.",
+    "widths": [
+      320,
+      480,
+      640,
+      960
+    ],
+    "colour": "#080808",
+    "v": "0a9af4f6",
+    "aspect": 0.6667,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.35
+    }
+  },
+  "life-toddler-grip": {
+    "id": "life-toddler-grip",
+    "tier": "C",
+    "alt": "A toddler holding a duck bottle in both hands.",
+    "widths": [
+      320,
+      480,
+      640,
+      960
+    ],
+    "colour": "#889868",
+    "v": "a1e784c0",
+    "aspect": 0.6667,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "focal": {
+      "x": 0.6,
+      "y": 0.55
+    }
+  },
+  "life-toddler-swing": {
+    "id": "life-toddler-swing",
+    "tier": "C",
+    "alt": "A toddler on a playground swing with his duck bottle beside him.",
+    "widths": [
+      320,
+      480,
+      640,
+      960
+    ],
+    "colour": "#587848",
+    "v": "28db5d1a",
+    "aspect": 0.6666,
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "focal": {
+      "x": 0.5,
+      "y": 0.4
+    }
+  },
   "poster-duck-1": {
     "id": "poster-duck-1",
     "tier": "B",

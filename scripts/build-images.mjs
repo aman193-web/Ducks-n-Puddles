@@ -99,7 +99,8 @@ for (const p of photos) {
   }
   pipeline = (grades[p.grade] ?? grades.none)(pipeline)
 
-  const widths = WIDTHS.filter((w) => w <= srcW)
+  /* `p.widths` caps the set for a photograph that only ever renders small. */
+  const widths = (p.widths ?? WIDTHS).filter((w) => w <= srcW)
   const colour = await dominant(pipeline)
   const done = await emit(p.id, pipeline, widths)
   const final = await sharp(await pipeline.clone().toBuffer()).metadata()
