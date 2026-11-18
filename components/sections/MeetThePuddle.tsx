@@ -131,17 +131,26 @@ export function MeetThePuddle() {
           ))}
         </ol>
 
-        <p className={styles.body} data-anim="">
-          <strong>{puddle.lede}</strong>{' '}
-          {SNACK_CLAIMS_APPROVED ? puddle.body : puddleSleeveOnly.body}
-        </p>
-
-        <p className={styles.everyday} data-anim="">
-          <span className={styles.everydayMark} aria-hidden="true">
-            <Motif name="splash" size={22} />
-          </span>
-          <span><strong>{everyday.label}.</strong> {everyday.body}</span>
-        </p>
+        {/* THE EXPLANATION, as one panel rather than three loose lines: the
+            client's statement of belief leads in the display face, their
+            paragraph follows it, and their third bullet — what all three
+            frames are for — sits beside them as a card of its own. Their
+            closing line signs the section off underneath. */}
+        <div className={styles.story} data-anim="">
+          <div className={styles.storyMain}>
+            <p className={`d ${styles.storyLede}`}>{puddle.lede}</p>
+            <p className={styles.storyBody}>
+              {SNACK_CLAIMS_APPROVED ? puddle.body : puddleSleeveOnly.body}
+            </p>
+          </div>
+          <p className={styles.everyday}>
+            <span className={styles.everydayMark} aria-hidden="true">
+              <Motif name="splash" size={26} />
+            </span>
+            <strong className={styles.everydayTitle}>{everyday.label}</strong>
+            <span className={styles.everydayBody}>{everyday.body}</span>
+          </p>
+        </div>
 
         <p className={`d ${styles.close}`} data-anim="">{puddle.close}</p>
       </div>
