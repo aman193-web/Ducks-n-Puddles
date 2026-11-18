@@ -48,7 +48,7 @@ export function Specs() {
             The details
           </Sticker>
           <h2 id="specs-title" className="d d-xl" data-anim="">
-            Made with parents in mind.
+            Designed with parents in mind.
           </h2>
           <p className="lead measure" data-anim="">
             Thoughtful, practical details designed for little hands and busy parents

@@ -57,8 +57,12 @@ export function MeetThePuddle() {
               It was the one line the first version of the gate left standing,
               at the top of the section, in the display face. */}
           <div className={styles.headMain}>
+            {/* The client's section 02 headline (Nov 2026). Their earlier
+                primary message moves under it, in place of "Two purposes.
+                One thoughtful design." — which said the same as the new
+                headline and still says it on the Puddle's feature card. */}
             <h2 id="puddle-title" className={`d ${styles.title}`} data-anim="">
-              {SNACK_CLAIMS_APPROVED ? puddle.message : puddleSleeveOnly.message}
+              {SNACK_CLAIMS_APPROVED ? puddle.headline : puddleSleeveOnly.message}
             </h2>
             {/* UNDER THE HEADLINE, in its cell — not centred on a row of its
                 own. The head is a two-column grid whose height is set by a
@@ -66,7 +70,7 @@ export function MeetThePuddle() {
                 yellow beneath it while this line sat in a band below BOTH
                 columns. One move fills the hole and removes the band. */}
             {SNACK_CLAIMS_APPROVED && (
-              <p className={`d ${styles.purpose}`} data-anim="">{puddle.purpose}</p>
+              <p className={`d ${styles.purpose}`} data-anim="">{puddle.message}</p>
             )}
           </div>
           <p className="lead measure" data-anim="">

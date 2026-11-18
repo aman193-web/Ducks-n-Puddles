@@ -124,7 +124,7 @@ export default function FaqPage() {
             </div>
             <div className={styles.cardBtns}>
               <Btn href="/contact" colour="var(--sun-soft)">Ask us anything</Btn>
-              <Btn href="/#squad" colour="var(--sky-soft)">Join the family</Btn>
+              <Btn href="/#squad" colour="var(--sky-soft)">Get Early Access</Btn>
             </div>
           </aside>
         </div>

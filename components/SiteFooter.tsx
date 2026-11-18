@@ -13,7 +13,8 @@ const EXPLORE = [
   { href: '/#story', label: 'Our Story' },
   { href: '/#next', label: 'Our Bigger Vision' },
   { href: '/#foundation', label: 'The Foundation' },
-  { href: '/blog', label: 'From the Pond' },
+  /* "The Blog", the client's Nov 2026 rename of the section it opens. */
+  { href: '/blog', label: 'The Blog' },
 ]
 
 /* The client's own list, and only theirs. Accessibility was an addition of

@@ -299,7 +299,7 @@ export default async function DuckPage({ params }: { params: Promise<{ slug: str
               homepage section that carries it — not a heading of mine. */}
           <div className={styles.specsHead}>
             <Sticker data-pop="">The details</Sticker>
-            <h2 id="specs-title" className={`d ${styles.h2}`} data-anim="">Made with parents in mind.</h2>
+            <h2 id="specs-title" className={`d ${styles.h2}`} data-anim="">Designed with parents in mind.</h2>
             <p className={styles.lead} data-anim="">
               Thoughtful, practical details designed for little hands and busy parents
               &mdash; making everyday adventures a little easier.

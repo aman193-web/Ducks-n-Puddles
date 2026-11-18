@@ -72,7 +72,7 @@ export function Faq() {
                 aria-hidden and pointer-events: none by default, so the row is
                 unchanged for the keyboard and for a screen reader. */}
             <Duck who="trio" pose="walk" className={styles.peek} float />
-            <Btn href="/#squad" colour="var(--sun-soft)">Join the family</Btn>
+            <Btn href="/#squad" colour="var(--sun-soft)">Get Early Access</Btn>
             <Btn href={brand.instagram} colour="var(--sky-soft)">Follow along</Btn>
           </div>
         </div>

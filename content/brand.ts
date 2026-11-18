@@ -245,15 +245,23 @@ export const specs: Spec[] = [
      first draft ran "Protective sleeve + removable snack holder" over
      "Thoughtfully designed for little hands and everyday adventures", five
      lines in a box where every sibling takes two or three. */
-  { key: 'puddle', label: '2-in-1 silicone Puddle', value: 'Sleeve + snack holder',
+  /* VALUES FROM THE NOV 2026 DOC where it words a feature differently — its
+     section 02 list: "Removable, food-safe silicone sleeve that doubles as a
+     snack cup" (cut to the card's length — the whole sentence made every row
+     of the grid a third taller on a phone, since the rows share one height),
+     "9 oz stainless steel insulated bottle", "Flip-top straw lid".
+     ⚠️ The doc is the first place the client states stainless steel and
+     insulation; they were held as `pending` below until now. Published on
+     their written copy — confirm with the manufacturer all the same. */
+  { key: 'puddle', label: '2-in-1 silicone Puddle', value: 'Food-safe sleeve + snack cup',
     benefit: 'Two purposes. One thoughtful design.', status: 'confirmed',
     snackClaim: true,
     /* The client's own first bullet, which makes no snack claim at all. */
     whenPending: { label: 'Silicone Puddle', value: 'Removable protective sleeve',
       benefit: 'A comfortable grip for little hands.' } },
-  { key: 'capacity', label: 'Just the right size', value: '9 oz',
+  { key: 'capacity', label: 'Just the right size', value: '9 oz stainless steel insulated bottle',
     benefit: 'Sized for little hands', status: 'confirmed' },
-  { key: 'lid', label: 'Flip-top straw', value: 'Snaps securely closed',
+  { key: 'lid', label: 'Flip-top straw lid', value: 'Snaps securely closed',
     benefit: 'Easy sipping on the go', status: 'confirmed' },
   { key: 'spill', label: 'Spill-resistant', value: 'Made for everyday adventures',
     benefit: 'Because spills happen.', status: 'confirmed' },
@@ -352,6 +360,10 @@ export const personalization = {
 export const puddle = {
   eyebrow: 'Meet the Puddle',
   title: 'Meet the Puddle!',
+  /** The 2-in-1 reveal's headline, from the Nov 2026 reorganisation doc
+   *  (section 02): "One Adorable Bottle. Two Everyday Essentials." `message`
+   *  below, their Oct 2026 primary marketing message, now sits under it. */
+  headline: 'One Adorable Bottle. Two Everyday Essentials.',
   /** Section 6: "Primary Marketing Message". */
   message: 'The Duck Holds the Drink. The Puddle Holds the Snack.',
   lede: 'We believe the little details make a big difference.',
