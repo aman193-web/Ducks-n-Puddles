@@ -365,6 +365,14 @@ export const puddle = {
    *  (section 02): "One Adorable Bottle. Two Everyday Essentials." `message`
    *  below, their Oct 2026 primary marketing message, now sits under it. */
   headline: 'One Adorable Bottle. Two Everyday Essentials.',
+  /** The line under it, and the three step titles, from the client's design
+   *  reference for this section (Nov 2026). */
+  subline: 'A 2-in-1 water bottle and snack cup, designed for little explorers.',
+  sequence: [
+    { n: 1, title: 'Your 2-in-1 Water Bottle' },
+    { n: 2, title: 'Remove the Silicone Sleeve' },
+    { n: 3, title: 'Turn It Into a Snack Cup', snackClaim: true },
+  ],
   /** Section 6: "Primary Marketing Message". */
   message: 'The Duck Holds the Drink. The Puddle Holds the Snack.',
   lede: 'We believe the little details make a big difference.',

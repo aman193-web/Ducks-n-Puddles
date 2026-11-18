@@ -1,28 +1,19 @@
 /* =============================================================================
    MEET THE PUDDLE
 
-   The first section after the hero now (the client's Nov 2026 reorganisation),
-   directly under the yellow benefits band and above Specs (sky-soft). It was
-   sunshine yellow when it sat between two cream sections; under a yellow band
-   the two read as one block and the band disappeared, so it is cream here and
-   the band keeps its edge.
+   The first section after the hero (the client's Nov 2026 reorganisation),
+   under the yellow benefits band and above Specs (sky-soft). Cream, so the
+   band keeps its edge.
 
-   The two product panels do NOT sit on the yellow directly. They take the
-   character fields — Chi Chi's for her bottle, Vincey's blue for the Puddle,
-   which is the colour the sleeve actually is. That is the same device Store
-   uses for its three cards, and it is what stops the bottle's yellow cap and
-   handle dissolving into a yellow ground.
+   Laid out on the client's design reference for it: everything centred — a
+   headline with a drawn underline, one line under it — then three soft cards,
+   each a number, a title and a picture, with a drawn arrow between them.
+   No ink outline on the cards: the reference's are plain colour, and three
+   pale fields on cream carry themselves.
    ========================================================================== */
-/* COMPRESSED, on the client's note. It opened at 1362px at 1440 — the third
-   tallest section on the page for what is one product fact and three bullets.
-   Every number below that was trimmed is named where it is; together they take
-   roughly a fifth off without dropping a word of their copy.
-   The bottom padding is the full section rhythm again. It was half while
-   Personalize Your Puddle followed as this section's postscript; with Specs
-   below now pulling its panel up over this edge, half left the closing line
-   about 12px from the panel's top. */
 .section {
   background: var(--cream);
+  /* Full rhythm at the foot: Specs pulls its panel up over this edge. */
   padding-block: calc(var(--section-y) * 0.82) var(--section-y);
   position: relative;
   /* Specs below carries z-index 2 and pulls itself up over this one; this
@@ -30,333 +21,164 @@
   z-index: 1;
 }
 
-/* The shared two-column head — eyebrow and heading left, lead beside it. Eight
-   other sections carry this exact block; it is copied rather than extracted
-   because each one tunes the split, and a shared partial would have to take a
-   prop for every one of them. */
+/* ---- the head: centred ------------------------------------------------- */
 .head {
   display: grid;
-  justify-items: start;
+  justify-items: center;
+  text-align: center;
   gap: var(--flow-eyebrow);
-  /* --s-6, not --flow-block: 32 rather than 56 at 1440. */
-  margin-block-end: var(--s-6);
-}
-.head > :nth-child(3) { margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow)); }
-/* BALANCED ON ONE LINE. The paragraph is seven lines against a heading of two
-   plus a sub-line, so started level with the heading it overhung it by 60px
-   and the two columns ended in different places. Now it runs the height of the
-   whole left block — eyebrow included — and its last line shares a baseline
-   with "Two purposes. One thoughtful design.", so both columns finish together
-   and the paragraph's extra height is spent beside the eyebrow, where the left
-   column had nothing anyway. A wider right column takes it from seven lines
-   to six. */
-@media (min-width: 900px) {
-  .head {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    column-gap: clamp(var(--s-7), 5vw, var(--s-10));
-    align-items: end;
-  }
-  .head > :nth-child(1) { grid-column: 1; grid-row: 1; }
-  .head > :nth-child(2) { grid-column: 1; grid-row: 2; }
-  .head > :nth-child(3) {
-    grid-column: 2; grid-row: 1 / span 2;
-    margin-block-start: 0;
-    /* The sub-line's descenders, so the two last lines sit level. */
-    padding-block-end: .15em;
-  }
+  margin-block-end: var(--flow-block);
 }
 
-/* Why.module.css's value, for the same reason it has it: this is the other
-   heading on the page that is a long sentence rather than a phrase. At --fs-xl
-   it ran to four lines. */
 .title {
-  /* 5.2vw: at 1024 the left column is 456px, and at 5.72vw the second
-     sentence missed it by a few pixels and the heading broke mid-sentence. */
-  font-size: clamp(1.75rem, 5.2vw, 3.875rem);
-  line-height: var(--lh-xl);
+  position: relative;
+  display: grid;
+  justify-items: center;
+  font-size: var(--fs-xl);
+  line-height: 1.04;
   font-weight: 400;
   letter-spacing: .008em;
-  text-wrap: balance;
-}
-
-/* The client's lede is a one-line statement of belief and the body is the
-   explanation under it. Bolding the first sentence keeps them one paragraph —
-   which is how they wrote it — while letting the eye take the claim first. */
-.lede { font-weight: 700; }
-
-/* The heading and the line under it, as one block in the left column. */
-.headMain { display: grid; justify-items: start; gap: var(--flow-head); }
-
-/* "Two purposes. One thoughtful design." — the client's lead-in to their three
-   bullets, set as a sub-line under the headline it elaborates. Display face at
-   roughly half the heading size, so the two stack as one voice at two volumes
-   rather than competing. */
-.purpose {
-  font-size: clamp(1.375rem, 2.6vw, 2rem);
-  line-height: var(--lh-md);
-  letter-spacing: .008em;
   color: var(--ink);
-  text-wrap: balance;
 }
+.line { display: block; }
 
-/* ---- the panels ------------------------------------------------------------
-   THREE since the Nov 2026 reorganisation — sleeve on, sleeve off, snack cup —
-   or two while the snack claim is gated off. Stacked on a phone, where the
-   markers turn a quarter turn so they still point from one frame to the next. */
-.showcase {
-  display: grid;
-  gap: var(--s-5);
-  justify-items: stretch;
-  align-items: stretch;
-}
-@media (min-width: 900px) {
-  .showcase {
-    /* auto for the marker, so the two panels stay exactly equal — 1fr on all
-       three would have given the arrow a third of the row. */
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    gap: clamp(var(--s-5), 2.4vw, var(--s-7));
-    /* stretch, not center: centred, a three-line caption made the Puddle
-       panel 25px taller than the bottle's and the two tops sat out of line.
-       The arrow centres itself (.slide). */
-    align-items: stretch;
-  }
-}
-
-/* THREE ACROSS from 1024. Between 900 and 1023 three frames would put each
-   one near 190px wide — too narrow for Goosey and the Puddle side by side in
-   the last — so they stack there as they do on a phone.
-   The art box steps down to fit a third of the row: the last frame holds
-   Goosey and the Puddle together, about 1.06 x --art-h wide, and the panel's
-   inner width at 1440 is ~250px. */
-@media (max-width: 1023px) {
-  .showcaseThree { grid-template-columns: minmax(0, 1fr); }
-  .showcaseThree .slide { rotate: 90deg; }
-}
-@media (min-width: 1024px) {
-  .showcaseThree {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-    gap: clamp(var(--s-4), 1.6vw, var(--s-5));
-  }
-  .showcaseThree .art { --art-h: clamp(170px, 15.5vw, 230px); }
-  .showcaseThree .slide { inline-size: 52px; block-size: 52px; }
-  .showcaseThree .slide svg { inline-size: 24px; block-size: 24px; }
-  .showcaseThree .panel { padding: clamp(var(--s-4), 1.6vw, var(--s-5)); }
-  .showcaseThree .cap { gap: var(--s-4); }
-}
-
-.panel {
-  display: grid;
-  /* Art, then caption, both from the top. The art box is one fixed height in
-     both panels, so the captions start level even when one runs a line
-     longer — any spare height collects at the bottom, not between them. */
-  grid-template-rows: auto minmax(0, 1fr);
-  align-content: start;
-  gap: var(--s-4);
-  margin: 0;
-  padding: clamp(var(--s-5), 2vw, var(--s-6));
-  border: var(--border-lg);
-  border-radius: var(--r-lg);
-}
-/* --floor-inset is per panel because the two hold different widths of content:
-   one bottle at ~138px, and Goosey plus the Puddle at ~300. One shared inset
-   drew a 333px platter under a 138px bottle, which reads as a stage rather
-   than as the ground it is standing on. */
-.panelBottle { background: var(--chichi-field); --floor: var(--chichi); --floor-inset: 29%; }
-.panelPuddle { background: var(--vincey-field); --floor: var(--vincey); --floor-inset: 10%; }
-/* The middle frame, on Goosey's field: it sits between Chi Chi's pink and the
-   Puddle's blue, and the yellow keeps the three from reading as two. */
-.panelOff { background: var(--goosey-field); --floor: var(--goosey); --floor-inset: 8%; }
-
-/* The art box owns the height, so the two panels agree on where their captions
-   start no matter how differently the bottle and the sleeve are proportioned.
-   The bottle render is 0.45 wide to tall and the Puddle is 0.8, so left to
-   themselves one panel came out 120px taller than the other. */
-.art {
-  /* One height, named once. The two panels agree on where their captions start
-     because they agree on this, and the Puddle is a fraction of it rather than
-     three hand-copied clamp values. */
-  --art-h: clamp(200px, 22vw, 310px);
-  position: relative;
-  display: grid;
-  place-items: end center;
-  block-size: var(--art-h);
-}
-
-/* THE FLOOR. Both panels held their contents in mid-air on a flat field — a
-   bottle and a duck floating in colour, which is what made panel one read as
-   mostly empty pink. A pale ellipse under them is the same device the product
-   pages use, and it does two things at once: it says these objects are
-   standing somewhere, and it fills the bottom of the field with something that
-   belongs there. Each panel tints it with its own character colour. */
-.floor {
+/* The drawn underline under "Everyday". */
+.underlined { position: relative; display: inline-block; }
+.swash {
   position: absolute;
-  z-index: 0;
-  inset-inline: var(--floor-inset, 12%);
-  inset-block-end: 2%;
-  block-size: 12%;
-  background: color-mix(in srgb, var(--floor) 17%, transparent);
-  border-radius: 50%;
-}
-
-/* ⚠️ EXPLICIT HEIGHTS, NOT PERCENTAGES, and both notes below are why.
-   1. <Picture> renders <picture><img></picture>, and <picture> is an INLINE box
-      with auto height — so `block-size: 100%` on the img resolves against auto
-      and falls back to intrinsic. A 626 × 1404 bottle render then bursts 646px
-      out of a 290px panel. (The same bug put the author portrait in the top of
-      its circle on the blog.)
-   2. Giving the <picture> `block-size: 100%` instead does not fix it: .art's
-      row is an implicit `auto` row that `align-content: normal` stretches
-      afterwards, so the percentage has nothing definite to resolve against at
-      layout time and falls back again — measured at 974px.
-   A length resolves on the first pass, from the one variable above. */
-/* A GRID, not a block. <picture> is a block that fills the art box, and the
-   <img> inside it is INLINE — so with `inline-size: auto` it sat at the start
-   of the line box and the bottle hung off the left of its panel. */
-.art picture { position: relative; z-index: 1; display: grid; justify-items: center; inline-size: 100%; }
-/* `inline-size: auto` so the IMG BOX IS THE BOTTLE, rather than a panel-wide
-   box with the bottle letterboxed inside it by object-fit. The width then comes
-   from the render's own aspect, which is what lets `sizes` on the <Picture> be
-   a true number instead of a guess at how much of the box the art fills. */
-/* ⚠️ SCOPED TO THE BOTTLE PANEL. As `.art img` it also caught Goosey in the
-   other panel and stretched a 1:1 character into a 132 x 310 box — he rendered
-   as a tall thin duck, and nothing about the rule said why. */
-.artBottle img { inline-size: auto; max-inline-size: 100%; block-size: var(--art-h); }
-/* The sleeve-off photograph: the bottle in it stands the full art height, the
-   same size as the bottle in the first frame, so the eye reads one bottle
-   across the sequence. */
-.artOff img { inline-size: auto; max-inline-size: 100%; block-size: var(--art-h); object-fit: contain; }
-
-/* ---- panel 2: Goosey and the Puddle, as one group -------------------------
-   A TWO-COLUMN GRID, not a centred drawing with a duck absolutely positioned
-   beside it. Absolute left the pair sitting 60px left of the panel's middle —
-   the Puddle was centred and Goosey hung off its edge into the margin, so the
-   right half of the panel was empty blue. Laid out as a row that centres
-   itself, the group is centred and the overlap is one negative margin.
-
-   Every size is a fraction of --art-h, so the pair scales with the box instead
-   of needing a breakpoint of its own:
-     Puddle  0.76 tall  (a part should not loom as large as the whole bottle
-                         beside it), x 0.8 for the drawing's own aspect
-     Goosey  0.57 wide  (a head shorter than the Puddle — a duck standing
-                         beside a thing, not a duck the size of it)
-     overlap 0.16       (he crosses behind its edge rather than touching it) */
-.artPuddle {
-  grid-template-columns: auto auto;
-  justify-content: center;
-  align-items: end;
-}
-.puddleArt {
-  position: relative;
-  z-index: 1;
-  display: block;
-}
-/* A length on the img, not a percentage — <picture> is inline with auto height.
-   0.76 of the art box, the height the drawing had, so the caption row is where
-   it was. */
-.puddleArt picture { display: block; }
-.puddleArt img { display: block; block-size: calc(var(--art-h) * 0.76); inline-size: auto; }
-
-/* z-index 0 puts him UNDER the drawing: he shows through where the SVG is
-   transparent and is hidden where the shape actually is, which is what makes
-   him read as standing behind the Puddle rather than pasted beside it. */
-.snacker {
-  z-index: 0;
-  inline-size: calc(var(--art-h) * 0.57);
-  margin-inline-end: calc(var(--art-h) * -0.16);
-  margin-block-end: calc(var(--art-h) * -0.03);
+  inset-inline: 0;
+  inset-block-end: -.14em;
+  inline-size: 100%;
+  block-size: .2em;
+  color: var(--sun);
+  overflow: visible;
   pointer-events: none;
 }
 
-.cap {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--s-5);
-  /* start: the badges sit level across the two panels even when one caption
-     runs a line longer than the other. */
-  align-items: start;
-  padding-inline-start: 5px; /* the badge's outer ring */
+/* Two marks of light either side of the headline. */
+.spark {
+  position: absolute;
+  inset-block-start: 4%;
+  inline-size: clamp(26px, 3vw, 44px);
+  color: var(--sun);
+  pointer-events: none;
 }
-/* The numbered label the client asked for — "1. Protective Sleeve", "2. Snack
-   Holder" — as a disc rather than a printed numeral, so it reads at a glance
-   from across the section. */
-.num {
-  display: grid; place-items: center;
-  inline-size: 46px; block-size: 46px;
-  margin-block-start: -2px;
-  background: var(--sun); color: var(--ink);
-  border: var(--border-lg); border-radius: 50%;
-  /* A sticker, not a bullet: a paper ring and an ink ring outside the disc,
-     and a small tilt — the badge language of the Coming Soon chips. */
-  box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--ink);
-  rotate: -8deg;
-  /* Poppins at its heaviest. Bangbang's digits are hand-drawn and its 1 read
-     as a squiggle at this size. */
-  font-family: var(--font-body); font-weight: 800; font-size: 1.25rem; line-height: 1;
-  font-variant-numeric: tabular-nums;
-  transition: rotate .5s var(--spring);
-}
-.panel:hover .num { rotate: 6deg; }
-.capText { display: grid; gap: 2px; font-size: var(--fs-small); line-height: 1.5; }
-.capText strong { font-size: var(--fs-body); font-weight: 700; }
+.spark svg { display: block; inline-size: 100%; block-size: auto; }
+.sparkL { inset-inline-end: 100%; margin-inline-end: clamp(4px, 1vw, 16px); }
+.sparkR { inset-inline-start: 100%; margin-inline-start: clamp(4px, 1vw, 16px); }
+/* On a phone the headline fills the measure and the marks would sit off it. */
+@media (max-width: 599px) { .spark { display: none; } }
 
-/* The slide marker. Between the panels at width, a quarter turn when they
-   stack — the gesture has to point at the Puddle either way. */
-.slide {
-  display: grid; place-items: center;
-  justify-self: center; align-self: center;
-  /* 64, and sunshine yellow. At 52px in paper it was the SMALLEST element in
-     the composition while doing its most important job — saying that the thing
-     on the right comes off the thing on the left. */
-  inline-size: 64px; block-size: 64px;
-  background: var(--sun); color: var(--ink);
-  border: var(--border-lg); border-radius: 50%;
-  rotate: 90deg;
-}
-.slide svg { inline-size: 28px; block-size: 28px; }
-@media (min-width: 900px) { .slide { rotate: none; } }
-
-/* The third bullet, full width under both panels: it is what the two parts are
-   for rather than a third part. */
-.everyday {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--s-4);
-  /* Centred against ONE line of text at width, aligned to the first line once
-     it wraps to four — a disc floating level with line three reads as a stray
-     graphic rather than as the row's own mark. */
-  align-items: start;
-  margin-block-start: var(--s-4);
-  padding: var(--s-4) clamp(var(--s-5), 2.4vw, var(--s-7));
-  background: var(--paper);
-  /* --border-lg, matching the two panels above it. At 1.5px against their 2px
-     this row read as a notice stuck under the set rather than the third of the
-     client's three bullets. */
-  border: var(--border-lg);
-  border-radius: var(--r-lg);
-  font-size: var(--fs-body);
-  line-height: 1.6;
-  text-wrap: pretty;
-}
-/* A splash in a well, the same device the Specs cards use for their glyphs —
-   without it this row read as a notice bar bolted under the panels rather than
-   as the third of the client's three bullets. */
-.everydayMark {
-  display: grid; place-items: center;
-  margin-block-start: -2px;
-  inline-size: 44px; block-size: 44px;
-  background: var(--sun); color: var(--ink);
-  border: var(--border); border-radius: var(--r);
-}
-@media (min-width: 760px) {
-  .everyday { align-items: center; }
-  .everydayMark { margin-block-start: 0; }
-}
-
-.close {
-  margin-block-start: var(--s-6);
-  text-align: center;
-  font-size: clamp(1.375rem, 2.6vw, 2rem);
-  line-height: var(--lh-md);
-  letter-spacing: .008em;
+.sub {
+  margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow));
+  max-width: 60ch;
   text-wrap: balance;
 }
+
+/* ---- the three frames ---------------------------------------------------- */
+.frames {
+  --gap: clamp(48px, 5vw, 80px);
+  display: grid;
+  gap: var(--gap);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (min-width: 900px) {
+  .frames { grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
+  .frames[data-count='2'] { --cols: 2; max-inline-size: 760px; margin-inline: auto; }
+}
+
+.frameItem { position: relative; display: grid; }
+
+.frame {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  justify-items: center;
+  align-content: start;
+  gap: var(--s-3);
+  margin: 0;
+  padding: clamp(var(--s-5), 2.4vw, var(--s-6)) clamp(var(--s-4), 2vw, var(--s-6)) 0;
+  background: var(--field);
+  border-radius: clamp(24px, 2.4vw, 34px);
+  text-align: center;
+  overflow: clip;
+}
+.frame[data-frame='1'] { --field: var(--vincey-field); }
+.frame[data-frame='2'] { --field: var(--goosey-field); }
+.frame[data-frame='3'] { --field: var(--chichi-field); }
+
+.num {
+  display: grid; place-items: center;
+  inline-size: 44px; block-size: 44px;
+  background: var(--sun);
+  color: var(--ink);
+  border-radius: 50%;
+  font-family: var(--font-body); font-weight: 800; font-size: 1.125rem; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.frameTitle {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: .01em;
+  color: var(--ink);
+  max-inline-size: 12ch;
+  text-wrap: balance;
+}
+
+/* ONE ART HEIGHT for all three, standing on the card's foot, so the bottle in
+   frame 1 and the bottle in frame 2 are the same size and read as one bottle
+   across the sequence.
+   ⚠️ A LENGTH on the img, not a percentage: <Picture> renders an inline
+   <picture>, whose auto height gives a percentage nothing to resolve against. */
+.art {
+  --art-h: clamp(220px, 21vw, 300px);
+  display: grid;
+  place-items: end center;
+  align-self: end;
+  inline-size: 100%;
+  block-size: var(--art-h);
+  padding-block-end: clamp(var(--s-4), 1.8vw, var(--s-6));
+  box-sizing: content-box;
+}
+.art picture { display: grid; justify-items: center; inline-size: 100%; }
+.art img { inline-size: auto; max-inline-size: 100%; block-size: var(--art-h); object-fit: contain; }
+/* The snack cup is a part, not the whole bottle: shorter, so it does not loom
+   as large as the bottle in the frame before it. */
+.frame[data-frame='3'] .art img { block-size: calc(var(--art-h) * 0.8); }
+
+/* ---- the drawn arrows, in the gap between frames -------------------------
+   Pointing down between stacked frames; across between frames in a row. */
+.arrow {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: calc(var(--gap) / -2);
+  translate: -50% -50%;
+  rotate: 90deg;
+  inline-size: 44px;
+  color: var(--ink);
+  pointer-events: none;
+}
+.arrow svg { display: block; inline-size: 100%; block-size: auto; }
+@media (min-width: 900px) {
+  .arrow {
+    inset-inline-start: calc(var(--gap) / -2);
+    inset-block-start: 58%;
+    rotate: none;
+    inline-size: clamp(36px, 3.4vw, 52px);
+  }
+}
+
+/* ---- the client's explanation, under the frames -------------------------- */
+.body {
+  max-inline-size: 62ch;
+  margin: var(--flow-block) auto 0;
+  text-align: center;
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.body strong { font-weight: 700; }
