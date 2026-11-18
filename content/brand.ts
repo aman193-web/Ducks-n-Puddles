@@ -28,8 +28,9 @@
  *
  * IT IS `true` HERE ON PURPOSE, and that is not a contradiction: the client
  * asked to SEE this content, and they cannot approve copy that does not render.
- * Both states are built and both are finished — see .showcaseSolo in
- * MeetThePuddle.module.css for the one-panel layout the closed gate uses.
+ * Both states are built and both are finished — with the gate closed, Meet
+ * the Puddle shows its first two frames (sleeve on, sleeve off) and drops the
+ * snack cup.
  * SET IT TO false BEFORE THE SITE GOES LIVE, unless approval has landed by then.
  *
  * TODO(client): written confirmation of food-contact safety and compliance.
@@ -386,7 +387,9 @@ export const puddle = {
   close: 'One less thing for parents to pack. One more thing for little ones to love.',
   /** Section 6, "Visual 4: How It Works — Consider a simple three-step graphic".
    *  Their three steps and their three sentences.
-   *  ⚠️ NOT RENDERED, and that is a judgement call worth stating. The two
+   *  ONE IS RENDERED NOW: 'slide' captions the middle frame of Meet the
+   *  Puddle, which the client's sleeve-off photograph (Nov 2026) made a
+   *  three-frame sequence. The note below is why the other two are not. The two
    *  panels above already read sip → slide → snack: bottle, arrow, Puddle with
    *  snacks in it. Adding three more steps saying the same thing in words would
    *  have put ~240px of restatement in a section that is already the third

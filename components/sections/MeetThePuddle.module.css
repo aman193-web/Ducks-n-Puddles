@@ -99,9 +99,10 @@
   text-wrap: balance;
 }
 
-/* ---- the two panels -------------------------------------------------------
-   Stacked below 900, where a two-up would put each bottle at about 150px, and
-   the marker turns a quarter turn so it still points from one to the other. */
+/* ---- the panels ------------------------------------------------------------
+   THREE since the Nov 2026 reorganisation — sleeve on, sleeve off, snack cup —
+   or two while the snack claim is gated off. Stacked on a phone, where the
+   markers turn a quarter turn so they still point from one frame to the next. */
 .showcase {
   display: grid;
   gap: var(--s-5);
@@ -119,18 +120,28 @@
        The arrow centres itself (.slide). */
     align-items: stretch;
   }
+}
 
-  /* WITH THE SNACK CLAIM GATED OFF there is one panel, not two — and left in
-     the two-up grid it sat in the left third with the rest of the row empty,
-     which reads as a panel that failed to load. One panel takes the full width
-     and turns on its side: art beside its caption rather than above it. */
-  .showcaseSolo { grid-template-columns: minmax(0, 1fr); }
-  .showcaseSolo .panel {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: auto;
-    gap: clamp(var(--s-6), 4vw, var(--s-8));
-    align-items: center;
+/* THREE ACROSS from 1024. Between 900 and 1023 three frames would put each
+   one near 190px wide — too narrow for Goosey and the Puddle side by side in
+   the last — so they stack there as they do on a phone.
+   The art box steps down to fit a third of the row: the last frame holds
+   Goosey and the Puddle together, about 1.06 x --art-h wide, and the panel's
+   inner width at 1440 is ~250px. */
+@media (max-width: 1023px) {
+  .showcaseThree { grid-template-columns: minmax(0, 1fr); }
+  .showcaseThree .slide { rotate: 90deg; }
+}
+@media (min-width: 1024px) {
+  .showcaseThree {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: clamp(var(--s-4), 1.6vw, var(--s-5));
   }
+  .showcaseThree .art { --art-h: clamp(170px, 15.5vw, 230px); }
+  .showcaseThree .slide { inline-size: 52px; block-size: 52px; }
+  .showcaseThree .slide svg { inline-size: 24px; block-size: 24px; }
+  .showcaseThree .panel { padding: clamp(var(--s-4), 1.6vw, var(--s-5)); }
+  .showcaseThree .cap { gap: var(--s-4); }
 }
 
 .panel {
@@ -152,6 +163,9 @@
    than as the ground it is standing on. */
 .panelBottle { background: var(--chichi-field); --floor: var(--chichi); --floor-inset: 29%; }
 .panelPuddle { background: var(--vincey-field); --floor: var(--vincey); --floor-inset: 10%; }
+/* The middle frame, on Goosey's field: it sits between Chi Chi's pink and the
+   Puddle's blue, and the yellow keeps the three from reading as two. */
+.panelOff { background: var(--goosey-field); --floor: var(--goosey); --floor-inset: 8%; }
 
 /* The art box owns the height, so the two panels agree on where their captions
    start no matter how differently the bottle and the sleeve are proportioned.
@@ -207,6 +221,10 @@
    other panel and stretched a 1:1 character into a 132 x 310 box — he rendered
    as a tall thin duck, and nothing about the rule said why. */
 .artBottle img { inline-size: auto; max-inline-size: 100%; block-size: var(--art-h); }
+/* The sleeve-off photograph: the bottle in it stands the full art height, the
+   same size as the bottle in the first frame, so the eye reads one bottle
+   across the sequence. */
+.artOff img { inline-size: auto; max-inline-size: 100%; block-size: var(--art-h); object-fit: contain; }
 
 /* ---- panel 2: Goosey and the Puddle, as one group -------------------------
    A TWO-COLUMN GRID, not a centred drawing with a duck absolutely positioned

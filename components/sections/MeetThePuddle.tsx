@@ -40,6 +40,9 @@ export function MeetThePuddle() {
      the gate closed "Made for Everyday Adventures", which makes no snack claim
      at all, silently disappeared along with it. */
   const [sleeve, snack, everyday] = puddle.parts
+  /* The middle step's caption is the client's own "Slide" step, from the
+     how-it-works copy in the same brief (puddle.steps). */
+  const slide = puddle.steps.find((s) => s.k === 'slide')!
 
   return (
     <section className={styles.section} id="puddle" aria-labelledby="puddle-title">
@@ -83,7 +86,13 @@ export function MeetThePuddle() {
             marker, panel — collapsing to one column with the marker rotated a
             quarter turn, so the gesture still points from the bottle to the
             Puddle when they are stacked rather than side by side. */}
-        <div className={`${styles.showcase} ${SNACK_CLAIMS_APPROVED ? '' : styles.showcaseSolo}`}>
+        {/* THREE FRAMES, on the reorganisation doc (Nov 2026): the bottle
+            with its sleeve on, the sleeve slid off and standing beside it,
+            and the sleeve as a snack cup. The middle frame is the client's
+            own photograph, supplied for exactly this. With the snack claim
+            gated off the third frame goes and the first two stay — sliding
+            the sleeve off makes no claim. */}
+        <div className={`${styles.showcase} ${SNACK_CLAIMS_APPROVED ? styles.showcaseThree : ''}`}>
           <figure className={`${styles.panel} ${styles.panelBottle}`} data-anim="" data-anim-y="24">
             {/* `sizes` is the BOTTLE's box, not the panel's. The art box is
                 --art-h tall and the render is 0.446 wide to tall, so the image
@@ -103,6 +112,31 @@ export function MeetThePuddle() {
               <span className={styles.capText}>
                 <strong>{sleeve.label}</strong>
                 {sleeve.body}
+              </span>
+            </figcaption>
+          </figure>
+
+          <span className={styles.slide} aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8"
+                 strokeLinecap="round" strokeLinejoin="round" focusable="false">
+              <path d="M4 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+
+          <figure className={`${styles.panel} ${styles.panelOff}`} data-anim="" data-anim-y="24">
+            <span className={`${styles.art} ${styles.artOff}`}>
+              <span className={styles.floor} aria-hidden="true" />
+              <Picture
+                id="sleeve-off"
+                sizes="(min-width: 1024px) 200px, 240px"
+                alt="The same bottle with its silicone Puddle slid off and standing beside it."
+              />
+            </span>
+            <figcaption className={styles.cap}>
+              <span className={styles.num} aria-hidden="true">2</span>
+              <span className={styles.capText}>
+                <strong>{slide.label}</strong>
+                {slide.body}
               </span>
             </figcaption>
           </figure>
@@ -146,7 +180,7 @@ export function MeetThePuddle() {
                   </span>
                 </span>
                 <figcaption className={styles.cap}>
-                  <span className={styles.num} aria-hidden="true">2</span>
+                  <span className={styles.num} aria-hidden="true">3</span>
                   <span className={styles.capText}>
                     <strong>{snack.label}</strong>
                     {snack.body}

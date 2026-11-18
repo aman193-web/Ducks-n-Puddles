@@ -716,6 +716,24 @@
     "nativeWidth": 885,
     "nativeHeight": 1044
   },
+  "sleeve-off": {
+    "id": "sleeve-off",
+    "tier": "A",
+    "widths": [
+      320,
+      640,
+      1000
+    ],
+    "alpha": true,
+    "v": "5fb4b0a3",
+    "aspect": 0.8744,
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "nativeWidth": 1079,
+    "nativeHeight": 1234
+  },
   "puddle-lucy": {
     "id": "puddle-lucy",
     "tier": "A",

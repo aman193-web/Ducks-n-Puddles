@@ -145,6 +145,10 @@ export const alphaAssets = [
      bottle and filled with snacks (Oct 2026). It replaces the drawn PuddleShape
      in Meet the Puddle and on the product pages. Trimmed on import. */
   { id: 'puddle-snacks', src: `${BRAND_DIR}/products/puddle-snacks.png`, widths: [320, 640, 1000] },
+  /* THE MIDDLE STEP — Chi Chi's bottle with the Puddle slid off and standing
+     beside it, supplied Nov 2026 for the reorganisation doc's three-frame
+     sequence (sleeve on, sleeve off, snack cup). Trimmed on import. */
+  { id: 'sleeve-off', src: `${BRAND_DIR}/products/sleeve-off.png`, widths: [320, 640, 1000] },
   /* The same render with "Lucy" on it — the client's concept for the coming
      name personalisation, used in Personalize Your Puddle. Trimmed on import. */
   { id: 'puddle-lucy', src: `${BRAND_DIR}/products/puddle-lucy.png`, widths: [320, 640, 1000] },
