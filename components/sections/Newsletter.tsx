@@ -11,13 +11,43 @@ import styles from './Newsletter.module.css'
  * form, this, and a footer field) is two too many — the same list, asked for
  * three times, reads as nagging rather than as an offer.
  *
- * THE COPY IS SECTION 7 OF THE CLIENT'S OCT 2026 BRIEF, verbatim: the coming
+ * THE PERSONALISATION VARIANT (on hold since Nov 2026, kept for launch) is
+ * SECTION 7 OF THE CLIENT'S OCT 2026 BRIEF, verbatim: the coming
  * personalisation is used as the reason to join. Their instruction was to put
  * it on the EXISTING newsletter rather than a separate signup, so this band
  * carries it and tags the subscriber `interest:personalization` (see
  * INTERESTS); the Personalize section's button points here.
  */
-export function Newsletter() {
+/* THE PLAIN NEWSLETTER, the default since Nov 2026: personalisation is on
+   hold, so the blog's band asks for the newsletter itself. Its words are the
+   site's own — the article pages' sign-off says exactly this. */
+const NEWSLETTER = {
+  title: 'Get the next one by email.',
+  body: 'We send one short note every couple of weeks, and the Duck Squad hears about the bottles before this site does.',
+  button: 'Subscribe',
+}
+
+/**
+ * `variant="personalization"` brings back the personalisation teaser below,
+ * built and kept for its launch.
+ */
+export function Newsletter({ variant = 'newsletter' }: { variant?: 'newsletter' | 'personalization' }) {
+  if (variant === 'newsletter') {
+    return (
+      <section id="newsletter" className={styles.section} aria-labelledby="newsletter-title">
+        <div className="wrap">
+          <div className={styles.panel}>
+            <h2 id="newsletter-title" className={`d ${styles.title}`}>{NEWSLETTER.title}</h2>
+            <div className={styles.right}>
+              <p className={styles.blurb}>{NEWSLETTER.body}</p>
+              <FooterSignup label={NEWSLETTER.button} showLabel />
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section id="newsletter" className={styles.section} aria-labelledby="newsletter-title">
       <div className="wrap">
