@@ -69,9 +69,15 @@
 /* On a phone the headline fills the measure and the marks would sit off it. */
 @media (max-width: 599px) { .spark { display: none; } }
 
+/* "The Duck Holds the Drink. The Puddle Holds the Snack." — in the display
+   face at about half the headline, so the two read as one voice at two
+   volumes. */
 .sub {
   margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow));
-  max-width: 60ch;
+  font-size: clamp(1.25rem, 2.2vw, 1.875rem);
+  line-height: 1.2;
+  letter-spacing: .008em;
+  color: var(--ink);
   text-wrap: balance;
 }
 
@@ -124,9 +130,11 @@
   line-height: 1.1;
   letter-spacing: .01em;
   color: var(--ink);
-  max-inline-size: 12ch;
   text-wrap: balance;
 }
+/* Title, then the client's one-line description under it. */
+.cap { display: grid; justify-items: center; gap: var(--s-2); max-inline-size: 30ch; }
+.capBody { font-size: var(--fs-small); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
 
 /* ONE ART HEIGHT for all three, standing on the card's foot, so the bottle in
    frame 1 and the bottle in frame 2 are the same size and read as one bottle
@@ -182,3 +190,34 @@
   text-wrap: pretty;
 }
 .body strong { font-weight: 700; }
+
+/* The client's third bullet — what the frames are for — and their closing
+   line, centred under the paragraph. */
+.everyday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  max-inline-size: 62ch;
+  margin: var(--s-5) auto 0;
+  text-align: start;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--ink);
+}
+.everydayMark {
+  flex: none;
+  display: grid; place-items: center;
+  inline-size: 40px; block-size: 40px;
+  background: var(--sun);
+  color: var(--ink);
+  border-radius: 50%;
+}
+.close {
+  margin-block-start: var(--flow-block);
+  text-align: center;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.25;
+  color: var(--ink);
+  text-wrap: balance;
+}

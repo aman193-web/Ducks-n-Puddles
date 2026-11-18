@@ -1,5 +1,6 @@
 import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
+import { Motif } from '@/components/Motif'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { puddle, puddleSleeveOnly, SNACK_CLAIMS_APPROVED } from '@/content/brand'
 import styles from './MeetThePuddle.module.css'
@@ -8,21 +9,22 @@ import styles from './MeetThePuddle.module.css'
  * MEET THE PUDDLE — the 2-in-1 silicone sleeve, as three frames.
  *
  * Opens section 02, "Product Features & Details", of the client's Nov 2026
- * reorganisation, and is laid out on their design reference for it: a centred
+ * reorganisation. THE DESIGN follows a reference supplied for it — a centred
  * headline with a hand-drawn underline, one line under it, and three soft
- * cards — number, title, picture — with a drawn arrow from each to the next:
+ * cards with a drawn arrow from each to the next. THE WORDS DO NOT: they are
+ * the doc's headline and the client's own Puddle copy (Oct 2026 brief), as
+ * they were before the redesign.
  *
- *   1  Your 2-in-1 Water Bottle      Chi Chi's bottle, sleeve on
- *   2  Remove the Silicone Sleeve    the client's photograph, sleeve slid off
- *   3  Turn It Into a Snack Cup      the client's render, sleeve full of snacks
+ *   1  Protective Sleeve   Chi Chi's bottle, sleeve on
+ *   2  Slide               the client's photograph, sleeve slid off
+ *   3  Snack Holder        the client's render, sleeve full of snacks
  *
  * CHI CHI'S BOTTLE, because her body is pink and her Puddle is blue, so the
  * sleeve reads as a separate part at a glance — on Vincey (blue on blue) it
  * looks like the bottom of the bottle.
  *
- * The explanatory paragraph from the Oct 2026 brief closes the section, under
- * the frames, centred: the frames make the point and the paragraph is there
- * for the reader who wants it said.
+ * Under the frames, centred: the client's explanatory paragraph, their third
+ * bullet ("Made for Everyday Adventures") and their closing line.
  *
  * ⚠️ THE SNACK CLAIM IS GATED (SNACK_CLAIMS_APPROVED). Closed, the third frame
  * and the snack lines go and the first two frames — which make no claim —
@@ -51,7 +53,16 @@ function Arrow() {
 }
 
 export function MeetThePuddle() {
-  const frames = puddle.sequence.filter((f) => SNACK_CLAIMS_APPROVED || !('snackClaim' in f))
+  /* BY ROLE, NOT BY INDEX: the third of the client's parts is not a frame,
+     it is what all three are for, and it runs under them. */
+  const [sleeve, snack, everyday] = puddle.parts
+  /* The middle frame's caption is the client's own "Slide" step. */
+  const slide = puddle.steps.find((s) => s.k === 'slide')!
+  const frames = [
+    { n: 1, label: sleeve.label, body: sleeve.body },
+    { n: 2, label: slide.label, body: slide.body },
+    ...(SNACK_CLAIMS_APPROVED ? [{ n: 3, label: snack.label, body: snack.body }] : []),
+  ]
   const [first, second] = puddle.headline.split('. ')
 
   return (
@@ -95,8 +106,10 @@ export function MeetThePuddle() {
             </h2>
           )}
 
+          {/* The client's primary marketing message (Oct 2026), under the
+              doc's headline. It is itself a snack claim, so it is gated. */}
           {SNACK_CLAIMS_APPROVED && (
-            <p className={`lead ${styles.sub}`} data-anim="">{puddle.subline}</p>
+            <p className={`d ${styles.sub}`} data-anim="">{puddle.message}</p>
           )}
         </div>
 
@@ -106,7 +119,10 @@ export function MeetThePuddle() {
               {i > 0 && <Arrow />}
               <figure className={styles.frame} data-frame={f.n} data-anim="" data-anim-y="24">
                 <span className={styles.num} aria-hidden="true">{f.n}</span>
-                <figcaption className={styles.frameTitle}>{f.title}</figcaption>
+                <figcaption className={styles.cap}>
+                  <strong className={styles.frameTitle}>{f.label}</strong>
+                  <span className={styles.capBody}>{f.body}</span>
+                </figcaption>
                 <span className={styles.art}>
                   <Picture id={ART[i].id} sizes={ART[i].sizes} alt={ART[i].alt} />
                 </span>
@@ -119,6 +135,15 @@ export function MeetThePuddle() {
           <strong>{puddle.lede}</strong>{' '}
           {SNACK_CLAIMS_APPROVED ? puddle.body : puddleSleeveOnly.body}
         </p>
+
+        <p className={styles.everyday} data-anim="">
+          <span className={styles.everydayMark} aria-hidden="true">
+            <Motif name="splash" size={22} />
+          </span>
+          <span><strong>{everyday.label}.</strong> {everyday.body}</span>
+        </p>
+
+        <p className={`d ${styles.close}`} data-anim="">{puddle.close}</p>
       </div>
     </section>
   )
