@@ -156,28 +156,17 @@
   padding-block-end: clamp(var(--s-4), 1.8vw, var(--s-6));
   box-sizing: content-box;
 }
-/* "2-in-1 Bottle + Snack Cup" on the first frame: a sun-yellow tag tilted
-   against the bottle's shoulder, the badge language of the site's chips. */
-.art { position: relative; }
+/* "2-in-1 Bottle + Snack Cup", the first frame's subheading: a small
+   sun-yellow pill between its title and its description. */
 .twoInOne {
-  position: absolute;
-  z-index: 2;
-  /* From the art box's own left edge, not from the bottle's centre: off the
-     centre it ran out of the card and was clipped at every desktop width. */
-  /* Across the bottle's body, below the face: higher, it sat over the eyes. */
-  inset-block-start: 46%;
-  inset-inline-start: 0;
-  rotate: -8deg;
-  padding: 6px 12px;
+  padding: 4px 12px;
   background: var(--sun);
   color: var(--ink);
-  border: var(--border);
   border-radius: var(--r-pill);
   font-family: var(--font-body); font-weight: 700;
   font-size: clamp(.75rem, .9vw, .875rem);
-  line-height: 1.2;
+  line-height: 1.3;
   white-space: nowrap;
-  box-shadow: 0 6px 14px rgba(16, 38, 74, .12);
 }
 .art picture { display: grid; justify-items: center; inline-size: 100%; }
 .art img { inline-size: auto; max-inline-size: 100%; block-size: var(--art-h); object-fit: contain; }

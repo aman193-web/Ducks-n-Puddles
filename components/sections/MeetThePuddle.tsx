@@ -123,14 +123,15 @@ export function MeetThePuddle() {
                 <span className={styles.num} aria-hidden="true">{f.n}</span>
                 <figcaption className={styles.cap}>
                   <strong className={styles.frameTitle}>{f.label}</strong>
-                  <span className={styles.capBody}>{f.body}</span>
-                </figcaption>
-                <span className={styles.art}>
-                  {/* The first frame names what the bottle is, in the client's
-                      own banner wording. A snack claim, so gated with it. */}
+                  {/* The first frame names what the bottle is — the client's
+                      own banner wording — as a subheading over its
+                      description. A snack claim, so gated with it. */}
                   {f.n === 1 && SNACK_CLAIMS_APPROVED && (
                     <span className={styles.twoInOne}>2-in-1 Bottle + Snack Cup</span>
                   )}
+                  <span className={styles.capBody}>{f.body}</span>
+                </figcaption>
+                <span className={styles.art}>
                   <Picture id={ART[i].id} sizes={ART[i].sizes} alt={ART[i].alt} />
                 </span>
               </figure>
