@@ -58,10 +58,19 @@ export function MeetThePuddle() {
   const [sleeve, snack, everyday] = puddle.parts
   /* The middle frame's caption is the client's own "Slide" step. */
   const slide = puddle.steps.find((s) => s.k === 'slide')!
+  /* Each frame's pill, in the client's words: frame 1 is their benefits-band
+     phrase, frames 2 and 3 are the Nov 2026 doc's own feature line, "Removable,
+     food-safe silicone sleeve that doubles as a snack cup", split across the
+     two halves of the gesture. Frames 1 and 3 make the snack claim and only
+     ever render with the gate open (frame 3 does not render at all without it;
+     frame 1's pill is dropped). */
   const frames = [
-    { n: 1, label: sleeve.label, body: sleeve.body },
-    { n: 2, label: slide.label, body: slide.body },
-    ...(SNACK_CLAIMS_APPROVED ? [{ n: 3, label: snack.label, body: snack.body }] : []),
+    { n: 1, label: sleeve.label, body: sleeve.body,
+      pill: SNACK_CLAIMS_APPROVED ? '2-in-1 Bottle + Snack Cup' : undefined },
+    { n: 2, label: slide.label, body: slide.body, pill: 'Removable Silicone Sleeve' },
+    ...(SNACK_CLAIMS_APPROVED
+      ? [{ n: 3, label: snack.label, body: snack.body, pill: 'Food-Safe Snack Cup' }]
+      : []),
   ]
   const [first, second] = puddle.headline.split('. ')
 
@@ -123,12 +132,7 @@ export function MeetThePuddle() {
                 <span className={styles.num} aria-hidden="true">{f.n}</span>
                 <figcaption className={styles.cap}>
                   <strong className={styles.frameTitle}>{f.label}</strong>
-                  {/* The first frame names what the bottle is — the client's
-                      own banner wording — as a subheading over its
-                      description. A snack claim, so gated with it. */}
-                  {f.n === 1 && SNACK_CLAIMS_APPROVED && (
-                    <span className={styles.twoInOne}>2-in-1 Bottle + Snack Cup</span>
-                  )}
+                  {f.pill && <span className={styles.pill}>{f.pill}</span>}
                   <span className={styles.capBody}>{f.body}</span>
                 </figcaption>
                 <span className={styles.art}>
