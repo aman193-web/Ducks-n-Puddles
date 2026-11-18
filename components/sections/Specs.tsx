@@ -40,8 +40,9 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; weight?: 'light
  * THE PICTURE BEHIND EACH CARD (Nov 2026). The client asked for the cards to
  * reveal an image on hover, product shots and lifestyle photographs both.
  *
- *   with a mouse      the picture wipes up over the card on hover, and the
- *                     card's label rides on it as a tag
+ *   with a mouse      the picture pops up out of the card on hover — a
+ *                     framed print springing up above it, drifting with the
+ *                     pointer — and the card keeps its text
  *   touch / narrow    nothing can hover, so the picture is simply THERE, at
  *                     the top of each card — and below 680 the cards become a
  *                     swipe rail, so eight pictures do not make the section
@@ -104,8 +105,7 @@ export function Specs() {
                 {shot && (
                   <dd className={`${styles.shot} ${shot.product ? styles.shotProduct : ''}`}>
                     <Picture id={shot.id} tint={false}
-                             sizes="(min-width: 1000px) 280px, (min-width: 680px) 32vw, 290px" />
-                    <span className={styles.shotTag} aria-hidden="true">{s.label}</span>
+                             sizes="(min-width: 680px) 220px, 290px" />
                   </dd>
                 )}
               </div>
