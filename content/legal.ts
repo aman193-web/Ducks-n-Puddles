@@ -11,11 +11,9 @@
    The shape is three block kinds — a paragraph, a sub-heading, a list — which
    is everything the two documents actually use. <LegalPage> renders them.
 
-   ⚠️ TODO(client): both documents give the email address as a placeholder,
-   "[Add official support email]" / "[Add official privacy or support email]".
-   Until one arrives, <LegalPage> shows brand.email, which is still the
-   personal Gmail that content/brand.ts has had a TODO against since September.
-   Replace `contact.email` below the day the real address exists.
+   Both documents give the email address as a placeholder, "[Add official
+   support email]" / "[Add official privacy or support email]"; <LegalPage>
+   fills it with brand.supportEmail, team@ducksnpuddles.com.
    ========================================================================== */
 
 /** A paragraph, a bold sub-heading, or a bulleted list. */

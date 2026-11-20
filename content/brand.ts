@@ -62,27 +62,15 @@ export const brand = {
   closing: 'Every great adventure begins with a smile.',
   founders: 'Larisa & Vinny',
   place: 'South Florida',
-  /** The address the brand actually reads today — the one in the Instagram bio.
-   *  It works, so the footer and the contact form use it, but it is a personal
-   *  Gmail and not a support address. */
-  email: 'ducksnpuddles7@gmail.com', // TODO(client): professional domain address
+  /** The brand's address, on its own domain (supplied Nov 2026). */
+  email: 'team@ducksnpuddles.com',
   /**
-   * ⚠️ A PLACEHOLDER. THIS MAILBOX DOES NOT EXIST.
-   *
-   * The client's own Terms and Privacy documents (October 2026) leave the field
-   * blank in both places — "[Add official support email]" and "[Add official
-   * privacy or support email]" — so there is no real address to print. This is
-   * the shape the real one will take, on the brand's own domain, so that
-   * swapping it changes one line and nothing shifts.
-   *
-   * It is shown on /terms, /privacy and /contact, and the contact form composes
-   * to it — so until this is replaced, MAIL SENT FROM THE FORM WILL BOUNCE.
-   * brand.email (the Gmail) is still what the footer links to, because that one
-   * is read.
-   *
-   * TODO(client): the real support address, and this comment goes with it.
+   * The address printed on /contact, /terms and /privacy, linked from the
+   * footer, and the one the contact form composes to. The same mailbox as
+   * `email` — the client's team@ address, supplied Nov 2026, which replaced
+   * the placeholder that stood here.
    */
-  supportEmail: 'hello@ducksnpuddles.com',
+  supportEmail: 'team@ducksnpuddles.com',
   instagram: 'https://www.instagram.com/ducksnpuddles/',
   facebook: 'https://www.facebook.com/profile.php?id=61581543035997',
   domain: 'https://ducksnpuddles.com',

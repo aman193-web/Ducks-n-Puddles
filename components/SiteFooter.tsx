@@ -93,8 +93,7 @@ export function SiteFooter() {
       vb: frame([5.4, 5.0, 11.6, 19.0], 19.2) },
     /* brand.supportEmail, not brand.email: the legal pages and the contact
        page all print the support address, and a footer button that opened a
-       different one was the site holding two answers to the same question.
-       ⚠️ That address is a placeholder — see content/brand.ts. */
+       different one was the site holding two answers to the same question. */
     { href: `mailto:${brand.supportEmail}`, label: 'Email us', d: MAIL, fill: false, bg: 'var(--duck-blue)',
       vb: frame([2.5, 5.5, 19.0, 13.0], 20.0) },
   ]

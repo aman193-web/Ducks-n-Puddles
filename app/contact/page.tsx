@@ -25,11 +25,7 @@ export const metadata: Metadata = {
  * The seven subjects stay, below, but they are buttons now: pressing one sets
  * the form's subject and sends you back to it. See ContactPanel.
  *
- * ⚠️ THE ADDRESS ON THIS PAGE IS A PLACEHOLDER. brand.supportEmail is
- * hello@ducksnpuddles.com, a mailbox that does not exist — the client's own
- * documents leave the field blank. The direct line shows it and the form
- * composes to it, so mail sent from here BOUNCES until it is set. See the note
- * on brand.supportEmail.
+ * The address is brand.supportEmail — team@ducksnpuddles.com.
  */
 export default function ContactPage() {
   return (

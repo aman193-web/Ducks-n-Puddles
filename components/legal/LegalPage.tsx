@@ -60,9 +60,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
     ? { href: '/privacy', label: 'Privacy Policy' }
     : { href: '/terms', label: 'Terms of Service' }
 
-  /* Where the document left the address blank, brand.supportEmail stands in.
-     ⚠️ That address is a placeholder and does not receive mail yet — see the
-     note on it in content/brand.ts. */
+  /* Where the document left the address blank, brand.supportEmail stands in. */
   const email = doc.contact.email.startsWith('[') ? brand.supportEmail : doc.contact.email
 
   return (
