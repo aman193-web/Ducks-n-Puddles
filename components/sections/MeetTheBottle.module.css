@@ -210,9 +210,8 @@
 .pan {
   position: absolute;
   z-index: 5;
-  /* Level with the pond, below every callout (they run 27-76% of the
-     stage), so the label can open inwards without covering one. */
-  inset-block-start: calc(var(--frame-h) * .88);
+  /* Level with the middle of the bottle. */
+  inset-block-start: calc(var(--frame-h) * .5);
   display: inline-flex;
   align-items: center;
   gap: 0;
@@ -258,8 +257,7 @@
 .pan:active { scale: .95; }
 .pan:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
 @media (max-width: 1023px) {
-  /* No callouts beside the bottle on a phone: back to its middle. */
-  .pan { inset-block-start: calc(var(--frame-h) * .5); block-size: 48px; min-inline-size: 48px; padding-inline: 11px; }
+  .pan { block-size: 48px; min-inline-size: 48px; padding-inline: 11px; }
 }
 
 /* The chosen duck's colour behind the bottle, easing over as you switch. */
