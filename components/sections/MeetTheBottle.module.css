@@ -26,17 +26,17 @@
 .head {
   display: grid;
   gap: var(--flow-block);
-  align-items: center;
-  margin-block-start: var(--s-5);
 }
+/* Text left, prints right — and the prints sit UP, level with the label,
+   rather than centred against the whole column. */
 @media (min-width: 960px) {
   .head {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
-    column-gap: clamp(var(--s-7), 5vw, var(--s-10));
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+    column-gap: clamp(var(--s-6), 4vw, var(--s-9));
+    align-items: start;
   }
 }
 
-/* The why runs the full width of the page. */
 .why { display: grid; justify-items: start; }
 .why > * + * { margin-block-start: var(--s-3); }
 .lead {
@@ -47,10 +47,12 @@
 }
 .quote {
   position: relative;
-  /* Full width, so the sentence sits in two lines on a desktop and three on
-     a tablet, rather than four or five in a narrow column. */
-  max-inline-size: none;
-  font-size: clamp(1.875rem, 4.2vw, 4rem);
+  /* THREE LINES at every width. A measure in the heading's own em, so it
+     scales with the type: measured line by line from 360 to 1440, anything
+     from 10em to 13em sets this sentence in three, and 13.6em in two. 12em
+     sits in the middle of that. */
+  max-inline-size: 12em;
+  font-size: clamp(1.875rem, 3.7vw, 3.5rem);
   line-height: 1.06;
   letter-spacing: .006em;
   color: var(--ink);
@@ -70,6 +72,8 @@
   rotate: -6deg;
   overflow: visible;
 }
+/* One column: as large as a 12em measure across the screen allows. */
+@media (max-width: 959px) { .quote { font-size: clamp(1.5rem, calc((100vw - 2 * var(--gutter)) / 12.4), 2.5rem); } }
 /* No margin to hang it in on a narrower page: it sits above the line. */
 @media (max-width: 1199px) {
   .mark { position: static; display: block; inline-size: .7em; margin-block-end: .14em; }
@@ -78,9 +82,9 @@
   font-size: clamp(1.125rem, 1.5vw, 1.375rem);
   color: var(--ink);
 }
-.say { display: grid; justify-items: start; gap: var(--s-4); }
 .story {
-  max-inline-size: 44ch;
+  margin-block-start: var(--s-5) !important;
+  max-inline-size: 46ch;
   font-size: var(--fs-lead);
   line-height: 1.6;
   color: var(--ink);
@@ -89,19 +93,25 @@
 
 /* The three ducks, standing together — just the characters. */
 .trio {
+  --duck-h: clamp(96px, 8.4vw, 124px);
   display: flex;
   align-items: flex-end;
-  margin-block-start: var(--s-4);
+  margin-block-start: var(--s-6) !important;
 }
-.trioDuck { inline-size: clamp(92px, 9vw, 128px); }
-.trioDuck + .trioDuck { margin-inline-start: calc(clamp(92px, 9vw, 128px) * -.18); }
-.trio > :nth-child(2) { z-index: 1; translate: 0 6px; }
+/* One HEIGHT for all three. Width follows each pose's own shape. */
+.trioDuck { flex: none; }
+.trioDuck img { inline-size: auto; block-size: var(--duck-h); }
+.trioDuck + .trioDuck { margin-inline-start: calc(var(--duck-h) * -.12); }
+/* Goosey's pose is square with air either side of him; pull him in by it. */
+.trioGoosey { margin-inline-start: calc(var(--duck-h) * -.3) !important; }
+.trio > :nth-child(2) { position: relative; z-index: 1; }
 
 /* ---- three prints, pinned up -------------------------------------------- */
 .prints {
   position: relative;
   inline-size: 100%;
-  block-size: clamp(340px, 34vw, 470px);
+  block-size: clamp(360px, 34vw, 480px);
+  margin-block-start: var(--s-4);
 }
 .print {
   position: absolute;
@@ -124,7 +134,7 @@
   border-radius: 3px;
 }
 .printA { --rest: -6deg; --float: 6.4s; inline-size: 52%; inset-inline-start: 2%; inset-block-start: 0; z-index: 2; }
-.printB { --rest: 5deg;  --float: 7.2s; inline-size: 46%; inset-inline-end: 0; inset-block-start: 14%; z-index: 1; animation-delay: -2s; }
+.printB { --rest: 5deg;  --float: 7.2s; inline-size: 46%; inset-inline-end: 3%; inset-block-start: 14%; z-index: 1; animation-delay: -2s; }
 .printC { --rest: -2deg; --float: 5.6s; inline-size: 38%; inset-inline-start: 34%; inset-block-end: 0; z-index: 3; animation-delay: -4s; }
 @media (hover: hover) {
   .print:hover {
