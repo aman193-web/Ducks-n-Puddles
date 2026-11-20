@@ -27,14 +27,16 @@
   display: grid;
   gap: var(--flow-block);
   align-items: center;
+  margin-block-start: var(--s-5);
 }
 @media (min-width: 960px) {
   .head {
-    grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
     column-gap: clamp(var(--s-7), 5vw, var(--s-10));
   }
 }
 
+/* The why runs the full width of the page. */
 .why { display: grid; justify-items: start; }
 .why > * + * { margin-block-start: var(--s-3); }
 .lead {
@@ -45,9 +47,11 @@
 }
 .quote {
   position: relative;
-  max-inline-size: 22ch;
-  font-size: clamp(1.875rem, 3.5vw, 3.25rem);
-  line-height: 1.08;
+  /* Full width, so the sentence sits in two lines on a desktop and three on
+     a tablet, rather than four or five in a narrow column. */
+  max-inline-size: none;
+  font-size: clamp(1.875rem, 4.2vw, 4rem);
+  line-height: 1.06;
   letter-spacing: .006em;
   color: var(--ink);
   text-wrap: balance;
@@ -74,67 +78,24 @@
   font-size: clamp(1.125rem, 1.5vw, 1.375rem);
   color: var(--ink);
 }
+.say { display: grid; justify-items: start; gap: var(--s-4); }
 .story {
-  margin-block-start: var(--s-5) !important;
-  max-inline-size: 50ch;
+  max-inline-size: 44ch;
   font-size: var(--fs-lead);
   line-height: 1.6;
   color: var(--ink);
   text-wrap: pretty;
 }
 
-/* Who it is for — two cards, each with its character. */
-.forWhom {
-  display: grid;
-  gap: var(--s-3);
-  inline-size: 100%;
-  max-inline-size: 620px;
-  margin-block-start: var(--s-6) !important;
-  padding: 0;
-  list-style: none;
+/* The three ducks, standing together — just the characters. */
+.trio {
+  display: flex;
+  align-items: flex-end;
+  margin-block-start: var(--s-4);
 }
-@media (min-width: 560px) { .forWhom { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.forCard {
-  position: relative;
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-3) var(--s-4) var(--s-3) var(--s-3);
-  background: var(--paper);
-  border-radius: var(--r-lg);
-  box-shadow: 0 8px 22px rgba(16, 38, 74, .07);
-  transition: transform var(--t) var(--spring), box-shadow var(--t) ease;
-}
-.forCard[data-for='parents'] { --for-field: var(--vincey-soft); }
-.forCard[data-for='kids'] { --for-field: var(--chichi-soft); }
-.forCard::before {
-  /* A pond for the duck to stand in. */
-  content: '';
-  position: absolute;
-  inset-inline-start: var(--s-3);
-  inset-block: var(--s-3);
-  inline-size: 64px;
-  background: color-mix(in srgb, var(--for-field) 45%, var(--paper));
-  border-radius: var(--r);
-}
-@media (hover: hover) {
-  .forCard:hover { transform: translateY(-4px) rotate(-.6deg); box-shadow: 0 14px 28px rgba(16, 38, 74, .12); }
-  .forCard[data-for='kids']:hover { transform: translateY(-4px) rotate(.6deg); }
-}
-.forDuck { grid-column: 1; position: relative; z-index: 1; inline-size: 64px; justify-self: center; }
-.forText { grid-column: 2; display: grid; gap: 2px; }
-.forLabel {
-  font-family: var(--font-mono); font-weight: 500;
-  font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.forLine {
-  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
-  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
-  line-height: 1.15;
-  color: var(--ink);
-}
+.trioDuck { inline-size: clamp(92px, 9vw, 128px); }
+.trioDuck + .trioDuck { margin-inline-start: calc(clamp(92px, 9vw, 128px) * -.18); }
+.trio > :nth-child(2) { z-index: 1; translate: 0 6px; }
 
 /* ---- three prints, pinned up -------------------------------------------- */
 .prints {
@@ -310,41 +271,6 @@
   70%  { opacity: .7; }
   100% { opacity: 0; translate: 10px calc(var(--frame-h) * -.62); }
 }
-
-/* The 360° badge, by the bottle's foot on the LEFT — the side with no
-   callout that low, so it never crosses a leader line. */
-.badge360 {
-  position: absolute;
-  z-index: 3;
-  inset-block-start: 82%;
-  inset-inline-end: calc(50% + var(--bottle-half) + 4px);
-  display: grid;
-  place-items: center;
-  inline-size: 66px;
-  block-size: 66px;
-  translate: 0 -50%;
-  background: var(--paper);
-  border-radius: 50%;
-  box-shadow: 0 8px 18px rgba(16, 38, 74, .14);
-  pointer-events: none;
-}
-.badge360 svg {
-  position: absolute;
-  inset: 4px;
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 3.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  animation: turn 6s linear infinite;
-}
-.badge360 > span {
-  position: relative;
-  font-family: var(--font-body); font-weight: 800; font-size: .75rem;
-  letter-spacing: -.02em;
-  color: var(--ink);
-}
-@keyframes turn { to { rotate: 1turn; } }
 
 /* =============================================================================
    THE CALLOUTS — a numbered list under the bottle below 1024; from 1024 each
@@ -559,7 +485,7 @@
    REDUCED MOTION — every loop stops and every entrance is already in place.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .print, .spotlight, .ghost, .bubbles i, .badge360 svg, .nextArrow,
+  .print, .spotlight, .ghost, .bubbles i, .trioDuck, .nextArrow,
   [data-inview] .callout::before { animation: none !important; }
   .bubbles { display: none; }
   .callout { opacity: 1; translate: 0 0; transition: none; }

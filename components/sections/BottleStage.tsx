@@ -39,8 +39,7 @@ interface Props {
  *                 towards the bottle, and the dots at the bottle start to pulse
  *   data-loading  while a newly chosen duck's model loads: the frame fades
  *                 out and back in, so the switch is a crossfade, not a pop
- * Bubbles rise from the pond and a 360° badge turns, both decorative; reduced
- * motion stills every one of them.
+ * Bubbles rise from the pond, decorative; reduced motion stills them.
  */
 export function BottleStage({ ducks, callouts }: Props) {
   const [slug, setSlug] = useState<DuckSlug>('chi-chi')
@@ -99,16 +98,6 @@ export function BottleStage({ ducks, callouts }: Props) {
           onLoad={() => { setLoading(false); if (sleeveOff) post('sleeve-off') }}
         />
 
-        {/* A turning badge, by the bottle's foot: it says "you can spin this"
-            without the "Drag to spin" label the client had taken off the duck
-            pages. */}
-        <span className={styles.badge360} aria-hidden="true">
-          <svg viewBox="0 0 64 64" focusable="false">
-            <path className={styles.badgeRing} d="M50 22a21 21 0 1 0 3 14" />
-            <path className={styles.badgeHead} d="M44 18l7 4-4 7" />
-          </svg>
-          <span>360°</span>
-        </span>
       </div>
 
       <div className={styles.controls}>

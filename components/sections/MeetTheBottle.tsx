@@ -14,9 +14,9 @@ import styles from './MeetTheBottle.module.css'
  *
  * So, between the benefits band and Meet the Puddle, three movements:
  *
- *   WHY        the founders' own sentence for why the ducks exist, signed, the
- *              two lines of their story that follow it, and who it is for —
- *              parents and little ones — with two lifestyle prints pinned up
+ *   WHY        the founders' own sentence for why the ducks exist, full width
+ *              and signed, the next sentence of their story, the three ducks
+ *              standing together, and three lifestyle prints pinned up
  *   THE BOTTLE their 360° model of the production bottle, spinning, its parts
  *              called out on leader lines that draw themselves in, a switcher
  *              for all three ducks and the sleeve button
@@ -48,43 +48,38 @@ export function MeetTheBottle() {
     <section className={styles.section} id="bottle" aria-labelledby="bottle-title">
       <BrandDetail preset="droplets" />
       <div className="wrap">
+        {/* THE WHY, FULL WIDTH: the label, their lead-in, and the sentence
+            itself across the whole page so it sits in two or three lines. */}
+        <div className={styles.why}>
+          <Sticker data-pop="">Meet the bottle</Sticker>
+          <p className={`hand ${styles.lead}`} data-anim="">{bottleWhy.lead}</p>
+          <h2 id="bottle-title" className={`d ${styles.quote}`} data-anim="">
+            {/* The sentence runs on from the colon above, so it keeps their
+                lower-case start. The mark is drawn: the display face's own
+                quotation marks are two thin slashes. */}
+            <svg className={styles.mark} viewBox="0 0 48 40" aria-hidden="true" focusable="false">
+              <path d="M4 38V23C4 11 10 4 20 1.5l2.2 6C16.4 9.6 13.6 13.4 13.4 19H21v19H4Zm24 0V23c0-12 6-19 16-21.5l2.2 6C40.4 9.6 37.6 13.4 37.4 19H45v19H28Z" />
+            </svg>
+            {bottleWhy.line}
+          </h2>
+          <p className={`hand ${styles.sig}`} data-anim="">&mdash; {bottleWhy.by}</p>
+        </div>
+
+        {/* Under it: the next sentence of their story, the
+            three ducks standing together, and the prints. */}
         <div className={styles.head}>
-          <div className={styles.why}>
-            <Sticker data-pop="">Meet the bottle</Sticker>
-            <p className={`hand ${styles.lead}`} data-anim="">{bottleWhy.lead}</p>
-            <h2 id="bottle-title" className={`d ${styles.quote}`} data-anim="">
-              {/* The sentence runs on from the colon above, so it keeps their
-                  lower-case start. The mark is drawn: the display face's own
-                  quotation marks are two thin slashes. */}
-              <svg className={styles.mark} viewBox="0 0 48 40" aria-hidden="true" focusable="false">
-                <path d="M4 38V23C4 11 10 4 20 1.5l2.2 6C16.4 9.6 13.6 13.4 13.4 19H21v19H4Zm24 0V23c0-12 6-19 16-21.5l2.2 6C40.4 9.6 37.6 13.4 37.4 19H45v19H28Z" />
-              </svg>
-              {bottleWhy.line}
-            </h2>
-            <p className={`hand ${styles.sig}`} data-anim="">&mdash; {bottleWhy.by}</p>
-
-            <p className={styles.story} data-anim="">{bottleWhy.story.join(' ')}</p>
-
-            {/* Who it is for: the two halves of their own sentence, each with
-                the character the Why section gives that audience. */}
-            <ul className={styles.forWhom}>
-              {bottleWhy.forWhom.map((f) => (
-                <li key={f.k} className={styles.forCard} data-for={f.k} data-anim="" data-anim-y="18">
-                  <Duck who={f.k === 'parents' ? 'vincey' : 'chi-chi'}
-                        pose={f.k === 'parents' ? 'wink' : 'wave'}
-                        className={styles.forDuck} float density="always"
-                        sizes="72px" />
-                  <span className={styles.forText}>
-                    <span className={styles.forLabel}>{f.label}</span>
-                    <span className={styles.forLine}>{f.line}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+          <div className={styles.say}>
+            <p className={styles.story} data-anim="">{bottleWhy.story}</p>
+            {/* Just the characters — no cards, no labels. */}
+            <div className={styles.trio} aria-hidden="true">
+              <Duck who="vincey" pose="wink" className={styles.trioDuck} float density="always" sizes="120px" />
+              <Duck who="chi-chi" pose="wave" className={styles.trioDuck} float density="always" sizes="120px" />
+              <Duck who="goosey" pose="cheer" className={styles.trioDuck} float density="always" sizes="120px" />
+            </div>
           </div>
 
-          {/* Two prints pinned beside the why: the client's lifestyle set, the
-              frames where the sample sleeve's mark is smallest. */}
+          {/* Three prints pinned up: the client's lifestyle set, the frames
+              where the sample sleeve's mark is smallest. */}
           <div className={styles.prints} aria-hidden="true">
             <span className={`${styles.print} ${styles.printA}`}>
               <span className={styles.tape} />

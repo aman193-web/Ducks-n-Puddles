@@ -357,18 +357,8 @@ export const bottleWhy = {
   lead: 'Ducks \u2019n Puddles began with a feeling we wanted every child to have:',
   line: 'the comfort of knowing they have a little friend by their side, wherever life takes them.',
   by: 'Larisa & Vinny',
-  /** The next two sentences of the same story, and the line after them. */
-  story: [
-    'Something to bring a little extra comfort on the first day of school, a new adventure, or any moment they need it most.',
-    'That feeling inspired Chi\u00a0Chi, Goosey, and Vincey \u2014 three little ducks with personalities of their own, each created to bring something positive along for the ride.',
-  ],
-  /** Their own "thoughtful products that bring ease and convenience to parents,
-   *  and comfort, confidence, and positive direction to kids", split between
-   *  the two people it is for. The labels are the Why section's. */
-  forWhom: [
-    { k: 'parents', label: 'For parents', line: 'Ease and convenience.' },
-    { k: 'kids', label: 'For little ones', line: 'Comfort, confidence, and positive direction.' },
-  ],
+  /** The next sentence of the same story — one, kept short on purpose. */
+  story: 'Something to bring a little extra comfort on the first day of school, a new adventure, or any moment they need it most.',
 } as const
 
 export const puddle = {
