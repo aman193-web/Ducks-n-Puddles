@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NameSticker } from '@/components/NameSticker'
 import type { DuckSlug } from '@/content/brand'
 import styles from './MeetTheBottle.module.css'
@@ -18,7 +18,7 @@ export interface Callout {
   value: string
   side: 'l' | 'r'
   /** Height on the stage, 0-100: where that part of the bottle sits in the
-   *  model's frame — lid ~24, body ~44, sleeve ~66. The model fills its frame
+   *  model's frame — lid ~27, body ~45, sleeve ~64. The model fills its frame
    *  by height and spins about its vertical axis, so a part's height holds
    *  however far round it has turned. */
   y: number
@@ -31,17 +31,37 @@ interface Props {
 
 /**
  * THE BOTTLE, IN THE ROUND — the client's 360° model at the centre, its parts
- * called out around it on drawn leader lines, a duck switcher under it, and
- * the sleeve button that hands the reader on to the Puddle section below.
+ * called out around it, a duck switcher under it, and the sleeve button.
  *
- * The spotlight behind the bottle takes the chosen duck's colour, and that
- * duck's name sits huge and quiet behind it, as on the duck pages.
+ * MOTION, all of it CSS keyed off two attributes this sets:
+ *   data-inview   once the stage first scrolls into view: the callouts slide
+ *                 in from their side, their leader lines draw themselves in
+ *                 towards the bottle, and the dots at the bottle start to pulse
+ *   data-loading  while a newly chosen duck's model loads: the frame fades
+ *                 out and back in, so the switch is a crossfade, not a pop
+ * Bubbles rise from the pond and a 360° badge turns, both decorative; reduced
+ * motion stills every one of them.
  */
 export function BottleStage({ ducks, callouts }: Props) {
   const [slug, setSlug] = useState<DuckSlug>('chi-chi')
   const [sleeveOff, setSleeveOff] = useState(false)
+  /* false to start: only a SWITCH fades. Starting true would hide the model
+     for good if it loaded before hydration and its load event was missed. */
+  const [loading, setLoading] = useState(false)
+  const [inView, setInView] = useState(false)
   const frame = useRef<HTMLIFrameElement>(null)
+  const wrap = useRef<HTMLDivElement>(null)
   const duck = ducks.find((d) => d.slug === slug)!
+
+  useEffect(() => {
+    const el = wrap.current
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setInView(true); io.disconnect() }
+    }, { threshold: 0.25 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
   const post = (msg: string) => frame.current?.contentWindow?.postMessage(msg, window.location.origin)
   const flipSleeve = () => {
@@ -49,21 +69,46 @@ export function BottleStage({ ducks, callouts }: Props) {
     setSleeveOff(off)
     post(off ? 'sleeve-off' : 'sleeve-on')
   }
+  const choose = (next: DuckSlug) => {
+    if (next === slug) return
+    setLoading(true)
+    setSlug(next)
+  }
 
   return (
-    <div className={styles.stageWrap}
+    <div ref={wrap} className={styles.stageWrap}
+         data-inview={inView || undefined}
          style={{ ['--spot' as string]: duck.soft, ['--spot-ink' as string]: duck.colour } as React.CSSProperties}>
       <div className={styles.stage}>
         <span className={styles.spotlight} aria-hidden="true" />
-        <span className={`d ${styles.ghost}`} aria-hidden="true">{duck.name}</span>
+        {/* Keyed, so a new name rises in rather than just changing. */}
+        <span key={duck.slug} className={`d ${styles.ghost}`} aria-hidden="true">{duck.name}</span>
+
+        {/* Bubbles rising off the pond, behind the bottle. */}
+        <span className={styles.bubbles} aria-hidden="true">
+          <i /><i /><i /><i /><i /><i /><i />
+        </span>
+
         <iframe
           ref={frame}
           className={styles.frame}
+          data-loading={loading || undefined}
           src={`${MODELS[slug]}?button=0&hint=0`}
           title={`The ${duck.name} bottle in 3D. Drag, or use the arrow keys, to spin it.`}
           loading="lazy"
-          onLoad={() => { if (sleeveOff) post('sleeve-off') }}
+          onLoad={() => { setLoading(false); if (sleeveOff) post('sleeve-off') }}
         />
+
+        {/* A turning badge, by the bottle's foot: it says "you can spin this"
+            without the "Drag to spin" label the client had taken off the duck
+            pages. */}
+        <span className={styles.badge360} aria-hidden="true">
+          <svg viewBox="0 0 64 64" focusable="false">
+            <path className={styles.badgeRing} d="M50 22a21 21 0 1 0 3 14" />
+            <path className={styles.badgeHead} d="M44 18l7 4-4 7" />
+          </svg>
+          <span>360°</span>
+        </span>
       </div>
 
       <div className={styles.controls}>
@@ -78,11 +123,16 @@ export function BottleStage({ ducks, callouts }: Props) {
               colour={d.soft}
               size="m"
               className={styles.pick}
-              onClick={() => setSlug(d.slug)}
+              onClick={() => choose(d.slug)}
             />
           ))}
         </div>
         <button type="button" className={styles.sleeve} aria-pressed={sleeveOff} onClick={flipSleeve}>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            {sleeveOff
+              ? <path d="M12 19V7M6 13l6-6 6 6" />
+              : <path d="M12 5v12M6 11l6 6 6-6" />}
+          </svg>
           {sleeveOff ? 'Put the sleeve on' : 'Take the sleeve off'}
         </button>
       </div>
@@ -91,10 +141,9 @@ export function BottleStage({ ducks, callouts }: Props) {
           the bottle; from 1024 they are laid over the stage, level with the
           parts they name. */}
       <ol className={styles.callouts}>
-        {callouts.map((c) => (
+        {callouts.map((c, i) => (
           <li key={c.key} className={styles.callout} data-side={c.side}
-              style={{ ['--y' as string]: `${c.y}%` } as React.CSSProperties}
-              data-anim="" data-anim-y="12">
+              style={{ ['--y' as string]: `${c.y}%`, ['--i' as string]: i } as React.CSSProperties}>
             <span className={styles.calloutNum} aria-hidden="true">{c.n}</span>
             <span className={styles.calloutText}>
               <span className={styles.calloutLabel}>{c.label}</span>

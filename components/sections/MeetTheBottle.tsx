@@ -1,5 +1,6 @@
 import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
+import { Duck } from '@/components/ui/Duck'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { ducks, confirmedSpecs, bottleWhy } from '@/content/brand'
 import { BottleStage, type Callout } from './BottleStage'
@@ -13,13 +14,13 @@ import styles from './MeetTheBottle.module.css'
  *
  * So, between the benefits band and Meet the Puddle, three movements:
  *
- *   WHY        the founders' own sentence for why the ducks exist, signed, with
- *              two of the client's lifestyle photographs pinned beside it
- *   THE BOTTLE their 360° model of the production bottle — it spins on its own
- *              and under a finger — with its parts called out around it on
- *              drawn leader lines, and a switcher for all three ducks
- *   HAND-OFF   "Take the sleeve off" on the model, then the link down to the
- *              Puddle, which is the next section
+ *   WHY        the founders' own sentence for why the ducks exist, signed, the
+ *              two lines of their story that follow it, and who it is for —
+ *              parents and little ones — with two lifestyle prints pinned up
+ *   THE BOTTLE their 360° model of the production bottle, spinning, its parts
+ *              called out on leader lines that draw themselves in, a switcher
+ *              for all three ducks and the sleeve button
+ *   HAND-OFF   down to the Puddle, which is the next section
  *
  * EVERY WORD IS THE CLIENT'S. The why is their founders' story; the callouts
  * are the feature cards' own label and value (confirmedSpecs), so the two can
@@ -31,10 +32,10 @@ import styles from './MeetTheBottle.module.css'
  * the samples, with the early green duck mark on the sleeve.
  */
 const CALLOUT_AT: Record<string, { n: number; side: 'l' | 'r'; y: number }> = {
-  lid:      { n: 1, side: 'l', y: 25 },
-  capacity: { n: 2, side: 'r', y: 44 },
-  puddle:   { n: 3, side: 'l', y: 66 },
-  bpa:      { n: 4, side: 'r', y: 74 },
+  lid:      { n: 1, side: 'l', y: 27 },
+  capacity: { n: 2, side: 'r', y: 45 },
+  puddle:   { n: 3, side: 'l', y: 64 },
+  bpa:      { n: 4, side: 'r', y: 76 },
 }
 
 export function MeetTheBottle() {
@@ -61,6 +62,25 @@ export function MeetTheBottle() {
               {bottleWhy.line}
             </h2>
             <p className={`hand ${styles.sig}`} data-anim="">&mdash; {bottleWhy.by}</p>
+
+            <p className={styles.story} data-anim="">{bottleWhy.story.join(' ')}</p>
+
+            {/* Who it is for: the two halves of their own sentence, each with
+                the character the Why section gives that audience. */}
+            <ul className={styles.forWhom}>
+              {bottleWhy.forWhom.map((f) => (
+                <li key={f.k} className={styles.forCard} data-for={f.k} data-anim="" data-anim-y="18">
+                  <Duck who={f.k === 'parents' ? 'vincey' : 'chi-chi'}
+                        pose={f.k === 'parents' ? 'wink' : 'wave'}
+                        className={styles.forDuck} float density="always"
+                        sizes="72px" />
+                  <span className={styles.forText}>
+                    <span className={styles.forLabel}>{f.label}</span>
+                    <span className={styles.forLine}>{f.line}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Two prints pinned beside the why: the client's lifestyle set, the
@@ -68,11 +88,15 @@ export function MeetTheBottle() {
           <div className={styles.prints} aria-hidden="true">
             <span className={`${styles.print} ${styles.printA}`}>
               <span className={styles.tape} />
-              <Picture id="life-armful" sizes="(min-width: 900px) 220px, 42vw" alt="" tint={false} />
+              <Picture id="life-armful" sizes="(min-width: 900px) 260px, 46vw" alt="" tint={false} />
             </span>
             <span className={`${styles.print} ${styles.printB}`}>
               <span className={styles.tape} />
-              <Picture id="life-cuddle" sizes="(min-width: 900px) 200px, 38vw" alt="" tint={false} />
+              <Picture id="life-cuddle" sizes="(min-width: 900px) 240px, 42vw" alt="" tint={false} />
+            </span>
+            <span className={`${styles.print} ${styles.printC}`}>
+              <span className={styles.tape} />
+              <Picture id="life-toddler-grip" sizes="(min-width: 900px) 200px, 34vw" alt="" tint={false} />
             </span>
           </div>
         </div>
@@ -83,7 +107,9 @@ export function MeetTheBottle() {
         />
 
         <p className={styles.next}>
-          <a href="#puddle">See how the Puddle works <span aria-hidden="true">&darr;</span></a>
+          <a href="#puddle">
+            See how the Puddle works <span className={styles.nextArrow} aria-hidden="true">&darr;</span>
+          </a>
         </p>
       </div>
     </section>

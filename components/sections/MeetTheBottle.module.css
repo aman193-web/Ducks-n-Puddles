@@ -4,38 +4,49 @@
    Between the yellow benefits band and Meet the Puddle (cream). Vincey's pale
    field with a faint dot grid — a designer's sketchbook page, which is what the
    drawn leader lines and numbered callouts are written on.
+
+   MOTION: the prints float, the callouts and their leader lines draw in once
+   the stage is in view (BottleStage sets data-inview), bubbles rise off the
+   pond, the 360° badge turns. Every one of them stops under reduced motion —
+   see the foot of this file.
    ========================================================================== */
 .section {
   position: relative;
-  padding-block: var(--section-y);
+  padding-block: var(--section-y) calc(var(--section-y) * .9);
   background-color: var(--vincey-field);
-  background-image: radial-gradient(rgba(16, 38, 74, .09) 1.2px, transparent 1.6px);
+  background-image: radial-gradient(rgba(16, 38, 74, .085) 1.2px, transparent 1.6px);
   background-size: 24px 24px;
   background-position: center top;
   overflow: clip;
 }
 
-/* ---- the why ------------------------------------------------------------- */
+/* =============================================================================
+   THE WHY
+   ========================================================================== */
 .head {
   display: grid;
   gap: var(--flow-block);
   align-items: center;
 }
-@media (min-width: 900px) {
-  .head { grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); column-gap: clamp(var(--s-6), 4vw, var(--s-9)); }
+@media (min-width: 960px) {
+  .head {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr);
+    column-gap: clamp(var(--s-7), 5vw, var(--s-10));
+  }
 }
 
-.why { display: grid; justify-items: start; gap: var(--flow-eyebrow); }
+.why { display: grid; justify-items: start; }
+.why > * + * { margin-block-start: var(--s-3); }
 .lead {
-  margin-block-start: calc(var(--flow-head) - var(--flow-eyebrow));
-  font-size: clamp(1.125rem, 1.7vw, 1.5rem);
+  margin-block-start: var(--flow-head) !important;
+  font-size: clamp(1.125rem, 1.6vw, 1.4375rem);
   line-height: 1.3;
   color: var(--ink);
 }
 .quote {
   position: relative;
-  max-inline-size: 24ch;
-  font-size: clamp(1.75rem, 3.7vw, 3.375rem);
+  max-inline-size: 22ch;
+  font-size: clamp(1.875rem, 3.5vw, 3.25rem);
   line-height: 1.08;
   letter-spacing: .006em;
   color: var(--ink);
@@ -57,19 +68,79 @@
 }
 /* No margin to hang it in on a narrower page: it sits above the line. */
 @media (max-width: 1199px) {
-  .mark { position: static; display: block; inline-size: .7em; margin-block-end: .12em; }
+  .mark { position: static; display: block; inline-size: .7em; margin-block-end: .14em; }
 }
 .sig {
-  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  color: var(--ink);
+}
+.story {
+  margin-block-start: var(--s-5) !important;
+  max-inline-size: 50ch;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* Who it is for — two cards, each with its character. */
+.forWhom {
+  display: grid;
+  gap: var(--s-3);
+  inline-size: 100%;
+  max-inline-size: 620px;
+  margin-block-start: var(--s-6) !important;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 560px) { .forWhom { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.forCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4) var(--s-3) var(--s-3);
+  background: var(--paper);
+  border-radius: var(--r-lg);
+  box-shadow: 0 8px 22px rgba(16, 38, 74, .07);
+  transition: transform var(--t) var(--spring), box-shadow var(--t) ease;
+}
+.forCard[data-for='parents'] { --for-field: var(--vincey-soft); }
+.forCard[data-for='kids'] { --for-field: var(--chichi-soft); }
+.forCard::before {
+  /* A pond for the duck to stand in. */
+  content: '';
+  position: absolute;
+  inset-inline-start: var(--s-3);
+  inset-block: var(--s-3);
+  inline-size: 64px;
+  background: color-mix(in srgb, var(--for-field) 45%, var(--paper));
+  border-radius: var(--r);
+}
+@media (hover: hover) {
+  .forCard:hover { transform: translateY(-4px) rotate(-.6deg); box-shadow: 0 14px 28px rgba(16, 38, 74, .12); }
+  .forCard[data-for='kids']:hover { transform: translateY(-4px) rotate(.6deg); }
+}
+.forDuck { grid-column: 1; position: relative; z-index: 1; inline-size: 64px; justify-self: center; }
+.forText { grid-column: 2; display: grid; gap: 2px; }
+.forLabel {
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.forLine {
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.15;
   color: var(--ink);
 }
 
-/* Two prints pinned up beside the why — the scrapbook device the community
-   photos use, at a smaller scale. */
+/* ---- three prints, pinned up -------------------------------------------- */
 .prints {
   position: relative;
-  block-size: clamp(260px, 26vw, 360px);
   inline-size: 100%;
+  block-size: clamp(340px, 34vw, 470px);
 }
 .print {
   position: absolute;
@@ -78,6 +149,9 @@
   background: var(--paper);
   border-radius: 6px;
   box-shadow: 0 14px 30px rgba(16, 38, 74, .16), 0 2px 6px rgba(16, 38, 74, .08);
+  rotate: var(--rest, 0deg);
+  transition: rotate .5s var(--spring), scale .5s var(--spring), box-shadow .3s ease;
+  animation: printFloat var(--float, 6s) ease-in-out infinite;
 }
 .print picture { display: block; }
 .print img {
@@ -88,8 +162,17 @@
   object-fit: cover;
   border-radius: 3px;
 }
-.printA { inline-size: 56%; inset-inline-start: 0; inset-block-start: 0; rotate: -6deg; z-index: 1; }
-.printB { inline-size: 50%; inset-inline-end: 0; inset-block-end: 0; rotate: 5deg; z-index: 2; }
+.printA { --rest: -6deg; --float: 6.4s; inline-size: 52%; inset-inline-start: 2%; inset-block-start: 0; z-index: 2; }
+.printB { --rest: 5deg;  --float: 7.2s; inline-size: 46%; inset-inline-end: 0; inset-block-start: 14%; z-index: 1; animation-delay: -2s; }
+.printC { --rest: -2deg; --float: 5.6s; inline-size: 38%; inset-inline-start: 34%; inset-block-end: 0; z-index: 3; animation-delay: -4s; }
+@media (hover: hover) {
+  .print:hover {
+    z-index: 4;
+    rotate: 0deg;
+    scale: 1.05;
+    box-shadow: 0 24px 44px rgba(16, 38, 74, .22), 0 3px 8px rgba(16, 38, 74, .1);
+  }
+}
 .tape {
   position: absolute;
   z-index: 1;
@@ -103,22 +186,36 @@
   border-radius: 2px;
 }
 .printB .tape { rotate: 6deg; background: color-mix(in srgb, var(--chichi-soft) 75%, transparent); }
-@media (max-width: 899px) {
-  .prints { block-size: clamp(220px, 60vw, 300px); max-inline-size: 440px; justify-self: center; }
+.printC .tape { rotate: -2deg; background: color-mix(in srgb, var(--vincey-soft) 80%, transparent); }
+@keyframes printFloat {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
+@media (max-width: 959px) {
+  .prints { block-size: clamp(300px, 82vw, 440px); max-inline-size: 520px; justify-self: center; }
 }
 
-/* ---- the stage ------------------------------------------------------------
-   The model's frame is 0.82 wide to tall, the shape its camera fills, so a
-   part's height on the stage is the same fraction it is in the model — which
-   is what lets the callouts' --y line up with the lid, the body and the sleeve. */
+/* =============================================================================
+   THE STAGE
+
+   The model's frame is 1.25 wide to 1 tall. Its camera fits the bottle by
+   HEIGHT, so a wider frame leaves the bottle the same size and simply shows
+   more of the water around it — at 0.82 wide the pond ran off both sides and
+   was cut flat. A part's height on the stage is the same fraction it is in the
+   model, which is what lines the callouts' --y up with the lid, body, sleeve.
+   ========================================================================== */
 .stageWrap {
+  --frame-h: clamp(380px, 112vw, 460px);
+  --frame-w: calc(var(--frame-h) * 1.25);
+  /* Half the bottle's own width, as a share of the frame's height. */
+  --bottle-half: calc(var(--frame-h) * .19);
   position: relative;
-  --frame-w: clamp(280px, 72vw, 420px);
-  --frame-h: calc(var(--frame-w) * 1.22);
-  margin-block-start: var(--flow-block);
+  /* The model's own frame carries air above the handle, so the gap to the
+     why above can be smaller than it looks in the code. */
+  margin-block-start: clamp(var(--s-5), 3vw, var(--s-7));
 }
 @media (min-width: 1024px) {
-  .stageWrap { --frame-w: clamp(360px, 33vw, 470px); }
+  .stageWrap { --frame-h: clamp(460px, 40vw, 580px); }
 }
 .stage {
   position: relative;
@@ -134,73 +231,161 @@
   block-size: var(--frame-h);
   border: 0;
   background: transparent;
-  /* The model draws its own water under the bottle, and the canvas cut it off
-     in a hard rectangle at the frame's sides and foot. Faded out instead. */
-  mask-image:
-    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%),
-    linear-gradient(to bottom, #000 82%, transparent 100%);
-  mask-composite: intersect;
+  /* The pond fits the frame now; this only softens its far ends where a
+     phone screen is narrower than the frame. */
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  transition: opacity .35s ease;
 }
+.frame[data-loading] { opacity: 0; }
+
 /* The chosen duck's colour behind the bottle, easing over as you switch. */
 .spotlight {
   position: absolute;
   z-index: 0;
-  inset-block-start: 46%;
+  inset-block-start: 44%;
   inset-inline-start: 50%;
-  inline-size: calc(var(--frame-w) * 1.12);
+  inline-size: calc(var(--frame-h) * .98);
   aspect-ratio: 1;
   translate: -50% -50%;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--spot) 0%, color-mix(in srgb, var(--spot) 55%, transparent) 46%, transparent 70%);
+  background: radial-gradient(circle, var(--spot) 0%, color-mix(in srgb, var(--spot) 55%, transparent) 44%, transparent 70%);
   transition: background .6s ease;
+  animation: breathe 7s ease-in-out infinite;
 }
+@keyframes breathe { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
+
 .ghost {
   position: absolute;
   z-index: 1;
-  inset-block-start: 4%;
+  inset-block-start: 3%;
   inset-inline-start: 50%;
   translate: -50% 0;
-  font-size: clamp(4rem, 13vw, 11rem);
+  font-size: clamp(4rem, 12vw, 10.5rem);
   line-height: 1;
   white-space: nowrap;
   color: var(--paper);
-  opacity: .75;
+  opacity: .8;
   pointer-events: none;
   user-select: none;
+  animation: ghostIn .7s cubic-bezier(.16, 1, .3, 1) both;
+}
+@keyframes ghostIn {
+  from { opacity: 0; translate: -50% 24px; }
+  to   { opacity: .8; translate: -50% 0; }
 }
 
-/* ---- the callouts ---------------------------------------------------------
-   Under 1024 a numbered two-up list beneath the bottle; from 1024 each sits
-   level with its part and draws a dashed line in to the bottle. */
+/* Bubbles rising off the pond, behind the bottle. */
+.bubbles {
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: 50%;
+  inset-block: 18% 14%;
+  inline-size: calc(var(--frame-h) * .7);
+  translate: -50% 0;
+  pointer-events: none;
+}
+.bubbles i {
+  position: absolute;
+  inset-block-end: 0;
+  display: block;
+  inline-size: var(--b, 10px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, .9);
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, .8), rgba(255, 255, 255, .15) 60%);
+  opacity: 0;
+  animation: rise var(--d, 7s) ease-in infinite;
+  animation-delay: var(--w, 0s);
+}
+.bubbles i:nth-child(1) { --b: 12px; --d: 7s;   --w: 0s;   inset-inline-start: 6%; }
+.bubbles i:nth-child(2) { --b: 8px;  --d: 6s;   --w: 1.6s; inset-inline-start: 18%; }
+.bubbles i:nth-child(3) { --b: 14px; --d: 8.5s; --w: 3.1s; inset-inline-start: 28%; }
+.bubbles i:nth-child(4) { --b: 9px;  --d: 6.6s; --w: .8s;  inset-inline-start: 70%; }
+.bubbles i:nth-child(5) { --b: 11px; --d: 7.8s; --w: 2.4s; inset-inline-start: 82%; }
+.bubbles i:nth-child(6) { --b: 7px;  --d: 5.8s; --w: 4s;   inset-inline-start: 92%; }
+.bubbles i:nth-child(7) { --b: 10px; --d: 9s;   --w: 5.2s; inset-inline-start: 60%; }
+@keyframes rise {
+  0%   { opacity: 0; translate: 0 0; }
+  12%  { opacity: .9; }
+  70%  { opacity: .7; }
+  100% { opacity: 0; translate: 10px calc(var(--frame-h) * -.62); }
+}
+
+/* The 360° badge, by the bottle's foot on the LEFT — the side with no
+   callout that low, so it never crosses a leader line. */
+.badge360 {
+  position: absolute;
+  z-index: 3;
+  inset-block-start: 82%;
+  inset-inline-end: calc(50% + var(--bottle-half) + 4px);
+  display: grid;
+  place-items: center;
+  inline-size: 66px;
+  block-size: 66px;
+  translate: 0 -50%;
+  background: var(--paper);
+  border-radius: 50%;
+  box-shadow: 0 8px 18px rgba(16, 38, 74, .14);
+  pointer-events: none;
+}
+.badge360 svg {
+  position: absolute;
+  inset: 4px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: turn 6s linear infinite;
+}
+.badge360 > span {
+  position: relative;
+  font-family: var(--font-body); font-weight: 800; font-size: .75rem;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+@keyframes turn { to { rotate: 1turn; } }
+
+/* =============================================================================
+   THE CALLOUTS — a numbered list under the bottle below 1024; from 1024 each
+   sits level with its part and draws a dashed line in to the bottle.
+   ========================================================================== */
 .callouts {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--s-3);
   list-style: none;
   padding: 0;
-  margin: var(--s-5) 0 0;
+  margin: var(--s-6) 0 0;
 }
 @media (min-width: 560px) { .callouts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .callout {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--s-3);
   padding: var(--s-3) var(--s-4);
   background: var(--paper);
   border-radius: var(--r);
   box-shadow: 0 6px 16px rgba(16, 38, 74, .07);
+  /* Arrives with the stage. */
+  opacity: 0;
+  translate: 0 14px;
+  transition: opacity .5s ease, translate .7s cubic-bezier(.16, 1, .3, 1);
+  transition-delay: calc(var(--i) * 110ms + 150ms);
 }
+[data-inview] .callout { opacity: 1; translate: 0 0; }
 .calloutNum {
   flex: none;
   display: grid; place-items: center;
-  inline-size: 30px; block-size: 30px;
+  inline-size: 32px; block-size: 32px;
   background: var(--sun);
   color: var(--ink);
   border: var(--border);
   border-radius: 50%;
   font-family: var(--font-body); font-weight: 800; font-size: .875rem; line-height: 1;
+  transition: rotate .45s var(--spring), scale .45s var(--spring);
 }
-.calloutText { display: grid; gap: 2px; }
+.calloutText { display: grid; gap: 3px; }
 .calloutLabel {
   font-family: var(--font-mono); font-weight: 500;
   font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase;
@@ -208,7 +393,7 @@
   color: var(--ink-soft);
 }
 .calloutValue {
-  font-size: clamp(.9375rem, 1.1vw, 1.0625rem);
+  font-size: clamp(.9375rem, 1.05vw, 1.0625rem);
   font-weight: 600;
   line-height: 1.3;
   color: var(--ink);
@@ -217,41 +402,50 @@
 
 @media (min-width: 1024px) {
   .callouts {
-    --reach: clamp(28px, 4.6vw, 88px);
-    --bottle-half: calc(var(--frame-w) * .24);
-    display: block;
+    --reach: clamp(36px, 4.6vw, 84px);
     position: absolute;
     z-index: 3;
     inset-inline: 0;
     inset-block-start: 0;
+    display: block;
     block-size: var(--frame-h);
     margin: 0;
-    /* The lines cross the model's frame; they must not take the drag. */
+    /* The lines cross the model's frame and must not take the drag; the
+       cards themselves take the pointer back below. */
     pointer-events: none;
   }
   .callout {
     position: absolute;
     inset-block-start: var(--y);
-    translate: 0 -50%;
-    inline-size: clamp(220px, 20vw, 270px);
-    align-items: center;
+    inline-size: clamp(220px, 19vw, 270px);
     padding: 0;
     background: none;
     box-shadow: none;
+    translate: var(--from, 0) -50%;
   }
   .callout[data-side='l'] {
+    --from: -28px;
     inset-inline-end: calc(50% + var(--bottle-half) + var(--reach));
     flex-direction: row-reverse;
     text-align: end;
   }
-  .callout[data-side='r'] { inset-inline-start: calc(50% + var(--bottle-half) + var(--reach)); }
+  .callout[data-side='r'] {
+    --from: 28px;
+    inset-inline-start: calc(50% + var(--bottle-half) + var(--reach));
+  }
+  [data-inview] .callout { translate: 0 -50%; }
+
+  .calloutNum, .calloutText { pointer-events: auto; }
   .calloutText {
     padding: var(--s-3) var(--s-4);
     background: var(--paper);
     border-radius: var(--r);
     box-shadow: 0 8px 20px rgba(16, 38, 74, .08);
+    transition: translate .45s var(--spring), box-shadow .3s ease;
   }
-  /* The leader: dashed, from the number to the bottle's edge, ending in a dot. */
+
+  /* The leader: dashed, from the number towards the bottle. It DRAWS IN —
+     scaleX from the number's end — once the stage is in view. */
   .callout::after {
     content: '';
     position: absolute;
@@ -259,39 +453,69 @@
     inline-size: var(--reach);
     border-block-start: 2px dashed var(--ink);
     opacity: .55;
+    scale: 0 1;
+    transition: scale .6s cubic-bezier(.65, 0, .35, 1), opacity .3s ease, border-color .3s ease;
+    transition-delay: calc(var(--i) * 110ms + 450ms), 0s, 0s;
   }
-  .callout[data-side='l']::after { inset-inline-start: 100%; }
-  .callout[data-side='r']::after { inset-inline-end: 100%; }
+  .callout[data-side='l']::after { inset-inline-start: 100%; transform-origin: left center; }
+  .callout[data-side='r']::after { inset-inline-end: 100%; transform-origin: right center; }
+  [data-inview] .callout::after { scale: 1 1; }
+
+  /* The dot where the line meets the bottle: pops once the line arrives,
+     then pulses. */
   .callout::before {
     content: '';
     position: absolute;
     inset-block-start: 50%;
-    inline-size: 9px; block-size: 9px;
+    inline-size: 10px; block-size: 10px;
     translate: 0 -50%;
     margin-block-start: 1px;
     background: var(--ink);
     border-radius: 50%;
+    scale: 0;
+    transition: scale .4s var(--spring), background-color .3s ease;
+    transition-delay: calc(var(--i) * 110ms + 1000ms), 0s;
   }
-  .callout[data-side='l']::before { inset-inline-start: calc(100% + var(--reach) - 4px); }
-  .callout[data-side='r']::before { inset-inline-end: calc(100% + var(--reach) - 4px); }
+  .callout[data-side='l']::before { inset-inline-start: calc(100% + var(--reach) - 5px); }
+  .callout[data-side='r']::before { inset-inline-end: calc(100% + var(--reach) - 5px); }
+  [data-inview] .callout::before { scale: 1; animation: pulse 2.4s ease-out infinite; animation-delay: calc(var(--i) * .3s + 1.4s); }
+
+  /* Hover a callout: its card lifts, its number turns, its line goes solid
+     sunshine and its dot grows. */
+  .callout:hover .calloutText { translate: 0 -3px; box-shadow: 0 14px 28px rgba(16, 38, 74, .13); }
+  .callout:hover .calloutNum { rotate: -14deg; scale: 1.12; }
+  .callout:hover::after { opacity: 1; border-block-start-style: solid; border-color: #F2B705; }
+  .callout:hover::before { background: #F2B705; scale: 1.35; transition-delay: 0s; }
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 38, 74, .35); }
+  70%  { box-shadow: 0 0 0 10px rgba(16, 38, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 38, 74, 0); }
 }
 
-/* ---- under the bottle ---------------------------------------------------- */
+/* =============================================================================
+   UNDER THE BOTTLE
+   ========================================================================== */
 .controls {
+  position: relative;
+  z-index: 3;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--s-3) var(--s-5);
-  margin-block-start: var(--s-5);
+  gap: var(--s-4) var(--s-6);
+  margin-block-start: var(--s-4);
 }
 .picker { display: flex; gap: var(--s-2); }
-.pick { cursor: pointer; transition: transform var(--t) var(--spring); }
-.pick[aria-checked='true'] { outline: var(--bw-lg) solid var(--ink); outline-offset: 2px; }
-.pick:hover { transform: translateY(-2px); }
+.pick { cursor: pointer; transition: translate var(--t) var(--spring), scale var(--t) var(--spring); }
+.pick[aria-checked='true'] { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; scale: 1.06; }
+@media (hover: hover) { .pick:hover { translate: 0 -3px; } }
 .sleeve {
-  min-block-size: 44px;
-  padding: 0 var(--s-5);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-block-size: 46px;
+  padding: 0 var(--s-5) 0 var(--s-4);
   background: var(--paper);
   color: var(--ink);
   border: var(--border-lg);
@@ -301,21 +525,46 @@
   cursor: pointer;
   transition: background-color var(--t-fast) linear, transform var(--t) var(--spring);
 }
+.sleeve svg {
+  inline-size: 18px; block-size: 18px;
+  fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+}
 .sleeve[aria-pressed='true'] { background: var(--sun); }
 .sleeve:active { transform: scale(.96); }
-@media (hover: hover) { .sleeve[aria-pressed='false']:hover { background: var(--sun-soft); } }
-
+@media (hover: hover) {
+  .sleeve[aria-pressed='false']:hover { background: var(--sun-soft); }
+  .sleeve:hover svg { animation: nudge .8s ease-in-out infinite; }
+}
+@keyframes nudge { 0%, 100% { translate: 0 0; } 50% { translate: 0 3px; } }
 
 .next {
-  margin-block-start: var(--flow-block);
+  margin-block-start: clamp(var(--s-6), 4vw, var(--s-8));
   text-align: center;
 }
 .next a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
   font-weight: 700;
   color: var(--ink);
   text-decoration: underline;
   text-decoration-color: var(--sun);
   text-decoration-thickness: 3px;
-  text-underline-offset: 5px;
+  text-underline-offset: 6px;
 }
 .next a:hover { text-decoration-thickness: 4px; }
+.nextArrow { display: inline-block; animation: nudge 1.6s ease-in-out infinite; }
+
+/* =============================================================================
+   REDUCED MOTION — every loop stops and every entrance is already in place.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .print, .spotlight, .ghost, .bubbles i, .badge360 svg, .nextArrow,
+  [data-inview] .callout::before { animation: none !important; }
+  .bubbles { display: none; }
+  .callout { opacity: 1; translate: 0 0; transition: none; }
+  .callout::after, .callout::before { scale: 1 !important; transition: none !important; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .callout { translate: 0 -50%; }
+}
