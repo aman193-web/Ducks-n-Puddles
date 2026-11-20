@@ -1,6 +1,5 @@
 import { Picture } from '@/components/Picture'
 import { Sticker } from '@/components/ui/Sticker'
-import { Duck } from '@/components/ui/Duck'
 import { BrandDetail } from '@/components/ui/BrandDetail'
 import { ducks, confirmedSpecs, bottleWhy } from '@/content/brand'
 import { BottleStage, type Callout } from './BottleStage'
@@ -15,8 +14,8 @@ import styles from './MeetTheBottle.module.css'
  * So, between the benefits band and Meet the Puddle, three movements:
  *
  *   WHY        the founders' own sentence for why the ducks exist, full width
- *              and signed, the next sentence of their story, the three ducks
- *              standing together, and three lifestyle prints pinned up
+ *              and signed, the next sentence of their story, and three
+ *              lifestyle prints pinned up
  *   THE BOTTLE their 360° model of the production bottle, spinning, its parts
  *              called out on leader lines that draw themselves in, a switcher
  *              for all three ducks and the sleeve button
@@ -49,16 +48,14 @@ export function MeetTheBottle() {
       <BrandDetail preset="droplets" />
       <div className="wrap">
         {/* THE WHY on the left — label, their lead-in, the sentence in three
-            lines, signed, the next sentence of their story and the three ducks
-            standing together — and three prints pinned up on the right. */}
+            lines, signed, and the next sentence of their story — and three prints pinned up on the right. */}
         <div className={styles.head}>
           <div className={styles.why}>
             <Sticker data-pop="">Meet the bottle</Sticker>
             <p className={`hand ${styles.lead}`} data-anim="">{bottleWhy.lead}</p>
             <h2 id="bottle-title" className={`d ${styles.quote}`} data-anim="">
-              {/* The sentence runs on from the colon above, so it keeps their
-                  lower-case start. The mark is drawn: the display face's own
-                  quotation marks are two thin slashes. */}
+              {/* The mark is drawn: the display face's own quotation marks
+                  are two thin slashes. */}
               <svg className={styles.mark} viewBox="0 0 48 40" aria-hidden="true" focusable="false">
                 <path d="M4 38V23C4 11 10 4 20 1.5l2.2 6C16.4 9.6 13.6 13.4 13.4 19H21v19H4Zm24 0V23c0-12 6-19 16-21.5l2.2 6C40.4 9.6 37.6 13.4 37.4 19H45v19H28Z" />
               </svg>
@@ -66,14 +63,6 @@ export function MeetTheBottle() {
             </h2>
             <p className={`hand ${styles.sig}`} data-anim="">&mdash; {bottleWhy.by}</p>
             <p className={styles.story} data-anim="">{bottleWhy.story}</p>
-            {/* Just the characters — no cards, no labels. Sized by HEIGHT:
-                the three poses are different shapes (Goosey's is square), so
-                one width made him a head shorter than the other two. */}
-            <div className={styles.trio} aria-hidden="true">
-              <Duck who="vincey" pose="wink" className={styles.trioDuck} float density="always" sizes="110px" />
-              <Duck who="chi-chi" pose="wave" className={styles.trioDuck} float density="always" sizes="110px" />
-              <Duck who="goosey" pose="cheer" className={`${styles.trioDuck} ${styles.trioGoosey}`} float density="always" sizes="150px" />
-            </div>
           </div>
 
           <div className={styles.prints} aria-hidden="true">

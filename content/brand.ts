@@ -355,7 +355,7 @@ export const personalization = {
  */
 export const bottleWhy = {
   lead: 'Ducks \u2019n Puddles began with a feeling we wanted every child to have:',
-  line: 'the comfort of knowing they have a little friend by their side, wherever life takes them.',
+  line: 'The comfort of knowing they have a little friend by their side, wherever life takes them.',
   by: 'Larisa & Vinny',
   /** The next sentence of the same story — one, kept short on purpose. */
   story: 'Something to bring a little extra comfort on the first day of school, a new adventure, or any moment they need it most.',

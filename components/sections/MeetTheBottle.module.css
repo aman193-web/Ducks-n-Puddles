@@ -91,21 +91,6 @@
   text-wrap: pretty;
 }
 
-/* The three ducks, standing together — just the characters. */
-.trio {
-  --duck-h: clamp(96px, 8.4vw, 124px);
-  display: flex;
-  align-items: flex-end;
-  margin-block-start: var(--s-6) !important;
-}
-/* One HEIGHT for all three. Width follows each pose's own shape. */
-.trioDuck { flex: none; }
-.trioDuck img { inline-size: auto; block-size: var(--duck-h); }
-.trioDuck + .trioDuck { margin-inline-start: calc(var(--duck-h) * -.12); }
-/* Goosey's pose is square with air either side of him; pull him in by it. */
-.trioGoosey { margin-inline-start: calc(var(--duck-h) * -.3) !important; }
-.trio > :nth-child(2) { position: relative; z-index: 1; }
-
 /* ---- three prints, pinned up -------------------------------------------- */
 .prints {
   position: relative;
@@ -495,7 +480,7 @@
    REDUCED MOTION — every loop stops and every entrance is already in place.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .print, .spotlight, .ghost, .bubbles i, .trioDuck, .nextArrow,
+  .print, .spotlight, .ghost, .bubbles i, .nextArrow,
   [data-inview] .callout::before { animation: none !important; }
   .bubbles { display: none; }
   .callout { opacity: 1; translate: 0 0; transition: none; }
