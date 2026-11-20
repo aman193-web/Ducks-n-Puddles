@@ -140,6 +140,9 @@ export function SiteFooter() {
                 </a>
               ))}
             </div>
+            {/* The address itself, written out — the envelope button above
+                opens a mail app, but not everyone has one set up. */}
+            <a className={styles.email} href={`mailto:${brand.supportEmail}`}>{brand.supportEmail}</a>
           </div>
 
           {/* ---- link columns ---- */}
