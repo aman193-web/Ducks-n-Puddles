@@ -8,6 +8,7 @@ import { DuckStage } from '@/components/sections/DuckStage'
 import { Specs } from '@/components/sections/Specs'
 import { Store } from '@/components/sections/Store'
 import { MeetThePuddle } from '@/components/sections/MeetThePuddle'
+import { MeetTheBottle } from '@/components/sections/MeetTheBottle'
 import { Story } from '@/components/sections/Story'
 import { WhatsNext } from '@/components/sections/WhatsNext'
 import { InTheWild } from '@/components/sections/InTheWild'
@@ -24,6 +25,7 @@ import { Squad } from '@/components/sections/Squad'
  *
  *   Hero          Their New Favorite Water Bottle.   fall in love with the bottles
  *   Benefits band
+ *   The bottle    the 360° bottle, its parts, and the founders' why
  *   The Puddle    the 2-in-1 sleeve and snack cup    understand their value
  *   Features      made with parents in mind
  *   The bottles   A Friend for Every Adventure       choose a favourite
@@ -55,6 +57,9 @@ export default function HomePage() {
            read as a ticker rather than as a band. */
         colour="var(--sun-soft)" rot={0} seconds={200}
       />
+      {/* THE BOTTLE ITSELF, and why it exists, before its Puddle — the
+          client's Nov 2026 follow-up to their own reorganisation. */}
+      <MeetTheBottle />
       {/* SECTION 02, PRODUCT FEATURES & DETAILS: the 2-in-1 reveal, then the
           details. Specs pulls itself up over the Puddle, and the bottles pull
           themselves up over Specs, so the three read as one run. */}

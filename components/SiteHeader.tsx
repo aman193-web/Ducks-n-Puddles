@@ -10,7 +10,7 @@ import styles from './SiteHeader.module.css'
 const NAV = [
   /* The three bottles' pages hang off this one — see NavDucks. */
   { href: '/#ducks', label: 'The Ducks', menu: true },
-  { href: '/#puddle', label: 'Features' },
+  { href: '/#bottle', label: 'Features' },
   { href: '/#story', label: 'Our Story' },
   { href: '/blog', label: 'Blog' },
   /* Last, and set apart as a button. Points at the on-page section until the

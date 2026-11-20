@@ -346,6 +346,19 @@ export const personalization = {
   sampleName: 'Lucy',
 } as const
 
+/**
+ * WHY THE BOTTLE EXISTS — the founders' own sentence, from their story
+ * (A Message from the Founders), for the "Meet the bottle" section the client
+ * asked for in Nov 2026: "show the actual water bottle and describe it and add
+ * a 'why' before we go into the puddle". Their words, split where they wrote
+ * the colon; nothing added.
+ */
+export const bottleWhy = {
+  lead: 'Ducks \u2019n Puddles began with a feeling we wanted every child to have:',
+  line: 'the comfort of knowing they have a little friend by their side, wherever life takes them.',
+  by: 'Larisa & Vinny',
+} as const
+
 export const puddle = {
   eyebrow: 'Meet the Puddle',
   title: 'Meet the Puddle!',
