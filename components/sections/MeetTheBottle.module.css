@@ -181,7 +181,8 @@
   position: absolute;
   z-index: 2;
   inset-block-start: 0;
-  inset-inline-start: 50%;
+  /* Its slot on the strip: a screen's width per bottle. */
+  inset-inline-start: calc(50% + var(--slot, 0) * 100vw);
   translate: -50% 0;
   inline-size: var(--frame-w);
   block-size: var(--frame-h);
@@ -190,9 +191,76 @@
   /* The pond fits the frame now; this only softens its far ends where a
      phone screen is narrower than the frame. */
   mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  transition: opacity .35s ease;
+  /* No CSS transition here: GSAP drives the switch, and a transition on the
+     same property would chase every frame of the tween. */
 }
-.frame[data-loading] { opacity: 0; }
+/* ---- the strip: three bottles, a screen apart ---------------------------
+   GSAP pans it (BottleStage). The section clips, so the neighbours wait
+   off-frame until the camera brings them in. */
+.strip {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  will-change: transform;
+}
+
+/* ---- the camera's controls, at the page's edges --------------------------
+   A round arrow that opens on hover into "Meet <duck>", on the colour of the
+   duck it goes to. */
+.pan {
+  position: absolute;
+  z-index: 5;
+  /* Level with the pond, below every callout (they run 27-76% of the
+     stage), so the label can open inwards without covering one. */
+  inset-block-start: calc(var(--frame-h) * .88);
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  block-size: 58px;
+  min-inline-size: 58px;
+  padding-inline: 16px;
+  translate: 0 -50%;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border-lg);
+  border-radius: var(--r-pill);
+  box-shadow: 0 10px 22px rgba(16, 38, 74, .14);
+  cursor: pointer;
+  transition: background-color .3s ease, gap .45s var(--spring), box-shadow .3s ease, scale .35s var(--spring);
+}
+.panPrev { inset-inline-start: calc(50% - 50vw + var(--gutter)); }
+.panNext { inset-inline-end: calc(50% - 50vw + var(--gutter)); }
+.pan svg {
+  flex: none;
+  inline-size: 22px; block-size: 22px;
+  fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round;
+  transition: translate .35s var(--spring);
+}
+.panLabel {
+  overflow: hidden;
+  max-inline-size: 0;
+  white-space: nowrap;
+  font-family: var(--font-display); font-synthesis: none; font-weight: 400;
+  font-size: 1.25rem; line-height: 1;
+  opacity: 0;
+  transition: max-inline-size .5s var(--spring), opacity .25s ease;
+}
+@media (hover: hover) {
+  .pan:hover, .pan:focus-visible {
+    gap: 10px;
+    background: var(--pan-bg);
+    box-shadow: 0 14px 28px rgba(16, 38, 74, .2);
+  }
+  .pan:hover .panLabel, .pan:focus-visible .panLabel { max-inline-size: 180px; opacity: 1; }
+  .panPrev:hover svg { translate: -3px 0; }
+  .panNext:hover svg { translate: 3px 0; }
+}
+.pan:active { scale: .95; }
+.pan:focus-visible { outline: var(--bw-lg) solid var(--ink); outline-offset: 3px; }
+@media (max-width: 1023px) {
+  /* No callouts beside the bottle on a phone: back to its middle. */
+  .pan { inset-block-start: calc(var(--frame-h) * .5); block-size: 48px; min-inline-size: 48px; padding-inline: 11px; }
+}
 
 /* The chosen duck's colour behind the bottle, easing over as you switch. */
 .spotlight {
@@ -223,11 +291,6 @@
   opacity: .8;
   pointer-events: none;
   user-select: none;
-  animation: ghostIn .7s cubic-bezier(.16, 1, .3, 1) both;
-}
-@keyframes ghostIn {
-  from { opacity: 0; translate: -50% 24px; }
-  to   { opacity: .8; translate: -50% 0; }
 }
 
 /* Bubbles rising off the pond, behind the bottle. */
@@ -480,7 +543,7 @@
    REDUCED MOTION — every loop stops and every entrance is already in place.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .print, .spotlight, .ghost, .bubbles i, .nextArrow,
+  .print, .spotlight, .bubbles i, .nextArrow,
   [data-inview] .callout::before { animation: none !important; }
   .bubbles { display: none; }
   .callout { opacity: 1; translate: 0 0; transition: none; }
