@@ -921,6 +921,14 @@ p { text-wrap: pretty; }
   margin-bottom: -1px;
 }
 .ftr-edge svg { display: block; width: 100%; height: calc(100% + 1px); fill: var(--cream); }
+/* index.html: cream above the footer, so the edge carries its own water — a
+   sky ribbon riding the same brand wave, with the duck on it. */
+.ftr-edge-ribbon { background: var(--cream); height: clamp(52px, 7vw, 104px); }
+.ftr-edge-ribbon .ribbon-water { fill: var(--vincey-soft); }
+/* five periods squeezed into a phone read as a zigzag — keep each period at
+   least ~300px wide and let the edge clip the rest */
+.ftr-edge-ribbon svg { min-width: 1500px; }
+.ftr-crest:has(.ftr-edge-ribbon) .ftr-swimmer { bottom: 38%; }
 .ftr-crest::after { content: ""; position: absolute; inset-inline: 0; bottom: -1px; height: 3px; background: var(--cream); z-index: 3; }
 .ftr-swimmer { position: absolute; bottom: 34%; left: 0; z-index: 4; display: block; pointer-events: none; }
 .ftr-paddle { display: block; }
