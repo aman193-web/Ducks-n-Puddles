@@ -2,22 +2,20 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
 /**
- * THE SHOPIFY DESIGN PROTOTYPE — DEV SERVER AND VERCEL PREVIEWS ONLY.
+ * THE SHOPIFY DESIGN PROTOTYPE.
  *
  * `shopify-design/` at the repo root is a static HTML prototype of the Shopify
  * store (homepage + $1 reservation page). This hands its files out under
- * /shopify-design/… under `next dev` and on Vercel PREVIEW deployments (any
- * branch other than main), so it can be shared at a preview URL without
- * touching the live site.
+ * /shopify-design/… — on every deployment, production included (Nov 2026:
+ * the site's "Get Early Access" buttons link here for client review).
+ *
+ * NOTE the reserve form is still a mock: it shows a thank-you and keeps
+ * nothing. Pages are served noindex.
  *
  * The standalone single-file versions are at /shopify-design/standalone/.
  *
- * It is a route handler rather than a copy under public/ on purpose: public/
- * ships with the site, and a mock storefront with a "Reserve for $1" button
- * must never be live on ducksnpuddles.com. On the production deployment
- * (VERCEL_ENV=production) this answers 404 for everything. next.config.ts
- * bundles the folder with this route (outputFileTracingIncludes) so the
- * files exist on a preview deployment's server.
+ * next.config.ts bundles the folder with this route
+ * (outputFileTracingIncludes) so the files exist on the deployment's server.
  */
 
 const ROOT = path.join(process.cwd(), 'shopify-design')
@@ -38,10 +36,6 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ path?: string[] }> },
 ) {
-  if (process.env.VERCEL_ENV === 'production') {
-    return new Response('Not found', { status: 404 })
-  }
-
   const parts = (await params).path ?? []
 
   /* The pages link to their assets relatively ("assets/theme.css"), so the

@@ -3,9 +3,9 @@ import type { NextConfig } from 'next'
 const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  /* The Shopify design prototype is read from disk by its route on Vercel
-     preview deployments; tracing can't see that, so the folder is named here.
-     See app/shopify-design/[[...path]]/route.ts — production answers 404. */
+  /* The Shopify design prototype is read from disk by its route; tracing
+     can't see that, so the folder is named here.
+     See app/shopify-design/[[...path]]/route.ts. */
   outputFileTracingIncludes: {
     '/shopify-design/\\[\\[\\.\\.\\.path\\]\\]': ['./shopify-design/**/*'],
   },
