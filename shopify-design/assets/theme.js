@@ -291,6 +291,59 @@
   }
 
   /* =============================================================================
+     FOOTER DUCKS — the main site's FooterDucks.tsx without GSAP.
+     The video never plays: its timeline IS the head-turn, so the pointer's X
+     maps onto currentTime and the heads follow the cursor. Touch and reduced
+     motion get the straight-ahead middle frame and nothing is bound.
+     ========================================================================== */
+  const duckStage = $('[data-follow-ducks]')
+  const duckVid = duckStage && $('video', duckStage)
+  if (duckVid) {
+    const st = { t: NaN, cur: NaN, x: 0, y: 0, tx: 0, ty: 0 }
+    const apply = () => {
+      if (!Number.isFinite(st.cur) || duckVid.readyState < 1 || duckVid.seeking) return
+      if (Math.abs(duckVid.currentTime - st.cur) < 1 / 48) return
+      duckVid.currentTime = st.cur
+    }
+    const park = () => {
+      if (!Number.isFinite(duckVid.duration) || !duckVid.duration) return
+      if (!Number.isFinite(st.t)) { st.t = st.cur = duckVid.duration / 2 }
+      apply()
+    }
+    ;['loadedmetadata', 'loadeddata', 'canplay'].forEach((e) => duckVid.addEventListener(e, park))
+    duckVid.addEventListener('seeked', apply)
+    park()
+
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer: fine)').matches) {
+      let onScreen = false
+      let raf = 0
+      new IntersectionObserver(([en]) => { onScreen = en.isIntersecting }, { rootMargin: '160px 0px' }).observe(duckStage)
+      const tick = () => {
+        raf = 0
+        st.cur += (st.t - st.cur) * 0.18
+        st.x += (st.tx - st.x) * 0.08
+        st.y += (st.ty - st.y) * 0.08
+        apply()
+        duckStage.style.transform = `translate(${st.x.toFixed(2)}px, ${st.y.toFixed(2)}px)`
+        if (Math.abs(st.t - st.cur) > 0.005 || Math.abs(st.tx - st.x) > 0.1 || Math.abs(st.ty - st.y) > 0.1) raf = requestAnimationFrame(tick)
+      }
+      const aim = (nx, ny) => {
+        if (!Number.isFinite(duckVid.duration) || !duckVid.duration) return
+        st.t = nx * duckVid.duration
+        if (!Number.isFinite(st.cur)) st.cur = st.t
+        st.tx = (0.5 - nx) * 14
+        st.ty = (0.5 - ny) * 8
+        if (!raf) raf = requestAnimationFrame(tick)
+      }
+      window.addEventListener('pointermove', (e) => {
+        if (!onScreen) return
+        aim(Math.min(Math.max(e.clientX / innerWidth, 0), 1), Math.min(Math.max(e.clientY / innerHeight, 0), 1))
+      }, { passive: true })
+      document.addEventListener('pointerleave', () => aim(0.5, 0.5))
+    }
+  }
+
+  /* =============================================================================
      REVIEW MODE — prototype only.
      ========================================================================== */
   /* Hidden by default (Nov 2026, client review): the button and the orange

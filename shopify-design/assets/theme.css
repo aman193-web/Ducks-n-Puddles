@@ -921,14 +921,9 @@ p { text-wrap: pretty; }
   margin-bottom: -1px;
 }
 .ftr-edge svg { display: block; width: 100%; height: calc(100% + 1px); fill: var(--cream); }
-/* index.html: cream above the footer, so the edge carries its own water — a
-   sky ribbon riding the same brand wave, with the duck on it. */
-.ftr-edge-ribbon { background: var(--cream); height: clamp(52px, 7vw, 104px); }
-.ftr-edge-ribbon .ribbon-water { fill: var(--vincey-soft); }
-/* five periods squeezed into a phone read as a zigzag — keep each period at
-   least ~300px wide and let the edge clip the rest */
-.ftr-edge-ribbon svg { min-width: 1500px; }
-.ftr-crest:has(.ftr-edge-ribbon) .ftr-swimmer { bottom: 38%; }
+/* index.html's FAQ closes the page in the blue the footer wave expects */
+.faq-blue { background: var(--vincey-soft); --wave: var(--vincey-soft); }
+.wave-brand { height: clamp(34px, 4.6vw, 68px); }
 .ftr-crest::after { content: ""; position: absolute; inset-inline: 0; bottom: -1px; height: 3px; background: var(--cream); z-index: 3; }
 .ftr-swimmer { position: absolute; bottom: 34%; left: 0; z-index: 4; display: block; pointer-events: none; }
 .ftr-paddle { display: block; }
@@ -990,7 +985,7 @@ p { text-wrap: pretty; }
 .ftr-sendoff { position: relative; z-index: 1; display: block; margin: 0; align-self: center; width: clamp(260px, 34vw, 440px); height: auto; overflow: visible; }
 .ftr-sendoff text { font-family: var(--font-display); font-synthesis: none; font-weight: 400; font-size: 46px; letter-spacing: .004em; fill: var(--ink); }
 .ftr-ducks { position: relative; z-index: 1; display: flex; justify-content: center; margin-top: calc(min(100%, 900px) * -0.104); pointer-events: none; }
-.ftr-ducks img {
+.ftr-ducks img, .ftr-ducks video {
   display: block; width: min(100%, 900px); height: auto;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0, transparent 18.5%, #000 24.5%, #000 100%);
   -webkit-mask-composite: source-in;

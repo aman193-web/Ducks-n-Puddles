@@ -30,6 +30,7 @@ const TYPES: Record<string, string> = {
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.woff2': 'font/woff2',
+  '.mp4': 'video/mp4',
 }
 
 export async function GET(
@@ -54,14 +55,34 @@ export async function GET(
 
   try {
     const body = await readFile(file)
-    return new Response(body, {
-      headers: {
-        'Content-Type': TYPES[path.extname(file).toLowerCase()] ?? 'application/octet-stream',
-        /* Always the file on disk: this is for reviewing edits as they land. */
-        'Cache-Control': 'no-store',
-        'X-Robots-Tag': 'noindex, nofollow',
-      },
-    })
+    const headers: Record<string, string> = {
+      'Content-Type': TYPES[path.extname(file).toLowerCase()] ?? 'application/octet-stream',
+      /* Always the file on disk: this is for reviewing edits as they land. */
+      'Cache-Control': 'no-store',
+      'X-Robots-Tag': 'noindex, nofollow',
+      'Accept-Ranges': 'bytes',
+    }
+
+    /* BYTE RANGES. Without them Chrome treats an mp4 as unseekable: setting
+       currentTime on the footer ducks' video did nothing and the heads never
+       turned. One range per request is all a <video> ever asks for. */
+    const range = /^bytes=(\d*)-(\d*)$/.exec(request.headers.get('range') ?? '')
+    if (range) {
+      const size = body.length
+      let start = range[1] ? Number(range[1]) : size - Number(range[2])
+      let end = range[1] && range[2] ? Number(range[2]) : size - 1
+      start = Math.max(0, start)
+      end = Math.min(end, size - 1)
+      if (start > end || start >= size) {
+        return new Response(null, { status: 416, headers: { ...headers, 'Content-Range': `bytes */${size}` } })
+      }
+      return new Response(body.subarray(start, end + 1), {
+        status: 206,
+        headers: { ...headers, 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': String(end - start + 1) },
+      })
+    }
+
+    return new Response(body, { headers })
   } catch {
     return new Response('Not found', { status: 404 })
   }
