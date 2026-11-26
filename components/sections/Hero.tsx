@@ -121,7 +121,7 @@ export function Hero() {
               <div className={styles.ctas}>
                 <Btn href="/#store" colour="var(--sun-soft)">Explore the Bottles</Btn>
                 <span className={styles.second}>
-                  <Btn href="/#squad" colour="var(--paper)">Get Early Access</Btn>
+                  <Btn href="/shopify-design/index.html" colour="var(--paper)">Get Early Access</Btn>
                 </span>
               </div>
             </div>

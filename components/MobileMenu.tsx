@@ -90,7 +90,7 @@ export function MobileMenu() {
         </nav>
 
         <div className={styles.foot}>
-          <Btn href="/#squad" colour="var(--sun-soft)" block>Get Early Access</Btn>
+          <Btn href="/shopify-design/index.html" colour="var(--sun-soft)" block>Get Early Access</Btn>
         </div>
     </div>
   ) : null

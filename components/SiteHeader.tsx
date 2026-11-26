@@ -46,7 +46,7 @@ export function SiteHeader() {
         <div className={styles.actions} data-menu-load="">
           <SoundToggle />
           <span className={styles.ctaWrap}>
-            <Btn href="/#squad" size="sm" colour="var(--sun-soft)">Get Early Access</Btn>
+            <Btn href="/shopify-design/index.html" size="sm" colour="var(--sun-soft)">Get Early Access</Btn>
           </span>
           <MobileMenu />
         </div>

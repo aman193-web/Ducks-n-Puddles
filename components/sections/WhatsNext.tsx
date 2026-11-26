@@ -71,7 +71,7 @@ export function WhatsNext() {
         <Foundation />
 
         <div className={styles.cta}>
-          <Btn href="/#squad" colour="var(--sun-soft)">Get Early Access</Btn>
+          <Btn href="/shopify-design/index.html" colour="var(--sun-soft)">Get Early Access</Btn>
         </div>
       </div>
     </section>
