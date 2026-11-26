@@ -37,53 +37,53 @@ The tokens come straight from the main site's `styles/tokens.css`: the same pale
 
 ## Homepage sections → Shopify
 
+The header and footer are the main site's own (`components/SiteHeader.tsx`, `components/SiteFooter.tsx`), with the same links, so moving between ducksnpuddles.com and the shop feels like one site. The only Shopify changes: the call to action is "Reserve for $1", a cart sits beside it, and the footer's links point at the shop where the shop has that page.
+
 | Section | Shopify implementation |
 |---|---|
-| Announcement marquee | `announcement-bar`, one block per message |
-| Header with mega menu | `header`, `main-menu`, mega menu on "The Ducks" |
-| Hero + shop by duck | custom `hero-split` (blocks: eyebrow, heading, text, buttons, proof points, duck avatars) |
-| Product grid with filter pills | `featured-collection` on `all`, tabs from product type, `card-product` snippet, promo block in slot 5 |
-| Reserve band | custom `reserve-promo` (step blocks + image with overlay card) |
+| Header + menu sheet | `header`, `main-menu` (The Ducks dropdown, Features, Our Story, Blog, Store) |
+| Hero + shop by duck | custom `hero-split` (blocks: eyebrow, heading, text, button, duck avatars) |
+| Product grid with filter pills | `featured-collection` on `all`, tabs from product type, `card-product` snippet |
+| Reserve band | custom `reserve-promo` (three step blocks + image) |
 | Duck finder | custom `duck-finder`, one block per duck (the client's character copy) |
 | Meet the Puddle + features | `image-with-text` + `multicolumn` |
-| Follow the build | custom `build-tracker` (stage blocks with done / now / next state) + image rail |
+| In the wild gallery | custom `scrapbook-gallery` (photo / video blocks), same as the main site |
 | FAQ | `collapsible-content` |
-| Duck Squad signup | `newsletter` (customer form, tag `newsletter`) |
 | Footer | `footer`, three menus + Settings → Policies |
 
 "Notify me" on coming-soon cards opens an email field inline, then saves it as a customer with the tag `notify:<product>`.
 
+## Reservation page
+
+Buy box (gallery in the chosen duck's colour, duck picker, what the $1 gets you, email, $1 button) → How it works in three steps (reserve for $1 → first pick on launch day → pay the rest, get your bottle) → what you're reserving → founders → FAQ → email-only signup → footer.
+
 ## Reservation mechanics (recommended)
 
 - **A $1 product** ("Duck Reservation") on the `product.reserve` template. The $1 then goes through native Shopify checkout, Shop Pay included, with no app needed.
-- **Variants = duck preference** (Vincey / Chi Chi / Goosey / All three / Undecided). That way the choice is recorded on the order.
-- **Inventory = the early-bird allocation.** The "Early-bird spots" meter reads it. Turn on "continue selling when out of stock" or switch to a waitlist once it runs out.
-- **Shopify Flow:** order paid → tag customer `reserver` → Shopify Email or Klaviyo segment. On launch day, that segment gets the private Kickstarter link.
+- **Variants = duck preference** (Vincey / Chi Chi / Goosey / All three). That way the choice is recorded on the order.
+- **Shopify Flow:** order paid → tag customer `reserver` → Shopify Email or Klaviyo segment. On launch day, that segment gets the launch link first.
 - **Email-only signups** (the "Not ready to reserve?" band) are tagged `prelaunch-lead`. This gives the team two separate audiences: likely backers and warm leads.
 - **Refunds** go through Shopify admin. The refund policy page must cover the reservation before it goes live.
 - **Indexing:** if the client wants the page kept out of search, add `{% if template.suffix == 'reserve' %}<meta name="robots" content="noindex">{% endif %}` to `theme.liquid`. (Both prototype pages are noindex either way.)
 
 ## Open items: need client confirmation
 
-These are also outlined on the pages themselves (orange button, bottom left). Wherever one of them appears, the placeholder copy is worded so it stays true until the item is settled.
+These are also outlined on the pages themselves (orange button, bottom left).
 
-1. Deposit: $1 per the latest direction. Still to confirm: amount, whether it's refundable, and the terms.
-2. How the $1 relates to the Kickstarter pledge (credited, separate, or refunded).
+1. Deposit: $1. Still to confirm: whether it's refundable, and the terms.
+2. How the $1 is credited toward the final price (the flow says "pay the rest").
 3. The early-bird incentive (discount or reward).
-4. What the secret reward is, and how access to its private link is controlled.
-5. Kickstarter launch date.
-6. Fulfilment timeline (the meeting said "several months after the campaign").
-7. Early-bird quantity, plus the structure of the public early-bird rewards.
-8. Limit per customer / multiple reservations.
-9. Retail price of each bottle (the cards say "Launch price announced soon").
-10. Trio bundle: this is our proposal. Offer and price not confirmed.
-11. Add-ons from the meeting (theme song, stickers, hats, merch): which ones sell in Shopify, and which are Kickstarter-only.
-12. Personalized Puddle: personalization is currently held back on the main site. Confirm it can be teased here.
-13. Snack-holder claim: still waiting on the client's written food-contact approval (the same gate as `SNACK_CLAIMS_APPROVED` on the main site).
-14. Build-tracker stage statuses.
-15. Shipping and refund policy pages.
-16. Whether the reservation page is indexed by search engines.
+4. Launch date.
+5. Fulfilment timeline (the meeting said "several months after the campaign").
+6. Limit per customer / multiple reservations.
+7. Retail price of each bottle (the cards say "Launch price announced soon").
+8. Trio bundle: this is our proposal. Offer and price not confirmed.
+9. Add-ons from the meeting (theme song, stickers, hats, merch): which ones sell in Shopify.
+10. Personalized Puddle: personalization is currently held back on the main site.
+11. Snack-holder claim: waiting on the client's written food-contact approval.
+12. Refund policy page, which must cover the reservation.
+13. Whether the reservation page is indexed by search engines.
 
 ## Assets
 
-`assets/img` holds copies of the main site's optimised images from `public/img`. `assets/fonts` holds Bangbang. Icons are Phosphor (regular), inlined as an SVG sprite at the top of each page.
+`assets/img` and `assets/video` hold copies of the main site's optimised images and gallery clips. `assets/fonts` holds Bangbang. Icons are Phosphor (regular), inlined as an SVG sprite at the top of each page.

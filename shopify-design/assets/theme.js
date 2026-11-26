@@ -14,24 +14,57 @@
   /* ---- header: hairline once the page scrolls under it ---------------- */
   const hdr = $('.hdr')
   if (hdr) {
-    const onScroll = () => hdr.classList.toggle('is-stuck', window.scrollY > 8)
+    const onScroll = () => hdr.classList.toggle('is-stuck', window.scrollY > 64)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
   }
 
-  /* ---- mobile drawer ---------------------------------------------------- */
-  const drawer = $('.drawer')
-  if (drawer) {
+  /* ---- menu sheet (the main site's full-screen mobile menu) ------------ */
+  const sheet = $('#mobile-menu')
+  if (sheet) {
+    const opener = $('[data-drawer-open]')
     const open = (on) => {
-      drawer.classList.toggle('is-open', on)
-      drawer.setAttribute('aria-hidden', String(!on))
+      sheet.hidden = !on
       document.body.style.overflow = on ? 'hidden' : ''
-      $$('[data-drawer-open]').forEach((b) => b.setAttribute('aria-expanded', String(on)))
-      if (on) $('.drawer-panel button', drawer)?.focus()
+      opener?.setAttribute('aria-expanded', String(on))
+      if (on) $('.sheet-close', sheet)?.focus()
+      else opener?.focus()
     }
-    $$('[data-drawer-open]').forEach((b) => b.addEventListener('click', () => open(true)))
-    $$('[data-drawer-close], .drawer-scrim, .drawer-links a', drawer).forEach((b) => b.addEventListener('click', () => open(false)))
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drawer.classList.contains('is-open')) open(false) })
+    opener?.addEventListener('click', () => open(true))
+    $$('[data-drawer-close], a', sheet).forEach((b) => b.addEventListener('click', () => open(false)))
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sheet.hidden) open(false) })
+  }
+
+  /* ---- scrapbook gallery: arrows page the rail, one clip plays at a time - */
+  const rail = $('[data-rail]')
+  if (rail) {
+    const arrows = $$('[data-rail-step]')
+    const ends = () => {
+      const max = rail.scrollWidth - rail.clientWidth
+      arrows[0].disabled = rail.scrollLeft <= 2
+      arrows[1].disabled = rail.scrollLeft >= max - 2
+    }
+    arrows.forEach((b) => b.addEventListener('click', () => {
+      const card = $('li', rail)
+      const step = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || '0') : rail.clientWidth * 0.8
+      rail.scrollBy({ left: step * Number(b.dataset.railStep), behavior: 'smooth' })
+    }))
+    rail.addEventListener('scroll', ends, { passive: true })
+    window.addEventListener('resize', ends)
+    ends()
+    $$('[data-play]', rail).forEach((btn) => {
+      const v = btn.parentElement.querySelector('video')
+      const label = $('.vh', btn)
+      const cap = label.textContent.replace(/^(Play|Pause) — /, '')
+      v.addEventListener('play', () => { btn.classList.add('is-playing'); label.textContent = `Pause — ${cap}` })
+      v.addEventListener('pause', () => { btn.classList.remove('is-playing'); label.textContent = `Play — ${cap}` })
+      btn.addEventListener('click', () => {
+        if (v.paused) {
+          $$('video', rail).forEach((o) => { if (o !== v && !o.paused) o.pause() })
+          v.play()
+        } else v.pause()
+      })
+    })
   }
 
   /* ---- collection tabs (product type / tag filter) --------------------- */
@@ -151,7 +184,6 @@
     'chi-chi': { name: 'Chi Chi', line: 'The Brave Spark', file: 'chichi', soft: 'var(--chichi-soft)', field: 'var(--chichi-field)' },
     goosey: { name: 'Goosey', line: 'The Sunshine Friend', file: 'goosey', soft: 'var(--goosey-soft)', field: 'var(--goosey-field)' },
     trio: { name: 'All three', line: 'Vincey, Chi Chi & Goosey', multi: true, soft: 'var(--sky-soft)', field: 'var(--vincey-field)' },
-    undecided: { name: 'Decide at launch', line: 'Pick your duck on launch day', multi: true, soft: 'var(--sky-soft)', field: 'var(--vincey-field)' },
   }
   const stage = $('[data-stage]')
   if (stage) {

@@ -19,6 +19,8 @@ const GOOGLE =
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
 
 const dataUri = (buf, type) => `data:${type};base64,${buf.toString('base64')}`
+const TYPE = { webp: 'image/webp', jpg: 'image/jpeg', mp4: 'video/mp4' }
+const FILE = /assets\/(?:img|video)\/([\w.-]+\.(?:webp|jpg|mp4))/g
 
 /* Google Fonts, latin subset only, each file fetched once. */
 async function googleFonts() {
@@ -43,8 +45,8 @@ async function build(page, fontsCss, themeCss, themeJs) {
 
   /* Every image the page or its script can ask for. The script builds some
      names at runtime (the duck picker swaps bottles), so those are expanded. */
-  const names = new Set([...html.matchAll(/assets\/img\/([\w.-]+\.webp)/g)].map((m) => m[1]))
-  for (const m of themeJs.matchAll(/assets\/img\/([\w.-]+\.webp)/g)) names.add(m[1])
+  const names = new Set([...html.matchAll(FILE)].map((m) => m[1]))
+  for (const m of themeJs.matchAll(FILE)) names.add(m[1])
   if (html.includes('data-stage')) {
     for (const f of ['vincey', 'chichi', 'goosey']) {
       for (const s of ['-621', '-back-621', '-peeking-320', '-idle-420']) names.add(`${f}${s}.webp`)
@@ -52,12 +54,15 @@ async function build(page, fontsCss, themeCss, themeJs) {
     names.add('trio-walk-560.webp')
   }
   const img = {}
-  for (const n of names) img[n] = dataUri(await readFile(path.join(ROOT, 'assets/img', n)), 'image/webp')
+  for (const n of names) {
+    const ext = n.split('.').pop()
+    img[n] = dataUri(await readFile(path.join(ROOT, ext === 'mp4' ? 'assets/video' : 'assets/img', n)), TYPE[ext])
+  }
 
   /* Each image is stored ONCE, in a script map; <img> tags carry the name and
      a tiny script fills them in. Inlining into every src would repeat the big
      ones (the bottles appear several times per page). */
-  html = html.replace(/<img([^>]*?)\ssrc="assets\/img\/([\w.-]+\.webp)"/g, '<img$1 data-inline-src="$2"')
+  html = html.replace(/\s(src|poster)="assets\/(?:img|video)\/([\w.-]+)"/g, ' data-inline-$1="$2"')
   html = html.replace(/href="assets\/img\/([\w.-]+\.webp)"/g, (_, n) => `href="${img[n]}"`)
 
   const js = themeJs
@@ -73,12 +78,13 @@ async function build(page, fontsCss, themeCss, themeJs) {
       /<script src="assets\/theme\.js[^"]*" defer><\/script>/,
       () => `<script>
 const IMG = ${JSON.stringify(img)};
-document.querySelectorAll('img[data-inline-src]').forEach((el) => { el.src = IMG[el.dataset.inlineSrc] });
+document.querySelectorAll('[data-inline-poster]').forEach((el) => { el.poster = IMG[el.dataset.inlinePoster] });
+document.querySelectorAll('[data-inline-src]').forEach((el) => { el.src = IMG[el.dataset.inlineSrc] });
 </script>
 <script>${js}</script>`,
     )
 
-  const left = html.match(/\s(src|href)="(?!data:|#|https?:|mailto:|index\.html|reserve\.html)[^"]+"/g)
+  const left = html.match(/\s(src|href|poster)="(?!data:|#|https?:|mailto:|index\.html|reserve\.html)[^"]+"/g)
   if (left) throw new Error(`${page}: unresolved references ${left.join(', ')}`)
 
   await writeFile(path.join(OUT, page), html)

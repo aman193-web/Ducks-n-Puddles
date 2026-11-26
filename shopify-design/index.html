@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Edu+QLD+Beginner:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="preload" href="assets/fonts/Bangbang-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/theme.css?v=2">
+  <link rel="stylesheet" href="assets/theme.css?v=6">
 </head>
 <body>
 <!-- icon sprite (Phosphor, regular) — snippets/icon-*.liquid in the theme -->
@@ -65,95 +65,69 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ======================================================================
-     HEADER GROUP  ·  sections/announcement-bar.liquid + sections/header.liquid
+     HEADER  ·  sections/header.liquid
+     The main site's header, item for item (components/SiteHeader.tsx): the
+     logo mark, The Ducks with its three-bottle menu, Features, Our Story,
+     Blog and the Store capsule. Two Shopify changes only: the call to action
+     is "Reserve for $1" instead of "Get Early Access", and a cart sits before it.
      ====================================================================== -->
-<div class="announce" role="region" aria-label="Announcements">
-  <div class="announce-track">
-    <span class="announce-item"><img src="assets/img/mark-footprints-144.webp" alt="">Reservations are open — <b>$1</b> holds your duck</span>
-    <span class="announce-item"><img src="assets/img/mark-footprints-144.webp" alt="">Early-bird perks for everyone who reserves</span>
-    <span class="announce-item"><img src="assets/img/mark-footprints-144.webp" alt="">Our Kickstarter is coming soon</span>
-    <span class="announce-item"><img src="assets/img/mark-footprints-144.webp" alt="">A secret reward for reservers, revealed on launch day</span>
-    <span class="announce-item" aria-hidden="true"><img src="assets/img/mark-footprints-144.webp" alt="">Reservations are open — <b>$1</b> holds your duck</span>
-    <span class="announce-item" aria-hidden="true"><img src="assets/img/mark-footprints-144.webp" alt="">Early-bird perks for everyone who reserves</span>
-    <span class="announce-item" aria-hidden="true"><img src="assets/img/mark-footprints-144.webp" alt="">Our Kickstarter is coming soon</span>
-    <span class="announce-item" aria-hidden="true"><img src="assets/img/mark-footprints-144.webp" alt="">A secret reward for reservers, revealed on launch day</span>
-  </div>
-</div>
-
 <header class="hdr">
   <div class="wrap hdr-bar">
-    <button class="hdr-icon hdr-menu-btn" type="button" data-drawer-open aria-expanded="false" aria-controls="drawer">
-      <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg><span class="vh">Menu</span>
-    </button>
-
-    <nav aria-label="Main">
-      <ul class="hdr-nav">
-        <li><a class="hdr-link is-current" href="#shop" aria-current="page">Shop all</a></li>
-        <li class="has-mega">
-          <a class="hdr-link" href="#shop" aria-haspopup="true">The Ducks <svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg></a>
-          <div class="mega">
-            <div class="wrap mega-inner">
-              <a class="mega-card" href="reserve.html?duck=vincey" style="--field:var(--vincey-field)">
-                <img src="assets/img/vincey-idle-420.webp" alt="" loading="lazy">
-                <span><b>Vincey</b><span>The Calm Companion</span></span>
-              </a>
-              <a class="mega-card" href="reserve.html?duck=chi-chi" style="--field:var(--chichi-field)">
-                <img src="assets/img/chichi-idle-420.webp" alt="" loading="lazy">
-                <span><b>Chi Chi</b><span>The Brave Spark</span></span>
-              </a>
-              <a class="mega-card" href="reserve.html?duck=goosey" style="--field:var(--goosey-field)">
-                <img src="assets/img/goosey-idle-420.webp" alt="" loading="lazy">
-                <span><b>Goosey</b><span>The Sunshine Friend</span></span>
-              </a>
-              <div class="mega-side">
-                <a class="link" href="#shop">Shop all ducks <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-                <a class="link" href="reserve.html?duck=trio">The Duck Trio <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-                <a class="link" href="#finder">Which duck is theirs? <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-                <a class="link" href="https://ducksnpuddles.com/#ducks">Meet the ducks <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li><a class="hdr-link" href="#shop" data-jump="soon">Coming soon</a></li>
-        <li><a class="hdr-link is-reserve" href="reserve.html">Reserve for $1</a></li>
-      </ul>
-    </nav>
-
-    <a class="hdr-logo" href="index.html" aria-label="Ducks ’n Puddles shop home">
-      <img src="assets/img/logo-primary-264.webp" alt="Ducks ’n Puddles" width="264" height="273">
+    <a class="hdr-brand" href="https://ducksnpuddles.com/" aria-label="Ducks ’n Puddles home">
+      <img src="assets/img/logo-mark-240.webp" alt="" width="240" height="207">
     </a>
 
+    <nav class="hdr-nav" aria-label="Primary">
+      <div class="drop">
+        <a href="https://ducksnpuddles.com/#ducks" aria-haspopup="true">
+          <span class="roll"><span>The Ducks</span></span>
+          <svg class="caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </a>
+        <ul class="drop-menu">
+          <li><a href="reserve.html?duck=vincey" style="--duck:var(--vincey)"><span class="dot" aria-hidden="true"></span><span class="item"><span class="item-name">Vincey</span><span class="item-role">The Calm Companion</span></span></a></li>
+          <li><a href="reserve.html?duck=chi-chi" style="--duck:var(--chichi)"><span class="dot" aria-hidden="true"></span><span class="item"><span class="item-name">Chi Chi</span><span class="item-role">The Brave Spark</span></span></a></li>
+          <li><a href="reserve.html?duck=goosey" style="--duck:var(--goosey)"><span class="dot" aria-hidden="true"></span><span class="item"><span class="item-name">Goosey</span><span class="item-role">The Sunshine Friend</span></span></a></li>
+        </ul>
+      </div>
+      <a href="https://ducksnpuddles.com/#bottle"><span class="roll"><span>Features</span></span></a>
+      <a href="https://ducksnpuddles.com/#story"><span class="roll"><span>Our Story</span></span></a>
+      <a href="https://ducksnpuddles.com/blog"><span class="roll"><span>Blog</span></span></a>
+      <a class="store-link" href="index.html" aria-current="page"><span class="roll"><span>Store</span></span><span class="note">Pre-launch</span></a>
+    </nav>
+
     <div class="hdr-actions">
-      <a class="hdr-link hide-m" href="https://ducksnpuddles.com/">Our story <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a class="hdr-icon" href="#" aria-label="Search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></a>
-      <a class="hdr-icon hide-m" href="#" aria-label="Account"><svg class="icon" aria-hidden="true"><use href="#i-user"/></svg></a>
-      <a class="hdr-icon" href="#" aria-label="Cart, 0 items"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span class="cart-count" aria-hidden="true">0</span></a>
+      <a class="hdr-cart" href="#" aria-label="Cart, 0 items"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span class="cart-count" aria-hidden="true">0</span></a>
+      <span class="hdr-cta"><a class="btn btn-sm" href="reserve.html" style="--bg:var(--sun-soft)"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a></span>
+      <button class="menu-pill" type="button" data-drawer-open aria-expanded="false" aria-controls="mobile-menu">
+        <span class="vh">Open menu</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 8.5h15M4.5 15.5h15"/></svg>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- menu-drawer (mobile) -->
-<div class="drawer" id="drawer" aria-hidden="true">
-  <div class="drawer-scrim"></div>
-  <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
-    <div class="drawer-head">
-      <img src="assets/img/logo-primary-264.webp" alt="Ducks ’n Puddles">
-      <button class="hdr-icon" type="button" data-drawer-close aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+<!-- the main site's full-screen menu sheet (components/MobileMenu.tsx) -->
+<div class="sheet" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="sheet-top">
+    <button class="sheet-close" type="button" data-drawer-close>
+      <span class="vh">Close menu</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <nav class="sheet-links" aria-label="Primary">
+    <a href="https://ducksnpuddles.com/#ducks"><span>The Ducks</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <div class="sheet-ducks">
+      <a href="reserve.html?duck=vincey" style="--duck:var(--vincey)">Vincey</a>
+      <a href="reserve.html?duck=chi-chi" style="--duck:var(--chichi)">Chi Chi</a>
+      <a href="reserve.html?duck=goosey" style="--duck:var(--goosey)">Goosey</a>
     </div>
+    <a href="https://ducksnpuddles.com/#bottle"><span>Features</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a href="https://ducksnpuddles.com/#story"><span>Our Story</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a href="https://ducksnpuddles.com/blog"><span>Blog</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a href="index.html"><span>Store <em class="sheet-note">Pre-launch</em></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+  </nav>
+  <div class="sheet-foot">
     <a class="btn btn-block" href="reserve.html" style="--bg:var(--sun-soft)"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
-    <div class="drawer-ducks">
-      <a href="reserve.html?duck=vincey" style="--field:var(--vincey-field)"><img src="assets/img/vincey-idle-420.webp" alt="">Vincey</a>
-      <a href="reserve.html?duck=chi-chi" style="--field:var(--chichi-field)"><img src="assets/img/chichi-idle-420.webp" alt="">Chi Chi</a>
-      <a href="reserve.html?duck=goosey" style="--field:var(--goosey-field)"><img src="assets/img/goosey-idle-420.webp" alt="">Goosey</a>
-    </div>
-    <nav class="drawer-links" aria-label="Mobile">
-      <a href="#shop">Shop all <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-      <a href="#shop" data-jump="soon">Coming soon <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-      <a href="#finder">Which duck is theirs? <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-      <a href="#faq">FAQ <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-      <a href="https://ducksnpuddles.com/">Our story <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a href="#">Account <svg class="icon" aria-hidden="true"><use href="#i-user"/></svg></a>
-    </nav>
   </div>
 </div>
 
@@ -161,7 +135,7 @@
 
   <!-- ====================================================================
        HERO  ·  custom section "hero-split"
-       blocks: eyebrow, heading, text, buttons, proof points, shop-by-duck
+       blocks: eyebrow, heading, text, button, shop-by-duck
        ==================================================================== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero-grid">
@@ -170,14 +144,8 @@
         <h1 id="hero-title" class="d d-hero hero-title">Pick their duck.</h1>
         <p class="lead">Three duck water bottles, three big personalities — and every one comes with its own removable silicone Puddle. Reserve yours for $1 before we launch.</p>
         <div class="hero-ctas">
-          <a class="btn" href="#shop"><span>Shop the ducks</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
-          <a class="btn btn-ghost" href="reserve.html"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
+                    <a class="btn" href="reserve.html"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
         </div>
-        <p class="hero-proof">
-          <span><svg class="icon" aria-hidden="true"><use href="#i-thermo"/></svg>9 oz insulated</span>
-          <span><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg>BPA-free</span>
-          <span><svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg>Dishwasher-safe bottle &amp; cap</span>
-        </p>
         <div class="shop-by">
           <span class="mono">Shop by duck</span>
           <ul>
@@ -193,14 +161,6 @@
         <div class="hero-panel squircle">
           <img src="assets/img/trio-peek-1365.webp" alt="The Vincey, Chi Chi and Goosey bottles side by side, with each duck peeking out from behind its own bottle" width="1365" height="1058" fetchpriority="high">
         </div>
-        <span class="chip hero-chip"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg>9 oz · flip-top straw</span>
-        <a class="spin-badge" href="reserve.html" aria-label="Reserve for $1">
-          <svg viewBox="0 0 100 100" aria-hidden="true">
-            <defs><path id="spin-path" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
-            <text><textPath href="#spin-path" textLength="236" lengthAdjust="spacing">RESERVE NOW • EARLY-BIRD PERKS •</textPath></text>
-          </svg>
-          <b>$1</b>
-        </a>
       </div>
     </div>
     <svg class="wave wave-bottom" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true" style="--wave:var(--vincey-field)"><path d="M0 24 Q40 4 80 24 T160 24 T240 24 T320 24 T400 24 T480 24 T560 24 T640 24 T720 24 T800 24 T880 24 T960 24 T1040 24 T1120 24 T1200 24 T1280 24 T1360 24 T1440 24 V48 H0 Z"/></svg>
@@ -209,7 +169,7 @@
   <!-- ====================================================================
        PRODUCT GRID  ·  sections/featured-collection.liquid
        collection: "all" · tabs block filters by product type
-       cards: snippets/card-product.liquid (+ a "promo" block in slot 5)
+       cards: snippets/card-product.liquid
        ==================================================================== -->
   <section class="section shop" id="shop" aria-labelledby="shop-title">
     <div class="wrap">
@@ -218,7 +178,7 @@
           <span class="sticker" style="--bg:var(--sun-soft)">The shop</span>
           <h2 id="shop-title" class="d d-xl">Shop the ducks.</h2>
         </div>
-        <p class="lead">Every bottle comes with its own removable silicone Puddle. Bottles ship after our Kickstarter campaign — reserve yours today for $1.</p>
+        <p class="lead">Every bottle comes with its own removable silicone Puddle. Reserve yours today for $1 and get first pick on launch day.</p>
       </div>
 
       <div class="filters-bar">
@@ -313,22 +273,6 @@
           </div>
         </article>
 
-        <!-- Promo tile -->
-        <aside class="promo" data-cat="promo" aria-label="How the $1 reservation works">
-          <img class="promo-duck" src="assets/img/goosey-cheer-600.webp" alt="" loading="lazy">
-          <div>
-            <p class="mono">Before we launch</p>
-            <p class="promo-price">$1</p>
-            <h3>holds your duck until launch day.</h3>
-          </div>
-          <ul>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-tbc="Early-bird incentive — discount or reward not decided">An early-bird reward, just for reservers</span></li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>A private link to a secret Kickstarter reward</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Behind-the-scenes build updates</li>
-          </ul>
-          <a class="btn btn-sm btn-block" href="reserve.html"><span>How it works</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
-        </aside>
-
         <!-- Personalized Puddle (coming soon) -->
         <article class="pcard" data-cat="soon">
           <div class="pcard-media" style="--field:var(--chichi-field);--soft:var(--chichi-soft)">
@@ -402,11 +346,11 @@
         <div class="rband-copy">
           <span class="sticker" style="--bg:var(--sun)">Before we launch</span>
           <h2 id="rband-title" class="d d-xl">Reserve your duck for $1.</h2>
-          <p class="lead">Hold your spot before our Kickstarter goes live — and get a few things the public won’t.</p>
+          <p class="lead">Hold your duck now and be first in line the day we launch.</p>
           <ol class="rsteps">
-            <li><span class="n">1</span><div><b>Reserve for $1 today</b><span>Pick a duck now, or decide on launch day.</span></div></li>
-            <li><span class="n">2</span><div><b>Unlock your early-bird reward</b><span data-tbc="Early-bird incentive — discount or reward not decided">The details land in your inbox before launch.</span></div></li>
-            <li><span class="n">3</span><div><b>Get your private launch-day link</b><span>It opens a secret Kickstarter reward only reservers can see.</span></div></li>
+            <li><span class="n">1</span><div><b>Reserve for $1 today</b><span>Choose your duck and hold your spot.</span></div></li>
+            <li><span class="n">2</span><div><b>Get first pick on launch day</b><span>Reservers get the launch link before anyone else.</span></div></li>
+            <li><span class="n">3</span><div><b>Pay the rest, get your bottle</b><span data-tbc="How the $1 is credited toward the final price">Your $1 already counts toward it.</span></div></li>
           </ol>
           <div class="rband-ctas">
             <a class="btn" href="reserve.html"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
@@ -415,10 +359,6 @@
         </div>
         <div class="rband-media">
           <div class="squircle"><img src="assets/img/sample-turf-960.webp" alt="Three Ducks ’n Puddles sample bottles standing on grass in warm light" width="960" height="640" loading="lazy"></div>
-          <div class="secret">
-            <span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></span>
-            <span><b>Secret reward</b><span>For reservers only. Revealed on launch day.</span></span>
-          </div>
           <img class="rband-duck" src="assets/img/vincey-wink-520.webp" alt="" loading="lazy">
         </div>
       </div>
@@ -505,37 +445,68 @@
   </section>
 
   <!-- ====================================================================
-       FOLLOW THE BUILD  ·  custom section "build-tracker"
-       blocks: stage ×5 (title, status, state: done|now|next) + image rail
+       IN THE WILD  ·  custom section "scrapbook-gallery" (photo / video blocks)
+       The main site's gallery (components/sections/InTheWild.tsx), same copy,
+       same taped-print rail, same clips.
        ==================================================================== -->
-  <section class="section" aria-labelledby="build-title">
+  <section class="wild" id="wild" aria-label="The ducks out in the world">
     <div class="wrap">
-      <div class="sec-head split">
-        <div>
-          <span class="sticker">Built in the open</span>
-          <h2 id="build-title" class="d d-xl">Follow the build.</h2>
+      <div class="wild-head">
+        <p class="lead measure">Big adventures, little moments, and every puddle in between &mdash; Chi&nbsp;Chi, Vincey, and Goosey are ready to come along!</p>
+        <div class="wild-controls" aria-hidden="true">
+          <button type="button" class="wild-arrow" data-rail-step="-1" tabindex="-1"><svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"/></svg></button>
+          <button type="button" class="wild-arrow" data-rail-step="1" tabindex="-1"><svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg></button>
         </div>
-        <p class="lead">We’re sharing every step with our community — the progress and the hiccups. Here’s where things stand.</p>
       </div>
-
-      <ol class="track" data-tbc="Stage statuses need confirming before launch">
-        <li class="done"><span class="dot"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><b>Characters &amp; design</b><span class="mono">Done</span></li>
-        <li class="done"><span class="dot"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><b>First samples</b><span class="mono">In hand</span></li>
-        <li class="now"><span class="dot"><svg class="icon" aria-hidden="true"><use href="#i-ticket"/></svg></span><b>Reservations</b><span class="mono">Open now</span></li>
-        <li><span class="dot"><svg class="icon" aria-hidden="true"><use href="#i-megaphone"/></svg></span><b>Kickstarter</b><span class="mono" data-tbc="Kickstarter launch date">Launching soon</span></li>
-        <li><span class="dot"><svg class="icon" aria-hidden="true"><use href="#i-truck"/></svg></span><b>Production &amp; delivery</b><span class="mono" data-tbc="Fulfilment timeline — ‘several months after the campaign’ per meeting">After the campaign</span></li>
-      </ol>
-
-      <div class="rail" tabindex="0" aria-label="Photos of the sample bottles">
-        <figure><img src="assets/img/life-armful-640.webp" alt="A smiling girl hugging three Ducks ’n Puddles bottles to her chest" loading="lazy"><figcaption class="mono">Sample round · the hug test</figcaption></figure>
-        <figure><img src="assets/img/sample-caddy-640.webp" alt="Three early sample bottles tucked into a yellow beach caddy with a striped towel" loading="lazy"><figcaption class="mono">Beach-bag ready</figcaption></figure>
-        <figure><img src="assets/img/life-sip-640.webp" alt="A girl sipping through the straw of her duck bottle at a playground table" loading="lazy"><figcaption class="mono">Straw-lid testing</figcaption></figure>
-        <figure><img src="assets/img/life-toddler-grip-640.webp" alt="A toddler holding a duck bottle in both hands" loading="lazy"><figcaption class="mono">Little-hand grip check</figcaption></figure>
-        <figure><img src="assets/img/life-cuddle-640.webp" alt="A girl cuddling her duck bottle against her cheek" loading="lazy"><figcaption class="mono">Cuddle-tested</figcaption></figure>
-      </div>
-      <div class="build-foot">
-        <a class="link" href="https://ducksnpuddles.com/blog">Read the build diary <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="link" href="https://www.instagram.com/ducksnpuddles/">Follow @ducksnpuddles <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <span class="wild-doodles" aria-hidden="true">
+      <svg class="sun" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="10.5"/><circle cx="30" cy="30" r="4.5"/><path d="M30 6.5v7M30 46.5v7M6.5 30h7M46.5 30h7M13.4 13.4l5 5M41.6 41.6l5 5M46.6 13.4l-5 5M18.4 41.6l-5 5"/></svg>
+      <svg class="drops-a" viewBox="0 0 46 40" fill="none"><path d="M9 30C6 24 9.5 14 15 6M22 33c-2-7 1.5-17 7-25M35 30c-1.5-5 1-12 5-18"/></svg>
+      <svg class="drops-b" viewBox="0 0 40 36" fill="none"><path d="M8 27c-2.5-5 .5-13 5-19M20 30c-1.6-6 1.2-14 5.6-21"/></svg>
+    </span>
+    <ul class="wild-rail" data-rail aria-label="Photos and clips from the duck pond">
+    <li class="wcard" data-i="0" data-kind="photo" data-stack="one" style="--shot-aspect:0.6667">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-playground-640.webp" alt="A child drinking at a playground table, two more bottles beside her." loading="lazy"></span></div>
+    </li>
+    <li class="wcard" data-i="1" data-kind="video" data-stack="one">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><video playsinline muted loop preload="none" poster="assets/img/poster-duck-2-540.webp" src="assets/video/duck-2-540.mp4"></video><button type="button" class="play" data-play><span class="vh">Play — Two ducks, one afternoon.</span><svg class="i-play" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i-pause" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg></button></span></div>
+    </li>
+    <li class="wcard" data-i="2" data-kind="photo" data-stack="two" style="--shot-aspect:1.5">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-turf-960.webp" alt="Three bottles standing on sunlit grass." loading="lazy"></span></div>
+      <div class="wframe under"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-splashpad-640.webp" alt="A bottle on the painted surface of a splash pad." loading="lazy"></span></div>
+    </li>
+    <li class="wcard" data-i="3" data-kind="photo" data-stack="one" style="--shot-aspect:0.6667">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-armful-640.webp" alt="A child carrying three bottles in both arms across a lawn." loading="lazy"></span></div>
+    </li>
+    <li class="wcard" data-i="4" data-kind="video" data-stack="one">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><video playsinline muted loop preload="none" poster="assets/img/poster-duck-3-540.webp" src="assets/video/duck-3-540.mp4"></video><button type="button" class="play" data-play><span class="vh">Play — Three of them, out in the world.</span><svg class="i-play" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i-pause" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg></button></span></div>
+    </li>
+    <li class="wcard" data-i="5" data-kind="photo" data-stack="one" style="--shot-aspect:0.6667">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-carry-640.webp" alt="A child carrying a bottle by its handle." loading="lazy"></span></div>
+    </li>
+    <li class="wcard" data-i="0" data-kind="photo" data-stack="one" style="--shot-aspect:0.6667">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-sunup-640.webp" alt="Two parents holding bottles up towards the afternoon light." loading="lazy"></span></div>
+    </li>
+    <li class="wcard" data-i="1" data-kind="video" data-stack="one">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><video playsinline muted loop preload="none" poster="assets/img/poster-duck-4-540.webp" src="assets/video/duck-4-540.mp4"></video><button type="button" class="play" data-play><span class="vh">Play — A bottle going everywhere the day goes.</span><svg class="i-play" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i-pause" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg></button></span></div>
+    </li>
+    <li class="wcard" data-i="2" data-kind="photo" data-stack="two" style="--shot-aspect:1.3333">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-beach-960.webp" alt="Three bottles on wet sand at dusk." loading="lazy"></span></div>
+      <div class="wframe under"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/cart-path-640.webp" alt="Two children walking hand in hand down a sunlit path." loading="lazy"></span></div>
+    </li>
+    <li class="wcard" data-i="3" data-kind="video" data-stack="one">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><video playsinline muted loop preload="none" poster="assets/img/poster-duck-1-540.webp" src="assets/video/duck-1-540.mp4"></video><button type="button" class="play" data-play><span class="vh">Play — Straight from the pool to the towel.</span><svg class="i-play" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i-pause" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg></button></span></div>
+    </li>
+    <li class="wcard" data-i="4" data-kind="photo" data-stack="one" style="--shot-aspect:0.6667">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-swing-640.webp" alt="A bottle tucked beside a toddler in a playground swing." loading="lazy"></span></div>
+    </li>
+    <li class="wcard" data-i="5" data-kind="photo" data-stack="one" style="--shot-aspect:0.6667">
+      <div class="wframe"><span class="tape" aria-hidden="true"></span><span class="shot"><img src="assets/img/sample-mosaic-640.webp" alt="Three bottles on stone beside a blue fountain." loading="lazy"></span></div>
+    </li>
+    </ul>
+    <div class="wrap">
+      <div class="wild-cta">
+        <a class="btn" href="https://www.instagram.com/ducksnpuddles/" style="--bg:var(--sun-soft)"><span>Follow Us on Instagram</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
       </div>
     </div>
   </section>
@@ -553,7 +524,7 @@
       <div class="acc">
         <details open>
           <summary>How does the $1 reservation work?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans"><p>You pay $1 to hold your spot before our Kickstarter campaign goes live. On launch day we email everyone who reserved a private link to a secret reward that only reservers can open.</p></div>
+          <div class="ans"><p data-tbc="How the $1 is credited toward the final price">You pay $1 to hold your duck. On launch day, reservers get the launch link before anyone else, so you get first pick — and your $1 counts toward your bottle when you complete your order.</p></div>
         </details>
         <details>
           <summary>Is the $1 refundable?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
@@ -561,7 +532,7 @@
         </details>
         <details>
           <summary>When will the bottles ship?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans"><p data-tbc="Fulfilment timeline — ‘several months after the campaign’ per meeting">Bottles ship after the Kickstarter campaign ends. We’ll share a confirmed timeline before launch, and reservers get updates as production moves along.</p></div>
+          <div class="ans"><p data-tbc="Fulfilment timeline — ‘several months after the campaign’ per meeting">Bottles ship once production is complete. We’ll share a confirmed timeline before launch, and reservers get updates as production moves along.</p></div>
         </details>
         <details>
           <summary>What comes with each bottle?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
@@ -579,87 +550,89 @@
     </div>
   </section>
 
-  <!-- ====================================================================
-       NEWSLETTER  ·  sections/newsletter.liquid  (customer form, tag: newsletter)
-       ==================================================================== -->
-  <section class="section news" aria-labelledby="news-title">
-    <svg class="wave wave-top" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24 Q40 4 80 24 T160 24 T240 24 T320 24 T400 24 T480 24 T560 24 T640 24 T720 24 T800 24 T880 24 T960 24 T1040 24 T1120 24 T1200 24 T1280 24 T1360 24 T1440 24 V48 H0 Z"/></svg>
-    <img class="news-art" src="assets/img/chichi-wave-680.webp" alt="" loading="lazy">
-    <div class="wrap news-grid">
-      <div class="news-copy">
-        <span class="sticker" style="--bg:var(--cream)">The Duck Squad</span>
-        <h2 id="news-title" class="d d-xl">Not ready to reserve?</h2>
-        <p class="lead">Join the Duck Squad for free. We’ll tell you the moment the Kickstarter goes live, and share the build along the way.</p>
-      </div>
-      <form class="news-form" data-capture data-ok="Welcome to the Duck Squad! Launch news is on its way." novalidate>
-        <label class="label" for="news-email">Your email</label>
-        <div class="inline-form">
-          <input class="field" id="news-email" type="email" placeholder="you@example.com" autocomplete="email" required>
-          <button class="btn btn-plain" type="submit" style="--bg:var(--sun-soft)">Join the Squad</button>
-        </div>
-        <p class="fine" style="color:var(--ink)">No spam, just ducks. Unsubscribe any time.</p>
-      </form>
-    </div>
-  </section>
 </main>
 
 <!-- ======================================================================
-     FOOTER GROUP  ·  sections/footer.liquid (menus: footer-shop, footer-brand,
-     footer-help; policies from Settings → Policies)
+     FOOTER  ·  sections/footer.liquid
+     The main site's footer (components/SiteFooter.tsx): the wave crest with
+     the swimming duck, the tagline and socials, three link columns, the mark
+     on the rule and the "Come Back to the Pond Soon!" send-off over the three
+     ducks. Links point at the shop where the shop has the page.
      ====================================================================== -->
 <footer class="ftr">
-  <svg class="wave wave-top" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24 Q40 4 80 24 T160 24 T240 24 T320 24 T400 24 T480 24 T560 24 T640 24 T720 24 T800 24 T880 24 T960 24 T1040 24 T1120 24 T1200 24 T1280 24 T1360 24 T1440 24 V48 H0 Z"/></svg>
-  <div class="wrap">
+  <div class="ftr-crest">
+    <div class="ftr-edge" aria-hidden="true">
+      <svg viewBox="0 0 5000 237.6" preserveAspectRatio="none"><path d="M 0 9.50 C 165 9.5 165 177.6 330 177.6 C 415 177.6 415 89.8 500 89.8 C 585 89.8 585 177.6 670 177.6 C 835 177.6 835 9.5 1000 9.5 C 1165 9.5 1165 177.6 1330 177.6 C 1415 177.6 1415 89.8 1500 89.8 C 1585 89.8 1585 177.6 1670 177.6 C 1835 177.6 1835 9.5 2000 9.5 C 2165 9.5 2165 177.6 2330 177.6 C 2415 177.6 2415 89.8 2500 89.8 C 2585 89.8 2585 177.6 2670 177.6 C 2835 177.6 2835 9.5 3000 9.5 C 3165 9.5 3165 177.6 3330 177.6 C 3415 177.6 3415 89.8 3500 89.8 C 3585 89.8 3585 177.6 3670 177.6 C 3835 177.6 3835 9.5 4000 9.5 C 4165 9.5 4165 177.6 4330 177.6 C 4415 177.6 4415 89.8 4500 89.8 C 4585 89.8 4585 177.6 4670 177.6 C 4835 177.6 4835 9.5 5000 9.5 L 5000 237.6 L 0 237.6 Z"/></svg>
+    </div>
+    <span class="ftr-swimmer" aria-hidden="true"><span class="ftr-paddle"><img src="assets/img/mascot-140.webp" width="54" height="60" alt=""></span></span>
+  </div>
+
+  <div class="wrap ftr-inner">
     <div class="ftr-grid">
-      <div class="ftr-brand">
-        <img src="assets/img/logo-primary-264.webp" alt="Ducks ’n Puddles" loading="lazy">
-        <p>A friend for every adventure.</p>
-        <div class="socials">
-          <a href="https://www.instagram.com/ducksnpuddles/" aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a>
-          <a href="https://www.facebook.com/profile.php?id=61581543035997" aria-label="Facebook"><svg class="icon" aria-hidden="true"><use href="#i-facebook"/></svg></a>
-          <a href="mailto:team@ducksnpuddles.com" aria-label="Email us"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a>
+      <div class="ftr-signup">
+        <h2 class="ftr-h">A Friend for Every Adventure</h2>
+        <p class="ftr-blurb">Thoughtful products for parents. Little friends for kids. Made to bring more ease, comfort, and connection to everyday adventures.</p>
+        <p class="hand ftr-hang">Come hang with us</p>
+        <div class="ftr-socials">
+          <a class="ftr-social" href="https://www.instagram.com/ducksnpuddles/" rel="me noopener" style="--s-bg:#E4405F"><span class="vh">Instagram</span><svg width="24" height="24" viewBox="-0.774 -0.674 25.548 25.548" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.7 4.92 4.92.06 1.28.07 1.67.07 4.9s-.01 3.62-.07 4.9c-.15 3.22-1.66 4.77-4.92 4.92-1.28.06-1.67.07-4.9.07s-3.62-.01-4.9-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.11 15.62 2.1 15.23 2.1 12s.01-3.62.07-4.9C2.32 3.88 3.83 2.33 7.1 2.18 8.38 2.12 8.77 2.2 12 2.2Zm0 3.1a6.7 6.7 0 1 0 0 13.4 6.7 6.7 0 0 0 0-13.4Zm0 11.05a4.35 4.35 0 1 1 0-8.7 4.35 4.35 0 0 1 0 8.7Zm6.96-11.3a1.57 1.57 0 1 0 0 3.13 1.57 1.57 0 0 0 0-3.13Z"/></svg></a>
+          <a class="ftr-social" href="https://www.facebook.com/profile.php?id=61581543035997" rel="me noopener" style="--s-bg:#1877F2"><span class="vh">Facebook</span><svg width="24" height="24" viewBox="-0.675 2.625 23.75 23.75" fill="currentColor" aria-hidden="true"><path d="M14.5 8.5H17V5.2c-.43-.06-1.7-.19-3.18-.19-3.15 0-5.3 1.9-5.3 5.4V13H5.4v3.7h3.12V24h3.830v-7.3h3.1l.48-3.7h-3.58v-2.2c0-1.07.3-1.8 1.86-1.8Z"/></svg></a>
+          <a class="ftr-social" href="mailto:team@ducksnpuddles.com" style="--s-bg:var(--duck-blue)"><span class="vh">Email us</span><svg width="24" height="24" viewBox="0.6 0.6 22.8 22.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 5.5h17a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-17a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Zm.9 2L12 12.6l7.6-5.1"/></svg></a>
         </div>
+        <a class="ftr-email" href="mailto:team@ducksnpuddles.com">team@ducksnpuddles.com</a>
       </div>
-      <nav aria-labelledby="f-shop">
-        <h3 id="f-shop" class="mono">Shop</h3>
-        <ul class="ftr-links">
-          <li><a href="reserve.html?duck=vincey">Vincey</a></li>
-          <li><a href="reserve.html?duck=chi-chi">Chi Chi</a></li>
-          <li><a href="reserve.html?duck=goosey">Goosey</a></li>
-          <li><a href="reserve.html?duck=trio">The Duck Trio</a></li>
-          <li><a href="reserve.html">Reserve for $1</a></li>
-        </ul>
-      </nav>
-      <nav aria-labelledby="f-brand">
-        <h3 id="f-brand" class="mono">Ducks ’n Puddles</h3>
-        <ul class="ftr-links">
-          <li><a href="https://ducksnpuddles.com/">Our story <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="https://ducksnpuddles.com/#ducks">Meet the ducks <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="https://ducksnpuddles.com/blog">Blog <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="https://ducksnpuddles.com/#foundation">The Foundation <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        </ul>
-      </nav>
-      <nav aria-labelledby="f-help">
-        <h3 id="f-help" class="mono">Help</h3>
-        <ul class="ftr-links">
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="https://ducksnpuddles.com/contact">Contact us <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#" data-tbc="Shipping policy (Shopify → Settings → Policies)">Shipping policy</a></li>
-          <li><a href="#" data-tbc="Refund policy — must cover the $1 reservation">Refund policy</a></li>
-        </ul>
+
+      <nav class="ftr-cols" aria-label="Footer">
+        <div>
+          <h2 class="ftr-colh">Explore</h2>
+          <ul class="ftr-links">
+            <li><a href="index.html">Shop All</a></li>
+            <li><a href="reserve.html">Reserve for $1</a></li>
+            <li><a href="https://ducksnpuddles.com/#ducks">Meet the Ducks</a></li>
+            <li><a href="https://ducksnpuddles.com/#story">Our Story</a></li>
+            <li><a href="https://ducksnpuddles.com/#foundation">The Foundation</a></li>
+            <li><a href="https://ducksnpuddles.com/blog">The Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="ftr-colh">The Ducks</h2>
+          <ul class="ftr-links">
+            <li><a href="reserve.html?duck=vincey">Vincey</a></li>
+            <li><a href="reserve.html?duck=chi-chi">Chi Chi</a></li>
+            <li><a href="reserve.html?duck=goosey">Goosey</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="ftr-colh">Help</h2>
+          <ul class="ftr-links">
+            <li><a href="#faq">FAQs</a></li>
+            <li><a href="https://ducksnpuddles.com/contact">Contact Us</a></li>
+            <li><a href="#" data-tbc="Refund policy — must cover the $1 reservation">Refund Policy</a></li>
+            <li><a href="https://ducksnpuddles.com/privacy">Privacy Policy</a></li>
+            <li><a href="https://ducksnpuddles.com/terms">Terms of Service</a></li>
+          </ul>
+        </div>
       </nav>
     </div>
-    <div class="ftr-base">
+
+    <div class="ftr-rule">
+      <span class="ftr-line"></span>
+      <a class="ftr-mark" href="https://ducksnpuddles.com/" aria-label="Ducks ’n Puddles home"><img src="assets/img/logo-mark-240.webp" width="104" height="90" alt=""></a>
+      <span class="ftr-line"></span>
+    </div>
+
+    <div class="ftr-bottom">
       <span>&copy; 2026 Ducks ’n Puddles. All rights reserved.</span>
-      <nav aria-label="Legal">
-        <a href="https://ducksnpuddles.com/privacy">Privacy</a>
-        <a href="https://ducksnpuddles.com/terms">Terms</a>
-      </nav>
-      <span class="pay"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Secure checkout by Shopify</span>
+      <svg class="ftr-sendoff" viewBox="0 -10 560 142" role="img" aria-label="Come Back to the Pond Soon!">
+        <path id="sendoff-arc" fill="none" d="M 24 116 A 420 420 0 0 1 536 116"/>
+        <text><textPath href="#sendoff-arc" startOffset="50%" text-anchor="middle">Come Back to the Pond Soon!</textPath></text>
+      </svg>
+      <span class="hand">Here’s to all the adventures ahead.</span>
     </div>
   </div>
+
+  <div class="ftr-ducks" aria-hidden="true"><img src="assets/img/ducks-follow-poster.jpg" width="1200" height="675" alt=""></div>
 </footer>
 
-<script src="assets/theme.js?v=2" defer></script>
+<script src="assets/theme.js?v=6" defer></script>
 </body>
 </html>

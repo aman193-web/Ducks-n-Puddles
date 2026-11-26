@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reserve Your Duck for $1 | Ducks ’n Puddles</title>
-  <meta name="description" content="Reserve Vincey, Chi Chi or Goosey for $1 before our Kickstarter launches, and unlock reserver-only rewards.">
+  <meta name="description" content="Reserve Vincey, Chi Chi or Goosey for $1 and get first pick the day we launch.">
   <!-- Whether the live reservation page is indexed is an open item. The prototype stays out of search either way. -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#10264A">
@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Edu+QLD+Beginner:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="preload" href="assets/fonts/Bangbang-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/theme.css?v=2">
+  <link rel="stylesheet" href="assets/theme.css?v=6">
 </head>
 <body>
 <!-- icon sprite (Phosphor, regular) — snippets/icon-*.liquid in the theme -->
@@ -65,41 +65,79 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ======================================================================
-     HEADER GROUP — the landing-page version: no main menu, so the only ways
-     forward are "reserve" or "back to the shop".
+     HEADER  ·  sections/header.liquid
+     The main site's header, item for item (components/SiteHeader.tsx): the
+     logo mark, The Ducks with its three-bottle menu, Features, Our Story,
+     Blog and the Store capsule. Two Shopify changes only: the call to action
+     is "Reserve for $1" instead of "Get Early Access", and a cart sits before it.
      ====================================================================== -->
-<div class="announce" role="region" aria-label="Announcements">
-  <div class="announce-track">
-    <span class="announce-item"><img src="assets/img/mark-footprints-144.webp" alt="">Reservations are open — <b>$1</b> holds your duck</span>
-    <span class="announce-item"><img src="assets/img/mark-footprints-144.webp" alt="">Reservers get a private link to a secret Kickstarter reward</span>
-    <span class="announce-item"><img src="assets/img/mark-footprints-144.webp" alt="">Early-bird perks while spots last</span>
-    <span class="announce-item" aria-hidden="true"><img src="assets/img/mark-footprints-144.webp" alt="">Reservations are open — <b>$1</b> holds your duck</span>
-    <span class="announce-item" aria-hidden="true"><img src="assets/img/mark-footprints-144.webp" alt="">Reservers get a private link to a secret Kickstarter reward</span>
-    <span class="announce-item" aria-hidden="true"><img src="assets/img/mark-footprints-144.webp" alt="">Early-bird perks while spots last</span>
-  </div>
-</div>
-
-<header class="hdr hdr-min">
+<header class="hdr">
   <div class="wrap hdr-bar">
-    <a class="hdr-back" href="index.html"><svg class="icon" aria-hidden="true"><use href="#i-arrowleft"/></svg><span>Back to shop</span></a>
-    <a class="hdr-logo" href="index.html" aria-label="Ducks ’n Puddles shop home">
-      <img src="assets/img/logo-primary-264.webp" alt="Ducks ’n Puddles" width="264" height="273">
+    <a class="hdr-brand" href="https://ducksnpuddles.com/" aria-label="Ducks ’n Puddles home">
+      <img src="assets/img/logo-mark-240.webp" alt="" width="240" height="207">
     </a>
+
+    <nav class="hdr-nav" aria-label="Primary">
+      <div class="drop">
+        <a href="https://ducksnpuddles.com/#ducks" aria-haspopup="true">
+          <span class="roll"><span>The Ducks</span></span>
+          <svg class="caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </a>
+        <ul class="drop-menu">
+          <li><a href="reserve.html?duck=vincey" style="--duck:var(--vincey)"><span class="dot" aria-hidden="true"></span><span class="item"><span class="item-name">Vincey</span><span class="item-role">The Calm Companion</span></span></a></li>
+          <li><a href="reserve.html?duck=chi-chi" style="--duck:var(--chichi)"><span class="dot" aria-hidden="true"></span><span class="item"><span class="item-name">Chi Chi</span><span class="item-role">The Brave Spark</span></span></a></li>
+          <li><a href="reserve.html?duck=goosey" style="--duck:var(--goosey)"><span class="dot" aria-hidden="true"></span><span class="item"><span class="item-name">Goosey</span><span class="item-role">The Sunshine Friend</span></span></a></li>
+        </ul>
+      </div>
+      <a href="https://ducksnpuddles.com/#bottle"><span class="roll"><span>Features</span></span></a>
+      <a href="https://ducksnpuddles.com/#story"><span class="roll"><span>Our Story</span></span></a>
+      <a href="https://ducksnpuddles.com/blog"><span class="roll"><span>Blog</span></span></a>
+      <a class="store-link" href="index.html"><span class="roll"><span>Store</span></span><span class="note">Pre-launch</span></a>
+    </nav>
+
     <div class="hdr-actions">
-      <a class="hdr-link hide-m" href="#faq">FAQ</a>
-      <a class="hdr-icon" href="#" aria-label="Cart, 0 items"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span class="cart-count" aria-hidden="true">0</span></a>
+      <a class="hdr-cart" href="#" aria-label="Cart, 0 items"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span class="cart-count" aria-hidden="true">0</span></a>
+      <span class="hdr-cta"><a class="btn btn-sm" href="reserve.html" style="--bg:var(--sun-soft)"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a></span>
+      <button class="menu-pill" type="button" data-drawer-open aria-expanded="false" aria-controls="mobile-menu">
+        <span class="vh">Open menu</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 8.5h15M4.5 15.5h15"/></svg>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- the main site's full-screen menu sheet (components/MobileMenu.tsx) -->
+<div class="sheet" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="sheet-top">
+    <button class="sheet-close" type="button" data-drawer-close>
+      <span class="vh">Close menu</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <nav class="sheet-links" aria-label="Primary">
+    <a href="https://ducksnpuddles.com/#ducks"><span>The Ducks</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <div class="sheet-ducks">
+      <a href="reserve.html?duck=vincey" style="--duck:var(--vincey)">Vincey</a>
+      <a href="reserve.html?duck=chi-chi" style="--duck:var(--chichi)">Chi Chi</a>
+      <a href="reserve.html?duck=goosey" style="--duck:var(--goosey)">Goosey</a>
+    </div>
+    <a href="https://ducksnpuddles.com/#bottle"><span>Features</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a href="https://ducksnpuddles.com/#story"><span>Our Story</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a href="https://ducksnpuddles.com/blog"><span>Blog</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    <a href="index.html"><span>Store <em class="sheet-note">Pre-launch</em></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+  </nav>
+  <div class="sheet-foot">
+    <a class="btn btn-block" href="reserve.html" style="--bg:var(--sun-soft)"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
+  </div>
+</div>
 
 <main id="main">
 
   <!-- ====================================================================
        MAIN PRODUCT · sections/main-product.liquid on product.reserve.json
        The reservation is a $1 Shopify product. Its variants are the duck
-       preference (Vincey / Chi Chi / Goosey / All three / Undecided), so the
-       choice lands on the order without an app, and its inventory is the
-       early-bird allocation that drives the meter.
+       preference (Vincey / Chi Chi / Goosey / All three), so the choice lands
+       on the order without an app.
        ==================================================================== -->
   <section class="rsv" aria-labelledby="rsv-title">
     <div class="wrap">
@@ -109,7 +147,6 @@
         <!-- gallery -->
         <div class="gallery">
           <div class="stage" data-stage data-duck="vincey" aria-roledescription="carousel" aria-label="Product images">
-            <span class="chip stage-tag"><svg class="icon" aria-hidden="true"><use href="#i-ticket"/></svg>Pre-launch</span>
             <span class="burst stage-burst">Early bird</span>
 
             <div class="stage-slide is-active" role="group" aria-label="1 of 4">
@@ -156,11 +193,6 @@
             </button>
           </div>
 
-          <div class="gallery-trust">
-            <div><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Secure $1 checkout</div>
-            <div><svg class="icon" aria-hidden="true"><use href="#i-gift"/></svg>Reserver-only rewards</div>
-            <div><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Launch-day email</div>
-          </div>
         </div>
 
         <!-- buy box -->
@@ -168,10 +200,9 @@
           <div class="buy-top">
             <div class="buy-kicker">
               <span class="chip" style="background:var(--sun-soft)"><svg class="icon" aria-hidden="true"><use href="#i-ticket"/></svg>Pre-launch reservation</span>
-              <span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-megaphone"/></svg>Kickstarter coming soon</span>
             </div>
             <h1 id="rsv-title" class="d">Reserve your duck for $1.</h1>
-            <p class="lead">Hold your spot before our Kickstarter goes live — and unlock rewards the public won’t see.</p>
+            <p class="lead">Hold your duck today and get first pick the day we launch.</p>
           </div>
 
           <div class="price-box">
@@ -201,28 +232,23 @@
             </div>
             <div class="dpick-alt" role="radiogroup" aria-label="Other options">
               <label><input type="radio" name="duck" value="trio"><span><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg>All three</span></label>
-              <label><input type="radio" name="duck" value="undecided"><span><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>Not sure yet — decide at launch</span></label>
             </div>
           </div>
 
           <div class="perks">
             <h2>What your $1 gets you</h2>
             <ul class="perks-list" style="display:grid;gap:10px;list-style:none;padding:0">
-              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>Your spot, held.</b> First in line when the campaign opens.</span></li>
-              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span data-tbc="Early-bird incentive — discount or reward not decided"><b>An early-bird reward.</b> Reservers only — the details land before launch.</span></li>
-              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>A secret Kickstarter reward.</b> We email you a private link to it on launch day.</span></li>
-              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>Front-row build updates.</b> Progress, photos and the occasional hiccup.</span></li>
+              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>Your duck, held.</b> No waiting for launch day to claim yours.</span></li>
+              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>First pick on launch day.</b> We send you the launch link before anyone else.</span></li>
+              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span data-tbc="How the $1 is credited toward the final price"><b>Your $1 counts.</b> It comes off the price when you complete your order.</span></li>
+              <li><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span data-tbc="Early-bird incentive — discount or reward not decided"><b>An early-bird reward.</b> Reservers only — details before launch.</span></li>
             </ul>
           </div>
 
-          <div class="meter" data-tbc="Early-bird quantity — the bar reads the reservation product’s live Shopify inventory">
-            <div class="meter-top"><span>Early-bird spots</span><span>Limited quantity</span></div>
-            <div class="meter-bar" role="img" aria-label="Early-bird spots are filling up"><i style="--fill:38%"></i></div>
-          </div>
 
           <form class="buy-form" data-reserve-form novalidate>
             <div>
-              <div class="step-h"><label class="label" for="rsv-email"><em>Step 2</em>Where should we send your private link?</label></div>
+              <div class="step-h"><label class="label" for="rsv-email"><em>Step 2</em>Where should we send your launch link?</label></div>
               <input class="field" id="rsv-email" type="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="rsv-err">
               <p class="fine" id="rsv-err" data-email-err hidden style="color:var(--chichi-ink);margin-top:6px;font-weight:600">Please enter a valid email so we can send your launch-day link.</p>
             </div>
@@ -230,13 +256,9 @@
             <button class="btn btn-lg btn-block" type="submit" style="--bg:var(--sun)" data-sticky-anchor><span data-cta-label>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></button>
             <div class="buy-trust"><span><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Secure checkout by Shopify</span></div>
             <div class="paybadges" aria-label="Accepted payments"><span>Shop Pay</span><span>Apple Pay</span><span>G Pay</span><span>Visa</span><span>Mastercard</span><span>Amex</span></div>
-            <p class="fine" data-tbc="How the $1 relates to the Kickstarter pledge — credited, separate, or refunded">Reserving isn’t a purchase of the bottle. You’ll back the campaign on Kickstarter on launch day.</p>
+            <p class="fine" data-tbc="How the $1 is credited toward the final price">Your $1 holds your spot. You’ll complete your order through your launch link.</p>
           </form>
 
-          <div class="alt-cta">
-            <span>Just want launch news? Joining the Duck Squad is free.</span>
-            <a class="link" href="#updates">Get updates <svg class="icon" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-          </div>
         </div>
       </div>
     </div>
@@ -251,70 +273,17 @@
       <div class="sec-head center">
         <span class="sticker" style="--bg:var(--goosey-soft)">How it works</span>
         <h2 id="how-title" class="d d-xl">From $1 to your duck.</h2>
-        <p class="lead">Four steps, and we’ll keep you posted at every one of them.</p>
+        <p class="lead">Three simple steps from reserving to your little one’s new favorite bottle.</p>
       </div>
       <ol class="how-list">
-        <li><span class="how-n" style="--bg:var(--sky-soft)">1</span><span class="mono how-when">Today</span><h3>Reserve for $1</h3><p>Pick your duck, or decide later, and hold your spot with a $1 deposit.</p></li>
-        <li><span class="how-n" style="--bg:var(--chichi-soft)">2</span><span class="mono how-when">Between now and launch</span><h3>Follow the build</h3><p>We share the progress, the photos and the honest hiccups with everyone who reserved.</p></li>
-        <li><span class="how-n" style="--bg:var(--goosey-soft)">3</span><span class="mono how-when" data-tbc="Kickstarter launch date">Launch day</span><h3>Open your private link</h3><p>We email reservers a private link to a secret Kickstarter reward the public can’t see.</p></li>
-        <li><span class="how-n" style="--bg:var(--sun-soft)">4</span><span class="mono how-when" data-tbc="Fulfilment timeline — ‘several months after the campaign’ per meeting">After the campaign</span><h3>Back it &amp; get your duck</h3><p>Back the campaign on Kickstarter. Bottles ship once the campaign wraps and production is done.</p></li>
+        <li><span class="how-n" style="--bg:var(--sky-soft)">1</span><span class="mono how-when">Today</span><h3>Reserve for $1</h3><p>Choose your duck and hold your spot with a $1 deposit. That’s all it takes.</p></li>
+        <li><span class="how-n" style="--bg:var(--chichi-soft)">2</span><span class="mono how-when" data-tbc="Launch date">Launch day</span><h3>Get first pick</h3><p>Reservers get the launch link before anyone else, so you’re first in line for your duck.</p></li>
+        <li><span class="how-n" style="--bg:var(--goosey-soft)">3</span><span class="mono how-when" data-tbc="Fulfilment timeline — ‘several months after the campaign’ per meeting">After launch</span><h3>Pay the rest, get your bottle</h3><p data-tbc="How the $1 is credited toward the final price">Complete your order with your $1 already taken off, and we ship your duck as soon as it’s made.</p></li>
       </ol>
     </div>
     <svg class="wave wave-bottom" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24 Q40 4 80 24 T160 24 T240 24 T320 24 T400 24 T480 24 T560 24 T640 24 T720 24 T800 24 T880 24 T960 24 T1040 24 T1120 24 T1200 24 T1280 24 T1360 24 T1440 24 V48 H0 Z"/></svg>
   </section>
 
-  <!-- ====================================================================
-       RESERVERS VS EVERYONE · custom section "comparison-table"
-       ==================================================================== -->
-  <section class="section" aria-labelledby="cmp-title" style="padding-top:calc(var(--section-y) + 24px)">
-    <div class="wrap">
-      <div class="sec-head center">
-        <span class="sticker">Reservers get more</span>
-        <h2 id="cmp-title" class="d d-xl">Why reserve now?</h2>
-      </div>
-      <div class="cmp-wrap">
-        <table class="cmp">
-          <thead>
-            <tr>
-              <th scope="col"><span class="vh">Perk</span></th>
-              <th scope="col" class="hl"><small>$1 deposit</small><b>Reservers</b></th>
-              <th scope="col"><small>Free</small><b>Everyone else</b></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Secret Kickstarter reward<span>Private link, emailed on launch day</span></td>
-              <td class="hl"><span class="yes"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="vh">Yes</span></span></td>
-              <td><span class="no"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span class="vh">No</span></span></td>
-            </tr>
-            <tr>
-              <td data-tbc="Early-bird incentive — discount or reward not decided">Early-bird reward<span>Reservers only</span></td>
-              <td class="hl"><span class="yes"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="vh">Yes</span></span></td>
-              <td><span class="no"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span class="vh">No</span></span></td>
-            </tr>
-            <tr>
-              <td data-tbc="Public early-bird quantities & reward structure">Public early-bird rewards<span>Limited quantities on Kickstarter</span></td>
-              <td class="hl"><span class="yes"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="vh">Yes</span></span><span class="note">First dibs</span></td>
-              <td><span class="yes" style="background:var(--paper);color:var(--ink)"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="vh">Yes</span></span><span class="note">While they last</span></td>
-            </tr>
-            <tr>
-              <td>First to know on launch day<span>An email the minute we go live</span></td>
-              <td class="hl"><span class="yes"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="vh">Yes</span></span></td>
-              <td><span class="no"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span class="vh">No</span></span><span class="note">Newsletter only</span></td>
-            </tr>
-            <tr>
-              <td>Build updates<span>Progress, photos and hiccups</span></td>
-              <td class="hl"><span class="yes"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="vh">Yes</span></span></td>
-              <td><span class="yes" style="background:var(--paper);color:var(--ink)"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span class="vh">Yes</span></span><span class="note">With the Duck Squad</span></td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="display:flex;justify-content:center;margin-top:36px">
-          <a class="btn" href="#rsv-title" style="--bg:var(--sun)"><span>Reserve for $1</span><span class="btn-badge" aria-hidden="true"><svg><use href="#i-arrow"/></svg><svg><use href="#i-arrow"/></svg></span></a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ====================================================================
        WHAT YOU'RE RESERVING · image-with-text + icon list
@@ -379,23 +348,19 @@
       <div class="acc">
         <details open>
           <summary>What is the $1 reservation?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans"><p>It’s a small deposit that holds your spot before our Kickstarter campaign goes live. It tells us you’re in — and it unlocks a few things only reservers get, including a private link to a secret reward on launch day.</p></div>
+          <div class="ans"><p>It holds your duck before we launch. Reservers get the launch link before anyone else, so you get first pick.</p></div>
+        </details>
+        <details>
+          <summary>Does my $1 count toward the bottle?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans"><p data-tbc="How the $1 is credited toward the final price">Yes. When you complete your order through your launch link, you pay the remaining balance.</p></div>
         </details>
         <details>
           <summary>Is it refundable?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
           <div class="ans"><p data-tbc="Whether the deposit is refundable, and how refunds are handled">We’ll publish the full reservation terms, including refunds, on this page before you pay.</p></div>
         </details>
         <details>
-          <summary>Have I bought a bottle by reserving?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans"><p data-tbc="How the $1 relates to the Kickstarter pledge — credited, separate, or refunded">Not yet. The $1 holds your spot and your perks. On launch day you’ll pick your reward and back the campaign on Kickstarter.</p></div>
-        </details>
-        <details>
-          <summary>What’s the secret reward?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans"><p data-tbc="What the secret reward is, and how access to its private link is controlled">It’s a surprise, and it can only be reached through the private link we email to reservers on launch day.</p></div>
-        </details>
-        <details>
-          <summary>When does the Kickstarter launch?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans"><p data-tbc="Kickstarter launch date">Soon. Reservers hear first — we’ll email you the moment it goes live.</p></div>
+          <summary>When do we launch?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans"><p data-tbc="Launch date">Soon. Reservers hear first — we’ll email you the moment it’s live.</p></div>
         </details>
         <details>
           <summary>Can I reserve more than one duck?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
@@ -403,7 +368,7 @@
         </details>
         <details>
           <summary>When will my bottle arrive?<span class="pm"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans"><p data-tbc="Fulfilment timeline — ‘several months after the campaign’ per meeting">Bottles ship after the campaign ends and production is complete. We’ll share a confirmed timeline before launch, and keep reservers updated along the way.</p></div>
+          <div class="ans"><p data-tbc="Fulfilment timeline — ‘several months after the campaign’ per meeting">Bottles ship once production is complete. We’ll share a confirmed timeline before launch, and keep reservers updated along the way.</p></div>
         </details>
       </div>
     </div>
@@ -420,7 +385,7 @@
       <div class="news-copy">
         <span class="sticker" style="--bg:var(--cream)">The Duck Squad</span>
         <h2 id="news-title" class="d d-xl">Not ready to reserve?</h2>
-        <p class="lead">Join the Duck Squad for free. We’ll tell you the moment the Kickstarter goes live.</p>
+        <p class="lead">Join the Duck Squad for free. We’ll tell you the moment we launch.</p>
       </div>
       <form class="news-form" data-capture data-ok="You’re in! We’ll email you the moment we launch." novalidate>
         <label class="label" for="news-email">Your email</label>
@@ -434,20 +399,85 @@
   </section>
 </main>
 
-<footer class="ftr" style="padding-top:8px">
-  <svg class="wave wave-top" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24 Q40 4 80 24 T160 24 T240 24 T320 24 T400 24 T480 24 T560 24 T640 24 T720 24 T800 24 T880 24 T960 24 T1040 24 T1120 24 T1200 24 T1280 24 T1360 24 T1440 24 V48 H0 Z"/></svg>
-  <div class="wrap">
-    <div class="ftr-base" style="border-top:0;margin-top:0">
-      <span>&copy; 2026 Ducks ’n Puddles. All rights reserved.</span>
-      <nav aria-label="Legal">
-        <a href="#" data-tbc="Refund policy — must cover the $1 reservation">Refund policy</a>
-        <a href="https://ducksnpuddles.com/privacy">Privacy</a>
-        <a href="https://ducksnpuddles.com/terms">Terms</a>
-        <a href="https://ducksnpuddles.com/contact">Contact</a>
+<!-- ======================================================================
+     FOOTER  ·  sections/footer.liquid
+     The main site's footer (components/SiteFooter.tsx): the wave crest with
+     the swimming duck, the tagline and socials, three link columns, the mark
+     on the rule and the "Come Back to the Pond Soon!" send-off over the three
+     ducks. Links point at the shop where the shop has the page.
+     ====================================================================== -->
+<footer class="ftr">
+  <div class="ftr-crest">
+    <div class="ftr-edge" aria-hidden="true">
+      <svg viewBox="0 0 5000 237.6" preserveAspectRatio="none"><path d="M 0 9.50 C 165 9.5 165 177.6 330 177.6 C 415 177.6 415 89.8 500 89.8 C 585 89.8 585 177.6 670 177.6 C 835 177.6 835 9.5 1000 9.5 C 1165 9.5 1165 177.6 1330 177.6 C 1415 177.6 1415 89.8 1500 89.8 C 1585 89.8 1585 177.6 1670 177.6 C 1835 177.6 1835 9.5 2000 9.5 C 2165 9.5 2165 177.6 2330 177.6 C 2415 177.6 2415 89.8 2500 89.8 C 2585 89.8 2585 177.6 2670 177.6 C 2835 177.6 2835 9.5 3000 9.5 C 3165 9.5 3165 177.6 3330 177.6 C 3415 177.6 3415 89.8 3500 89.8 C 3585 89.8 3585 177.6 3670 177.6 C 3835 177.6 3835 9.5 4000 9.5 C 4165 9.5 4165 177.6 4330 177.6 C 4415 177.6 4415 89.8 4500 89.8 C 4585 89.8 4585 177.6 4670 177.6 C 4835 177.6 4835 9.5 5000 9.5 L 5000 237.6 L 0 237.6 Z"/></svg>
+    </div>
+    <span class="ftr-swimmer" aria-hidden="true"><span class="ftr-paddle"><img src="assets/img/mascot-140.webp" width="54" height="60" alt=""></span></span>
+  </div>
+
+  <div class="wrap ftr-inner">
+    <div class="ftr-grid">
+      <div class="ftr-signup">
+        <h2 class="ftr-h">A Friend for Every Adventure</h2>
+        <p class="ftr-blurb">Thoughtful products for parents. Little friends for kids. Made to bring more ease, comfort, and connection to everyday adventures.</p>
+        <p class="hand ftr-hang">Come hang with us</p>
+        <div class="ftr-socials">
+          <a class="ftr-social" href="https://www.instagram.com/ducksnpuddles/" rel="me noopener" style="--s-bg:#E4405F"><span class="vh">Instagram</span><svg width="24" height="24" viewBox="-0.774 -0.674 25.548 25.548" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.7 4.92 4.92.06 1.28.07 1.67.07 4.9s-.01 3.62-.07 4.9c-.15 3.22-1.66 4.77-4.92 4.92-1.28.06-1.67.07-4.9.07s-3.62-.01-4.9-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.11 15.62 2.1 15.23 2.1 12s.01-3.62.07-4.9C2.32 3.88 3.83 2.33 7.1 2.18 8.38 2.12 8.77 2.2 12 2.2Zm0 3.1a6.7 6.7 0 1 0 0 13.4 6.7 6.7 0 0 0 0-13.4Zm0 11.05a4.35 4.35 0 1 1 0-8.7 4.35 4.35 0 0 1 0 8.7Zm6.96-11.3a1.57 1.57 0 1 0 0 3.13 1.57 1.57 0 0 0 0-3.13Z"/></svg></a>
+          <a class="ftr-social" href="https://www.facebook.com/profile.php?id=61581543035997" rel="me noopener" style="--s-bg:#1877F2"><span class="vh">Facebook</span><svg width="24" height="24" viewBox="-0.675 2.625 23.75 23.75" fill="currentColor" aria-hidden="true"><path d="M14.5 8.5H17V5.2c-.43-.06-1.7-.19-3.18-.19-3.15 0-5.3 1.9-5.3 5.4V13H5.4v3.7h3.12V24h3.830v-7.3h3.1l.48-3.7h-3.58v-2.2c0-1.07.3-1.8 1.86-1.8Z"/></svg></a>
+          <a class="ftr-social" href="mailto:team@ducksnpuddles.com" style="--s-bg:var(--duck-blue)"><span class="vh">Email us</span><svg width="24" height="24" viewBox="0.6 0.6 22.8 22.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 5.5h17a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-17a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Zm.9 2L12 12.6l7.6-5.1"/></svg></a>
+        </div>
+        <a class="ftr-email" href="mailto:team@ducksnpuddles.com">team@ducksnpuddles.com</a>
+      </div>
+
+      <nav class="ftr-cols" aria-label="Footer">
+        <div>
+          <h2 class="ftr-colh">Explore</h2>
+          <ul class="ftr-links">
+            <li><a href="index.html">Shop All</a></li>
+            <li><a href="reserve.html">Reserve for $1</a></li>
+            <li><a href="https://ducksnpuddles.com/#ducks">Meet the Ducks</a></li>
+            <li><a href="https://ducksnpuddles.com/#story">Our Story</a></li>
+            <li><a href="https://ducksnpuddles.com/#foundation">The Foundation</a></li>
+            <li><a href="https://ducksnpuddles.com/blog">The Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="ftr-colh">The Ducks</h2>
+          <ul class="ftr-links">
+            <li><a href="reserve.html?duck=vincey">Vincey</a></li>
+            <li><a href="reserve.html?duck=chi-chi">Chi Chi</a></li>
+            <li><a href="reserve.html?duck=goosey">Goosey</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="ftr-colh">Help</h2>
+          <ul class="ftr-links">
+            <li><a href="#faq">FAQs</a></li>
+            <li><a href="https://ducksnpuddles.com/contact">Contact Us</a></li>
+            <li><a href="#" data-tbc="Refund policy — must cover the $1 reservation">Refund Policy</a></li>
+            <li><a href="https://ducksnpuddles.com/privacy">Privacy Policy</a></li>
+            <li><a href="https://ducksnpuddles.com/terms">Terms of Service</a></li>
+          </ul>
+        </div>
       </nav>
-      <span class="pay"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Secure checkout by Shopify</span>
+    </div>
+
+    <div class="ftr-rule">
+      <span class="ftr-line"></span>
+      <a class="ftr-mark" href="https://ducksnpuddles.com/" aria-label="Ducks ’n Puddles home"><img src="assets/img/logo-mark-240.webp" width="104" height="90" alt=""></a>
+      <span class="ftr-line"></span>
+    </div>
+
+    <div class="ftr-bottom">
+      <span>&copy; 2026 Ducks ’n Puddles. All rights reserved.</span>
+      <svg class="ftr-sendoff" viewBox="0 -10 560 142" role="img" aria-label="Come Back to the Pond Soon!">
+        <path id="sendoff-arc" fill="none" d="M 24 116 A 420 420 0 0 1 536 116"/>
+        <text><textPath href="#sendoff-arc" startOffset="50%" text-anchor="middle">Come Back to the Pond Soon!</textPath></text>
+      </svg>
+      <span class="hand">Here’s to all the adventures ahead.</span>
     </div>
   </div>
+
+  <div class="ftr-ducks" aria-hidden="true"><img src="assets/img/ducks-follow-poster.jpg" width="1200" height="675" alt=""></div>
 </footer>
 
 <!-- sticky-atc (phones only) -->
@@ -466,6 +496,6 @@
   <button type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
 </div>
 
-<script src="assets/theme.js?v=2" defer></script>
+<script src="assets/theme.js?v=6" defer></script>
 </body>
 </html>
