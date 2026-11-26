@@ -25,7 +25,7 @@ The folder also works on its own with any static server, e.g. `python3 -m http.s
 
 `reserve.html?duck=chi-chi` opens the page with a duck already chosen (`vincey`, `chi-chi`, `goosey`, `trio`, `undecided`). Every "Reserve" button on the homepage uses this link.
 
-**Open items:** the orange button at the bottom left outlines every piece of copy, price or campaign detail that is still waiting on the client, and lists them. Add `?review` to a URL to open it in review mode.
+**Open items:** hidden by default. Add `?review` to a URL (e.g. `index.html?review`) to show the orange button at the bottom left, which outlines every piece of copy, price or campaign detail that is still waiting on the client, and lists them.
 
 ## Brand
 

@@ -293,8 +293,12 @@
   /* =============================================================================
      REVIEW MODE — prototype only.
      ========================================================================== */
+  /* Hidden by default (Nov 2026, client review): the button and the orange
+     outlines only appear when the URL has ?review. The open items stay in the
+     markup as data-tbc and in README.md — nothing is lost, just not shown. */
   const items = $$('[data-tbc]')
-  if (items.length) {
+  const reviewOn = new URLSearchParams(location.search).has('review')
+  if (items.length && reviewOn) {
     const btn = document.createElement('button')
     btn.className = 'review-toggle'
     btn.type = 'button'
@@ -344,6 +348,6 @@
       void el.offsetWidth
       el.classList.add('tbc-flash')
     })
-    if (new URLSearchParams(location.search).has('review')) setReview(true)
+    setReview(true)
   }
 })()
